@@ -1,0 +1,14 @@
+[
+  {"id":"P3-1","verdict":"PASS","evidence":"test/p3a.test.ts > P3-1 canonical envelope; npm test: 42 passed","note":"정규화된 realpath, 정렬 배열, 고정 키 순서로 SHA-256을 계산한다."},
+  {"id":"P3-2","verdict":"PASS","evidence":"test/p3a.test.ts > P3-2 adapters are transport only","note":"어댑터는 원문 운반과 argv 생성만 담당하며 판정 모듈 import가 없다."},
+  {"id":"P3-3","verdict":"PASS","evidence":"test/p3a.test.ts > P3-3 fail closed mapping","note":"무작위 미지 메서드를 decline하고 default allow 소스 패턴이 없다."},
+  {"id":"P3-4","verdict":"PASS","evidence":"test/p3a.test.ts > P3-4 decision response whitelist","note":"응답 decision은 accept, decline, cancel의 타입 합집합이며 src 금지 문자열 검사가 통과했다."},
+  {"id":"P3-5","verdict":"PASS","evidence":"test/p3a.test.ts > P3-5 permissions response (7 tests)","note":"turn scope, strictAutoReview, NonEmpty 타입과 구체 하위 경로 검사를 적용한다."},
+  {"id":"P3-6","verdict":"PASS","evidence":"test/p3a.test.ts > P3-6 preflight (9 tests)","note":"cwd, command, 추가 권한, grantRoot, writeStdin, 인증 및 금지 메서드를 각각 검증했다."},
+  {"id":"P3-7","verdict":"PASS","evidence":"test/p3a.test.ts > P3-7 replay prevention","note":"Phase 2 null-safe 유니크 인덱스를 사용하며 중복 시 replay_alert 원장 행을 추가한다."},
+  {"id":"P3-8","verdict":"PASS","evidence":"test/p3a.test.ts > P3-8 lifetime","note":"expires_at 또는 ended_at이 성립하면 봉투 내부 요청도 decline한다."},
+  {"id":"P3-10","verdict":"PASS","evidence":"test/p3a.test.ts > P3-10 byte-owned payload classification","note":"실제 Uint8Array를 분류하며 불투명, 암호화, 유효하지 않은 바이너리를 cancel한다."},
+  {"id":"P3-13","verdict":"PASS","evidence":"test/p3a.test.ts > P3-13 cancel is danger-only","note":"cancel 이유 타입과 전 경로 테스트를 세 위험 사유로 제한했다."},
+  {"id":"P3-14","verdict":"PASS","evidence":"test/p3a.test.ts > P3-14 execution profile","note":"생성 argv는 -a on-request이며 금지 플래그가 없다."},
+  {"id":"P3-18","verdict":"PASS","evidence":"test/p3a.test.ts > P3-18 advisory tools","note":"Codex enforcement_capable은 false이고 도구 종류와 무관하게 강제 검사가 선행한다."}
+]

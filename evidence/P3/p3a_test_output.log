@@ -1,0 +1,56 @@
+npm notice run cue-daemon@1.0.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@1.0.0 test
+npm notice run vitest run --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p3a.test.ts > P3-1 canonical envelope > is stable across key and array order and changes for one field 5ms
+ ✓ test/p3a.test.ts > P3-2 adapters are transport only > carries raw values and imports no decision or policy module 2ms
+ ✓ test/p3a.test.ts > P3-3 fail closed mapping > declines random unknown methods and has no default allow branch 6ms
+ ✓ test/p3a.test.ts > P3-4 decision response whitelist > enumerates only the three response decisions and source has no prohibited response or bypass spelling 3ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > accepts only a nonempty concrete contained path and fixes turn scope and strict review 2ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines empty entries 2ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines glob entries 2ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines outside entries 2ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special root entries 2ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special arbitrary entries 2ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > models nonempty entries at the type boundary and source constructs no empty accept entries 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null cwd 2ms
+ ✓ test/p3a.test.ts > P3-6 preflight > wrong cwd 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null command 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > extra outside 2ms
+ ✓ test/p3a.test.ts > P3-6 preflight > outside grant 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > auth gate 2ms
+ ✓ test/p3a.test.ts > P3-6 preflight > tool 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > elicitation 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > judges writeStdin independently of a parent command decision 2ms
+ ✓ test/p3a.test.ts > P3-7 replay prevention > declines a duplicate null approval id and appends a replay alert 2ms
+ ✓ test/p3a.test.ts > P3-8 lifetime > declines after expiry and after run end without inheritance 2ms
+ ✓ test/p3a.test.ts > P3-10 byte-owned payload classification > classifies actual bytes and cancels opaque, encrypted, and invalid binary payloads 2ms
+ ✓ test/p3a.test.ts > P3-13 cancel is danger-only > returns cancel only for the three enumerated reasons across all mapped and rejected paths 2ms
+ ✓ test/p3a.test.ts > P3-14 execution profile > generates on-request argv without prohibited flags and source passes grep 0ms
+ ✓ test/p3a.test.ts > P3-18 advisory tools > marks Codex non-enforcing and core enforcement has no tool-kind bypass 0ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > migrates an empty database and inserts and reads every table 6ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > rejects every envelope update 2ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > prevents replay even when approval id is null 1ms
+ ✓ test/p2.test.ts > P2-2 IPC > uses a protected 256-bit token, rejects missing auth and bad schemas, and binds loopback 65ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > has six states and blocks budget only at a token threshold from the two allowed event shapes 1ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > contains no monetary conversion or display path in source 31ms
+ ✓ test/p2.test.ts > P2-4 process identity and heartbeat > stops refreshing after the identified process is killed so age grows 155ms
+ ✓ test/p2.test.ts > P2-5 named health vector > names the failed component 0ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only heartbeat is expired 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only connection fails 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > emits the exact fixture from a separate process and creates a marker when relay is blocked 72ms
+ ✓ test/p2.test.ts > P2-8 crash reconciliation > blocks an interrupted task, captures actual git status, and records no automatic resume 89ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > creates only copied auth and Cue config with all extension surfaces disabled 5ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > accepts only an absolute vendor binary path, never an npm shim 0ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > launches the absolute vendor binary with the isolated tool home 2162ms
+ ✓ test/p2.test.ts > P2-7 scope > documents design without creating a scheduled task 1ms
+
+ Test Files  2 passed (2)
+      Tests  42 passed (42)
+   Start at  21:17:13
+   Duration  2.84s (transform 123ms, setup 0ms, import 203ms, tests 2.64s, environment 0ms)
