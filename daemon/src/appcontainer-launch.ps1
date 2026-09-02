@@ -46,6 +46,8 @@ public static class CueAppContainer {
       STARTUPINFOEX startup = new STARTUPINFOEX(); startup.StartupInfo.cb = Marshal.SizeOf(startup); startup.lpAttributeList = list;
       PROCESS_INFORMATION process;
       if (!CreateProcess(app, commandLine, IntPtr.Zero, IntPtr.Zero, false, 0x00080000, IntPtr.Zero, cwd, ref startup, out process)) throw new Win32Exception(Marshal.GetLastWin32Error());
+      Console.WriteLine("CUE_APPCONTAINER_PID=" + process.dwProcessId + ";START_TIME=" + DateTime.UtcNow.ToString("o"));
+      Console.Out.Flush();
       try { WaitForSingleObject(process.hProcess, 0xffffffff); uint exitCode; if (!GetExitCodeProcess(process.hProcess, out exitCode)) throw new Win32Exception(Marshal.GetLastWin32Error()); return unchecked((int)exitCode); }
       finally { CloseHandle(process.hThread); CloseHandle(process.hProcess); }
     } finally {

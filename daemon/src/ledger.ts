@@ -9,6 +9,7 @@ export function openLedger(filename = ':memory:'): Ledger {
   const db = new Database(filename);
   const here = dirname(fileURLToPath(import.meta.url));
   const migration = join(here, '..', 'migrations', '001_init.sql');
-  db.exec(readFileSync(migration, 'utf8'));
+  const initialized = db.prepare("SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name='task'").get() as { n: number };
+  if (!initialized.n) db.exec(readFileSync(migration, 'utf8'));
   return db;
 }
