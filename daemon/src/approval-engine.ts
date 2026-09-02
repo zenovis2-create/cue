@@ -1,8 +1,8 @@
-import { isAbsolute, relative, resolve } from 'node:path';
 import type { Ledger } from './ledger.js';
 import type { Envelope } from './envelope.js';
 import { classifyPayload } from './payload.js';
 import { buildPermissionsAccept, isConcreteContainedPath, type PermissionsAccept } from './permissions-response.js';
+import { isCanonicalContained } from './worker-enforcement.js';
 
 export type Decision = { decision: 'accept' } | { decision: 'decline'; reason: string } | { decision: 'cancel'; reason: 'credential_request' | 'outside_grant_root' | 'uninspectable_payload' } | PermissionsAccept;
 export interface ApprovalIdentity { thread_id: string; item_id: string; approval_id: string | null; request_ordinal: number }
@@ -28,8 +28,7 @@ const actionByMethod: Readonly<Record<string, string>> = Object.freeze({
 });
 
 function contained(worktree: string, candidate: string): boolean {
-  const rel = relative(worktree, resolve(candidate));
-  return rel === '' || (!rel.startsWith('..') && !isAbsolute(rel));
+  return isCanonicalContained(worktree, candidate);
 }
 
 function mandatoryChecks(request: ApprovalRequest, active: RunEnvelope, now: Date): Decision | undefined {

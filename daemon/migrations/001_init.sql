@@ -36,6 +36,19 @@ CREATE TABLE approval_event (
 CREATE UNIQUE INDEX approval_event_replay_null_safe ON approval_event(
   run_id,envelope_hash,thread_id,item_id,ifnull(approval_id,''),request_ordinal
 );
+CREATE TABLE execution_event (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  run_id TEXT NOT NULL REFERENCES run(id),
+  thread_id TEXT NOT NULL,
+  item_id TEXT,
+  approval_id TEXT,
+  execution_id TEXT NOT NULL,
+  execution_ordinal INTEGER NOT NULL CHECK (execution_ordinal >= 0),
+  created_at TEXT NOT NULL
+);
+CREATE UNIQUE INDEX execution_event_replay_null_safe ON execution_event(
+  run_id,thread_id,ifnull(item_id,''),ifnull(approval_id,''),execution_id,execution_ordinal
+);
 CREATE TABLE session_handle (
   handle TEXT PRIMARY KEY,
   pid INTEGER NOT NULL,

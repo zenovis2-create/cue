@@ -1,4 +1,5 @@
-import { isAbsolute, relative } from 'node:path';
+import { isAbsolute } from 'node:path';
+import { isCanonicalContained } from './worker-enforcement.js';
 
 export type NonEmpty<T> = readonly [T, ...T[]];
 export interface PermissionEntry { path: string; access: 'read' | 'write' }
@@ -11,8 +12,7 @@ export interface PermissionsAccept {
 
 export function isConcreteContainedPath(worktree: string, value: unknown): value is string {
   if (typeof value !== 'string' || !isAbsolute(value) || /[*?\[\]{}]/.test(value)) return false;
-  const rel = relative(worktree, value);
-  return rel !== '' && !rel.startsWith('..') && !isAbsolute(rel);
+  return isCanonicalContained(worktree, value) && value !== worktree;
 }
 
 export function buildPermissionsAccept(worktree: string, raw: unknown): PermissionsAccept | undefined {
