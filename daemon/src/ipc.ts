@@ -2,7 +2,7 @@ import { createServer, type Server } from 'node:http';
 import { chmodSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
+import { runProcessSync } from './process-launch.js';
 import { healthVector, type ComponentName } from './health.js';
 
 export const IPC_HOST = '127.0.0.1';
@@ -13,7 +13,8 @@ export function createBearerFile(path: string): string {
   if (process.platform === 'win32') {
     const principal = process.env.USERNAME;
     if (!principal) throw new Error('missing process principal');
-    execFileSync('icacls', [path, '/inheritance:r', '/grant:r', `${principal}:(R,W)`], { stdio: 'ignore' });
+    const acl = runProcessSync('icacls', [path, '/inheritance:r', '/grant:r', `${principal}:(R,W)`], { encoding: 'utf8', stdio: 'ignore' });
+    if (acl.status !== 0) throw new Error('failed to protect bearer file');
   } else chmodSync(path, 0o600);
   return token;
 }

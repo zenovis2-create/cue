@@ -1,7 +1,7 @@
-import { execFileSync } from 'node:child_process';
+import { runProcessSync } from '../process-launch.js';
 
 export type OrcaExec = (args: readonly string[]) => string;
-const defaultExec: OrcaExec = args => execFileSync('orca', [...args], { encoding: 'utf8', windowsHide: true });
+const defaultExec: OrcaExec = args => runProcessSync('orca', args, { encoding: 'utf8', windowsHide: true }).stdout;
 
 export function parseOrcaJson(text: string): unknown {
   let quoted = false, escaped = false, clean = '';

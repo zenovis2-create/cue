@@ -12,7 +12,8 @@ import { failedComponents, healthVector } from '../src/health.js';
 import { heartbeatAgeMs, readHeartbeat } from '../src/heartbeat.js';
 import { evaluateSentinel, SENTINEL_ALERT } from '../src/sentinel.js';
 import { reconcileInterruptedWrites } from '../src/recovery.js';
-import { assertVendorBinary, CLEAN_CONFIG, createCleanCodexHome, spawnVendorCodex } from '../src/tool-home.js';
+import { assertVendorBinary, CLEAN_CONFIG, createCleanCodexHome } from '../src/tool-home.js';
+import { spawnVendorCodexInAppContainer } from '../src/codex-session.js';
 
 const temporary: string[] = [];
 const testStateRoot = resolve('.test-state');
@@ -152,8 +153,9 @@ describe('P2-9 clean tool home', () => {
   it('launches the absolute vendor binary with the isolated tool home', async () => {
     const root=temp(), vendorDir=join(root,'vendor'); mkdirSync(vendorDir); const binary=join(vendorDir,process.platform==='win32'?'codex.exe':'codex'); copyFileSync(process.execPath,binary);
     const auth=join(root,'source-auth.json'); writeFileSync(auth,'credential-placeholder'); const cleanHome=createCleanCodexHome(join(root,'homes'),auth);
-    const marker=join(root,'home-marker.txt'); const child=spawnVendorCodex(binary,['-e',`const f=require('fs'),h=process.env.CODEX_HOME||'';f.writeFileSync(${JSON.stringify(marker)},h+${JSON.stringify('\n')}+f.readdirSync(h).sort().join(','))`],cleanHome,{stdio:'ignore'});
+    const db=openLedger(); seed(db); const marker=join(root,'home-marker.txt'); const {child}=spawnVendorCodexInAppContainer(db,{cwd:root,task_id:'t1',run_id:'r1'},binary,cleanHome,['-e',`const f=require('fs'),h=process.env.CODEX_HOME||'';f.writeFileSync(${JSON.stringify(marker)},h+${JSON.stringify('\n')}+f.readdirSync(h).sort().join(','))`]);
     const [exitCode]=await once(child,'exit'); expect(exitCode).toBe(0); expect(readFileSync(marker,'utf8')).toBe(`${cleanHome}\nauth.json,config.toml`);
+    db.close();
   });
 });
 

@@ -1,7 +1,5 @@
 import { copyFileSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import type { ChildProcess, SpawnOptions } from 'node:child_process';
-import { launchProcess } from './process-launch.js';
 export const CLEAN_CONFIG = `[features]\nhooks = false\nmcp = false\nplugins = false\nskills = false\n`;
 export function createCleanCodexHome(parent: string, authPath: string): string {
   mkdirSync(parent, { recursive: true });
@@ -18,8 +16,4 @@ export function assertVendorBinary(path: string): string {
 }
 export function vendorCodexLaunchSpec(path: string, args: readonly string[], codexHome: string): { command: string; args: string[]; env: NodeJS.ProcessEnv } {
   return { command: assertVendorBinary(path), args: [...args], env: { ...process.env, CODEX_HOME: codexHome } };
-}
-export function spawnVendorCodex(path: string, args: string[], codexHome: string, options: SpawnOptions = {}): ChildProcess {
-  const spec = vendorCodexLaunchSpec(path,args,codexHome);
-  return launchProcess(spec.command,spec.args,{...options,env:{...spec.env,...options.env}});
 }

@@ -1,6 +1,6 @@
 import { existsSync, realpathSync } from 'node:fs';
 import type { SpawnSyncReturns } from 'node:child_process';
-import { launchProcessSync } from './process-launch.js';
+import { runProcessSync } from './process-launch.js';
 import { dirname, isAbsolute, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Ledger } from './ledger.js';
@@ -36,11 +36,11 @@ function quoteWindowsArg(value: string): string {
 
 function runAppContainer(command: WorkerCommand): SpawnSyncReturns<string> {
   const launcher = fileURLToPath(new URL('./appcontainer-launch.ps1', import.meta.url));
-  const located = isAbsolute(command.executable) ? command.executable : launchProcessSync('where.exe', [command.executable], { encoding: 'utf8' }).stdout.split(/\r?\n/u).find(Boolean);
-  if (!located) return launchProcessSync(command.executable, ['--cue-executable-not-found'], { encoding: 'utf8' });
+  const located = isAbsolute(command.executable) ? command.executable : runProcessSync('where.exe', [command.executable], { encoding: 'utf8' }).stdout.split(/\r?\n/u).find(Boolean);
+  if (!located) return runProcessSync(command.executable, ['--cue-executable-not-found'], { encoding: 'utf8' });
   const commandLine = [located, ...command.args].map(quoteWindowsArg).join(' ');
   const payload = Buffer.from(JSON.stringify({ executable: located, commandLine, cwd: command.cwd })).toString('base64');
-  return launchProcessSync('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', launcher, '-PayloadBase64', payload], { encoding: 'utf8' });
+  return runProcessSync('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', launcher, '-PayloadBase64', payload], { encoding: 'utf8' });
 }
 
 function absolutePaths(args: string[]): string[] {
@@ -55,7 +55,7 @@ export function runEnforcedWorker(envelope: Envelope, command: WorkerCommand): W
   const paths = [...(command.inspectedPaths ?? []), ...absolutePaths(command.args)];
   if (!isCanonicalContained(envelope.worktree_realpath, command.cwd) || paths.some(path => !isCanonicalContained(envelope.worktree_realpath, path))) return { violation: 'filesystem' };
   if (process.platform === 'win32' && envelope.egress.length === 0 && /TcpClient|Sockets?\.|WebClient|Invoke-WebRequest|curl(?:\.exe)?|wget(?:\.exe)?/iu.test([command.executable, ...command.args].join(' '))) {
-    const result = launchProcessSync('powershell.exe', ['-NoProfile', '-Command', "[Console]::Error.Write('CUE_EGRESS_DETECTED'); exit 77"], { encoding: 'utf8' });
+    const result = runProcessSync('powershell.exe', ['-NoProfile', '-Command', "[Console]::Error.Write('CUE_EGRESS_DETECTED'); exit 77"], { encoding: 'utf8' });
     return { result, violation: 'network_gate' };
   }
   if (process.platform === 'win32' && envelope.egress.length === 0) {
@@ -72,7 +72,7 @@ export function runEnforcedWorker(envelope: Envelope, command: WorkerCommand): W
   const guard = fileURLToPath(new URL('./network-guard.cjs', import.meta.url));
   if (!existsSync(guard)) return { violation: 'network_gate' };
   const nodeOptions = [process.env.NODE_OPTIONS, `--require=${JSON.stringify(guard)}`].filter(Boolean).join(' ');
-  const result = launchProcessSync(command.executable, command.args, {
+  const result = runProcessSync(command.executable, command.args, {
     cwd: command.cwd,
     encoding: 'utf8',
     env: { ...process.env, NODE_OPTIONS: nodeOptions, CUE_EGRESS_JSON: JSON.stringify(envelope.egress) },

@@ -1,7 +1,7 @@
 import type { Ledger } from './ledger.js';
-import { execFileSync } from 'node:child_process';
+import { runProcessSync } from './process-launch.js';
 export type GitStatusReader = (cwd: string) => string;
-export const captureGitStatus: GitStatusReader = cwd => execFileSync('git',['status','--short'],{cwd,encoding:'utf8'});
+export const captureGitStatus: GitStatusReader = cwd => runProcessSync('git',['status','--short'],{cwd,encoding:'utf8'}).stdout;
 export function reconcileInterruptedWrites(db: Ledger, cwd: string, readGitStatus: GitStatusReader = captureGitStatus): number {
   const rows = db.prepare("SELECT run.id AS run_id, run.task_id FROM run JOIN task ON task.id=run.task_id WHERE run.write_in_progress=1 AND task.state='running'").all() as Array<{run_id:string; task_id:string}>;
   const capture = readGitStatus(cwd);
