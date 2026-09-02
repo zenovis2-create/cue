@@ -1,0 +1,56 @@
+[
+  {
+    "id": "P2-1",
+    "verdict": "PASS",
+    "evidence": "p2_test_output.log: P2-1 SQLite ledger 3 tests; p2_build_output.log",
+    "note": "9개 테이블의 빈 DB migration, 테이블별 삽입/조회, envelope UPDATE 거부, NULL approval_id 재생 방지를 검증했다."
+  },
+  {
+    "id": "P2-2",
+    "verdict": "PASS",
+    "evidence": "p2_test_output.log: P2-2 IPC 1 test",
+    "note": "256비트 토큰, 0600 또는 Windows 동등 ACL, 무인증 401, 스키마 오류 400, 127.0.0.1 바인딩을 검증했다."
+  },
+  {
+    "id": "P2-3",
+    "verdict": "PASS",
+    "evidence": "p2_test_output.log: P2-3 state and token accounting 2 tests",
+    "note": "6상태, 타입 있는 blocked 사유, 두 허용 이벤트 경로의 토큰 임계값, 금지 문자열 grep 0건을 검증했다."
+  },
+  {
+    "id": "P2-4",
+    "verdict": "PASS",
+    "evidence": "p2_test_output.log: P2-4 process identity and heartbeat 1 test",
+    "note": "pid와 start_time 신원을 기록하는 실제 자식 프로세스를 종료한 뒤 파일 하트비트 나이가 증가함을 검증했다."
+  },
+  {
+    "id": "P2-5",
+    "verdict": "PASS",
+    "evidence": "p2_test_output.log: P2-5 named health vector 1 test",
+    "note": "orca, codex_app_server, daemon, sentinel 이름을 보존하고 중단된 구성요소 이름을 반환한다."
+  },
+  {
+    "id": "P2-6",
+    "verdict": "PASS",
+    "evidence": "p2_test_output.log: P2-6 sentinel 3 tests",
+    "note": "두 단독 조건은 침묵하고 결합 조건만 별도 프로세스에서 고정 fixture를 출력하며 릴레이 차단 시 cue.dead를 만든다."
+  },
+  {
+    "id": "P2-7",
+    "verdict": "SKIPPED",
+    "evidence": "p2_test_output.log: P2-7 scope 1 test; daemon/docs/P2-7_WINDOWS_TASK_DESIGN.md",
+    "note": "요구대로 예약 작업은 등록하지 않고 설계만 문서화했다."
+  },
+  {
+    "id": "P2-8",
+    "verdict": "PASS",
+    "evidence": "p2_test_output.log: P2-8 crash reconciliation 1 test",
+    "note": "실제 git status를 원장 artifact에 캡처하고 태스크를 blocked/crash로 바꾸며 자동 재개 없음 기록을 검증했다."
+  },
+  {
+    "id": "P2-9",
+    "verdict": "PASS",
+    "evidence": "p2_test_output.log: P2-9 clean tool home 3 tests",
+    "note": "auth.json과 Cue config만 있는 홈, 확장 표면 비활성화, npm shim 거부, 절대 vendor 바이너리의 격리 CODEX_HOME 기동을 검증했다."
+  }
+]
