@@ -1,0 +1,30 @@
+[
+  {
+    "id": "P3-9",
+    "verdict": "PASS",
+    "tier": 1,
+    "evidence": "p3c_test_output.log: runtime-computed outside path blocked in PowerShell; inside-write positive control passed; ephemeral ACE cleanup assertion passed; CUE_PROFILE_REMAINDERS=0",
+    "note": "Ephemeral AppContainer SID is launched with PROC_THREAD_ATTRIBUTE_SECURITY_CAPABILITIES. Only the worktree receives a modifying ACE, removed in finally together with the profile."
+  },
+  {
+    "id": "P3-16",
+    "verdict": "PARTIAL",
+    "tier": 3,
+    "evidence": "p3c_test_output.log: the unchanged non-Node local-socket gate returns network_gate and nonzero; direct AppContainer probing showed loopback was not OS-blocked on this machine",
+    "note": "Empty-egress native network primitives that are visible in the invocation are detected and stopped immediately. This is detection, not a complete syscall boundary; dynamically obscured or unknown network clients can evade it."
+  },
+  {
+    "id": "P3-15",
+    "verdict": "PASS",
+    "tier": "production wiring",
+    "evidence": "p3c_test_output.log: completion-card integration test calls completeTaskCard and observes the ledger-derived label plus completed state",
+    "note": "completionApprovalLabel now has a production caller in the real completion path."
+  },
+  {
+    "id": "P3-17",
+    "verdict": "PASS",
+    "tier": "production wiring",
+    "evidence": "p3c_test_output.log: a real PowerShell worker exits 0 through runWorkerLifecycle and execution_event contains actual-worker",
+    "note": "recordExecution is called at the worker lifecycle execution point; violations are also recorded before completion can proceed."
+  }
+]
