@@ -1,0 +1,604 @@
+{
+  "worktree": "D:\\Temp\\User\\cue-p1-1-ii7yppi7",
+  "approval_requests": [
+    {
+      "method": "item/commandExecution/requestApproval",
+      "id": 0,
+      "params": {
+        "kind": "command",
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "itemId": "exec-81748864-7b63-42f5-902f-f7e7638216aa",
+        "startedAtMs": 1788339855820,
+        "environmentId": "local",
+        "command": "\"C:\\\\Program Files\\\\WindowsApps\\\\Microsoft.PowerShell_7.6.5.0_x64__8wekyb3d8bbwe\\\\pwsh.exe\" -Command 'echo cue-probe-first'",
+        "cwd": "D:\\Temp\\User\\cue-p1-1-ii7yppi7",
+        "commandActions": [
+          {
+            "type": "unknown",
+            "command": "echo cue-probe-first"
+          }
+        ],
+        "proposedExecpolicyAmendment": [
+          "echo",
+          "cue-probe-first"
+        ],
+        "availableDecisions": [
+          "accept",
+          {
+            "acceptWithExecpolicyAmendment": {
+              "execpolicy_amendment": [
+                "echo",
+                "cue-probe-first"
+              ]
+            }
+          },
+          "cancel"
+        ]
+      }
+    },
+    {
+      "method": "item/commandExecution/requestApproval",
+      "id": 1,
+      "params": {
+        "kind": "command",
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "itemId": "exec-93536cab-6ee6-41a5-aa13-0e19ab508527",
+        "startedAtMs": 1788339986448,
+        "environmentId": "local",
+        "command": "\"C:\\\\Program Files\\\\WindowsApps\\\\Microsoft.PowerShell_7.6.5.0_x64__8wekyb3d8bbwe\\\\pwsh.exe\" -Command 'echo cue-probe-second'",
+        "cwd": "D:\\Temp\\User\\cue-p1-1-ii7yppi7",
+        "commandActions": [
+          {
+            "type": "unknown",
+            "command": "echo cue-probe-second"
+          }
+        ],
+        "proposedExecpolicyAmendment": [
+          "echo",
+          "cue-probe-second"
+        ],
+        "availableDecisions": [
+          "accept",
+          {
+            "acceptWithExecpolicyAmendment": {
+              "execpolicy_amendment": [
+                "echo",
+                "cue-probe-second"
+              ]
+            }
+          },
+          "cancel"
+        ]
+      }
+    }
+  ],
+  "responses_sent": [
+    {
+      "id": 0,
+      "method": "item/commandExecution/requestApproval",
+      "response": {
+        "decision": "accept"
+      }
+    },
+    {
+      "id": 1,
+      "method": "item/commandExecution/requestApproval",
+      "response": {
+        "decision": "decline"
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "seq": 1,
+      "decision": "accept"
+    },
+    {
+      "seq": 2,
+      "decision": "decline"
+    }
+  ],
+  "notes": [],
+  "initialize": {
+    "id": 1,
+    "result": {
+      "userAgent": "cue-probe/0.151.0 (Windows 10.0.26200; x86_64) Orca/1.4.191 (cue-probe; 0.0.1)",
+      "codexHome": "C:\\Users\\User\\AppData\\Roaming\\orca\\codex-accounts\\94124ce4-bf33-491f-8167-704b05a61092\\home",
+      "platformFamily": "windows",
+      "platformOs": "windows"
+    }
+  },
+  "thread_start": {
+    "id": 2,
+    "result": {
+      "thread": {
+        "id": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "extra": null,
+        "sessionId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "forkedFromId": null,
+        "parentThreadId": null,
+        "preview": "",
+        "ephemeral": false,
+        "section": null,
+        "sectionEnteredAt": null,
+        "projectId": null,
+        "historyMode": "paginated",
+        "modelProvider": "openai",
+        "createdAt": 1788339843,
+        "updatedAt": 1788339843,
+        "recencyAt": 1788339843,
+        "status": {
+          "type": "idle"
+        },
+        "path": "C:\\Users\\User\\AppData\\Roaming\\orca\\codex-accounts\\94124ce4-bf33-491f-8167-704b05a61092\\home\\sessions\\2026\\09\\02\\rollout-2026-09-02T18-04-03-01a0615c-717b-7611-88cc-c2bfb945a758.jsonl",
+        "cwd": "D:\\Temp\\User\\cue-p1-1-ii7yppi7",
+        "cliVersion": "0.151.0",
+        "source": "vscode",
+        "canAcceptDirectInput": true,
+        "threadSource": null,
+        "agentNickname": null,
+        "agentRole": null,
+        "gitInfo": null,
+        "name": null,
+        "turns": []
+      },
+      "model": "gpt-5.6-sol",
+      "modelProvider": "openai",
+      "serviceTier": "default",
+      "cwd": "D:\\Temp\\User\\cue-p1-1-ii7yppi7",
+      "runtimeWorkspaceRoots": [
+        "D:\\Temp\\User\\cue-p1-1-ii7yppi7"
+      ],
+      "instructionSources": [],
+      "approvalPolicy": "untrusted",
+      "approvalsReviewer": "user",
+      "sandbox": {
+        "type": "readOnly",
+        "networkAccess": false
+      },
+      "activePermissionProfile": {
+        "id": ":read-only",
+        "extends": null
+      },
+      "reasoningEffort": "max",
+      "multiAgentMode": "explicitRequestOnly"
+    }
+  },
+  "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+  "turn_ack": {
+    "id": 3,
+    "result": {
+      "turn": {
+        "id": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "items": [],
+        "itemsView": "notLoaded",
+        "status": "inProgress",
+        "error": null,
+        "startedAt": null,
+        "completedAt": null,
+        "durationMs": null
+      }
+    }
+  },
+  "items": [
+    {
+      "method": "turn/started",
+      "params": {
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turn": {
+          "id": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+          "items": [],
+          "itemsView": "notLoaded",
+          "status": "inProgress",
+          "error": null,
+          "startedAt": 1788339844,
+          "completedAt": null,
+          "durationMs": null
+        }
+      },
+      "emittedAtMs": 1788339844304
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "userMessage",
+          "id": "01a0615c-867a-72b3-835b-c363ce003976",
+          "clientId": null,
+          "content": [
+            {
+              "type": "text",
+              "text": "Run exactly two shell commands, one after the other, and nothing else.\n1) `echo cue-probe-first`\n2) `echo cue-probe-second`\nDo not read or write any files. After both attempts, reply with one line stating for each command whether it ran or was rejected.",
+              "text_elements": []
+            }
+          ]
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339848826
+      },
+      "emittedAtMs": 1788339848827
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "userMessage",
+          "id": "01a0615c-867a-72b3-835b-c363ce003976",
+          "clientId": null,
+          "content": [
+            {
+              "type": "text",
+              "text": "Run exactly two shell commands, one after the other, and nothing else.\n1) `echo cue-probe-first`\n2) `echo cue-probe-second`\nDo not read or write any files. After both attempts, reply with one line stating for each command whether it ran or was rejected.",
+              "text_elements": []
+            }
+          ]
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339848826
+      },
+      "emittedAtMs": 1788339848932
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e68aaef087d092346d1d500f0ca5",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339850696
+      },
+      "emittedAtMs": 1788339850696
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e68aaef087d092346d1d500f0ca5",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339852816
+      },
+      "emittedAtMs": 1788339852841
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "commandExecution",
+          "id": "exec-81748864-7b63-42f5-902f-f7e7638216aa",
+          "pluginId": null,
+          "scriptPath": null,
+          "command": "\"C:\\\\Program Files\\\\WindowsApps\\\\Microsoft.PowerShell_7.6.5.0_x64__8wekyb3d8bbwe\\\\pwsh.exe\" -Command 'echo cue-probe-first'",
+          "cwd": "D:\\Temp\\User\\cue-p1-1-ii7yppi7",
+          "processId": null,
+          "source": "agent",
+          "status": "inProgress",
+          "commandActions": [
+            {
+              "type": "unknown",
+              "command": "echo cue-probe-first"
+            }
+          ],
+          "aggregatedOutput": null,
+          "exitCode": null,
+          "durationMs": null
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339855823
+      },
+      "emittedAtMs": 1788339855823
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e6af987887d081d87a9ddc0091a4",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339887606
+      },
+      "emittedAtMs": 1788339887606
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e6af987887d081d87a9ddc0091a4",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339890516
+      },
+      "emittedAtMs": 1788339890540
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e6c13ec087d0bbfc075128bded35",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339905264
+      },
+      "emittedAtMs": 1788339905264
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e6c13ec087d0bbfc075128bded35",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339905944
+      },
+      "emittedAtMs": 1788339905966
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e6cef66c87d0b4fbdd4d83a4c336",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339919025
+      },
+      "emittedAtMs": 1788339919026
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e6cef66c87d0b4fbdd4d83a4c336",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339920506
+      },
+      "emittedAtMs": 1788339920526
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e6f1b67c87d0b8649f6c9b125416",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339953726
+      },
+      "emittedAtMs": 1788339953726
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e6f1b67c87d0b8649f6c9b125416",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339956057
+      },
+      "emittedAtMs": 1788339956075
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e70ee3e487d0aa7a8c897e172aa7",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339982923
+      },
+      "emittedAtMs": 1788339982923
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e70ee3e487d0aa7a8c897e172aa7",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339983505
+      },
+      "emittedAtMs": 1788339983523
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "commandExecution",
+          "id": "exec-93536cab-6ee6-41a5-aa13-0e19ab508527",
+          "pluginId": null,
+          "scriptPath": null,
+          "command": "\"C:\\\\Program Files\\\\WindowsApps\\\\Microsoft.PowerShell_7.6.5.0_x64__8wekyb3d8bbwe\\\\pwsh.exe\" -Command 'echo cue-probe-second'",
+          "cwd": "D:\\Temp\\User\\cue-p1-1-ii7yppi7",
+          "processId": null,
+          "source": "agent",
+          "status": "inProgress",
+          "commandActions": [
+            {
+              "type": "unknown",
+              "command": "echo cue-probe-second"
+            }
+          ],
+          "aggregatedOutput": null,
+          "exitCode": null,
+          "durationMs": null
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339986448
+      },
+      "emittedAtMs": 1788339986448
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "commandExecution",
+          "id": "exec-93536cab-6ee6-41a5-aa13-0e19ab508527",
+          "pluginId": null,
+          "scriptPath": null,
+          "command": "\"C:\\\\Program Files\\\\WindowsApps\\\\Microsoft.PowerShell_7.6.5.0_x64__8wekyb3d8bbwe\\\\pwsh.exe\" -Command 'echo cue-probe-second'",
+          "cwd": "D:\\Temp\\User\\cue-p1-1-ii7yppi7",
+          "processId": null,
+          "source": "agent",
+          "status": "declined",
+          "commandActions": [
+            {
+              "type": "unknown",
+              "command": "echo cue-probe-second"
+            }
+          ],
+          "aggregatedOutput": null,
+          "exitCode": null,
+          "durationMs": null
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339986449
+      },
+      "emittedAtMs": 1788339986449
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e714ac9087d088d14adaa606754c",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339988698
+      },
+      "emittedAtMs": 1788339988698
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "reasoning",
+          "id": "rs_00adcd9b00c92d4e016a97e714ac9087d088d14adaa606754c",
+          "summary": [],
+          "content": []
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339989255
+      },
+      "emittedAtMs": 1788339989281
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_00adcd9b00c92d4e016a97e7153b8c87d0b16af8c312e9d8ad",
+          "text": "",
+          "phase": "final_answer",
+          "memoryCitation": null,
+          "delivery": null
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "startedAtMs": 1788339989299
+      },
+      "emittedAtMs": 1788339989299
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_00adcd9b00c92d4e016a97e7153b8c87d0b16af8c312e9d8ad",
+          "text": "`echo cue-probe-first` — rejected; `echo cue-probe-second` — rejected.",
+          "phase": "final_answer",
+          "memoryCitation": null,
+          "delivery": null
+        },
+        "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+        "turnId": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "completedAtMs": 1788339989885
+      },
+      "emittedAtMs": 1788339989907
+    }
+  ],
+  "turn_completed": {
+    "method": "turn/completed",
+    "params": {
+      "threadId": "01a0615c-717b-7611-88cc-c2bfb945a758",
+      "turn": {
+        "id": "01a0615c-72f0-7a51-bb5e-13c6944e7cd4",
+        "items": [
+          {
+            "type": "agentMessage",
+            "id": "msg_00adcd9b00c92d4e016a97e7153b8c87d0b16af8c312e9d8ad",
+            "text": "`echo cue-probe-first` — rejected; `echo cue-probe-second` — rejected.",
+            "phase": "final_answer",
+            "memoryCitation": null,
+            "delivery": null
+          }
+        ],
+        "itemsView": "summary",
+        "status": "completed",
+        "error": null,
+        "startedAt": 1788339844,
+        "completedAt": 1788339990,
+        "durationMs": 146513
+      }
+    },
+    "emittedAtMs": 1788339990632
+  },
+  "pump_status": "stopped"
+}
