@@ -1,0 +1,22 @@
+{
+  "phase": "P7",
+  "verdict": "PASS",
+  "test_summary": "136 passed, 5 skipped",
+  "test_log": "evidence/P7/p7_test_output.log",
+  "test_log_sha256": "cc1ef0bdb959c0b38de497153f2926d7a7b02039010789e7514a5e5d7b796d24",
+  "items": {
+    "P7-1": {"verdict": "PASS", "evidence": "동일 ResultRecord 변경이 한국어 요약·상세 보고서·HTML 세 출력에 함께 반영되는 테스트 통과."},
+    "P7-2": {"verdict": "PASS", "evidence": "4종 주입 이스케이프와 고정·동결 컴포넌트 허용 목록 밖 노드 거부 테스트 통과."},
+    "P7-3": {"verdict": "PASS", "evidence": "4종 비밀 스캔, 5단계 순서, 무승인 차단, 스캐너 오류 fail-closed 테스트 통과."},
+    "P7-4": {"verdict": "PASS", "evidence": "공유 HTML에 주석 컨트롤·스크립트가 없고 대상 origin 오버레이 경로가 없음을 검사."},
+    "P7-5": {"verdict": "PASS", "evidence": "이미지와 한국어 텍스트가 work·explain 각각 태스크로 변환되는 테스트 통과."},
+    "P7-6": {"verdict": "PASS", "evidence": "주입 fake로 screenshot·snapshot·tab current를 단일 capture id로 결합하고 부분 실패를 거부."},
+    "P7-7": {"verdict": "PASS", "evidence": "page id 필수·URL 라벨 전용·선택자 없는 스크린샷 레코드 유효성 테스트 통과."},
+    "P7-8": {"verdict": "PASS", "evidence": "차단 중 local storage 백업 후 재연결 원장 flush 및 저장용 eval 부재 테스트 통과."},
+    "P7-9": {"verdict": "SKIPPED", "evidence": "v0.2 범위이므로 지시대로 구현·검사하지 않음."},
+    "P7-10": {"verdict": "PASS", "evidence": "surface 필수와 work/explain 배타적 신원 유니온의 런타임·타입 검사 통과."},
+    "P7-11": {"verdict": "PASS", "evidence": "explain 코드 변경 요청이 동일한 주입 봉투 판정을 호출하며 거부 결과를 유지."},
+    "P7-12": {"verdict": "PASS", "evidence": "재생성 뒤 구 주석 버전 고정, 불변 주석 테이블, 직접 HTML 편집 경로 부재 검사 통과."},
+    "P7-live": {"verdict": "SKIPPED", "evidence": "실제 Orca 캡처·artifacts share는 외부 상태 금지에 따라 실행하지 않음."}
+  }
+}
