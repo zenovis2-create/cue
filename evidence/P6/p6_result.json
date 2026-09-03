@@ -1,0 +1,33 @@
+{
+  "phase": "P6",
+  "generated_at": "2026-09-03T10:05:17+09:00",
+  "command": "npm test",
+  "summary": {
+    "test_files_passed": 8,
+    "tests_passed": 112,
+    "tests_skipped": 4,
+    "exit_code": 0,
+    "log_sha256": "97d3008fa040f7cea8f6576983dbc5cba2fef08912944914dba287035d6a8376"
+  },
+  "items": {
+    "P6-1": {"verdict":"PASS","evidence":"missing identity returns identity_unconfigured and relay send attempts remain 0"},
+    "P6-2": {"verdict":"PASS","evidence":"exact two-tool allowlist; codex/orca/file_edit/shell denied; frontdoor source has no launch primitive; mismatched ledger envelope is rejected"},
+    "P6-3": {"verdict":"PARTIAL","evidence":"daemon-owned adapter delivers after FrontdoorSession.close without a session handle; real Buzz delivery is not run because it would mutate external state"},
+    "P6-4": {"verdict":"PASS","evidence":"conversation_route trigger rejects update and delivery uses the approval-pinned channel_id/thread_root"},
+    "P6-5": {"verdict":"PASS","evidence":"concurrent channel operations complete a:start,a:end,b:start,b:end with channel-specific results"},
+    "P6-6": {"verdict":"PASS","evidence":"exact four-line Korean output assertion and configuration-markup/UI source scan pass"},
+    "P6-7": {"verdict":"PASS","evidence":"only changesEnvelope candidates are returned, capped at three; uncertainty is moved to excluded scope"},
+    "P6-8": {"verdict":"PASS","evidence":"fake timer advances 24 hours with zero sends; no periodic-send source path"},
+    "P6-9": {"verdict":"PASS","evidence":"Orca false returns the named dead component and task remains awaiting_approval"},
+    "P6-10": {"verdict":"PASS","evidence":"canvas is not used and conversation surface has no canvas or annotation writer path"},
+    "P6-11": {"verdict":"PASS","evidence":"omitted choice records level 3; explicit level 2 records level 2 in run_autonomy"}
+  },
+  "external_live_canary": {
+    "verdict": "SKIPPED",
+    "reason": "@cue registration and real Buzz relay/channel delivery would mutate an external system"
+  },
+  "safety_answers": {
+    "frontdoor_can_edit_or_spawn_worker": false,
+    "yaml_exposed_to_user": false
+  }
+}
