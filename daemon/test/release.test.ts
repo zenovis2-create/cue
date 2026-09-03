@@ -40,11 +40,17 @@ function seed(dbPath:string, worktree:string, id:string, level?:1|3) {
 }
 
 describe.sequential('v0.1 release gates',()=>{
-  it('R-1 preserves original P1 evidence and does not manufacture the missing P1-3 record',()=>{
-    const required=['../evidence/P1/P1_1_VERDICT.md','../evidence/P1/p1_1_ledger.log','../evidence/P1/P1_2_VERDICT.md','../evidence/P1/p1_2_ledger.log'];
+  it('R-1 preserves original P1 evidence and now carries a re-run P1-3 record',()=>{
+    const required=['../evidence/P1/P1_1_VERDICT.md','../evidence/P1/p1_1_ledger.log','../evidence/P1/P1_2_VERDICT.md','../evidence/P1/p1_2_ledger.log','../evidence/P1/P1_3_RERUN_VERDICT.md','../evidence/P1/p1_3_rerun_result.json','../evidence/P1/p1_3_rerun_console.log'];
     expect(required.every(path=>existsSync(resolve(path)))).toBe(true);
-    expect(sourceFiles(resolve('../evidence/P1')).some(path=>/(?:^|\n)\s*(?:#\s*)?P1-3\s*(?:=|판정)/u.test(readFileSync(path,'utf8')))).toBe(false);
-    console.info('R-1 FAIL: P1-1/P1-2 원문은 있으나 P1-3 판정 원문 기록이 없음');
+    const rerun=JSON.parse(readFileSync(resolve('../evidence/P1/p1_3_rerun_result.json'),'utf8')) as {verdict:string;outside_write_succeeded:boolean;network_succeeded:boolean;evidence:{actual_vendor_process:boolean;appcontainer_used:boolean;appserver_pid:number}};
+    // The P1-3 record must be an observation, not a transcription: a real vendor process, without the P3C enforcement layer.
+    expect(rerun.evidence.actual_vendor_process).toBe(true);
+    expect(rerun.evidence.appcontainer_used).toBe(false);
+    expect(rerun.evidence.appserver_pid).toBeGreaterThan(0);
+    // The verdict must follow the observations rather than a pre-decided answer.
+    expect(rerun.verdict).toBe(rerun.outside_write_succeeded||rerun.network_succeeded?'FAIL':'PASS');
+    console.info(`R-1 PASS: P1-3 재실행 기록 존재 verdict=${rerun.verdict} outside_write=${rerun.outside_write_succeeded} network=${rerun.network_succeeded} appcontainer_used=${rerun.evidence.appcontainer_used}`);
   });
 
   it('R-2 scans all src and proves a disposable forbidden string makes the scanner fail',()=>{
