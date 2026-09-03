@@ -25,3 +25,9 @@ export function interview(candidates: readonly InterviewCandidate[]): readonly s
 export function narrowUncertainty(copy: ApprovalCopy, uncertainArea: string): ApprovalCopy {
   return Object.freeze({...copy, excluded: `${copy.excluded}; 불확실: ${uncertainArea}`});
 }
+
+export interface PreferenceRequest { readonly text: string; readonly effect: 'presentation_only'|'skip_confirmation'|'expand_scope' }
+export function assessPreference(request: PreferenceRequest): { allowed: boolean; requiresApproval: boolean; reason: string } {
+  if (request.effect !== 'presentation_only') return {allowed:false,requiresApproval:true,reason:'effect_would_expand_authority'};
+  return {allowed:true,requiresApproval:false,reason:'presentation_only'};
+}

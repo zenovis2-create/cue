@@ -20,6 +20,7 @@ Phase 5는 **작업이 막혔는지 판단하고, 안전하게 다시 시도**�
 ### P5-1 결정론적 신호 수집기
 - 신호원: `gate-list`, exit code, terminal wait, `worker-read`, `task-list`.
 - 각 신호를 **`conclusive`(결론) / `candidate`(후보)** 로 태깅한다.
+- 출처 등급 규칙: 결정적 시스템 관측(`gate-list`, `exit-code`, `task-list`)만 `confirmed`로 취급하며, 모델/화면 해석(`terminal-wait`, `worker-read`)은 `candidate`다. `candidate`는 단독으로 사실 확정이나 상태 전이를 일으킬 수 없고, 둘 이상의 독립 후보가 모여도 진단 입력일 뿐 `confirmed`로 승격되지 않는다.
 - 검사: 각 신호가 올바른 등급으로 태깅된다.
 - exit code와 gate 상태는 결론이 될 수 있다. **`worker-read` 텍스트 추론은 후보다**
   (전제 2 — 잘려나간 로그로 결론을 내면 거짓말이 된다).

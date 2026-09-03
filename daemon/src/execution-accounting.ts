@@ -2,6 +2,13 @@ import type { Ledger } from './ledger.js';
 
 export interface ExecutionIdentity { run_id: string; thread_id: string; item_id: string | null; approval_id: string | null; execution_id: string; execution_ordinal: number }
 
+export function hasAcceptedApproval(db: Ledger, event: Pick<ExecutionIdentity,'run_id'|'thread_id'|'item_id'|'approval_id'>): boolean {
+  const row = db.prepare(`SELECT 1 AS authorized FROM approval_event
+    WHERE run_id=? AND thread_id=? AND item_id IS ? AND approval_id IS ? AND decision='accept' LIMIT 1`)
+    .get(event.run_id,event.thread_id,event.item_id,event.approval_id) as {authorized:1}|undefined;
+  return row?.authorized === 1;
+}
+
 export function recordExecution(db: Ledger, event: ExecutionIdentity, now = new Date()): void {
   db.prepare('INSERT INTO execution_event(run_id,thread_id,item_id,approval_id,execution_id,execution_ordinal,created_at) VALUES(?,?,?,?,?,?,?)')
     .run(event.run_id,event.thread_id,event.item_id,event.approval_id,event.execution_id,event.execution_ordinal,now.toISOString());

@@ -131,4 +131,10 @@ export class RecoveryCoordinator {
     tx();
     restart();
   }
+
+  recordRecoveryArtifacts(taskId: string, certain: readonly [string,string][], borderline: readonly [string,string][], writeBorderline: (write: () => void) => void = write => write(), now = new Date()): void {
+    const insert = this.db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)');
+    this.db.transaction(() => { for (const [kind,content] of certain) insert.run(taskId,this.runId,kind,content,now.toISOString()); })();
+    writeBorderline(() => { this.db.transaction(() => { for (const [kind,content] of borderline) insert.run(taskId,this.runId,kind,content,now.toISOString()); })(); });
+  }
 }

@@ -17,7 +17,10 @@ export function parseRoutingYaml(text: string): Rule[] {
 
 export function routeTask(path: string, task: string): RouteDecision {
   try {
-    for (const rule of parseRoutingYaml(readFileSync(path, 'utf8'))) if (new RegExp(rule.match, 'iu').test(task)) return { state: 'dispatch', tool: rule.tool };
+    const matches = parseRoutingYaml(readFileSync(path, 'utf8')).filter(rule => new RegExp(rule.match, 'iu').test(task));
+    if (matches.length === 0) return { state: 'ask_me' };
+    const tools = [...new Set(matches.map(rule => rule.tool))];
+    if (tools.length !== 1) return { state: 'ask_me' };
+    return { state: 'dispatch', tool: tools[0] };
   } catch { return { state: 'ask_me' }; }
-  return { state: 'ask_me' };
 }
