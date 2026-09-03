@@ -11,5 +11,6 @@ export function openLedger(filename = ':memory:'): Ledger {
   const migration = join(here, '..', 'migrations', '001_init.sql');
   const initialized = db.prepare("SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name='task'").get() as { n: number };
   if (!initialized.n) db.exec(readFileSync(migration, 'utf8'));
+  db.exec(readFileSync(join(here, '..', 'migrations', '002_p5.sql'), 'utf8'));
   return db;
 }

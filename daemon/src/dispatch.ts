@@ -5,12 +5,17 @@ import { closeTask } from './task-close.js';
 import { listOrphanSessions, } from './orphan-sessions.js';
 import type { SessionRecord } from './session-spawn.js';
 import { spawnVendorCodexInAppContainer } from './codex-session.js';
+import { classifyIdle, collectSignals, diagnoseCandidates, type IdleObservation, type SignalSource, type WatchSignal } from './watcher.js';
 
 export interface DispatchRequest { routingPath:string; description:string; taskId:string; runId:string; worktree:string; readOnly:boolean; binary?:string; codexHome?:string; args?:readonly string[] }
 
 export class Dispatcher {
   private readonly queued = new Map<string,{tool:string;request:DispatchRequest}>();
   constructor(private readonly db:Ledger, private readonly leases:WorkspaceLeases) {}
+  inspectWorker(observations:Partial<Record<SignalSource,unknown>>, idle:IdleObservation, diagnose:(signals:readonly WatchSignal[])=>unknown):{state:'blocked/idle'|'observing';diagnosis:unknown|undefined;signals:WatchSignal[]} {
+    const signals=collectSignals(observations);
+    return {state:classifyIdle(idle),diagnosis:diagnoseCandidates(signals,diagnose),signals};
+  }
   private spawnTool(tool:string, request:DispatchRequest): void {
     if (tool !== 'codex') throw new Error(`unsupported tool: ${tool}`);
     const binary=request.binary ?? process.env.CUE_VENDOR_CODEX, codexHome=request.codexHome ?? process.env.CODEX_HOME;
