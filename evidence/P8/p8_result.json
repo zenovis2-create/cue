@@ -1,0 +1,16 @@
+{
+  "phase": "P8",
+  "verdict": "PASS",
+  "test_summary": "151 passed, 5 skipped",
+  "test_log_sha256": "3ffdad16ee824c9e2ca82e4d515d6c378db8f53c0c5eb77a2327b2adecc0fe97",
+  "items": {
+    "P8-1": { "verdict": "PASS", "evidence": "querySelector로 대화와 현재 작업 컨테이너의 실제 DOM 존재를 확인했다." },
+    "P8-2": { "verdict": "PASS", "evidence": "캡처 전후 오른쪽 rail 객체가 toBe로 동일하고 왼쪽만 주석 캔버스로 교체됐다." },
+    "P8-3": { "verdict": "PASS", "evidence": "전환 전후 진행/단계 textContent가 같고 중단 버튼 click이 핸들러를 1회 호출했다." },
+    "P8-4": { "verdict": "PASS", "evidence": "유휴/작업 중/막힘/완료 리터럴과 전체 원장 상태 매핑 및 미지 상태 예외를 단정했다." },
+    "P8-5": { "verdict": "PASS", "evidence": "task_id 조회는 성공하고 session handle을 task id로 사용한 조회는 드러나게 실패했다." },
+    "P8-6": { "verdict": "PASS", "evidence": "원장 고아 0건이면 배지 DOM이 없고 2건이면 고아 2건 textContent가 표시됐다." },
+    "P8-7": { "verdict": "PASS", "evidence": "완료/막힘 모두 원장 집계로 정확한 승인/거부 문구를 렌더하고 자세히 click 후 상세 DOM이 열렸다." },
+    "P8-8": { "verdict": "PASS", "evidence": "원장 자율성 3과 recovery_attempt_v2 3행이 자율성: ③ · 자동 복구 3회로 일치했다." }
+  }
+}
