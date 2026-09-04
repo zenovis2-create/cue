@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cue</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header><span class="mark">C</span><strong>Cue</strong></header>
+  <main>
+    <section>
+      <h1>목표</h1>
+      <form id="goal-form">
+        <textarea id="goal" placeholder="자연어로 목표를 입력하세요…" required></textarea>
+        <button type="submit" class="secondary">범위 만들기</button>
+      </form>
+      <dl class="lines">
+        <div><dt>무엇을</dt><dd id="what">—</dd></div>
+        <div><dt>어디까지</dt><dd id="extent">—</dd></div>
+        <div><dt>안 건드릴 것</dt><dd id="excluded">—</dd></div>
+      </dl>
+    </section>
+    <section>
+      <h1>실행 봉투</h1>
+      <div id="envelope" class="envelope">목표를 입력하면 변경 불가능한 실행 범위를 제시합니다.</div>
+      <fieldset>
+        <legend>자율성</legend>
+        <label><input type="radio" name="autonomy" value="1"> ①</label>
+        <label><input type="radio" name="autonomy" value="2"> ②</label>
+        <label><input type="radio" name="autonomy" value="3" checked> ③</label>
+      </fieldset>
+      <button id="approve" disabled>승인하고 시작</button>
+    </section>
+    <section aria-live="polite">
+      <h1>상태</h1>
+      <div id="quiet" class="quiet">정상 진행 중에는 조용히 작업합니다.</div>
+      <article id="result" hidden>
+        <h2>완료</h2>
+        <p id="approval-summary"></p>
+        <p id="autonomy-summary"></p>
+      </article>
+    </section>
+  </main>
+  <script src="renderer.js"></script>
+</body>
+</html>

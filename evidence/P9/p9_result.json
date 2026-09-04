@@ -1,0 +1,20 @@
+{
+  "phase": "P9",
+  "test_summary": "174 passed, 5 skipped; baseline 165 passed, 5 skipped preserved",
+  "test_log_sha256": "12f80a0619b8379d5587de3e174e37c6d66c6d81f8c3e1cd5a07c2512d161470",
+  "preserved_partials": ["P3-16", "P4-2", "P6-3"],
+  "items": {
+    "P9-1": { "verdict": "PASS", "evidence": "Root npm start is electron . and app/main.mjs created a real BrowserWindow." },
+    "P9-2": { "verdict": "PASS", "evidence": "Source assertion passed for contextIsolation true, nodeIntegration false, sandbox true; renderer direct Node scan found zero paths." },
+    "P9-3": { "verdict": "PASS", "evidence": "Frozen four-channel IPC allowlist rejects unknown names and execute throws approval required before a ledger acceptance." },
+    "P9-4": { "verdict": "PASS", "evidence": "First launch creates config and ledger paths; second launch reused byte-equivalent settings with no credential fields." },
+    "P9-5": { "verdict": "PASS", "evidence": "Owned daemon closes with the app; crash remains blocked/crash without restart; live PID 97152 was absent after quit." },
+    "P9-6": { "verdict": "PASS", "evidence": "Renderer shows the three Korean scope lines and immutable envelope; execution requires and records an accepted approval row." },
+    "P9-7": { "verdict": "PASS", "evidence": "Default autonomy ③ and chosen level are ledgered; serialized envelope is unchanged by autonomy." },
+    "P9-8": { "verdict": "PASS", "evidence": "Normal-progress notification source scan found zero emission paths; renderer reports only terminal state." },
+    "P9-9": { "verdict": "PASS", "evidence": "Electron PID 97152 created a real window and completed cue-p9-live.txt through renderer IPC with adapter mode none." },
+    "P9-10": { "verdict": "PASS", "evidence": "Live card showed 1 accepted, 0 declined, autonomy ③, 0 recoveries from readTaskCard ledger queries." },
+    "P9-11": { "verdict": "PASS", "evidence": "App core static scan has no Buzz symbol/import and live run completed with adapter mode none." },
+    "P9-12": { "verdict": "PASS", "evidence": "Full npm test: 174 passed and 5 skipped, preserving all 165 baseline passes and 5 skips." }
+  }
+}

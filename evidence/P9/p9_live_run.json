@@ -1,0 +1,10 @@
+{
+  "pid": 97152,
+  "windowCreated": true,
+  "adapterMode": "none",
+  "task": "worktree 안 cue-p9-live.txt 생성 후 원장 완료 검증",
+  "taskId": "8967b725-077e-448a-8263-0e9189819e24",
+  "state": "completed",
+  "approvalSummary": "자동 승인 1건 · 거부 0건",
+  "autonomySummary": "자율성: ③ · 자동 복구 0회"
+}

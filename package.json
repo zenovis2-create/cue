@@ -1,0 +1,20 @@
+{
+  "name": "cue-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "app/main.mjs",
+  "scripts": {
+    "prestart": "npm --prefix daemon run build",
+    "start": "electron .",
+    "test": "npm --prefix daemon test",
+    "live:p9": "npm --prefix daemon run build && cross-env CUE_LIVE_RUN=1 electron ."
+  },
+  "devDependencies": {
+    "cross-env": "^10.0.0",
+    "electron": "^37.4.0"
+  },
+  "allowScripts": {
+    "electron@37.10.3": true
+  }
+}
