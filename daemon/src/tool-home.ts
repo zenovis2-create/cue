@@ -15,5 +15,9 @@ export function assertVendorBinary(path: string): string {
   return path;
 }
 export function vendorCodexLaunchSpec(path: string, args: readonly string[], codexHome: string): { command: string; args: string[]; env: NodeJS.ProcessEnv } {
-  return { command: assertVendorBinary(path), args: [...args], env: { ...process.env, CODEX_HOME: codexHome } };
+  const allowed = ['PATH','Path','PATHEXT','SYSTEMROOT','SystemRoot','WINDIR','TEMP','TMP','LOCALAPPDATA','APPDATA','PROGRAMDATA','ProgramFiles','ProgramFiles(x86)','COMSPEC'];
+  const env: NodeJS.ProcessEnv = {};
+  for (const key of allowed) if (process.env[key] !== undefined) env[key] = process.env[key];
+  env.CODEX_HOME = codexHome;
+  return { command: assertVendorBinary(path), args: [...args], env };
 }

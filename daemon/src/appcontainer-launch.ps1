@@ -63,6 +63,7 @@ $profile = 'Cue.Worker.' + [Guid]::NewGuid().ToString('N')
 $sid = [IntPtr]::Zero
 $sidText = $null
 $aceAdded = $false
+$grantedPaths = @()
 try {
   $hr = [CueAppContainer]::CreateAppContainerProfile($profile, 'Cue worker', 'Ephemeral Cue worker boundary', [IntPtr]::Zero, 0, [ref]$sid)
   if ($hr -ne 0) { throw "CreateAppContainerProfile failed: 0x$('{0:X8}' -f $hr)" }
@@ -71,11 +72,18 @@ try {
   & icacls.exe $payload.cwd /grant "*$sidText`:(OI)(CI)M" /Q | Out-Null
   if ($LASTEXITCODE -ne 0) { throw "icacls grant failed: $LASTEXITCODE" }
   $aceAdded = $true
+  foreach ($grantPath in @($payload.grantPaths)) {
+    if (-not $grantPath) { continue }
+    & icacls.exe $grantPath /grant "*$sidText`:(OI)(CI)M" /Q | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "icacls grant failed for extra path: $LASTEXITCODE" }
+    $grantedPaths += $grantPath
+  }
   $exitCode = [CueAppContainer]::Launch($payload.executable, $payload.commandLine, $payload.cwd, $sid)
   Write-Output "CUE_APPCONTAINER_EXIT=$exitCode"
   exit $exitCode
 } finally {
   if ($aceAdded -and $sidText) { & icacls.exe $payload.cwd /remove:g "*$sidText" /Q | Out-Null }
+  foreach ($grantPath in $grantedPaths) { & icacls.exe $grantPath /remove:g "*$sidText" /Q | Out-Null }
   if ($sid -ne [IntPtr]::Zero) { [CueAppContainer]::LocalFree($sid) | Out-Null }
   [CueAppContainer]::DeleteAppContainerProfile($profile) | Out-Null
 }

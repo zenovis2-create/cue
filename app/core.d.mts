@@ -11,15 +11,18 @@ export class AppDaemon {
   readonly db: any;
   readonly status: string;
   crash(reason?: string): void;
+  stop(runId: string, reason?: string): boolean;
   close(): void;
 }
 export interface CueCore {
   prepareGoal(goal: string, autonomy?: 1 | 2 | 3): PreparedGoal;
   approve(runId: string): Readonly<{ approved: true; runId: string }>;
   execute(runId: string): any;
+  stop(runId: string): boolean;
   completion(taskId: string): any;
   readonly daemon: AppDaemon;
   close(): void;
 }
 export function initializeConfig(userDataPath: string, defaults?: Partial<Pick<CueConfig, 'ledgerPath' | 'worktreeRoot'>>): CueConfig;
-export function createCueCore(config: CueConfig, daemon?: AppDaemon): CueCore;
+export interface CueRuntime { readonly binary?: string; readonly codexHome?: string; readonly extraArgs?: readonly string[]; readonly prompt?: (run: any) => string }
+export function createCueCore(config: CueConfig, daemon?: AppDaemon, runtime?: CueRuntime): CueCore;

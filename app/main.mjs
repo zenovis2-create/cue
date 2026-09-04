@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { join, resolve } from 'node:path';
-import { writeFileSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { createCueCore, initializeConfig } from './core.mjs';
 import { registerIpcHandlers } from './ipc.mjs';
@@ -42,18 +42,18 @@ async function runLiveCanary() {
   mainWindow.webContents.debugger.attach('1.3');
   const capture = await mainWindow.webContents.debugger.sendCommand('Page.captureScreenshot', { format: 'png' });
   mainWindow.webContents.debugger.detach();
-  writeFileSync(resolve('evidence/P9/p9_live_window.png'), Buffer.from(capture.data, 'base64'));
+  await writeFile(resolve('evidence/P9/p9_live_window.png'), Buffer.from(capture.data, 'base64'));
   const record = {
     pid: process.pid,
     windowCreated: Boolean(mainWindow && !mainWindow.isDestroyed()),
     adapterMode: process.env.CUE_ADAPTER_MODE || 'none',
-    task: 'worktree 안 cue-p9-live.txt 생성 후 원장 완료 검증',
+    task: 'worktree 안 목표별 산출물 생성 후 원장 완료 검증',
     taskId: latest.id,
     state: latest.state,
     approvalSummary: rendered.approvalSummary,
     autonomySummary: rendered.autonomySummary,
   };
-  writeFileSync(resolve('evidence/P9/p9_live_run.json'), `${JSON.stringify(record, null, 2)}\n`);
+  await writeFile(resolve('evidence/P9/p9_live_run.json'), `${JSON.stringify(record, null, 2)}\n`);
   app.quit();
 }
 
