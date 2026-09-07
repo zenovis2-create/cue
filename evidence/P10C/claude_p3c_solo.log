@@ -1,0 +1,10 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p3c.test.ts
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  22:15:07
+   Duration  6.86s (transform 68ms, setup 0ms, import 194ms, tests 6.46s, environment 0ms)

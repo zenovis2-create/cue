@@ -5,6 +5,9 @@ copyFileSync(new URL('../migrations/002_p5.sql', import.meta.url), new URL('../d
 copyFileSync(new URL('../migrations/003_p6.sql', import.meta.url), new URL('../dist/migrations/003_p6.sql', import.meta.url));
 copyFileSync(new URL('../migrations/004_p7.sql', import.meta.url), new URL('../dist/migrations/004_p7.sql', import.meta.url));
 copyFileSync(new URL('../migrations/005_p8.sql', import.meta.url), new URL('../dist/migrations/005_p8.sql', import.meta.url));
+copyFileSync(new URL('../migrations/006_p10c.sql', import.meta.url), new URL('../dist/migrations/006_p10c.sql', import.meta.url));
+copyFileSync(new URL('../migrations/007_workspace_write_lease.sql', import.meta.url), new URL('../dist/migrations/007_workspace_write_lease.sql', import.meta.url));
 mkdirSync(new URL('../dist/src/', import.meta.url), { recursive: true });
 copyFileSync(new URL('../src/network-guard.cjs', import.meta.url), new URL('../dist/src/network-guard.cjs', import.meta.url));
 copyFileSync(new URL('../src/appcontainer-launch.ps1', import.meta.url), new URL('../dist/src/appcontainer-launch.ps1', import.meta.url));
+copyFileSync(new URL('../src/job-object-launch.ps1', import.meta.url), new URL('../dist/src/job-object-launch.ps1', import.meta.url));

@@ -1,0 +1,333 @@
+{
+  "firstRunCancel": {
+    "command": "npm.cmd start",
+    "pid": 60792,
+    "exitCode": 1,
+    "configWritten": false,
+    "fallbackFolderCreated": false,
+    "userData": "D:\\Temp\\User\\cue-p11-electron-cancel-1788750225711\\state",
+    "workspace": "D:\\Temp\\User\\cue-p11-electron-cancel-1788750225711\\workspace",
+    "passed": true
+  },
+  "screenshot": "evidence/P11/p11_electron_window.png",
+  "passed": true,
+  "sources": [
+    "https://releases.electronjs.org/release/v44.2.0",
+    "https://github.com/electron/electron/security/advisories/GHSA-h7rp-cf8h-j98x",
+    "https://github.com/advisories/GHSA-jmr9-qjv8-65gv"
+  ],
+  "oldVersion": "37.10.3",
+  "advisories": [
+    {
+      "url": "https://github.com/advisories/GHSA-5rqw-r77c-jp79",
+      "severity": "moderate",
+      "id": "GHSA-5rqw-r77c-jp79"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-xj5x-m3f3-5x3h",
+      "severity": "moderate",
+      "id": "GHSA-xj5x-m3f3-5x3h"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-r5p7-gp4j-qhrx",
+      "severity": "moderate",
+      "id": "GHSA-r5p7-gp4j-qhrx"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-3c8v-cfp5-9885",
+      "severity": "moderate",
+      "id": "GHSA-3c8v-cfp5-9885"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-xwr5-m59h-vwqr",
+      "severity": "moderate",
+      "id": "GHSA-xwr5-m59h-vwqr"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-532v-xpq5-8h95",
+      "severity": "high",
+      "id": "GHSA-532v-xpq5-8h95"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-mwmh-mq4g-g6gr",
+      "severity": "moderate",
+      "id": "GHSA-mwmh-mq4g-g6gr"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-9w97-2464-8783",
+      "severity": "moderate",
+      "id": "GHSA-9w97-2464-8783"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-8337-3p73-46f4",
+      "severity": "high",
+      "id": "GHSA-8337-3p73-46f4"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-jjp3-mq3x-295m",
+      "severity": "high",
+      "id": "GHSA-jjp3-mq3x-295m"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-jfqx-fxh3-c62j",
+      "severity": "low",
+      "id": "GHSA-jfqx-fxh3-c62j"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-4p4r-m79c-wq3v",
+      "severity": "moderate",
+      "id": "GHSA-4p4r-m79c-wq3v"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-9899-m83m-qhpj",
+      "severity": "low",
+      "id": "GHSA-9899-m83m-qhpj"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-8x5q-pvf5-64mp",
+      "severity": "low",
+      "id": "GHSA-8x5q-pvf5-64mp"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-f37v-82c4-4x64",
+      "severity": "low",
+      "id": "GHSA-f37v-82c4-4x64"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-f3pv-wv63-48x8",
+      "severity": "moderate",
+      "id": "GHSA-f3pv-wv63-48x8"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-9wfr-w7mm-pc7f",
+      "severity": "high",
+      "id": "GHSA-9wfr-w7mm-pc7f"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-jm7p-cc5g-qwxx",
+      "severity": "moderate",
+      "id": "GHSA-jm7p-cc5g-qwxx"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-v3j7-r9gq-3gjw",
+      "severity": "high",
+      "id": "GHSA-v3j7-r9gq-3gjw"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-m55f-7gqj-fr98",
+      "severity": "moderate",
+      "id": "GHSA-m55f-7gqj-fr98"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-5c9j-mhmv-5xgx",
+      "severity": "moderate",
+      "id": "GHSA-5c9j-mhmv-5xgx"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-h7rp-cf8h-j98x",
+      "severity": "high",
+      "id": "GHSA-h7rp-cf8h-j98x"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-x8rc-wpg4-grpf",
+      "severity": "low",
+      "id": "GHSA-x8rc-wpg4-grpf"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-9pf5-hg6p-4pwp",
+      "severity": "moderate",
+      "id": "GHSA-9pf5-hg6p-4pwp"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-pfmc-3mgc-p6fp",
+      "severity": "low",
+      "id": "GHSA-pfmc-3mgc-p6fp"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-v64r-4m7r-3mvq",
+      "severity": "moderate",
+      "id": "GHSA-v64r-4m7r-3mvq"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-v93f-fgjr-hjrj",
+      "severity": "moderate",
+      "id": "GHSA-v93f-fgjr-hjrj"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-9f4c-93c8-jc8g",
+      "severity": "high",
+      "id": "GHSA-9f4c-93c8-jc8g"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-p2rr-rvmm-c5fp",
+      "severity": "moderate",
+      "id": "GHSA-p2rr-rvmm-c5fp"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-f2r8-jv7c-xqmp",
+      "severity": "moderate",
+      "id": "GHSA-f2r8-jv7c-xqmp"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-ff2p-hmqr-hxm4",
+      "severity": "moderate",
+      "id": "GHSA-ff2p-hmqr-hxm4"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-4f78-qhmw-8j8m",
+      "severity": "moderate",
+      "id": "GHSA-4f78-qhmw-8j8m"
+    },
+    {
+      "url": "https://github.com/advisories/GHSA-jmr9-qjv8-65gv",
+      "severity": "high",
+      "id": "GHSA-jmr9-qjv8-65gv"
+    }
+  ],
+  "advisoryIds": [
+    "GHSA-5rqw-r77c-jp79",
+    "GHSA-xj5x-m3f3-5x3h",
+    "GHSA-r5p7-gp4j-qhrx",
+    "GHSA-3c8v-cfp5-9885",
+    "GHSA-xwr5-m59h-vwqr",
+    "GHSA-532v-xpq5-8h95",
+    "GHSA-mwmh-mq4g-g6gr",
+    "GHSA-9w97-2464-8783",
+    "GHSA-8337-3p73-46f4",
+    "GHSA-jjp3-mq3x-295m",
+    "GHSA-jfqx-fxh3-c62j",
+    "GHSA-4p4r-m79c-wq3v",
+    "GHSA-9899-m83m-qhpj",
+    "GHSA-8x5q-pvf5-64mp",
+    "GHSA-f37v-82c4-4x64",
+    "GHSA-f3pv-wv63-48x8",
+    "GHSA-9wfr-w7mm-pc7f",
+    "GHSA-jm7p-cc5g-qwxx",
+    "GHSA-v3j7-r9gq-3gjw",
+    "GHSA-m55f-7gqj-fr98",
+    "GHSA-5c9j-mhmv-5xgx",
+    "GHSA-h7rp-cf8h-j98x",
+    "GHSA-x8rc-wpg4-grpf",
+    "GHSA-9pf5-hg6p-4pwp",
+    "GHSA-pfmc-3mgc-p6fp",
+    "GHSA-v64r-4m7r-3mvq",
+    "GHSA-v93f-fgjr-hjrj",
+    "GHSA-9f4c-93c8-jc8g",
+    "GHSA-p2rr-rvmm-c5fp",
+    "GHSA-f2r8-jv7c-xqmp",
+    "GHSA-ff2p-hmqr-hxm4",
+    "GHSA-4f78-qhmw-8j8m",
+    "GHSA-jmr9-qjv8-65gv"
+  ],
+  "runtime": {
+    "electronVersion": "44.2.0",
+    "pid": 73876,
+    "visible": true,
+    "windowCount": 1,
+    "prefs": {
+      "contextIsolation": true,
+      "nodeIntegration": false,
+      "sandbox": true
+    },
+    "renderer": {
+      "title": "Cue",
+      "readyState": "complete",
+      "api": [
+        "approve",
+        "execute",
+        "prepare",
+        "stop"
+      ],
+      "types": [
+        "function",
+        "function",
+        "function",
+        "function"
+      ],
+      "csp": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'",
+      "requireType": "undefined",
+      "processType": "undefined"
+    },
+    "navigation": {
+      "event": {
+        "url": "https://example.invalid/p11-navigation",
+        "prevented": true
+      },
+      "originalUrl": "file:///C:/Users/User/cue/app/renderer/index.html",
+      "finalUrl": "file:///C:/Users/User/cue/app/renderer/index.html"
+    },
+    "popupNull": true,
+    "exitCode": 0,
+    "passed": true
+  },
+  "surfaceCorrection": "Starting source exposed five functions. Removed fifth status API and channel; read-only polling uses execute status operation while normal execution retains core approval checks. Existing state/error assertions retained.",
+  "schema": "cue.p11.electron.v1",
+  "oldVersionSource": "original staged package-lock.json before round commit",
+  "focusedTests": {
+    "exitCode": 0,
+    "testsFailed": 0,
+    "filesPassed": 4,
+    "testsPassed": 19
+  },
+  "auditBefore": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 2,
+    "critical": 0,
+    "total": 2
+  },
+  "newVersion": "44.2.0",
+  "auditAfter": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "cancelMethod": "Observed real workspace dialog; Win32 WM_CLOSE cancelled it, then observed workspace selection cancelled error and dismissed error; npm exited 1. Orca synthetic click had no effect and focus requests failed, recorded separately.",
+  "window": {
+    "electronVersion": "44.2.0",
+    "pid": 83464,
+    "visible": true,
+    "windowCount": 1,
+    "prefs": {
+      "contextIsolation": true,
+      "nodeIntegration": false,
+      "sandbox": true
+    },
+    "renderer": {
+      "title": "Cue",
+      "readyState": "complete",
+      "api": [
+        "approve",
+        "execute",
+        "prepare",
+        "stop"
+      ],
+      "types": [
+        "function",
+        "function",
+        "function",
+        "function"
+      ],
+      "csp": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'",
+      "requireType": "undefined",
+      "processType": "undefined"
+    },
+    "navigation": {
+      "event": {
+        "url": "https://example.invalid/p11-navigation",
+        "prevented": true
+      },
+      "originalUrl": "file:///C:/Users/User/cue/app/renderer/index.html",
+      "finalUrl": "file:///C:/Users/User/cue/app/renderer/index.html"
+    },
+    "popupNull": true,
+    "exitCode": 0,
+    "passed": true
+  },
+  "finalSourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca",
+  "finalWindowVerification": "p11_electron_final_probe.log"
+}

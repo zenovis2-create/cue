@@ -1,0 +1,105 @@
+{
+  "completionGate": "Build and targeted serial tests exit 0; timeouts are FAIL",
+  "scope": "Fresh security-review corrective findings, independent of original R1 RED-ordering shortfall",
+  "findings": [
+    {
+      "finding": "Overlapping parent/child worktrees admitted across ledgers",
+      "resolution": "Canonical segment-aware overlap refusal in one shared ownership transaction; junction/case aliases and ..child covered",
+      "tests": [
+        "refuses overlapping worktrees across ledgers: parent then child",
+        "refuses overlapping worktrees across ledgers: child then parent",
+        "refuses overlapping worktrees across ledgers: junction child alias",
+        "refuses overlapping worktrees across ledgers: dotdot-named child"
+      ]
+    },
+    {
+      "finding": "Failed stop or runtime termination cleanup could release writer lease",
+      "resolution": "Quarantine blocked/crash retains lease, write flag, runtime handle and daemon ownership through late completion, branded rejection and termination result; close/crash cannot discard quarantine",
+      "tests": [
+        "failed stop quarantines the daemon and retains the writer lease",
+        "retains ownership through late completion after stop failure",
+        "retains ownership through termination rejection",
+        "retains ownership through termination result"
+      ]
+    },
+    {
+      "finding": "Failed initial CIM query mistaken for dead process",
+      "resolution": "Query status and errors checked, ErrorAction Stop; restart fences blocked runs whose write flag remains set",
+      "tests": [
+        "failed initial process query cannot be mistaken for a dead session"
+      ]
+    },
+    {
+      "finding": "Worker-writable state or credential homes",
+      "resolution": "Before daemon acquisition, refuse canonical overlap with state directory, sourceHome and homeRoot; resolve missing descendants through nearest real ancestor",
+      "tests": [
+        "refuses a worktree overlapping protected state",
+        "refuses a worktree overlapping protected sourceHome",
+        "refuses a worktree overlapping protected homeRoot",
+        "refuses a worktree overlapping protected missing homeRoot under junction",
+        "refuses a worktree overlapping protected homeRoot named ..homes",
+        "a protected-path refusal permits a corrected core for the same workspace immediately"
+      ]
+    }
+  ],
+  "redFirstComplete": true,
+  "passed": true,
+  "sourceRevisions": 2,
+  "attemptCap": 3,
+  "final": {
+    "exitCode": 0,
+    "testsPassed": 28,
+    "filesPassed": 2,
+    "testsSkipped": 0,
+    "testsFailed": 0,
+    "log": "evidence/P11/p11_writer_corrective_final.log"
+  },
+  "originalR1RedFirstComplete": false,
+  "sourceFiles": [
+    "app/core.mjs",
+    "daemon/src/daemon-ownership.ts",
+    "daemon/src/recovery.ts",
+    "daemon/test/p11-writer-corrective.test.ts",
+    "daemon/test/p9.test.ts"
+  ],
+  "additionalRed": {
+    "log": "evidence/P11/p11_writer_corrective_dotdot_red.log",
+    "exitCode": 1,
+    "testsPassed": 13,
+    "testsFailed": 2
+  },
+  "intermediateCompatibility": {
+    "exitCode": 1,
+    "testsPassed": 59,
+    "failure": "Phase 9 Electron shell > P9-10 builds completion totals only from ledger rows",
+    "reason": "FAIL: timeout 5000ms; observed 7734ms after verified termination overhead",
+    "testsFailed": 1,
+    "log": "evidence/P11/p11_writer_corrective_green.log"
+  },
+  "red": {
+    "log": "evidence/P11/p11_writer_corrective_red.log",
+    "exitCode": 1,
+    "testsPassed": 0,
+    "testsFailed": 12
+  },
+  "fixtureChanges": {
+    "change": "Five core tests use a separate temp workspace outside the existing state directory; every assertion retained",
+    "file": "daemon/test/p9.test.ts",
+    "timeoutChange": {
+      "assertionsUnchanged": true,
+      "test": "Phase 9 Electron shell > P9-10 builds completion totals only from ledger rows",
+      "justification": "Verified process-tree shutdown increased observed duration to 7734ms",
+      "newMs": 20000,
+      "oldMs": 5000
+    }
+  },
+  "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca",
+  "finalCanonicalVerification": {
+    "filesPassed": 29,
+    "testsPassed": 280,
+    "testsSkipped": 5,
+    "testsFailed": 0,
+    "exitCode": 0,
+    "log": "p11_full_regression.log"
+  }
+}

@@ -61,7 +61,7 @@ describe('P3-9 canonical filesystem enforcement',()=>{
     const result=runEnforcedWorker(s.envelope,{executable:'powershell.exe',args:['-NoProfile','-Command',`$p=[Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('${encoded}'));Set-Content -LiteralPath $p -Value escape`],cwd:s.envelope.worktree_realpath});
     // Required gate: this currently exposes that argv preflight is not a filesystem syscall boundary.
     expect(result.violation).toBe('filesystem'); expect(existsSync(target)).toBe(false); s.db.close();
-  });
+  }, 30_000);
 });
 
 describe('P3-16 process network gate',()=>{

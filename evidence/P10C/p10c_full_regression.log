@@ -1,0 +1,280 @@
+npm notice run cue-desktop@1.0.0 test
+npm notice run npm --prefix daemon test
+npm notice run cue-daemon@1.0.0 pretest
+npm notice run npm run build
+
+> cue-daemon@1.0.0 build
+> tsc -p tsconfig.json && node scripts/copy-assets.mjs
+
+npm notice run cue-daemon@1.0.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker 5472ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates 10283ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker 11501ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a controller crash without automatically resuming it 1852ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > reconciles a previously running write as blocked/crash without auto-resume on restart 178ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fences a verified live session before reconciling an interrupted run on startup 5629ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > refuses to kill a reused PID whose process start time does not match the ledger identity 4381ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks completion immediately when the controller credential-home cleanup fails 740ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks when cleanup fails after controller launch setup throws 725ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when independent goal verification finds no relevant workspace change 724ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fails closed before launch when the host Codex binary hash does not match the pin 525ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 2990ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks an expired approval without spawning a controller or recording execution 170ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > keeps the controller on the host and executes the real tool in AppContainer 3842ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > terminates and reaps a worker when parent linkage fails after spawn 5654ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > bounds host controller stderr retained in memory 3725ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > fails independent goal verification after a successful but read-only no-op tool call 4348ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects a workspace mutation that does not touch the output path named by the goal 4494ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects an expected-path change when the agent reports that it could not complete the goal 4620ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > changes a model-completed result to cleanup failure when the credential home cannot be safely removed 3296ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > rolls back a partially created home when credential staging fails 208ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > removes only disposable codex-home directories 217ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > stages a disposable controller home without granting or deleting the source Codex home 4601ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > starts three real replacement controller/worker pairs before autonomy 3 escalates 11907ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > rejects an expired envelope before spawning any worker 11ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > runs the actual command in capability-zero AppContainer and records its real PID 920ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > removes host credential variables from the AppContainer worker environment 1344ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > lets the OS boundary deny an obfuscated write outside the approved worktree 2655ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > denies a junction escape even when its destination is hidden from preflight parsing 3255ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > proves capability-zero AppContainer network denial with a real socket attempt 2493ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > bounds captured stdout and stderr before returning them to the host 1199ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > terminates a spawned worker when post-spawn runtime ledger insertion fails 3848ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > binds the AppContainer job lifetime to the daemon process handle 2ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the host controller descendant when the owned controller root is hard-killed 6055ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed 9319ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-1/S-3 keeps one child_process boundary and only owned public spawn APIs 9ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-3 positive control rejects a newly introduced direct spawn 18ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 asks the OS for the AppContainer worker parent PID 9525ms
+ ↓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 OS cwd query (SKIPPED on Windows: Win32_Process exposes no cwd)
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-3/P4-5 automatically starts the owned queued request after lease promotion 3874ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a runtime-computed outside path in a non-Node worker 2541ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a non-Node worker from a real local socket when egress is empty 382ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > allows a non-Node worker to write inside and removes its ephemeral ACE 1309ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > records execution from the real worker lifecycle 1067ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > renders the ledger label through the completion-card path 10ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > migrates an empty database and inserts and reads every table 8ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > rejects every envelope update 3ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > prevents replay even when approval id is null 3ms
+ ✓ test/p2.test.ts > P2-2 IPC > uses a protected 256-bit token, rejects missing auth and bad schemas, and binds loopback 76ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > has six states and blocks budget only at a token threshold from the two allowed event shapes 1ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > contains no monetary conversion or display path in source 49ms
+ ✓ test/p2.test.ts > P2-4 process identity and heartbeat > stops refreshing after the identified process is killed so age grows 163ms
+ ✓ test/p2.test.ts > P2-5 named health vector > names the failed component 0ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only heartbeat is expired 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only connection fails 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > emits the exact fixture from a separate process and creates a marker when relay is blocked 76ms
+ ✓ test/p2.test.ts > P2-8 crash reconciliation > blocks an interrupted task, captures actual git status, and records no automatic resume 89ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > creates only copied auth and Cue config with all extension surfaces disabled 6ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > disables parent-side browser, app, plugin, update, and web-search capabilities explicitly 1ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > accepts only an absolute vendor binary path, never an npm shim 0ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > redirects every writable profile and temp variable into the isolated home 4ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > launches the absolute vendor binary with the isolated tool home 1463ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > closes the launcher stdin for non-interactive vendor execution 1499ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > removes the isolated tool home after the vendor worker exits 1466ms
+ ✓ test/p2.test.ts > P2-7 scope > documents design without creating a scheduled task 1ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > contains paths by canonical realpath and has no string-prefix path comparison 17ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > blocks a write reached through a symlink or junction 18ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > reproduces P1-2: an accepted absolute outside write is stopped before the real process runs 10ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > does not complete a task after an outside-envelope change is detected 8ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > blocks a runtime-computed outside path in a non-Node worker 2510ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > reproduces P1-2: example.com fails with no egress in the envelope 1135ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > allows only the named host and blocks another host using a real local socket 213ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > prevents completion when gate failure is detected 8ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > blocks a non-Node worker from a real local socket when egress is empty 496ms
+ ✓ test/p3b.test.ts > P3-17 approval and execution accounting > records them separately and alerts when one permissions approval precedes three executions 14ms
+ ✓ test/p3b.test.ts > P3-17 approval and execution accounting > uses a composite null-safe execution replay key, not itemId alone 12ms
+ ✓ test/p3b.test.ts > P3-11 decline without killing task > keeps the task running after an outside-envelope request 10ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > blocks after the same digest twice 1ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > blocks when an approval stalls 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > offers exactly three choices 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > does not focus expand by default 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > continue suppresses the same digest 0ms
+ ✓ test/p3b.test.ts > P3-15 ledger-derived completion counter > renders approval totals from ledger queries 12ms
+stdout | test/release.test.ts > v0.1 release gates > R-1 preserves original P1 evidence and now carries a re-run P1-3 record
+R-1 PASS: P1-3 재실행 기록 존재 verdict=FAIL outside_write=true network=true appcontainer_used=false
+
+stdout | test/release.test.ts > v0.1 release gates > R-2 scans all src and proves a disposable forbidden string makes the scanner fail
+R-2 POSITIVE_CONTROL_RED observed=true
+
+stdout | test/release.test.ts > v0.1 release gates > R-3 uses a junction to attempt a real OS-blocked outside write
+R-3 LIVE app_pid=56272 junction=C:\Users\User\cue\daemon\.test-state-release-r3-work-UtrkWH\escape outside=C:\Users\User\cue\daemon\.test-state-release-r3-out-8hmKZH os_exit=1 outside_written=false
+
+ ✓ test/release.test.ts > v0.1 release gates > R-1 preserves original P1 evidence and now carries a re-run P1-3 record 4ms
+ ✓ test/release.test.ts > v0.1 release gates > R-2 scans all src and proves a disposable forbidden string makes the scanner fail 20ms
+ ✓ test/release.test.ts > v0.1 release gates > R-3 uses a junction to attempt a real OS-blocked outside write 1616ms
+stdout | test/release.test.ts > v0.1 release gates > R-4 kills and restarts a real daemon process, leaving blocked/crash and a git-status report
+R-4 LIVE killed_pid=29728 restarted_pid=70260 state=blocked/crash git_status="?? work.txt"
+
+stdout | test/release.test.ts > v0.1 release gates > R-6 performs approval, dispatch, real worker execution, verification, and ledger-derived Korean reporting
+R-6 LIVE app_pid=56776 완료: 파일 생성과 검증을 마쳤습니다. | 판정 경로: 카테고리 일치 → codex 디스패치 (routing.yaml 파일 생성 규칙) | 자동 승인 1건 · 거부 0건
+
+ ✓ test/release.test.ts > v0.1 release gates > R-4 kills and restarts a real daemon process, leaving blocked/crash and a git-status report 512ms
+ ✓ test/release.test.ts > v0.1 release gates > R-5 alerts only when heartbeat expiry and connection failure are both true 2ms
+stdout | test/release.test.ts > v0.1 release gates > R-9 runs the same real process task at autonomy ③ and ① with equal envelope decisions and different lineage
+R-9 LIVE pids=67064,59960 envelope=outside_envelope,outside_envelope attempts=1,0
+
+ ✓ test/release.test.ts > v0.1 release gates > R-6 performs approval, dispatch, real worker execution, verification, and ledger-derived Korean reporting 1814ms
+ ✓ test/release.test.ts > v0.1 release gates > R-7 has no monetary-budget emission path while retaining token-budget state 13ms
+ ✓ test/release.test.ts > v0.1 release gates > R-9 runs the same real process task at autonomy ③ and ① with equal envelope decisions and different lineage 585ms
+ ✓ test/release.test.ts > release improvements > I-1 selects a matching category without refinement escape and asks on ambiguity 17ms
+ ✓ test/release.test.ts > release improvements > I-2 requires the decision path in both completion and blocked reports 7ms
+ ✓ test/release.test.ts > release improvements > I-3 commits certain recovery artifacts before a separately failing borderline write 220ms
+ ✓ test/release.test.ts > release improvements > I-4 grants execution authority only from an accepted approval record 205ms
+ ✓ test/release.test.ts > release improvements > I-5 judges preference requests by effect, not workflow-friendly wording 1ms
+ ✓ test/release.test.ts > release improvements > I-6 documents confirmed/candidate source grading as a binding design rule 1ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-1 has npm start and a main entrypoint 6ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-2 seals BrowserWindow and exposes an explicit preload API only 9ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-3 freezes channels, rejects unknown channels, and cannot execute before approval 148ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 first-run setup chooses a workspace once and reuses the persisted choice 12ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 treats a cancelled workspace picker as cancellation and persists nothing 2ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 rejects a tampered persisted config instead of trusting stale paths 11ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 creates first-run config once, reuses it, and stores no credentials 12ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-5 closes the owned daemon and never restarts after crash 78ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-6/P9-7 records approval and default autonomy without widening the envelope 90ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-8 emits no notification during normal progress 86ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-9 polls ledger-backed status and exposes an actual stop control 1ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-10 builds completion totals only from ledger rows 3280ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-11 app core has no static Buzz dependency 1ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > writes the root evidence command to the repository evidence directory 2ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > observes only cue_workspace in the actual model request 2240ms
+ ✓ test/p10c-manifest-lifecycle.test.ts > manifest proof process lifecycle > waits for the child to close before its current working directory is removed 1306ms
+ ✓ test/p10c-renderer.test.ts > renderer ledger-grounded transport errors > keeps the last running ledger card and retries after a polling transport failure 681ms
+ ✓ test/p10c-renderer.test.ts > renderer ledger-grounded transport errors > preserves running state and re-enables stop when stop transport fails 75ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > tolerates literal JSON control characters inside strings 3ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > round-trips the exact create, ps, task-list, stop, and abandon argv 1ms
+ ↓ test/p4.test.ts > P4-1 Orca adapter > round-trips the installed Orca worktree ps without mutation
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > records the composite session identity and launches with the worktree cwd 137ms
+ ↓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > launches the real vendor Codex through the AppContainer supervisor
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > has one production spawn boundary and no direct spawn call elsewhere 43ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > queues a second writer, then admits it after release 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > does not lease reads and reaps an expired holder 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > reclaims a writer through the P2 heartbeat age primitive 4ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > records still_unsafe and does not succeed when close fails 3ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > succeeds only after a successful close 3ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > lists an unowned live process after ledger reopen and leaves it alive 152ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > contains no automatic orphan kill path 1ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > dispatches a match and asks for an unmatched task without spawning 5ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > asks when routing.yaml is missing or malformed 9ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > wires ask_me into dispatch and proves no tool is spawned 3ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-1 renders conversation and current-work containers in the default two-column screen 152ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-2 replaces only the left conversation with an annotation canvas and preserves rail node identity 15ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-3 keeps progress/stage vocabulary and invokes the real stop callback after canvas transition 16ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps queued to exact status 유휴 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps running to exact status 작업 중 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps blocked to exact status 막힘 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps completed to exact status 완료 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps every ledger state and fails visibly for an unknown state 2ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-5 looks up recent work by task_id, never by a session id 6ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-6 omits the orphan badge node when the ledger count is zero 14ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-6 shows an orphan badge whose count equals the ledger query 19ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-7 renders exact approval totals for completed and 자세히 opens a detail node 15ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-7 renders exact approval totals for blocked and 자세히 opens a detail node 14ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-8 displays autonomy ③ and exactly three ledgered recovery attempts 15ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8 safety gate keeps UI imports read-only and tests use real DOM queries/clicks 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5 ledger upgrades an existing pre-P5 database idempotently 75ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-1 grades deterministic signal sources without treating worker-read as truth 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-2 invokes diagnosis only after two candidate signals 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-2 production dispatcher integrates observation without adding a launch path 5ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-3 requires empty page, threshold exceeded, and live worker together 0ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-4 uses task-type threshold data, with no global idle constant path 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-5 records four-rung lineage and escalates at the immutable cap 5ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-6 fences and hashes state before a real owned restart while preserving actual worker work 77ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-7 validates handoff schema and has no automatic handoff executor 6ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-8 always sends an open decision gate to a human, including autonomy 3 8ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 1 has distinct lineage 2ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 2 has distinct lineage 2ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 3 has distinct lineage 2ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-10 autonomy 3 cannot widen envelope, retry cap, or task contract 10ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-11 rejects in-run increases and applies plus records decreases immediately 3ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-12 stores and retrieves the autonomy level for each run id 2ms
+ ✓ test/p3a.test.ts > P3-1 canonical envelope > is stable across key and array order and changes for one field 6ms
+ ✓ test/p3a.test.ts > P3-2 adapters are transport only > carries raw values and imports no decision or policy module 1ms
+ ✓ test/p3a.test.ts > P3-3 fail closed mapping > declines random unknown methods and has no default allow branch 7ms
+ ✓ test/p3a.test.ts > P3-4 decision response whitelist > enumerates only the three response decisions and source has no prohibited response or bypass spelling 7ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > accepts only a nonempty concrete contained path and fixes turn scope and strict review 5ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines empty entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines glob entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines outside entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special root entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special arbitrary entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > models nonempty entries at the type boundary and source constructs no empty accept entries 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null cwd 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > wrong cwd 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null command 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > extra outside 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > outside grant 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > auth gate 3ms
+ ✓ test/p3a.test.ts > P3-6 preflight > tool 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > elicitation 3ms
+ ✓ test/p3a.test.ts > P3-6 preflight > judges writeStdin independently of a parent command decision 5ms
+ ✓ test/p3a.test.ts > P3-7 replay prevention > declines a duplicate null approval id and appends a replay alert 5ms
+ ✓ test/p3a.test.ts > P3-8 lifetime > declines after expiry and after run end without inheritance 5ms
+ ✓ test/p3a.test.ts > P3-10 byte-owned payload classification > classifies actual bytes and cancels opaque, encrypted, and invalid binary payloads 6ms
+ ✓ test/p3a.test.ts > P3-13 cancel is danger-only > returns cancel only for the three enumerated reasons across all mapped and rejected paths 8ms
+ ✓ test/p3a.test.ts > P3-14 execution profile > generates on-request argv without prohibited flags and source passes grep 1ms
+ ✓ test/p3a.test.ts > P3-18 advisory tools > marks Codex non-enforcing and core enforcement has no tool-kind bypass 0ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > removes every host execution environment and exposes only the Cue AppContainer tool 2ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > disables Codex built-in shell tools in the isolated host controller home 0ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > pins dynamic tool execution to the approved worktree and rejects client-controlled cwd 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > fails closed on any other dynamic tool identity or malformed argv 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > returns bounded, explicit AppContainer evidence to the model 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > drives app-server and returns dynamic-tool output from the AppContainer runner 5ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > declines any host-side command or file execution request without invoking the worker runner 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > rejects wrong-thread and duplicate dynamic calls and ignores a mismatched terminal notification 25ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > does not create an orphan terminal rejection when turn/start itself fails 2ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > allows only one in-flight dynamic tool call at a time 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-1 fails closed before an outbound attempt when @cue identity is absent 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 exposes exactly conversation and daemon API, denying worker and edit tools 7ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 reaches running only through the injected daemon API and frontdoor has no launch path 5ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 daemon API fails closed when the approved envelope does not match the run ledger 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-3 daemon sends after the frontdoor session is closed and needs no session handle 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-4 pins channel and thread at approval and rejects later mutation 3ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-5 serializes concurrent channels without mixing their state 3ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-6 renders exactly Korean three lines plus one envelope line without configuration markup 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-7 asks at most three envelope-changing questions and narrows other uncertainty 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-8 stays silent while healthy; time alone cannot emit an outbound message 6ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-9 reports dead Orca before refusing task acceptance 3ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-10 has no canvas writer or annotation path on the conversation surface 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-11 defaults to level 3 and records the selected level in the P5 ledger table 5ms
+ ↓ test/p6.test.ts > Phase 6 conversation surface > P6 external Buzz live delivery and @cue registration — SKIPPED: would mutate an external system
+ ✓ test/p10c-electron-security.test.ts > Electron renderer defense in depth > ships a restrictive CSP that allows only packaged scripts and styles 2ms
+ ✓ test/p10c-electron-security.test.ts > Electron renderer defense in depth > allows only the packaged renderer URL and denies every new window 7ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-1 renders all three views from the same changed result record 3ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 escapes HTML injection <script>alert(1)</script> 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 escapes HTML injection <img src=x onerror=alert(1)> 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 escapes HTML injection javascript:alert(1) 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 escapes HTML injection <iframe src=x></iframe> 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 uses a frozen component allowlist and rejects nodes outside it 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 secret scan rejects token 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 secret scan rejects key 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 secret scan rejects .env 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 secret scan rejects absolute user path 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 enforces all five ordered steps and cannot share without human approval 3ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 fails closed when the scanner throws 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-4 shared HTML contains content only, with no annotation controls, scripts, or origin overlay path 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-5 converts image plus Korean text on 'work' surface to a task 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-5 converts image plus Korean text on 'explain' surface to a task 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-10 rejects missing and blank surface values 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-10 uses exclusive identities for explain and work at runtime and type level 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-11 sends explain code-change requests through the unchanged envelope decision 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-12 keeps old annotations pinned after regeneration and exposes no direct HTML edit path 7ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-6 binds screenshot, snapshot, and current tab to one capture id 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-6 rejects the entire capture if any one adapter call fails 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-7 requires page id rather than URL and accepts selector-free screenshot records 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-8 backs up while blocked and flushes to the ledger on reconnect 3ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-8 Orca backup uses storage local get/set and has no annotation eval call 1ms
+ ↓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7 external artifacts share and real Orca capture — SKIPPED: would mutate or require an external system
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-1 records two goal-derived immutable action sets and removes the old literal 3ms
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-2/P10-3 records distinct inspected artifacts and real controller/worker PIDs 1ms
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-4 through P10-8 remain executable OS-level gates in the replacement suites 1ms
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-9 through P10-11 preserves explicit approval, standalone Electron completion, and no progress notification 2ms
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-12 keeps the historical PARTIAL labels intact 1ms
+
+ Test Files  23 passed (23)
+      Tests  239 passed | 5 skipped (244)
+   Start at  09:01:56
+   Duration  175.20s (transform 846ms, setup 0ms, import 4.80s, tests 165.46s, environment 2ms)

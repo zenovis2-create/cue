@@ -12,7 +12,7 @@ import { failedComponents, healthVector } from '../src/health.js';
 import { heartbeatAgeMs, readHeartbeat } from '../src/heartbeat.js';
 import { evaluateSentinel, SENTINEL_ALERT } from '../src/sentinel.js';
 import { reconcileInterruptedWrites } from '../src/recovery.js';
-import { assertVendorBinary, CLEAN_CONFIG, createCleanCodexHome } from '../src/tool-home.js';
+import { assertVendorBinary, CLEAN_CONFIG, createCleanCodexHome, vendorCodexLaunchSpec } from '../src/tool-home.js';
 import { spawnVendorCodexInAppContainer } from '../src/codex-session.js';
 
 const temporary: string[] = [];
@@ -146,16 +146,53 @@ describe('P2-9 clean tool home', () => {
     expect(readFileSync(join(home,'config.toml'),'utf8')).toBe(CLEAN_CONFIG);
     expect(existsSync(join(home,'hooks.json'))).toBe(false);
   });
+  it('disables parent-side browser, app, plugin, update, and web-search capabilities explicitly', () => {
+    expect(CLEAN_CONFIG).toContain('web_search = "disabled"');
+    for(const feature of [
+      'apps','auth_elicitation','browser_use','browser_use_external','browser_use_full_cdp_access',
+      'code_mode_host','computer_use','image_generation','in_app_browser','in_app_local_automation',
+      'in_app_updates','multi_agent','plugin_sharing','plugins','remote_plugin',
+      'skill_mcp_dependency_install','skill_search','tool_call_mcp_elicitation','tool_suggest',
+    ]) expect(CLEAN_CONFIG).toContain(`${feature} = false`);
+  });
   it('accepts only an absolute vendor binary path, never an npm shim', () => {
     const vendor=process.platform==='win32'?'C:\\Program Files\\Codex\\vendor\\codex.exe':'/opt/codex/vendor/codex';
     expect(assertVendorBinary(vendor)).toBe(vendor); expect(()=>assertVendorBinary('codex')).toThrow(); expect(()=>assertVendorBinary(resolve('node_modules/.bin/codex'))).toThrow();
   });
+  it('redirects every writable profile and temp variable into the isolated home', () => {
+    const root=temp(), home=join(root,'home'), vendor=process.platform==='win32'?'C:\\Program Files\\Codex\\vendor\\codex.exe':'/opt/codex/vendor/codex';
+    mkdirSync(home);
+    const spec=vendorCodexLaunchSpec(vendor,['--version'],home);
+    expect(spec.env).toMatchObject({
+      CODEX_HOME:home,
+      HOME:home,
+      USERPROFILE:home,
+      APPDATA:join(home,'appdata'),
+      LOCALAPPDATA:join(home,'localappdata'),
+      TEMP:join(home,'tmp'),
+      TMP:join(home,'tmp'),
+    });
+    for(const path of [spec.env.APPDATA,spec.env.LOCALAPPDATA,spec.env.TEMP,spec.env.TMP]) expect(existsSync(path!)).toBe(true);
+  });
   it('launches the absolute vendor binary with the isolated tool home', async () => {
-    const root=temp(), vendorDir=join(root,'vendor'); mkdirSync(vendorDir); const binary=join(vendorDir,process.platform==='win32'?'codex.exe':'codex'); copyFileSync(process.execPath,binary);
+    const root=temp(), vendorDir=join(temp(),'vendor'); mkdirSync(vendorDir); const binary=join(vendorDir,process.platform==='win32'?'codex.exe':'codex'); copyFileSync(process.execPath,binary);
     const auth=join(root,'source-auth.json'); writeFileSync(auth,'credential-placeholder'); const cleanHome=createCleanCodexHome(join(root,'homes'),auth);
     const db=openLedger(); seed(db); const marker=join(root,'home-marker.txt'); const {child}=spawnVendorCodexInAppContainer(db,{cwd:root,task_id:'t1',run_id:'r1'},binary,cleanHome,['-e',`const f=require('fs'),h=process.env.CODEX_HOME||'';f.writeFileSync(${JSON.stringify(marker)},h+${JSON.stringify('\n')}+f.readdirSync(h).sort().join(','))`]);
-    const [exitCode]=await once(child,'exit'); expect(exitCode).toBe(0); expect(readFileSync(marker,'utf8')).toBe(`${cleanHome}\nauth.json,config.toml`);
+    const [exitCode]=await once(child,'exit'); expect(exitCode).toBe(0); expect(readFileSync(marker,'utf8')).toBe(`${cleanHome}\nappdata,auth.json,config.toml,localappdata,tmp`);
     db.close();
+  });
+  it('closes the launcher stdin for non-interactive vendor execution', async () => {
+    const root=temp(), vendorDir=join(temp(),'vendor'); mkdirSync(vendorDir); const binary=join(vendorDir,process.platform==='win32'?'codex.exe':'codex'); copyFileSync(process.execPath,binary);
+    const auth=join(root,'source-auth.json'); writeFileSync(auth,'credential-placeholder'); const cleanHome=createCleanCodexHome(join(root,'homes'),auth);
+    const db=openLedger(); seed(db); const {child}=spawnVendorCodexInAppContainer(db,{cwd:root,task_id:'t1',run_id:'r1'},binary,cleanHome,['-e','process.exit(0)']);
+    const stdinEnded=child.stdin?.writableEnded; const [exitCode]=await once(child,'exit'); db.close();
+    expect(exitCode).toBe(0); expect(stdinEnded).toBe(true);
+  });
+  it('removes the isolated tool home after the vendor worker exits', async () => {
+    const root=temp(), vendorDir=join(temp(),'vendor'); mkdirSync(vendorDir); const binary=join(vendorDir,process.platform==='win32'?'codex.exe':'codex'); copyFileSync(process.execPath,binary);
+    const auth=join(root,'source-auth.json'); writeFileSync(auth,'credential-placeholder'); const cleanHome=createCleanCodexHome(join(root,'homes'),auth);
+    const db=openLedger(); seed(db); const {child}=spawnVendorCodexInAppContainer(db,{cwd:root,task_id:'t1',run_id:'r1'},binary,cleanHome,['-e','process.exit(0)']);
+    const [exitCode]=await once(child,'exit'); expect(exitCode).toBe(0); expect(existsSync(cleanHome)).toBe(false); db.close();
   });
 });
 

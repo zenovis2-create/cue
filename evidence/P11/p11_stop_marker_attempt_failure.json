@@ -1,0 +1,20 @@
+{
+  "schema": "cue.p11.stop.v1",
+  "generatedAt": "2026-09-07T03:38:54.201Z",
+  "verdict": "FAIL",
+  "scope": "real vendor Codex model controller and real capability-zero AppContainer worker",
+  "taskId": "4991ddfa-ed24-493a-b134-f8a888805762",
+  "runId": "c263c995-8b04-429c-8c2c-f7e161a7e2ff",
+  "markerSha256": null,
+  "sessions": [],
+  "card": null,
+  "checks": {
+    "controllerAliveBeforeStop": false,
+    "appContainerWorkerAliveBeforeStop": false,
+    "allObservedProcessesDeadAfterStop": false,
+    "stopAccepted": false,
+    "ledgerBlockedCancelled": false,
+    "leaseReleased": false
+  },
+  "failure": "stop canary terminated before live worker observation: verification_failed"
+}

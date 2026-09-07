@@ -1,0 +1,87 @@
+{
+  "perPass": "Build; targeted serial tests; preserve raw log; timeout FAIL",
+  "attemptCap": 3,
+  "red": {
+    "filesFailed": 1,
+    "testsFailed": 4,
+    "failures": [
+      "P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime",
+      "P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume",
+      "P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash",
+      "P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree"
+    ],
+    "testsPassed": 1,
+    "log": "evidence/P11/p11_writer_lifecycle_red.log"
+  },
+  "status": "behavior_verified_procedure_incomplete",
+  "completionGate": "P11 writer lifecycle and existing core/containment targeted tests exit 0",
+  "passed": false,
+  "redFirstComplete": false,
+  "proceduralLimitation": "The RED run covered stop, daemon crash, reconciliation, cross-ledger refusal and parent death. Normal completion, controller crash and worker hard-kill explicit lease assertions were added after the first source fix; their first recorded run was GREEN. Existing working paths were never deliberately broken.",
+  "final": {
+    "log": "evidence/P11/p11_writer_lifecycle_final.log",
+    "filesPassed": 2,
+    "testsFailed": 0,
+    "testsPassed": 27,
+    "testsSkipped": 0,
+    "exitCode": 0
+  },
+  "previousGreen": {
+    "testsPassed": 28,
+    "filesPassed": 3,
+    "log": "evidence/P11/p11_writer_lifecycle.log",
+    "testsFailed": 0
+  },
+  "exitPaths": [
+    {
+      "passed": true,
+      "exitPath": "normal completion",
+      "test": "P11 writer lifecycle > normal completion releases the real runtime lease before another writer runs"
+    },
+    {
+      "passed": true,
+      "exitPath": "user stop",
+      "liveProcessTest": "Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker",
+      "test": "P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime"
+    },
+    {
+      "passed": true,
+      "exitPath": "controller crash",
+      "test": "P11 writer lifecycle > controller crash releases the real runtime lease before another writer runs"
+    },
+    {
+      "passed": true,
+      "exitPath": "worker hard-kill",
+      "test": "P11 writer lifecycle > worker hard-kill releases the real runtime lease before another writer runs"
+    },
+    {
+      "state": "blocked",
+      "passed": true,
+      "exitPath": "daemon crash",
+      "blockedReason": "crash",
+      "test": "P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume"
+    },
+    {
+      "state": "blocked",
+      "passed": true,
+      "exitPath": "parent death",
+      "blockedReason": "crash",
+      "test": "P11 writer lifecycle > parent death kills the real AppContainer worker and restart releases the lease without resuming"
+    }
+  ],
+  "additionalChecks": [
+    "Cross-ledger same-worktree canonical ownership refuses a live second daemon",
+    "Shared external ownership transaction fences and reconciles dead prior owners before takeover",
+    "Failed startup recovery does not publish a new ownership record",
+    "Approved worktree cannot overlap trusted Cue app or daemon runtime",
+    "Existing same-ledger queued writer serialization assertions retained"
+  ],
+  "sourceFiles": [
+    "app/core.mjs",
+    "daemon/src/daemon-ownership.ts",
+    "daemon/src/recovery.ts",
+    "daemon/test/p11-writer-lifecycle.test.ts"
+  ],
+  "behavioralPassed": true,
+  "correctiveReviewEvidence": "evidence/P11/p11_writer_lifecycle_corrective.json"
+}

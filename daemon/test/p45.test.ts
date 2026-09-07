@@ -68,7 +68,7 @@ describe('Phase 4.5 launch-path seal',()=>{
   });
 
   it.runIf(process.platform==='win32')('P4-2 asks the OS for the AppContainer worker parent PID',async()=>{
-    const root=temp('p45-tree-'), vendor=join(root,'vendor'); mkdirSync(vendor); const binary=join(vendor,'codex.exe'); copyFileSync(process.execPath,binary);
+    const root=temp('p45-tree-'), vendor=join(temp('p45-vendor-'),'vendor'); mkdirSync(vendor); const binary=join(vendor,'codex.exe'); copyFileSync(process.execPath,binary);
     const home=join(root,'home'); mkdirSync(home); writeFileSync(join(home,'config.toml'),'[features]\nhooks=false\nmcp=false\nplugins=false\nskills=false\n');
     const db=seedPair(), marker=join(root,'cwd.txt');
     const {child}=spawnVendorCodexInAppContainer(db,{cwd:root,task_id:'t1',run_id:'r1'},binary,home,['-e',`require('fs').writeFileSync(${JSON.stringify(marker)},process.cwd());setTimeout(()=>{},8000)`]);
@@ -83,7 +83,7 @@ describe('Phase 4.5 launch-path seal',()=>{
   });
 
   it.runIf(process.platform==='win32')('P4-3/P4-5 automatically starts the owned queued request after lease promotion',async()=>{
-    const root=temp('p45-dispatch-'), vendor=join(root,'vendor'); mkdirSync(vendor); const binary=join(vendor,'codex.exe'); copyFileSync(process.execPath,binary);
+    const root=temp('p45-dispatch-'), vendor=join(temp('p45-vendor-'),'vendor'); mkdirSync(vendor); const binary=join(vendor,'codex.exe'); copyFileSync(process.execPath,binary);
     const home=join(root,'home'); mkdirSync(home); writeFileSync(join(home,'config.toml'),'[features]\nhooks=false\nmcp=false\nplugins=false\nskills=false\n');
     const routing=join(root,'routing.yaml'); writeFileSync(routing,'rules:\n  - match: "work"\n    tool: codex\n');
     const second=join(root,'second.txt'), db=seedPair(), leases=new WorkspaceLeases(), dispatcher=new Dispatcher(db,leases);

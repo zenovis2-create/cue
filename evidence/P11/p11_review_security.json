@@ -1,0 +1,211 @@
+{
+  "schema": "cue.p11.independent-security-review.v1",
+  "generatedAt": "2026-09-07T03:44:32.804461+00:00",
+  "passed": false,
+  "valid": true,
+  "reviewer": {
+    "identity": "/root/security_review",
+    "method": "Native independent collaboration agent; read-only implementation review and metadata verification; reviewer did not implement remediations",
+    "authentication": "native agent session valid; no external review login required"
+  },
+  "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca",
+  "sourceVerification": {
+    "filesChecked": 147,
+    "mismatches": [],
+    "recomputedManifestSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca"
+  },
+  "scope": "P11 R0-R6 final source and available final evidence; R7 commit and R8 verdict not yet produced at review time",
+  "findings": [
+    {
+      "id": "P11-SEC-001",
+      "severity": "high",
+      "status": "open",
+      "blocking": true,
+      "path": "evidence/P11/p11_live_result.json",
+      "reason": "Mandatory R5 A/B proof is FAIL: run A is blocked/worker_failed and records a filesystem enforcement violation. Artifact content matching does not satisfy completed execution with zero enforcement violations. This is a failed release gate, not evidence that enforcement was bypassed.",
+      "evidence": [
+        "p11_live_result.json: verdict FAIL; invariants.zeroEnforcementViolations false; run A task 927d7dad-aa80-4972-9f18-9390a4ea3f58 blocked; run B completed",
+        "p11_live.log"
+      ]
+    },
+    {
+      "id": "P11-SEC-002",
+      "severity": "medium",
+      "status": "open",
+      "blocking": true,
+      "path": "evidence/P11/p11_writer_lifecycle.json",
+      "reason": "R1 required RED-first tests for every named exit path. Normal completion, controller crash and worker hard-kill explicit lease assertions were first recorded GREEN after source changes. The artifact correctly records redFirstComplete:false; later corrective RED/GREEN tests cannot retroactively satisfy chronology.",
+      "evidence": [
+        "p11_writer_lifecycle.json: passed false, redFirstComplete false, proceduralLimitation",
+        "p11_writer_lifecycle_corrective.json: originalR1RedFirstComplete false"
+      ]
+    },
+    {
+      "id": "P11-SEC-003",
+      "severity": "medium",
+      "status": "open",
+      "blocking": true,
+      "path": "daemon/test/p10c-containment.test.ts",
+      "reason": "An earlier canonical run observed workerAlive true after the five-second parent-death observation window while wrapperAlive was false. The original assertion passed in isolation and the final full run, but the historical failure has no established cause. PID reuse or delayed observation remain hypotheses; the earlier FAIL is not relabeled PASS. Residual parent-death reliability concern remains.",
+      "evidence": [
+        "p11_parent_death_regression_failure.json: 279 passed, 5 skipped, 1 failed",
+        "p11_parent_death_investigation.json: unreproduced numeric-PID observation",
+        "p11_full_regression.log: final parent-death assertion passes; identity diagnostics added without weakening original death assertions"
+      ]
+    },
+    {
+      "id": "P11-SEC-004",
+      "severity": "info",
+      "status": "limitation",
+      "blocking": false,
+      "path": "daemon/src/appcontainer-launch.ps1",
+      "reason": "ActiveProcessLimit=1 seals unmediated descendant execution by prohibiting worker subprocesses. Commands requiring nested subprocesses are unsupported; this compatibility limitation must remain explicit.",
+      "evidence": [
+        "p11_exec_sealing.json: additionalLimitation",
+        "p11_exec_sealing_verified.log",
+        "host-codex-controller.ts: model instructions disclose child-process prohibition"
+      ]
+    },
+    {
+      "id": "P11-SEC-005",
+      "severity": "info",
+      "status": "limitation",
+      "blocking": false,
+      "path": "evidence/P11/p11_stop_result.json",
+      "reason": "The successful stop proof stops the first observed AppContainer worker during goal preparation; it proves the stated PID/ledger/lease lifecycle conditions, not delivery of stop during the model-requested long-running marker command. The original marker-based probe failed before live-worker observation and remains recorded.",
+      "evidence": [
+        "p11_stop_result.json: controller 80612 and worker 52844 alive before/dead after; blocked/cancelled; lease released; markerSha256 null",
+        "stop-canary-probe.mjs: metadata liveness checks and unchanged required lifecycle assertions",
+        "p11_stop_marker_attempt_failure.json: verification_failed"
+      ]
+    }
+  ],
+  "resolvedFindings": [
+    {
+      "severity": "high",
+      "path": "daemon/src/daemon-ownership.ts",
+      "reason": "Exact-root ownership allowed overlapping writable roots across ledgers. Final shared transaction rejects canonical parent/child overlap, including junction, case and ..child aliases.",
+      "evidence": [
+        "p11_writer_lifecycle_corrective.json",
+        "p11_writer_corrective_red.log",
+        "p11_writer_corrective_final.log"
+      ]
+    },
+    {
+      "severity": "high",
+      "path": "daemon/src/process-termination.ts",
+      "reason": "Stop previously ignored termination outcome before releasing the lease. Final implementation captures attributed process tree, verifies death, normalizes unknown failures to CUE_TERMINATION_UNVERIFIED, and quarantines runs while retaining lease and ownership. Async completion paths preserve quarantine.",
+      "evidence": [
+        "p11_termination_throw_red.log",
+        "p11_termination_final.log",
+        "p11_writer_corrective_final.log",
+        "p11_stop_result.json"
+      ]
+    },
+    {
+      "severity": "high",
+      "path": "daemon/src/recovery.ts",
+      "reason": "Initial process-query failure was treated as absent process. Final startup fence checks query errors/status and fences write-in-progress runs even when already blocked before reconciliation.",
+      "evidence": [
+        "p11_writer_lifecycle_corrective.json",
+        "p11_writer_corrective_final.log"
+      ]
+    },
+    {
+      "severity": "high",
+      "path": "app/core.mjs",
+      "reason": "Approved workspace could overlap ledger or credential homes. Final canonical overlap checks cover state, source home and copied home root before daemon acquisition; missing descendants and junctions are checked.",
+      "evidence": [
+        "p11_writer_lifecycle_corrective.json",
+        "p11_writer_corrective_final.log"
+      ]
+    },
+    {
+      "severity": "medium",
+      "path": "app/core.mjs",
+      "reason": "Intermediate protected-path refusal could leak newly acquired ownership; validation now precedes acquisition and corrected initialization is tested.",
+      "evidence": [
+        "p11_writer_lifecycle_corrective.json: corrected-core test",
+        "p11_writer_corrective_final.log"
+      ]
+    }
+  ],
+  "verifiedControls": {
+    "lateRpc": "HostCodexRpcSession rejects dynamic calls after terminal notification, thread/turn mismatches, duplicate calls and concurrent calls; unsupported approvals are denied.",
+    "immutableEnvelope": "Prepared envelopes and allowed actions are frozen; no session permission, empty permission acceptance or yolo approval path found in reviewed production paths.",
+    "executableSealing": "Canonical absolute executable and launcher resolution excludes writable roots; planted PATH/absolute/junction binaries are refused and recorded; AppContainer job prevents descendants.",
+    "electron": {
+      "version": "44.2.0",
+      "livePreferences": {
+        "contextIsolation": true,
+        "nodeIntegration": false,
+        "sandbox": true
+      },
+      "preloadFunctions": [
+        "approve",
+        "execute",
+        "prepare",
+        "stop"
+      ],
+      "cspDefaultNone": true,
+      "navigationBlocked": true,
+      "newWindowRefused": true,
+      "exitCode": 0,
+      "pngExists": true,
+      "firstRunCancelEvidence": "p11_electron_cancel_result.json: exit 1, configWritten false, fallbackFolderCreated false"
+    },
+    "credentialHygiene": {
+      "fsckExitCode": 0,
+      "fsckOutputEmpty": true,
+      "historyPathScanExitCode": 0,
+      "credentialPathResidue": [],
+      "originalCommitAbsent": true,
+      "freshCloneEvidence": "p11_credential_hygiene.json and reviewed p11-purge-history.py verify no path/blob residue",
+      "stagedGuard": "Path-only guard is tested against actual staged paths and forced credential-home path; no credential-value matching",
+      "credentialValuesReadOrEmitted": false
+    },
+    "effectiveManifest": {
+      "verdict": "PASS",
+      "toolNames": [
+        "cue_workspace"
+      ],
+      "hostExecutionTools": []
+    },
+    "liveAB": {
+      "verdict": "FAIL",
+      "sourceCredentialHomeUnchanged": true,
+      "distinctControllers": true,
+      "disjointWorkers": true,
+      "distinctArtifacts": true,
+      "zeroEnforcementViolations": false
+    },
+    "stop": {
+      "verdict": "PASS",
+      "checks": {
+        "controllerAliveBeforeStop": true,
+        "appContainerWorkerAliveBeforeStop": true,
+        "allObservedProcessesDeadAfterStop": true,
+        "stopAccepted": true,
+        "ledgerBlockedCancelled": true,
+        "leaseReleased": true
+      }
+    }
+  },
+  "finalRegression": {
+    "filesPassed": 29,
+    "testsPassed": 280,
+    "testsSkipped": 5,
+    "testsFailed": 0,
+    "exitCode": 0,
+    "failingTests": [],
+    "rawLog": "evidence/P11/p11_full_regression.log",
+    "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca"
+  },
+  "limitations": [
+    "P3-16 network is detection-only",
+    "P4-2 `Win32_Process` does not supply cwd",
+    "P6-3 real Buzz delivery unverified",
+    "goal verification is oriented toward file-changing goals"
+  ],
+  "conclusion": "NO-GO: valid independent review completed; R5 live A/B fails, R1 RED-first chronology remains unmet, and the earlier parent-death failure remains unexplained. Final regression passing does not erase these findings."
+}

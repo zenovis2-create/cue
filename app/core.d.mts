@@ -24,5 +24,17 @@ export interface CueCore {
   close(): void;
 }
 export function initializeConfig(userDataPath: string, defaults?: Partial<Pick<CueConfig, 'ledgerPath' | 'worktreeRoot'>>): CueConfig;
-export interface CueRuntime { readonly binary?: string; readonly codexHome?: string; readonly extraArgs?: readonly string[]; readonly prompt?: (run: any) => string }
+export interface CueRuntime {
+  readonly binary?: string;
+  readonly binarySha256?: string;
+  readonly codexHome?: string;
+  readonly homeRoot?: string;
+  readonly extraArgs?: readonly string[];
+  readonly model?: string;
+  readonly prompt?: (run: any) => string;
+  readonly controllerArgs?: readonly string[];
+  readonly requestTimeoutMs?: number;
+  readonly runTimeoutMs?: number;
+  readonly envelopeTtlMs?: number;
+}
 export function createCueCore(config: CueConfig, daemon?: AppDaemon, runtime?: CueRuntime): CueCore;

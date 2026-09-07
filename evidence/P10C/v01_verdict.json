@@ -1,0 +1,84 @@
+{
+  "schema": "cue.v0.1.verdict.v2",
+  "generatedAt": "2026-09-06T00:05:46Z",
+  "verdict": "PENDING_INDEPENDENT_REVIEW",
+  "scope": "standalone local Electron app launched by npm start; installer is outside v0.1 scope",
+  "sourceCandidate": {
+    "manifest": "source_tree_manifest.json",
+    "fileCount": 132,
+    "sourceTreeSha256": "8ab9d9306e753500245d664b8e4e358b98a20c2a38a9e3a3245ea7656c9cb499"
+  },
+  "tests": {
+    "command": "npm.cmd test",
+    "exitCode": 0,
+    "filesPassed": 23,
+    "testsPassed": 239,
+    "testsSkipped": 5,
+    "testsFailed": 0,
+    "evidence": "p10c_full_regression.log"
+  },
+  "parallelTimeoutRemediation": {
+    "affectedTests": [
+      "test/p3b.test.ts > blocks a runtime-computed outside path in a non-Node worker",
+      "test/p3c.test.ts > blocks a runtime-computed outside path in a non-Node worker"
+    ],
+    "assertionsUnchanged": true,
+    "individualTimeoutMs": 30000,
+    "postFixDirectVitest": "23 files passed; 238 passed; 5 skipped; 0 failed",
+    "postFixTargetedVitest": "2 files passed; 23 passed; 0 failed",
+    "postFixEvidence": "p10c_p3_parallel_postfix.log",
+    "postFixCanonicalRegression": "23 files passed; 239 passed; 5 skipped; 0 failed"
+  },
+  "liveModel": {
+    "command": "npm.cmd run evidence:p10c",
+    "exitCode": 0,
+    "goalsCompleted": 2,
+    "differentAllowedActions": true,
+    "differentArtifactsAndHashes": true,
+    "realDistinctControllerAndWorkerPids": true,
+    "sourceCredentialHomeUnchanged": true,
+    "enforcementViolations": 0,
+    "evidence": "p10c_live_result.json"
+  },
+  "effectiveManifest": {
+    "command": "npm.cmd run evidence:p10c:manifest",
+    "exitCode": 0,
+    "toolNames": ["cue_workspace"],
+    "hostExecutionTools": [],
+    "binarySha256": "cf68265897197ac5f3bff6a10c168eec159842b353129726da5e3ed6b91ef0f4",
+    "toolManifestSha256": "8015e26177f3a5e428f6d34fbd0d129e5c403deb035e6bfef81e252a79a1f95d",
+    "evidence": "p10c_manifest_proof.json"
+  },
+  "electron": {
+    "command": "npm.cmd run live:p10c",
+    "exitCode": 0,
+    "windowCreated": true,
+    "terminalState": "completed",
+    "adapterMode": "none",
+    "realControllerAndAppContainerWorkerPids": true,
+    "evidence": ["p10c_electron_run.json", "p10c_electron_window.png"]
+  },
+  "firstRun": {
+    "normalWindowObserved": true,
+    "normalExitCode": 0,
+    "cancelExitCode": 1,
+    "cancelPersistedConfig": false,
+    "evidence": ["p10c_npm_start_result.json", "p10c_first_run_cancel.json"]
+  },
+  "stop": {
+    "verdict": "PASS",
+    "controllerAndWorkerStopped": true,
+    "terminalState": "blocked/cancelled",
+    "evidence": "p10c_stop_result.json"
+  },
+  "knownPartials": [
+    "Legacy P3-16 remains detection-and-stop only and is not relabeled as syscall enforcement.",
+    "Windows Win32_Process exposes no cwd, so the P4-2 OS cwd query remains intentionally skipped.",
+    "P6 external Buzz delivery and registration remain intentionally skipped because Buzz is outside this standalone app scope.",
+    "Independent goal verification is proven for file-changing goals, not generalized read-only research or summary goals."
+  ],
+  "independentReview": {
+    "status": "pending",
+    "passed": false
+  }
+}

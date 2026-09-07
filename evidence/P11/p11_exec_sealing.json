@@ -1,0 +1,172 @@
+{
+  "passed": true,
+  "status": "verified-targeted-awaiting-independent-review",
+  "redLog": "p11_exec_sealing_red.log",
+  "initialRed": {
+    "testsFailed": 3,
+    "testsPassed": 0
+  },
+  "attempts": [
+    {
+      "hypothesis": "canonical absolute launch resolution plus package execute deny",
+      "directLaunchTestsPassed": 2,
+      "nestedTest": "FAIL; initial relative-path child probe targeted wrong cwd"
+    },
+    {
+      "hypothesis": "absolute path descendant probe",
+      "result": "FAIL; descendant exit 0 disproved package ACE enforcement",
+      "log": "p11_exec_sealing_attempt2.log"
+    },
+    {
+      "hypothesis": "OS job ActiveProcessLimit=1 forces every program through host resolver",
+      "result": "PASS kernel child launch denied; classification corrected from filesystem to executable_sealing to reflect job boundary, with nonzero assertion retained and quota assertion added",
+      "classificationFailureLog": "p11_exec_sealing_final.log",
+      "finalLog": "p11_exec_sealing_verified.log"
+    }
+  ],
+  "additionalLimitation": "Worker child processes are prohibited; commands requiring nested subprocesses are unsupported. Request each executable through a separate cue_workspace call.",
+  "buildExitCode": 0,
+  "final": {
+    "testsPassed": 4,
+    "testsFailed": 0,
+    "testsSkipped": 0,
+    "exitCode": 0,
+    "log": "p11_exec_sealing_verified.log"
+  },
+  "compatibility": {
+    "filesPassed": 4,
+    "testsPassed": 39,
+    "testsSkipped": 1,
+    "testsFailed": 0,
+    "log": "p11_exec_sealing_final.log",
+    "note": "Combined run includes one R2 new-test classification FAIL retained verbatim. All four existing compatibility files passed; final corrected R2 file then passed separately."
+  },
+  "tests": [
+    {
+      "name": "rejects PATH and junction aliases into a writable worktree and verifies existence",
+      "checks": [
+        "PATH planting refused",
+        "junction alias planting refused",
+        "missing binary refused",
+        "system helper absolute outside writable tree"
+      ]
+    },
+    {
+      "name": "refuses a planted absolute worker binary and records a violation before launch",
+      "checks": [
+        "refused before session creation",
+        "enforcement_violation executable_sealing stored"
+      ]
+    },
+    {
+      "name": "refuses an owned launch from another writable worktree in the ledger",
+      "checks": [
+        "all ledger envelope roots checked",
+        "enforcement_violation stored"
+      ]
+    },
+    {
+      "name": "denies a planted executable launched as a shell descendant",
+      "checks": [
+        "nonzero exit",
+        "OS quota denial",
+        "exact executable_sealing classification"
+      ]
+    }
+  ],
+  "mechanisms": [
+    "Canonical absolute executable resolution before every owned/synchronous process launch",
+    "Every ledger worktree and explicit worker home excluded from executable location",
+    "Launcher PS1 assets verified outside writable roots",
+    "System PowerShell, taskkill, icacls and where use absolute system paths",
+    "AppContainer job ActiveProcessLimit=1 prevents unmediated child launch"
+  ],
+  "unchangedSecurityAssertions": true,
+  "fixtureChanges": "Only legacy p2/p45 vendor locations moved outside worktrees; assertions preserved.",
+  "sourceHashes": [
+    {
+      "path": "daemon/src/process-launch.ts",
+      "sha256": "e216d1aff691bd605f56917ddfda7277a345a47e3c60212ab64f1c11564a272f"
+    },
+    {
+      "path": "daemon/src/worker-enforcement.ts",
+      "sha256": "fdfbe101f3b9b1652fed94de4dbb203bc57a9177045ee9c0f5db41f5c09b2143"
+    },
+    {
+      "path": "daemon/src/codex-session.ts",
+      "sha256": "ce781cc40eea5fb6719cc4143d8b160dff8ee3ddef11f1fd6ea6eb972480c1e8"
+    },
+    {
+      "path": "daemon/src/host-codex-runtime.ts",
+      "sha256": "d9657428bccaeac3cd3bf4f9e7c5b6fb8b893cd47bda51ea0a9b30f9c618b516"
+    },
+    {
+      "path": "daemon/src/host-codex-controller.ts",
+      "sha256": "7fc2cf6b0581bc05f4dd2b5ecf2c91a95518a61c22c6c60201d62a60f6400a67"
+    },
+    {
+      "path": "daemon/src/appcontainer-launch.ps1",
+      "sha256": "ff47ce54ba45309e2a34c0cb0cf6d08dadb7bf297d5d02d67233591191ca3029"
+    },
+    {
+      "path": "daemon/test/p11-exec-sealing.test.ts",
+      "sha256": "c921d7ee65dd03272f0408ed829b8e2d9a8188a31a77a2e4412dda1ff48b8f7a"
+    },
+    {
+      "path": "daemon/test/p2.test.ts",
+      "sha256": "cfd3121b88cae79bf9391e8a321705d276b8c3bf81e7737d1d0b8c80477547c8"
+    },
+    {
+      "path": "daemon/test/p45.test.ts",
+      "sha256": "1fdc5e369f4ae7416cb60afa604392bc287624e38e3a7bb9e2ae14eb8f5648ed"
+    }
+  ],
+  "initialSourceHashes": [
+    {
+      "path": "daemon/src/process-launch.ts",
+      "sha256": "e216d1aff691bd605f56917ddfda7277a345a47e3c60212ab64f1c11564a272f"
+    },
+    {
+      "path": "daemon/src/worker-enforcement.ts",
+      "sha256": "174163c0ec4edc762a3e7ab2da66d460eff38a81421308075a526218d9afadcb"
+    },
+    {
+      "path": "daemon/src/codex-session.ts",
+      "sha256": "ce781cc40eea5fb6719cc4143d8b160dff8ee3ddef11f1fd6ea6eb972480c1e8"
+    },
+    {
+      "path": "daemon/src/host-codex-runtime.ts",
+      "sha256": "cf8adfc3697a473fe6becdba7610ec758c00202db5da37e0662fb9d5245b4848"
+    },
+    {
+      "path": "daemon/src/host-codex-controller.ts",
+      "sha256": "7fc2cf6b0581bc05f4dd2b5ecf2c91a95518a61c22c6c60201d62a60f6400a67"
+    },
+    {
+      "path": "daemon/src/appcontainer-launch.ps1",
+      "sha256": "ff47ce54ba45309e2a34c0cb0cf6d08dadb7bf297d5d02d67233591191ca3029"
+    },
+    {
+      "path": "daemon/test/p11-exec-sealing.test.ts",
+      "sha256": "c921d7ee65dd03272f0408ed829b8e2d9a8188a31a77a2e4412dda1ff48b8f7a"
+    },
+    {
+      "path": "daemon/test/p2.test.ts",
+      "sha256": "cfd3121b88cae79bf9391e8a321705d276b8c3bf81e7737d1d0b8c80477547c8"
+    },
+    {
+      "path": "daemon/test/p45.test.ts",
+      "sha256": "1fdc5e369f4ae7416cb60afa604392bc287624e38e3a7bb9e2ae14eb8f5648ed"
+    }
+  ],
+  "postReviewVerification": "Final source re-verification in p11_full_regression.log; earlier targeted logs preserved with their own source chronology",
+  "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca",
+  "finalCanonicalVerification": {
+    "filesPassed": 29,
+    "testsPassed": 280,
+    "testsSkipped": 5,
+    "testsFailed": 0,
+    "exitCode": 0,
+    "log": "p11_full_regression.log"
+  }
+}

@@ -1,0 +1,42 @@
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-writer-corrective.test.ts test/p9.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-1 has npm start and a main entrypoint 2ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-2 seals BrowserWindow and exposes an explicit preload API only 2ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-3 freezes channels, rejects unknown channels, and cannot execute before approval 115ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 first-run setup chooses a workspace once and reuses the persisted choice 11ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 treats a cancelled workspace picker as cancellation and persists nothing 2ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 rejects a tampered persisted config instead of trusting stale paths 11ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 creates first-run config once, reuses it, and stores no credentials 9ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-5 closes the owned daemon and never restarts after crash 85ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-6/P9-7 records approval and default autonomy without widening the envelope 82ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-8 emits no notification during normal progress 78ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-9 polls ledger-backed status and exposes an actual stop control 1ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-10 builds completion totals only from ledger rows 8016ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-11 app core has no static Buzz dependency 2ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: parent then child 188ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: child then parent 149ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: junction child alias 148ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: dotdot-named child 146ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed stop quarantines the daemon and retains the writer lease 96ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through late completion after stop failure 208ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination rejection 202ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination result 208ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed initial process query cannot be mistaken for a dead session 99ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected state 6ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected sourceHome 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected missing homeRoot under junction 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot named ..homes 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > a protected-path refusal permits a corrected core for the same workspace immediately 73ms
+
+ Test Files  2 passed (2)
+      Tests  28 passed (28)
+   Start at  12:23:30
+   Duration  11.15s (transform 243ms, setup 0ms, import 703ms, tests 9.96s, environment 0ms)
+
+EXIT_CODE=0

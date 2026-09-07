@@ -1,0 +1,9 @@
+{
+  "filesPassed": 23,
+  "testsPassed": 244,
+  "testsSkipped": 5,
+  "testsFailed": 0,
+  "exitCode": 0,
+  "failingTests": [],
+  "rawLog": "evidence/P11/p11_baseline_regression.log"
+}

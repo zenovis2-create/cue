@@ -47,10 +47,11 @@ export interface TaskCardModel {
   autonomyLevel: number | null;
   recoveryAttempts: number;
   orphanCount: number;
+  blockedReason: string | null;
 }
 
 export function readTaskCard(db: Ledger, taskId: string): TaskCardModel {
-  const task = db.prepare('SELECT id,state FROM task WHERE id=?').get(taskId) as { id: string; state: string } | undefined;
+  const task = db.prepare('SELECT id,state,blocked_reason FROM task WHERE id=?').get(taskId) as { id: string; state: string; blocked_reason: string | null } | undefined;
   if (!task) throw new Error(`task not found: ${taskId}`);
   assertTaskState(task.state);
   const run = db.prepare('SELECT id FROM run WHERE task_id=? ORDER BY started_at DESC,id DESC LIMIT 1').get(taskId) as { id: string } | undefined;
@@ -76,5 +77,6 @@ export function readTaskCard(db: Ledger, taskId: string): TaskCardModel {
     autonomyLevel: autonomy?.level ?? null,
     recoveryAttempts: recovery.count,
     orphanCount: orphans.count,
+    blockedReason: task.blocked_reason,
   };
 }

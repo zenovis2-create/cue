@@ -28,7 +28,7 @@ describe('Phase 3C AppContainer enforcement', () => {
     const encoded = Buffer.from(target).toString('base64');
     const result = runEnforcedWorker(s.envelope, { executable: 'powershell.exe', args: ['-NoProfile', '-Command', `$p=[Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('${encoded}'));Set-Content -LiteralPath $p -Value escape`], cwd: s.envelope.worktree_realpath });
     expect(result.violation).toBe('filesystem'); expect(existsSync(target)).toBe(false); s.db.close();
-  });
+  }, 30_000);
 
   it('blocks a non-Node worker from a real local socket when egress is empty', async () => {
     const server = createServer(socket => socket.end()); server.listen(0, '127.0.0.1'); await once(server, 'listening');

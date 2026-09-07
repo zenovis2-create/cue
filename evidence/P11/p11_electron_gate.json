@@ -1,0 +1,6 @@
+{
+  "attemptCap": 3,
+  "done": "Audit high=0; focused IPC tests exit0; actual npm start window exit0 with live prefs, four APIs, CSP, navigation/popup enforcement and PNG; first-run native cancel exit1 with no config",
+  "discrepancy": "Observed preload had five functions prepare approve execute stop status. Required four restored by routing read-only status through execute operation; approval and stop unchanged.",
+  "eachPass": "focused tests and live evidence assertions"
+}

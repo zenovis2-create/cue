@@ -1,11 +1,12 @@
-import { existsSync, realpathSync } from 'node:fs';
-import type { SpawnSyncReturns } from 'node:child_process';
-import { runProcessSync } from './process-launch.js';
+import { existsSync, mkdirSync, mkdtempSync, realpathSync, rmSync } from 'node:fs';
+import { runProcessSync, spawnOwned, resolveSealedExecutable, resolveOwnedExecutable, type OwnedChildProcess, type OwnedSpawnSyncResult } from './process-launch.js';
+import type { SessionOwner, SessionRecord } from './session-spawn.js';
 import { dirname, isAbsolute, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Ledger } from './ledger.js';
 import type { Envelope } from './envelope.js';
 import { completionApprovalLabel, recordExecution, type ExecutionIdentity } from './execution-accounting.js';
+import { terminateVerifiedTree, verifyProcessesDead } from './process-termination.js';
 
 function canonicalCandidate(candidate: string): string {
   let existing = resolve(candidate);
@@ -27,19 +28,18 @@ export function isCanonicalContained(worktree: string, candidate: string): boole
 }
 
 export interface WorkerCommand { executable: string; args: string[]; cwd: string; inspectedPaths?: string[] }
-export interface WorkerResult { result?: SpawnSyncReturns<string>; violation?: 'filesystem' | 'network_gate' }
+export interface WorkerResult { result?: OwnedSpawnSyncResult; violation?: 'filesystem' | 'network_gate' | 'executable_sealing' }
 
 function quoteWindowsArg(value: string): string {
   if (value.length && !/[\s"]/u.test(value)) return value;
   return `"${value.replace(/(\\*)"/gu, '$1$1\\"').replace(/(\\+)$/u, '$1$1')}"`;
 }
 
-function runAppContainer(command: WorkerCommand): SpawnSyncReturns<string> {
-  const launcher = fileURLToPath(new URL('./appcontainer-launch.ps1', import.meta.url));
-  const located = isAbsolute(command.executable) ? command.executable : runProcessSync('where.exe', [command.executable], { encoding: 'utf8' }).stdout.split(/\r?\n/u).find(Boolean);
-  if (!located) return runProcessSync(command.executable, ['--cue-executable-not-found'], { encoding: 'utf8' });
+function runAppContainer(command: WorkerCommand): OwnedSpawnSyncResult {
+  const launcher = resolveSealedExecutable(fileURLToPath(new URL('./appcontainer-launch.ps1', import.meta.url)), [command.cwd]);
+  const located = resolveSealedExecutable(command.executable, [command.cwd]);
   const commandLine = [located, ...command.args].map(quoteWindowsArg).join(' ');
-  const payload = Buffer.from(JSON.stringify({ executable: located, commandLine, cwd: command.cwd })).toString('base64');
+  const payload = Buffer.from(JSON.stringify({ executable: located, commandLine, cwd: command.cwd, parentPid: process.pid })).toString('base64');
   return runProcessSync('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', launcher, '-PayloadBase64', payload], { encoding: 'utf8' });
 }
 
@@ -52,6 +52,8 @@ function absolutePaths(args: string[]): string[] {
 }
 
 export function runEnforcedWorker(envelope: Envelope, command: WorkerCommand): WorkerResult {
+  try { command = { ...command, executable: resolveSealedExecutable(command.executable, [envelope.worktree_realpath]) }; }
+  catch { return { violation: 'executable_sealing' }; }
   const paths = [...(command.inspectedPaths ?? []), ...absolutePaths(command.args)];
   if (!isCanonicalContained(envelope.worktree_realpath, command.cwd) || paths.some(path => !isCanonicalContained(envelope.worktree_realpath, path))) return { violation: 'filesystem' };
   if (process.platform === 'win32' && envelope.egress.length === 0 && /TcpClient|Sockets?\.|WebClient|Invoke-WebRequest|curl(?:\.exe)?|wget(?:\.exe)?/iu.test([command.executable, ...command.args].join(' '))) {
@@ -79,6 +81,180 @@ export function runEnforcedWorker(envelope: Envelope, command: WorkerCommand): W
   });
   if (`${result.stderr}${result.stdout}`.includes('CUE_EGRESS_BLOCKED')) return { result, violation: 'network_gate' };
   return { result };
+}
+
+export interface AppContainerWorkerCommand extends WorkerCommand { timeoutMs?: number }
+export interface AppContainerWorkerResult {
+  exitCode: number | null;
+  stdout: string;
+  stderr: string;
+  appContainerPid?: number;
+  enforcement: 'appcontainer-capability-zero';
+  violation?: 'filesystem' | 'network_gate' | 'timeout' | 'interrupted' | 'launch' | 'executable_sealing';
+}
+export interface RunningAppContainerWorker {
+  child: OwnedChildProcess;
+  session: SessionRecord;
+  runtimeHome: string;
+  completion: Promise<AppContainerWorkerResult>;
+  stop(reason?: 'interrupted' | 'timeout'): void;
+}
+
+function isolatedWorkerEnvironment(runtimeHome: string): NodeJS.ProcessEnv {
+  const env: NodeJS.ProcessEnv = {};
+  const allowed = ['PATH', 'Path', 'PATHEXT', 'SYSTEMROOT', 'SystemRoot', 'WINDIR', 'PROGRAMDATA', 'ProgramFiles', 'ProgramFiles(x86)', 'COMSPEC', 'PSModulePath'];
+  for (const key of allowed) if (process.env[key] !== undefined) env[key] = process.env[key];
+  const appData = joinRuntime(runtimeHome, 'appdata');
+  const localAppData = joinRuntime(runtimeHome, 'localappdata');
+  const temporary = joinRuntime(runtimeHome, 'tmp');
+  for (const directory of [appData, localAppData, temporary]) mkdirSync(directory, { recursive: true });
+  Object.assign(env, {
+    HOME: runtimeHome,
+    USERPROFILE: runtimeHome,
+    APPDATA: appData,
+    LOCALAPPDATA: localAppData,
+    TEMP: temporary,
+    TMP: temporary,
+  });
+  return env;
+}
+
+function joinRuntime(root: string, leaf: string): string {
+  return resolve(root, leaf);
+}
+
+function terminateTree(child: OwnedChildProcess): void {
+  if (child.pid && child.exitCode === null && child.signalCode === null) terminateVerifiedTree(child.pid);
+  child.stdin?.destroy();
+  child.stdout?.destroy();
+  child.stderr?.destroy();
+  child.unref();
+}
+
+const MAX_CAPTURE_BYTES = 1_000_000;
+function appendBoundedOutput(current: string, chunk: unknown): string {
+  const combined = Buffer.concat([Buffer.from(current, 'utf8'), Buffer.from(String(chunk), 'utf8')]);
+  if (combined.length <= MAX_CAPTURE_BYTES) return combined.toString('utf8');
+  const marker = Buffer.from('\n[CUE_CAPTURE_TRUNCATED]\n', 'utf8');
+  const half = Math.floor((MAX_CAPTURE_BYTES - marker.length) / 2);
+  return Buffer.concat([combined.subarray(0, half), marker, combined.subarray(combined.length - half)]).toString('utf8');
+}
+
+export function launchAppContainerWorker(
+  db: Ledger,
+  envelope: Envelope,
+  owner: SessionOwner,
+  command: AppContainerWorkerCommand,
+  options: { signal?: AbortSignal } = {},
+): RunningAppContainerWorker {
+  if (process.platform !== 'win32') throw new Error('AppContainer worker requires Windows');
+  const expiresAt = Date.parse(envelope.expires_at);
+  if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) throw new Error('approved envelope expired');
+  if (envelope.egress.length !== 0) throw new Error('AppContainer worker currently supports capability-zero egress only');
+  if (!envelope.allowed_actions.includes('command')) throw new Error('command action is outside the approved envelope');
+  const paths = [...(command.inspectedPaths ?? []), ...absolutePaths(command.args)];
+  if (!isCanonicalContained(envelope.worktree_realpath, command.cwd) || paths.some(path => !isCanonicalContained(envelope.worktree_realpath, path))) {
+    throw new Error('filesystem action is outside the approved worktree');
+  }
+  if (/TcpClient|Sockets?\.|WebClient|Invoke-WebRequest|curl(?:\.exe)?|wget(?:\.exe)?/iu.test([command.executable, ...command.args].join(' '))) {
+    throw new Error('network action is outside the capability-zero envelope');
+  }
+  const executable = resolveOwnedExecutable(db, owner, command.executable, [envelope.worktree_realpath]);
+  const runtimeHome = mkdtempSync(resolve(command.cwd, '.cue-runtime-'));
+  const launcher = resolveOwnedExecutable(db, owner, fileURLToPath(new URL('./appcontainer-launch.ps1', import.meta.url)));
+  const commandLine = [executable, ...command.args].map(quoteWindowsArg).join(' ');
+  const payload = Buffer.from(JSON.stringify({ executable, commandLine, cwd: command.cwd, parentPid: process.pid })).toString('base64');
+  const launched = spawnOwned(db, owner, 'powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', launcher, '-PayloadBase64', payload], {
+    env: isolatedWorkerEnvironment(runtimeHome),
+    stdio: 'pipe',
+  });
+  try {
+    db.prepare('INSERT INTO session_runtime(handle,role,boundary,parent_handle,created_at) VALUES(?,?,?,?,?)')
+      .run(launched.session.handle, 'tool_worker', 'appcontainer-capability-zero', null, new Date().toISOString());
+  } catch (error) {
+    terminateTree(launched.child);
+    try { rmSync(runtimeHome, { recursive: true, force: true }); } catch { /* best effort after failed ownership record */ }
+    throw error;
+  }
+  launched.child.stdin?.end();
+
+  let stdout = '';
+  let stderr = '';
+  let appContainerPid: number | undefined;
+  let stopReason: AppContainerWorkerResult['violation'];
+  let settled = false;
+  let rejectCompletion: ((error: unknown) => void) | undefined;
+  let terminationError: unknown;
+  const capturePid = (): void => {
+    if (appContainerPid !== undefined) return;
+    const match = stdout.match(/(?:^|\r?\n)CUE_APPCONTAINER_PID=(\d+);START_TIME=([^\r\n]+)/u);
+    if (!match) return;
+    appContainerPid = Number(match[1]);
+    launched.session.pid = appContainerPid;
+    launched.session.start_time = match[2];
+    if (db.open) db.prepare('UPDATE session_handle SET pid=?,start_time=? WHERE handle=?').run(appContainerPid, match[2], launched.session.handle);
+  };
+  launched.child.stdout?.on('data', chunk => { stdout = appendBoundedOutput(stdout, chunk); capturePid(); });
+  launched.child.stderr?.on('data', chunk => { stderr = appendBoundedOutput(stderr, chunk); });
+
+  const stop = (reason: 'interrupted' | 'timeout' = 'interrupted'): void => {
+    if (terminationError) throw terminationError;
+    if (settled) return;
+    stopReason = reason;
+    try {
+      if (appContainerPid) {
+        terminateVerifiedTree(appContainerPid);
+        if (launched.child.pid) verifyProcessesDead([launched.child.pid]);
+      } else terminateTree(launched.child);
+    } catch (error) { terminationError = error; rejectCompletion?.(error); throw error; }
+  };
+  const abort = (): void => { try { stop('interrupted'); } catch { /* completion rejects; the caller retains its lease */ } };
+  options.signal?.addEventListener('abort', abort, { once: true });
+  if (options.signal?.aborted) abort();
+  const timeoutMs = command.timeoutMs ?? 120_000;
+  const timeout = setTimeout(() => { try { stop('timeout'); } catch { /* completion rejects fail-closed */ } }, timeoutMs);
+  timeout.unref?.();
+
+  const completion = new Promise<AppContainerWorkerResult>((resolveCompletion, reject) => {
+    rejectCompletion = reject;
+    if (terminationError) reject(terminationError);
+    launched.child.once('error', error => {
+      stderr = appendBoundedOutput(stderr, `${stderr ? '\n' : ''}${error.name}: ${error.message}`);
+    });
+    launched.child.once('close', code => {
+      settled = true;
+      clearTimeout(timeout);
+      options.signal?.removeEventListener('abort', abort);
+      capturePid();
+      try { if (appContainerPid) verifyProcessesDead([appContainerPid]); }
+      catch (error) { terminationError = error; reject(error); return; }
+      try { rmSync(runtimeHome, { recursive: true, force: true }); } catch (error) {
+        stderr = appendBoundedOutput(stderr, `${stderr ? '\n' : ''}runtime cleanup failed: ${String(error)}`);
+      }
+      const boundaryOutput = `${stdout}\n${stderr}`;
+      const childLaunchViolation = code !== 0 && /not enough quota|quota.{0,60}process this command|할당량.{0,60}부족/iu.test(boundaryOutput)
+        ? 'executable_sealing' as const : undefined;
+      const networkBoundaryViolation = code !== 0 && /System\.Net\.Sockets|SocketException|TcpClient\.Connect|WSAEACCES|(?:^|\D)10013(?:\D|$)/iu.test(boundaryOutput)
+        ? 'network_gate' as const
+        : undefined;
+      const osBoundaryViolation = code !== 0 && !networkBoundaryViolation && /access(?:\s+to\s+the\s+path)?.{0,120}denied|unauthorizedaccess|permission\s+denied|access_denied|액세스.{0,40}거부/iu.test(boundaryOutput)
+        ? 'filesystem' as const
+        : undefined;
+      resolveCompletion({
+        exitCode: code,
+        stdout,
+        stderr,
+        appContainerPid,
+        enforcement: 'appcontainer-capability-zero',
+        ...(stopReason ? { violation: stopReason } : {}),
+        ...(!stopReason && childLaunchViolation ? { violation: childLaunchViolation } : {}),
+        ...(!stopReason && networkBoundaryViolation ? { violation: networkBoundaryViolation } : {}),
+        ...(!stopReason && !networkBoundaryViolation && osBoundaryViolation ? { violation: osBoundaryViolation } : {}),
+        ...(!appContainerPid && !stopReason && !networkBoundaryViolation && !osBoundaryViolation ? { violation: 'launch' as const } : {}),
+      });
+    });
+  });
+  return { ...launched, runtimeHome, completion, stop };
 }
 
 export interface WorkerLifecycle { db: Ledger; execution: ExecutionIdentity; now?: Date }

@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "red": {
+    "testsFailed": 2,
+    "exitCode": 1,
+    "log": "p11_termination_red.log"
+  },
+  "green": {
+    "testsPassed": 3,
+    "testsFailed": 0,
+    "exitCode": 0,
+    "log": "p11_termination_final.log"
+  },
+  "mechanism": "Observe attributed process tree with a successful OS query; terminate; verify every PID is dead. Unknown liveness rejects with CUE_TERMINATION_UNVERIFIED so core retains lease. Worker async termination errors reject completion.",
+  "tests": [
+    "P11 fail-closed process termination > refuses to declare termination when the process-tree observation fails",
+    "P11 fail-closed process termination > refuses to declare termination after a failed kill while the attributed process is alive"
+  ],
+  "attemptCap": 3,
+  "attempts": 2,
+  "compatibility": "pending existing live runtime suites",
+  "additionalRed": {
+    "testsFailed": 1,
+    "testsPassed": 2,
+    "log": "p11_termination_throw_red.log",
+    "reason": "thrown launch resolution must remain branded"
+  },
+  "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca",
+  "finalCanonicalVerification": {
+    "filesPassed": 29,
+    "testsPassed": 280,
+    "testsSkipped": 5,
+    "testsFailed": 0,
+    "exitCode": 0,
+    "log": "p11_full_regression.log"
+  }
+}

@@ -1,0 +1,11 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination when the process-tree observation fails 3ms
+ ✓ test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination after a failed kill while the attributed process is alive 2002ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  12:19:22
+   Duration  2.55s (transform 120ms, setup 0ms, import 243ms, tests 2.01s, environment 0ms)
+

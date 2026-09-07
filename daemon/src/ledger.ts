@@ -15,5 +15,7 @@ export function openLedger(filename = ':memory:'): Ledger {
   db.exec(readFileSync(join(here, '..', 'migrations', '003_p6.sql'), 'utf8'));
   db.exec(readFileSync(join(here, '..', 'migrations', '004_p7.sql'), 'utf8'));
   db.exec(readFileSync(join(here, '..', 'migrations', '005_p8.sql'), 'utf8'));
+  db.exec(readFileSync(join(here, '..', 'migrations', '006_p10c.sql'), 'utf8'));
+  db.exec(readFileSync(join(here, '..', 'migrations', '007_workspace_write_lease.sql'), 'utf8'));
   return db;
 }

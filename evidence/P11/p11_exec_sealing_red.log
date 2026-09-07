@@ -1,0 +1,77 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-exec-sealing.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p11-exec-sealing.test.ts > P11 executable sealing > refuses a planted absolute worker binary and records a violation before launch 1251ms
+   → expected 'undefined' to match /executable.*writable worktree/i
+ × test/p11-exec-sealing.test.ts > P11 executable sealing > refuses an owned launch from another writable worktree in the ledger 465ms
+   → expected 'undefined' to match /executable.*writable worktree/i
+ × test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant 2045ms
+   → expected undefined to be 'filesystem' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p11-exec-sealing.test.ts > P11 executable sealing > refuses a planted absolute worker binary and records a violation before launch
+AssertionError: expected 'undefined' to match /executable.*writable worktree/i
+
+- Expected:
+/executable.*writable worktree/i
+
++ Received:
+"undefined"
+
+ ❯ test/p11-exec-sealing.test.ts:28:27
+     26|     try { launched = launchAppContainerWorker(s.db, s.envelope, s.owne…
+     27|     if (launched) await launched.completion;
+     28|     expect(String(error)).toMatch(/executable.*writable worktree/i);
+       |                           ^
+     29|     expect(s.db.prepare("SELECT content FROM artifact WHERE kind='enfo…
+     30|     expect(s.db.prepare('SELECT count(*) n FROM session_handle').get()…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/p11-exec-sealing.test.ts > P11 executable sealing > refuses an owned launch from another writable worktree in the ledger
+AssertionError: expected 'undefined' to match /executable.*writable worktree/i
+
+- Expected:
+/executable.*writable worktree/i
+
++ Received:
+"undefined"
+
+ ❯ test/p11-exec-sealing.test.ts:38:27
+     36|     try { launched = spawnOwned(s.db, s.owner, planted, ['-e', 'proces…
+     37|     if (launched) await new Promise(resolve => launched!.child.once('c…
+     38|     expect(String(error)).toMatch(/executable.*writable worktree/i);
+       |                           ^
+     39|     expect(s.db.prepare("SELECT content FROM artifact WHERE kind='enfo…
+     40|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant
+AssertionError: expected undefined to be 'filesystem' // Object.is equality
+
+- Expected:
+"filesystem"
+
++ Received:
+undefined
+
+ ❯ test/p11-exec-sealing.test.ts:46:30
+     44|     const result = await launched.completion;
+     45|     expect(result.exitCode).not.toBe(0);
+     46|     expect(result.violation).toBe('filesystem');
+       |                              ^
+     47|   }, 30_000);
+     48| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  11:59:42
+   Duration  4.18s (transform 78ms, setup 0ms, import 196ms, tests 3.76s, environment 0ms)
+

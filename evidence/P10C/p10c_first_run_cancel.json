@@ -1,0 +1,14 @@
+{
+  "schema": "cue.p10c.first-run-cancel.v1",
+  "generatedAt": "2026-09-05T08:09:55Z",
+  "command": "npm.cmd start",
+  "workspaceDialogObserved": true,
+  "workspaceDialogTitle": "Cue에서 작업할 프로젝트 폴더를 선택하세요",
+  "cancelled": true,
+  "startupError": "workspace selection cancelled",
+  "exitCode": 1,
+  "fallbackWorkspaceUsed": false,
+  "persistedConfigFound": false,
+  "failClosed": true,
+  "screenshot": "evidence/P10C/p10c_first_run_cancel.png"
+}

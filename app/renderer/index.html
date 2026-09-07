@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>Cue</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -35,10 +36,15 @@
     <section aria-live="polite">
       <h1>상태</h1>
       <div id="quiet" class="quiet">정상 진행 중에는 조용히 작업합니다.</div>
+      <p id="transport-error" class="transport-error" role="status" hidden></p>
       <article id="result" hidden>
-        <h2>완료</h2>
+        <h2 id="state-title">작업 중</h2>
+        <p id="stage" class="stage"></p>
         <p id="approval-summary"></p>
         <p id="autonomy-summary"></p>
+        <p id="tool-summary"></p>
+        <pre id="result-summary"></pre>
+        <button id="stop" class="danger" type="button" hidden>실행 중단</button>
       </article>
     </section>
   </main>

@@ -5,7 +5,6 @@ const allowedApi = Object.freeze({
   approve: input => ipcRenderer.invoke('cue:approve', input),
   execute: input => ipcRenderer.invoke('cue:execute', input),
   stop: input => ipcRenderer.invoke('cue:stop', input),
-  status: input => ipcRenderer.invoke('cue:status', input),
 });
 
 contextBridge.exposeInMainWorld('cue', allowedApi);

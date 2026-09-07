@@ -1,0 +1,54 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination when the process-tree observation fails 7ms
+   → expected [Function] to throw an error
+ × test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination after a failed kill while the attributed process is alive 1ms
+   → expected [Function] to throw an error
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination when the process-tree observation fails
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ test/p11-termination.test.ts:10:40
+      8|     vi.spyOn(launch, 'runProcessSync').mockReturnValue({ status: 1, st…
+      9|     const child = { pid: 123456789, exitCode: null, signalCode: null, …
+     10|     expect(() => terminateTree(child)).toThrow(/CUE_TERMINATION_UNVERI…
+       |                                        ^
+     11|   });
+     12|   it('refuses to declare termination after a failed kill while the att…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination after a failed kill while the attributed process is alive
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ test/p11-termination.test.ts:19:40
+     17|     vi.spyOn(process, 'kill').mockReturnValue(true);
+     18|     const child = { pid: 123456789, exitCode: null, signalCode: null, …
+     19|     expect(() => terminateTree(child)).toThrow(/CUE_TERMINATION_UNVERI…
+       |                                        ^
+     20|   });
+     21| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  12:16:41
+   Duration  516ms (transform 110ms, setup 0ms, import 233ms, tests 10ms, environment 0ms)
+

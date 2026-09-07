@@ -1,0 +1,14 @@
+{
+  "filesPassed": 28,
+  "testsPassed": 279,
+  "testsSkipped": 5,
+  "testsFailed": 1,
+  "exitCode": 1,
+  "failingTests": [
+    "Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed"
+  ],
+  "failure": "workerAlive remained true after five-second observation window; assertion unchanged",
+  "blocker": "R1 parent death",
+  "log": "p11_parent_death_regression_failure.log",
+  "sourceTreeSha256": "f998c77c43b528116eb2444827e30a4e1e73edd6b945c0dda893e77040f38395"
+}

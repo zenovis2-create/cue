@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && node scripts/copy-assets.mjs",
     "pretest": "npm run build",
-    "test": "vitest run --reporter=verbose"
+    "test": "vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1"
   },
   "keywords": [],
   "dependencies": {

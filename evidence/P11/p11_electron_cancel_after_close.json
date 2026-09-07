@@ -1,0 +1,44 @@
+{
+  "id": "c76d3c58-07b4-416b-9c3e-ef884909720c",
+  "ok": true,
+  "result": {
+    "snapshot": {
+      "id": "b8135d81-fc2f-4900-96f9-e4b2f56b90bf",
+      "app": {
+        "name": "electron",
+        "bundleId": "electron",
+        "pid": 60792
+      },
+      "window": {
+        "title": "Error",
+        "id": 75370094,
+        "index": null,
+        "x": 1541,
+        "y": 938,
+        "width": 732,
+        "height": 312,
+        "isMinimized": null,
+        "isOffscreen": null,
+        "screenIndex": null
+      },
+      "coordinateSpace": "window",
+      "treeText": "App=electron (pid 60792)\nWindow: \"Error\", App: electron.\n\n0 window Error\n\t1 이미지 MainInstructionIcon, Secondary Actions: SetValue\n\t2 텍스트 Cue 시작 실패, Secondary Actions: SetValue\n\t3 텍스트 workspace selection cancelled, Secondary Actions: SetValue\n\t4 pane 확인",
+      "elementCount": 5,
+      "focusedElementId": null,
+      "truncation": {
+        "truncated": false,
+        "maxNodes": 1200,
+        "maxDepth": 64,
+        "maxDepthReached": false
+      }
+    },
+    "screenshot": null,
+    "screenshotStatus": {
+      "state": "skipped",
+      "reason": "no_screenshot_flag"
+    }
+  },
+  "_meta": {
+    "runtimeId": "8d09ff1c-a16c-4be3-8be5-ae06f8e2e1bf"
+  }
+}

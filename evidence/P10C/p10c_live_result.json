@@ -1,0 +1,345 @@
+{
+  "schema": "cue.p10c.live.v1",
+  "generatedAt": "2026-09-05T08:01:45.420Z",
+  "verdict": "PASS",
+  "model": "gpt-5.5",
+  "productBoundary": "standalone-electron-core",
+  "controllerBoundary": "host-model-only; isolated controller cwd; environments=[]; cue_workspace dynamic tool only",
+  "workerBoundary": "Windows AppContainer capability-zero; approved worktree ACL only",
+  "networkClaim": "Tool-worker outbound networking is OS-denied by capability-zero AppContainer. Legacy P3-16 detection remains detection-only and is not relabeled.",
+  "runs": [
+    {
+      "name": "A",
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "allowedActions": [
+        "command",
+        "file_change",
+        "goal:4aaeab623d7ef1cb"
+      ],
+      "card": {
+        "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+        "state": "completed",
+        "status": "완료",
+        "stage": "마침",
+        "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+        "accepted": 1,
+        "declined": 0,
+        "autonomyLevel": 1,
+        "recoveryAttempts": 0,
+        "orphanCount": 0,
+        "blockedReason": null,
+        "approvalSummary": "자동 승인 1건 · 거부 0건",
+        "autonomySummary": "자율성: ① · 자동 복구 0회",
+        "isolatedToolCalls": 10,
+        "workerPids": [
+          66656,
+          61820,
+          24824,
+          60280,
+          69408,
+          60080,
+          56760,
+          61472,
+          59936,
+          61040,
+          65072,
+          67348
+        ],
+        "resultSummary": "Created and verified `alpha-live.txt` in the approved workspace root.\n\nVerification passed: 14 UTF-8 bytes, exactly `alpha-from-cue`, with no BOM or trailing newline."
+      },
+      "file": "alpha-live.txt",
+      "content": "alpha-from-cue",
+      "sha256": "ade9b72d5e64f5f4305af7caef33b109473c83676c10eecdbfdccb7577a84aca",
+      "contentVerified": true
+    },
+    {
+      "name": "B",
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "allowedActions": [
+        "command",
+        "file_change",
+        "goal:0659c83d8b98eb9b"
+      ],
+      "card": {
+        "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+        "state": "completed",
+        "status": "완료",
+        "stage": "마침",
+        "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+        "accepted": 1,
+        "declined": 0,
+        "autonomyLevel": 1,
+        "recoveryAttempts": 0,
+        "orphanCount": 0,
+        "blockedReason": null,
+        "approvalSummary": "자동 승인 1건 · 거부 0건",
+        "autonomySummary": "자율성: ① · 자동 복구 0회",
+        "isolatedToolCalls": 6,
+        "workerPids": [
+          68284,
+          62932,
+          65008,
+          51844,
+          69312,
+          68856,
+          30048,
+          67788
+        ],
+        "resultSummary": "Created and verified `beta-live.txt` in the approved workspace.\n\nVerification: exists, 23 bytes, exact UTF-8 content `beta-from-cue-different`, no extra characters."
+      },
+      "file": "beta-live.txt",
+      "content": "beta-from-cue-different",
+      "sha256": "bd7efc04367a1bd70a941acc7979fae5f1b4b9779ac772a16e87338d673ace8e",
+      "contentVerified": true
+    }
+  ],
+  "sessions": [
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 56452,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-state\\worker-homes\\codex-home-4MJM4P\\controller-workspace",
+      "role": "controller",
+      "boundary": "host-model-only",
+      "parentHandle": null
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 66656,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 61820,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 24824,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 60280,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 69408,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 60080,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 56760,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 61472,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 59936,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 61040,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 65072,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "66217300-ea6a-482a-b51a-51de08910364",
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "pid": 67348,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "5dfcd100-e262-4bed-8995-2487c4127817"
+    },
+    {
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "pid": 60460,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-state\\worker-homes\\codex-home-mEuIfg\\controller-workspace",
+      "role": "controller",
+      "boundary": "host-model-only",
+      "parentHandle": null
+    },
+    {
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "pid": 68284,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "facb3cd6-094c-4240-996a-a30cc4080a8e"
+    },
+    {
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "pid": 62932,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "facb3cd6-094c-4240-996a-a30cc4080a8e"
+    },
+    {
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "pid": 65008,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "facb3cd6-094c-4240-996a-a30cc4080a8e"
+    },
+    {
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "pid": 51844,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "facb3cd6-094c-4240-996a-a30cc4080a8e"
+    },
+    {
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "pid": 69312,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "facb3cd6-094c-4240-996a-a30cc4080a8e"
+    },
+    {
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "pid": 68856,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "facb3cd6-094c-4240-996a-a30cc4080a8e"
+    },
+    {
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "pid": 30048,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "facb3cd6-094c-4240-996a-a30cc4080a8e"
+    },
+    {
+      "taskId": "72aecf0e-b231-48f0-a9ab-5691e34625fc",
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "pid": 67788,
+      "cwd": "C:\\Users\\User\\cue\\evidence\\P10C\\live-worktree",
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "parentHandle": "facb3cd6-094c-4240-996a-a30cc4080a8e"
+    }
+  ],
+  "verifications": [
+    {
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "checkName": "isolated_agent_execution",
+      "verdict": "PASS",
+      "evidence": "{\"controllerPid\":56452,\"workerPids\":[66656,61820,24824,60280,69408,60080,56760,61472,59936,61040,65072,67348],\"successfulToolCalls\":7,\"threadId\":\"01a07094-a04b-74c0-9faf-671dc8564113\",\"turnId\":\"01a07094-a0c2-76d3-a98d-671146aec37c\",\"boundary\":\"host-model-only -> appcontainer-capability-zero\"}"
+    },
+    {
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "checkName": "goal_relevant_verification",
+      "verdict": "PASS",
+      "evidence": "{\"passed\":true,\"reason\":\"workspace_changed\",\"changedPaths\":[\"alpha-live.txt\"]}"
+    },
+    {
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "checkName": "isolated_agent_execution",
+      "verdict": "PASS",
+      "evidence": "{\"controllerPid\":60460,\"workerPids\":[68284,62932,65008,51844,69312,68856,30048,67788],\"successfulToolCalls\":4,\"threadId\":\"01a07095-d03a-73b0-a7dc-c612cde75847\",\"turnId\":\"01a07095-d0d1-7ac3-9050-c513916bdf2a\",\"boundary\":\"host-model-only -> appcontainer-capability-zero\"}"
+    },
+    {
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "checkName": "goal_relevant_verification",
+      "verdict": "PASS",
+      "evidence": "{\"passed\":true,\"reason\":\"workspace_changed\",\"changedPaths\":[\"beta-live.txt\"]}"
+    }
+  ],
+  "binaryIntegrity": [
+    {
+      "runId": "d433fed7-74fc-45bb-a7c1-f2f011a661e8",
+      "content": "sha256:PASS"
+    },
+    {
+      "runId": "2463d90d-4f56-4d7f-844c-e8f49c3ec13d",
+      "content": "sha256:PASS"
+    }
+  ],
+  "violations": [],
+  "invariants": {
+    "differentAllowedActions": true,
+    "differentArtifactHashes": true,
+    "realWorkerPidPerRun": true,
+    "differentControllerPids": true,
+    "disjointWorkerPids": true,
+    "sourceCredentialHomeUnchanged": true,
+    "binaryIntegrityPinned": true,
+    "zeroEnforcementViolations": true
+  }
+}

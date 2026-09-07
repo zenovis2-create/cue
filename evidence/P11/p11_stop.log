@@ -1,0 +1,1 @@
+{"verdict":"PASS","checks":{"controllerAliveBeforeStop":true,"appContainerWorkerAliveBeforeStop":true,"allObservedProcessesDeadAfterStop":true,"stopAccepted":true,"ledgerBlockedCancelled":true,"leaseReleased":true},"failure":null}

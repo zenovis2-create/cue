@@ -8,13 +8,18 @@
     "prestart": "npm --prefix daemon run build",
     "start": "electron .",
     "test": "npm --prefix daemon test",
-    "live:p9": "npm --prefix daemon run build && cross-env CUE_LIVE_RUN=1 electron ."
+    "live:p9": "npm run live:p10c",
+    "live:p10c": "node scripts/prepare-electron-live.mjs && npm --prefix daemon run build && cross-env CUE_LIVE_RUN=1 CUE_WORKTREE_ROOT=evidence/P10C/electron-worktree CUE_USER_DATA=evidence/P10C/electron-state CUE_MODEL=gpt-5.5 electron .",
+    "evidence:p10c": "npm --prefix daemon run build && node daemon/scripts/p10c-live.mjs",
+    "evidence:p10c:manifest": "npm --prefix daemon run build && node daemon/scripts/p10c-manifest-proof.mjs --output evidence/P10C/p10c_manifest_proof.json",
+    "evidence:p10c:stop": "npm --prefix daemon run build && cross-env NODE_ENV=test node daemon/scripts/p10c-stop-canary.mjs",
+    "evidence:p10c:source": "node scripts/p10c-source-manifest.mjs"
   },
   "devDependencies": {
     "cross-env": "^10.0.0",
-    "electron": "^37.4.0"
+    "electron": "44.2.0"
   },
   "allowScripts": {
-    "electron@37.10.3": true
+    "electron@44.2.0": true
   }
 }
