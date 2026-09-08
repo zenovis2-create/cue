@@ -5,6 +5,7 @@ import { join, relative, isAbsolute } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { openLedger, type Ledger } from './ledger.js';
 import { fenceInterruptedSessions, reconcileInterruptedWrites } from './recovery.js';
+import { cleanupInterruptedAppContainerProfiles } from './worker-enforcement.js';
 
 const localOwners = new Map<string, Ledger>();
 function live(pid: number): boolean {
@@ -28,6 +29,7 @@ export function ownDaemonWorktree(worktree: string, ledgerPath: string, ledger: 
     return path === '' || (path.split(/[\\/]/u)[0] !== '..' && !isAbsolute(path));
   };
   const identity = randomUUID();
+  const staleLocalIdentities: string[] = [];
   try {
     db.transaction(() => {
       const overlapping = (db.prepare('SELECT worktree,identity,pid,ledger_path FROM owner').all() as Array<{ worktree: string; identity: string; pid: number; ledger_path: string }>)
@@ -41,17 +43,20 @@ export function ownDaemonWorktree(worktree: string, ledgerPath: string, ledger: 
         const interrupted = previous.ledger_path === ledgerPath ? ledger : openLedger(previous.ledger_path);
         try {
           fenceInterruptedSessions(interrupted);
+          cleanupInterruptedAppContainerProfiles(interrupted, previous.worktree);
           reconcileInterruptedWrites(interrupted, previous.worktree);
         } finally { if (interrupted !== ledger) interrupted.close(); }
         db.prepare('DELETE FROM owner WHERE worktree=? AND identity=?').run(previous.worktree, previous.identity);
-        localOwners.delete(previous.identity);
+        staleLocalIdentities.push(previous.identity);
       }
       // Startup recovery is part of ownership acquisition: a failed fence cannot
       // publish a live owner or permit a replacement daemon to start writing.
       fenceInterruptedSessions(ledger);
+      cleanupInterruptedAppContainerProfiles(ledger, root);
       reconcileInterruptedWrites(ledger, root);
       db.prepare('INSERT OR REPLACE INTO owner VALUES(?,?,?,?)').run(key, identity, process.pid, ledgerPath);
     }).immediate();
+    for (const staleIdentity of staleLocalIdentities) localOwners.delete(staleIdentity);
     localOwners.set(identity, ledger);
   } finally { db.close(); }
   return () => {

@@ -10,6 +10,9 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 public static class CueJobLauncher {
+  const uint WAIT_OBJECT_0 = 0x00000000;
+  const uint WAIT_TIMEOUT = 0x00000102;
+  const uint WAIT_FAILED = 0xffffffff;
   [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
   public struct STARTUPINFO {
     public Int32 cb; public string lpReserved; public string lpDesktop; public string lpTitle;
@@ -38,6 +41,7 @@ public static class CueJobLauncher {
   [DllImport("kernel32.dll", SetLastError=true)] static extern bool SetInformationJobObject(IntPtr job, int informationClass, ref JOBOBJECT_EXTENDED_LIMIT_INFORMATION information, uint length);
   [DllImport("kernel32.dll", SetLastError=true)] static extern bool AssignProcessToJobObject(IntPtr job, IntPtr process);
   [DllImport("kernel32.dll", SetLastError=true)] static extern bool TerminateJobObject(IntPtr job, uint exitCode);
+  [DllImport("kernel32.dll", SetLastError=true)] static extern bool TerminateProcess(IntPtr process, uint exitCode);
   [DllImport("kernel32.dll", SetLastError=true)] static extern uint ResumeThread(IntPtr thread);
   [DllImport("kernel32.dll", SetLastError=true)] static extern uint WaitForSingleObject(IntPtr handle, uint milliseconds);
   [DllImport("kernel32.dll", SetLastError=true)] static extern uint WaitForMultipleObjects(uint count, IntPtr[] handles, bool waitAll, uint milliseconds);
@@ -45,6 +49,23 @@ public static class CueJobLauncher {
   [DllImport("kernel32.dll", SetLastError=true)] static extern IntPtr OpenProcess(uint access, bool inheritHandle, int processId);
   [DllImport("kernel32.dll", SetLastError=true)] static extern IntPtr GetStdHandle(int standardHandle);
   [DllImport("kernel32.dll")] static extern bool CloseHandle(IntPtr handle);
+
+  static void WaitForExitOrThrow(IntPtr process) {
+    uint wait = WaitForSingleObject(process, 5000);
+    if (wait == WAIT_TIMEOUT) throw new TimeoutException("process remained alive after termination");
+    if (wait == WAIT_FAILED) throw new Win32Exception(Marshal.GetLastWin32Error());
+    if (wait != WAIT_OBJECT_0) throw new InvalidOperationException("unexpected process wait result: " + wait);
+  }
+
+  static void TerminateAndWait(IntPtr job, IntPtr process, uint exitCode) {
+    if (!TerminateJobObject(job, exitCode)) throw new Win32Exception(Marshal.GetLastWin32Error());
+    WaitForExitOrThrow(process);
+  }
+
+  static void TerminateProcessAndWait(IntPtr process, uint exitCode) {
+    if (!TerminateProcess(process, exitCode)) throw new Win32Exception(Marshal.GetLastWin32Error());
+    WaitForExitOrThrow(process);
+  }
 
   public static int Launch(string app, string commandLine, string cwd, int parentPid) {
     IntPtr job = IntPtr.Zero;
@@ -66,19 +87,18 @@ public static class CueJobLauncher {
       startup.hStdError = GetStdHandle(-12);
       if (!CreateProcess(app, commandLine, IntPtr.Zero, IntPtr.Zero, true, 0x00000004, IntPtr.Zero, cwd, ref startup, out process)) throw new Win32Exception(Marshal.GetLastWin32Error());
       processCreated = true;
-      if (!AssignProcessToJobObject(job, process.hProcess)) { int error = Marshal.GetLastWin32Error(); TerminateJobObject(job, 111); throw new Win32Exception(error); }
+      if (!AssignProcessToJobObject(job, process.hProcess)) { int error = Marshal.GetLastWin32Error(); TerminateProcessAndWait(process.hProcess, 111); throw new Win32Exception(error); }
       parent = OpenProcess(0x00100000, false, parentPid);
-      if (parent == IntPtr.Zero) { int error = Marshal.GetLastWin32Error(); TerminateJobObject(job, 112); throw new Win32Exception(error); }
+      if (parent == IntPtr.Zero) { int error = Marshal.GetLastWin32Error(); TerminateAndWait(job, process.hProcess, 112); throw new Win32Exception(error); }
       Console.Error.WriteLine("CUE_HOST_CONTROLLER_PID=" + process.dwProcessId + ";START_TIME=" + DateTime.UtcNow.ToString("o"));
       Console.Error.Flush();
-      if (ResumeThread(process.hThread) == 0xffffffff) { int error = Marshal.GetLastWin32Error(); TerminateJobObject(job, 113); throw new Win32Exception(error); }
+      if (ResumeThread(process.hThread) == 0xffffffff) { int error = Marshal.GetLastWin32Error(); TerminateAndWait(job, process.hProcess, 113); throw new Win32Exception(error); }
 
       uint signaled = WaitForMultipleObjects(2, new IntPtr[] { process.hProcess, parent }, false, 0xffffffff);
       if (signaled == 1) {
-        TerminateJobObject(job, 114);
-        WaitForSingleObject(process.hProcess, 0xffffffff);
+        TerminateAndWait(job, process.hProcess, 114);
       } else if (signaled != 0) {
-        int error = Marshal.GetLastWin32Error(); TerminateJobObject(job, 115); throw new Win32Exception(error);
+        int error = Marshal.GetLastWin32Error(); TerminateAndWait(job, process.hProcess, 115); throw new Win32Exception(error);
       }
       uint exitCode;
       if (!GetExitCodeProcess(process.hProcess, out exitCode)) throw new Win32Exception(Marshal.GetLastWin32Error());

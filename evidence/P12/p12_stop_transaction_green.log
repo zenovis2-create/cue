@@ -1,0 +1,15 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-terminal-transaction.test.ts -t quarantines a user stop --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a user stop when its lease-release transaction aborts 123ms
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'normal completion' quarantines the writer and terminalizes its queue when lease release aborts
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'controller crash' quarantines the writer and terminalizes its queue when lease release aborts
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'worker hard-kill' quarantines the writer and terminalizes its queue when lease release aborts
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 3 skipped (4)
+   Start at  16:08:04
+   Duration  751ms (transform 141ms, setup 0ms, import 430ms, tests 124ms, environment 0ms)
+

@@ -1,0 +1,8 @@
+npm notice run cue-desktop@0.1.0 evidence:p12:source
+npm notice run node scripts/p10c-source-manifest.mjs evidence/P12/p12_source_manifest.json --index
+{
+  "outputPath": "C:\\Users\\User\\cue\\evidence\\P12\\p12_source_manifest.json",
+  "mode": "index",
+  "fileCount": 170,
+  "sourceTreeSha256": "9a13bd45dcde050ef39e03afb2855aef8ebb54a9be9eb5930953cb8e4c7d12e7"
+}

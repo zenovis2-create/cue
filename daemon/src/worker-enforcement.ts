@@ -3,6 +3,7 @@ import { runProcessSync, spawnOwned, resolveSealedExecutable, resolveOwnedExecut
 import type { SessionOwner, SessionRecord } from './session-spawn.js';
 import { dirname, isAbsolute, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { randomUUID } from 'node:crypto';
 import type { Ledger } from './ledger.js';
 import type { Envelope } from './envelope.js';
 import { completionApprovalLabel, recordExecution, type ExecutionIdentity } from './execution-accounting.js';
@@ -35,12 +36,67 @@ function quoteWindowsArg(value: string): string {
   return `"${value.replace(/(\\*)"/gu, '$1$1\\"').replace(/(\\+)$/u, '$1$1')}"`;
 }
 
+const PROFILE_ARTIFACT_KIND = 'appcontainer_profile_pending';
+const profilePattern = /^Cue\.Worker\.[0-9a-f]{32}$/u;
+function newProfileName(): string { return `Cue.Worker.${randomUUID().replaceAll('-', '')}`; }
+function processPossiblyLive(pid: number): boolean {
+  if (!Number.isSafeInteger(pid) || pid <= 0) return true;
+  try { process.kill(pid, 0); return true; }
+  catch (error) { return (error as NodeJS.ErrnoException).code !== 'ESRCH'; }
+}
+export function cleanupAppContainerProfile(profileName: string, worktree: string): void {
+  if (process.platform !== 'win32') return;
+  if (!profilePattern.test(profileName)) throw new Error('invalid persisted AppContainer profile name');
+  const canonicalWorktree = canonicalCandidate(worktree);
+  const cleanupScript = resolveSealedExecutable(fileURLToPath(new URL('./appcontainer-profile-cleanup.ps1', import.meta.url)), [canonicalWorktree]);
+  const result = runProcessSync('powershell.exe', [
+    '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', cleanupScript,
+    '-ProfileName', profileName, '-Worktree', canonicalWorktree,
+  ], { encoding: 'utf8' });
+  if (result.status !== 0 || result.error || !result.stdout.includes('CUE_APPCONTAINER_PROFILE_CLEANUP=PASS')) {
+    throw new Error(`AppContainer profile cleanup failed: status=${result.status ?? 'null'}`);
+  }
+}
+
+export function cleanupInterruptedAppContainerProfiles(db: Ledger, worktree: string): number {
+  if (process.platform !== 'win32') return 0;
+  const canonicalWorktree = canonicalCandidate(worktree);
+  const rows = db.prepare(`SELECT artifact.id,artifact.content,artifact.run_id,envelope.worktree_realpath
+    FROM artifact JOIN run ON run.id=artifact.run_id JOIN envelope ON envelope.envelope_hash=run.envelope_hash
+    WHERE artifact.kind=? ORDER BY artifact.id`).all(PROFILE_ARTIFACT_KIND) as Array<{ id: number; content: string; run_id: string; worktree_realpath: string }>;
+  let cleaned = 0;
+  for (const row of rows) {
+    const rowWorktree = canonicalCandidate(row.worktree_realpath);
+    if ((process.platform === 'win32' ? rowWorktree.toLowerCase() : rowWorktree) !== (process.platform === 'win32' ? canonicalWorktree.toLowerCase() : canonicalWorktree)) continue;
+    const parsed = JSON.parse(row.content) as { version?: unknown; profileName?: unknown; ownerPid?: unknown };
+    if (parsed.version !== 1 || typeof parsed.profileName !== 'string' || !profilePattern.test(parsed.profileName)
+      || typeof parsed.ownerPid !== 'number' || !Number.isSafeInteger(parsed.ownerPid) || parsed.ownerPid <= 0) {
+      throw new Error('invalid AppContainer cleanup journal');
+    }
+    // Conservative by design: a live/reused owner PID or any live recorded worker
+    // retains its profile. Ownership reconciliation can retry after identity is stale.
+    if (processPossiblyLive(parsed.ownerPid)) continue;
+    const sessions = db.prepare('SELECT pid FROM session_handle WHERE run_id=?').all(row.run_id) as Array<{ pid: number }>;
+    if (sessions.some(session => processPossiblyLive(session.pid))) continue;
+    cleanupAppContainerProfile(parsed.profileName, rowWorktree);
+    const removed = db.prepare('DELETE FROM artifact WHERE id=? AND kind=?').run(row.id, PROFILE_ARTIFACT_KIND);
+    if (removed.changes !== 1) throw new Error('AppContainer cleanup journal deletion failed');
+    cleaned += 1;
+  }
+  return cleaned;
+}
+
 function runAppContainer(command: WorkerCommand): OwnedSpawnSyncResult {
   const launcher = resolveSealedExecutable(fileURLToPath(new URL('./appcontainer-launch.ps1', import.meta.url)), [command.cwd]);
   const located = resolveSealedExecutable(command.executable, [command.cwd]);
   const commandLine = [located, ...command.args].map(quoteWindowsArg).join(' ');
-  const payload = Buffer.from(JSON.stringify({ executable: located, commandLine, cwd: command.cwd, parentPid: process.pid })).toString('base64');
-  return runProcessSync('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', launcher, '-PayloadBase64', payload], { encoding: 'utf8' });
+  const profileName = newProfileName();
+  const payload = Buffer.from(JSON.stringify({ executable: located, commandLine, cwd: command.cwd, parentPid: process.pid, profileName })).toString('base64');
+  try {
+    return runProcessSync('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', launcher, '-PayloadBase64', payload], { encoding: 'utf8' });
+  } finally {
+    cleanupAppContainerProfile(profileName, command.cwd);
+  }
 }
 
 function absolutePaths(args: string[]): string[] {
@@ -83,7 +139,10 @@ export function runEnforcedWorker(envelope: Envelope, command: WorkerCommand): W
   return { result };
 }
 
-export interface AppContainerWorkerCommand extends WorkerCommand { timeoutMs?: number }
+export interface AppContainerWorkerCommand extends WorkerCommand {
+  timeoutMs?: number;
+  operation?: 'write_text';
+}
 export interface AppContainerWorkerResult {
   exitCode: number | null;
   stdout: string;
@@ -98,6 +157,14 @@ export interface RunningAppContainerWorker {
   runtimeHome: string;
   completion: Promise<AppContainerWorkerResult>;
   stop(reason?: 'interrupted' | 'timeout'): void;
+}
+
+export class WorkerEnforcementViolationError extends Error {
+  readonly code = 'CUE_WORKER_ENFORCEMENT_VIOLATION';
+  constructor(readonly violation: 'filesystem' | 'network_gate' | 'executable_sealing', message: string) {
+    super(message);
+    this.name = 'WorkerEnforcementViolationError';
+  }
 }
 
 function isolatedWorkerEnvironment(runtimeHome: string): NodeJS.ProcessEnv {
@@ -154,29 +221,63 @@ export function launchAppContainerWorker(
   if (!envelope.allowed_actions.includes('command')) throw new Error('command action is outside the approved envelope');
   const paths = [...(command.inspectedPaths ?? []), ...absolutePaths(command.args)];
   if (!isCanonicalContained(envelope.worktree_realpath, command.cwd) || paths.some(path => !isCanonicalContained(envelope.worktree_realpath, path))) {
-    throw new Error('filesystem action is outside the approved worktree');
+    db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)')
+      .run(owner.task_id, owner.run_id, 'enforcement_violation', 'filesystem', new Date().toISOString());
+    throw new WorkerEnforcementViolationError('filesystem', 'filesystem action is outside the approved worktree');
   }
   if (/TcpClient|Sockets?\.|WebClient|Invoke-WebRequest|curl(?:\.exe)?|wget(?:\.exe)?/iu.test([command.executable, ...command.args].join(' '))) {
-    throw new Error('network action is outside the capability-zero envelope');
+    db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)')
+      .run(owner.task_id, owner.run_id, 'enforcement_violation', 'network_gate', new Date().toISOString());
+    throw new WorkerEnforcementViolationError('network_gate', 'network action is outside the capability-zero envelope');
   }
-  const executable = resolveOwnedExecutable(db, owner, command.executable, [envelope.worktree_realpath]);
+  let executable: string;
+  try {
+    executable = resolveOwnedExecutable(db, owner, command.executable, [envelope.worktree_realpath]);
+  } catch (error) {
+    throw new WorkerEnforcementViolationError(
+      'executable_sealing',
+      error instanceof Error ? error.message : 'worker executable sealing failed',
+    );
+  }
   const runtimeHome = mkdtempSync(resolve(command.cwd, '.cue-runtime-'));
   const launcher = resolveOwnedExecutable(db, owner, fileURLToPath(new URL('./appcontainer-launch.ps1', import.meta.url)));
   const commandLine = [executable, ...command.args].map(quoteWindowsArg).join(' ');
-  const payload = Buffer.from(JSON.stringify({ executable, commandLine, cwd: command.cwd, parentPid: process.pid })).toString('base64');
-  const launched = spawnOwned(db, owner, 'powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', launcher, '-PayloadBase64', payload], {
-    env: isolatedWorkerEnvironment(runtimeHome),
-    stdio: 'pipe',
-  });
+  const profileName = newProfileName();
+  const profileArtifactId = Number(db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)')
+    .run(owner.task_id, owner.run_id, PROFILE_ARTIFACT_KIND, JSON.stringify({ version: 1, profileName, ownerPid: process.pid }), new Date().toISOString()).lastInsertRowid);
+  const payload = Buffer.from(JSON.stringify({ executable, commandLine, cwd: command.cwd, parentPid: process.pid, profileName })).toString('base64');
+  let launched: ReturnType<typeof spawnOwned> | undefined;
   try {
+    launched = spawnOwned(db, owner, 'powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', launcher, '-PayloadBase64', payload], {
+      env: isolatedWorkerEnvironment(runtimeHome),
+      stdio: 'pipe',
+    });
     db.prepare('INSERT INTO session_runtime(handle,role,boundary,parent_handle,created_at) VALUES(?,?,?,?,?)')
       .run(launched.session.handle, 'tool_worker', 'appcontainer-capability-zero', null, new Date().toISOString());
   } catch (error) {
-    terminateTree(launched.child);
-    try { rmSync(runtimeHome, { recursive: true, force: true }); } catch { /* best effort after failed ownership record */ }
+    const failures: unknown[] = [error];
+    if (launched) { try { terminateTree(launched.child); } catch (cleanupError) { failures.push(cleanupError); } }
+    let profileRemoved = false;
+    try { cleanupAppContainerProfile(profileName, command.cwd); profileRemoved = true; } catch (cleanupError) { failures.push(cleanupError); }
+    if (profileRemoved) {
+      try { db.prepare('DELETE FROM artifact WHERE id=? AND kind=?').run(profileArtifactId, PROFILE_ARTIFACT_KIND); }
+      catch (cleanupError) { failures.push(cleanupError); }
+    }
+    try { rmSync(runtimeHome, { recursive: true, force: true }); } catch (cleanupError) { failures.push(cleanupError); }
+    if (failures.length > 1) throw new AggregateError(failures, 'AppContainer worker launch rollback failed');
     throw error;
   }
-  launched.child.stdin?.end();
+  const active = launched;
+  let profileCleaned = false;
+  const cleanupProfileJournal = (): void => {
+    if (profileCleaned) return;
+    cleanupAppContainerProfile(profileName, command.cwd);
+    if (!db.open) throw new Error('ledger closed before AppContainer cleanup journal deletion');
+    const removed = db.prepare('DELETE FROM artifact WHERE id=? AND kind=?').run(profileArtifactId, PROFILE_ARTIFACT_KIND);
+    if (removed.changes !== 1) throw new Error('AppContainer cleanup journal deletion failed');
+    profileCleaned = true;
+  };
+  active.child.stdin?.end();
 
   let stdout = '';
   let stderr = '';
@@ -190,12 +291,12 @@ export function launchAppContainerWorker(
     const match = stdout.match(/(?:^|\r?\n)CUE_APPCONTAINER_PID=(\d+);START_TIME=([^\r\n]+)/u);
     if (!match) return;
     appContainerPid = Number(match[1]);
-    launched.session.pid = appContainerPid;
-    launched.session.start_time = match[2];
-    if (db.open) db.prepare('UPDATE session_handle SET pid=?,start_time=? WHERE handle=?').run(appContainerPid, match[2], launched.session.handle);
+    active.session.pid = appContainerPid;
+    active.session.start_time = match[2];
+    if (db.open) db.prepare('UPDATE session_handle SET pid=?,start_time=? WHERE handle=?').run(appContainerPid, match[2], active.session.handle);
   };
-  launched.child.stdout?.on('data', chunk => { stdout = appendBoundedOutput(stdout, chunk); capturePid(); });
-  launched.child.stderr?.on('data', chunk => { stderr = appendBoundedOutput(stderr, chunk); });
+  active.child.stdout?.on('data', chunk => { stdout = appendBoundedOutput(stdout, chunk); capturePid(); });
+  active.child.stderr?.on('data', chunk => { stderr = appendBoundedOutput(stderr, chunk); });
 
   const stop = (reason: 'interrupted' | 'timeout' = 'interrupted'): void => {
     if (terminationError) throw terminationError;
@@ -204,8 +305,9 @@ export function launchAppContainerWorker(
     try {
       if (appContainerPid) {
         terminateVerifiedTree(appContainerPid);
-        if (launched.child.pid) verifyProcessesDead([launched.child.pid]);
-      } else terminateTree(launched.child);
+        if (active.child.pid) verifyProcessesDead([active.child.pid]);
+      } else terminateTree(active.child);
+      cleanupProfileJournal();
     } catch (error) { terminationError = error; rejectCompletion?.(error); throw error; }
   };
   const abort = (): void => { try { stop('interrupted'); } catch { /* completion rejects; the caller retains its lease */ } };
@@ -218,22 +320,29 @@ export function launchAppContainerWorker(
   const completion = new Promise<AppContainerWorkerResult>((resolveCompletion, reject) => {
     rejectCompletion = reject;
     if (terminationError) reject(terminationError);
-    launched.child.once('error', error => {
+    active.child.once('error', error => {
       stderr = appendBoundedOutput(stderr, `${stderr ? '\n' : ''}${error.name}: ${error.message}`);
     });
-    launched.child.once('close', code => {
+    active.child.once('close', code => {
       settled = true;
       clearTimeout(timeout);
       options.signal?.removeEventListener('abort', abort);
       capturePid();
-      try { if (appContainerPid) verifyProcessesDead([appContainerPid]); }
+      try {
+        if (appContainerPid) verifyProcessesDead([appContainerPid]);
+        cleanupProfileJournal();
+      }
       catch (error) { terminationError = error; reject(error); return; }
       try { rmSync(runtimeHome, { recursive: true, force: true }); } catch (error) {
         stderr = appendBoundedOutput(stderr, `${stderr ? '\n' : ''}runtime cleanup failed: ${String(error)}`);
       }
       const boundaryOutput = `${stdout}\n${stderr}`;
-      const childLaunchViolation = code !== 0 && /not enough quota|quota.{0,60}process this command|할당량.{0,60}부족/iu.test(boundaryOutput)
-        ? 'executable_sealing' as const : undefined;
+      const childLaunchIntent = /Diagnostics\.Process\]\s*::Start|Start-Process|ProcessStartInfo|CreateProcess/iu.test(command.args.join(' '));
+      const childLaunchViolation = code !== 0 && (
+        /CUE_CHILD_PROCESS_DENIED_NATIVE_ERROR=(?:1450|1816)/u.test(boundaryOutput)
+        || /not enough quota|quota.{0,60}process this command|할당량.{0,60}부족/iu.test(boundaryOutput)
+        || (childLaunchIntent && /Win32Exception/iu.test(boundaryOutput))
+      ) ? 'executable_sealing' as const : undefined;
       const networkBoundaryViolation = code !== 0 && /System\.Net\.Sockets|SocketException|TcpClient\.Connect|WSAEACCES|(?:^|\D)10013(?:\D|$)/iu.test(boundaryOutput)
         ? 'network_gate' as const
         : undefined;
@@ -254,7 +363,7 @@ export function launchAppContainerWorker(
       });
     });
   });
-  return { ...launched, runtimeHome, completion, stop };
+  return { ...active, runtimeHome, completion, stop };
 }
 
 export interface WorkerLifecycle { db: Ledger; execution: ExecutionIdentity; now?: Date }

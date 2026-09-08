@@ -1,0 +1,30 @@
+{
+  "schema": "cue.p12.mutation.v1",
+  "generatedAt": "2026-09-08T02:00:54.236Z",
+  "verdict": "PASS",
+  "scope": "disposable-copy mutation sensitivity; candidate checkout is never edited",
+  "mutations": [
+    {
+      "id": "failfast-terminal-seal-removed",
+      "test": "test/p12-enforcement-seal.test.ts",
+      "exitCode": 1,
+      "signal": null,
+      "detected": true
+    },
+    {
+      "id": "writer-stop-transaction-removed",
+      "test": "test/p12-terminal-transaction.test.ts",
+      "exitCode": 1,
+      "signal": null,
+      "detected": true
+    },
+    {
+      "id": "appcontainer-parent-death-kill-removed",
+      "test": "test/p12-parent-sentinel.test.ts",
+      "exitCode": 1,
+      "signal": null,
+      "detected": true
+    }
+  ],
+  "failure": null
+}

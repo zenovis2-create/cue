@@ -1,0 +1,17 @@
+npm notice run cue-daemon@0.1.0 npx
+npm notice run vitest run test/p10c-containment.test.ts -t kills the capability-zero worker job when its daemon parent is hard-killed --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p10c-containment.test.ts > Phase 10-C process containment > binds the AppContainer job lifetime to the daemon process handle
+ ↓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the host controller descendant when the owned controller root is hard-killed
+stdout | test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed
+P12_PARENT_DEATH_IDENTITY {"parentPid":29772,"wrapperPid":33564,"workerPid":8248,"terminationLatencyMs":1738,"wrapperAlive":false,"workerAlive":false,"originalWrapperAlive":false,"originalWorkerAlive":false,"wrapperIdentityBefore":{"ProcessId":33564,"ParentProcessId":29772,"created":"2026-09-08T02:05:00.3293050Z"},"wrapperIdentityAfter":null,"workerIdentityBefore":{"ProcessId":8248,"ParentProcessId":33564,"created":"2026-09-08T02:05:01.1735670Z"},"workerIdentityAfter":null}
+
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed 19922ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 2 skipped (3)
+   Start at  11:04:59
+   Duration  20.49s (transform 170ms, setup 0ms, import 356ms, tests 19.92s, environment 0ms)
+

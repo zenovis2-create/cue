@@ -10,4 +10,5 @@ copyFileSync(new URL('../migrations/007_workspace_write_lease.sql', import.meta.
 mkdirSync(new URL('../dist/src/', import.meta.url), { recursive: true });
 copyFileSync(new URL('../src/network-guard.cjs', import.meta.url), new URL('../dist/src/network-guard.cjs', import.meta.url));
 copyFileSync(new URL('../src/appcontainer-launch.ps1', import.meta.url), new URL('../dist/src/appcontainer-launch.ps1', import.meta.url));
+copyFileSync(new URL('../src/appcontainer-profile-cleanup.ps1', import.meta.url), new URL('../dist/src/appcontainer-profile-cleanup.ps1', import.meta.url));
 copyFileSync(new URL('../src/job-object-launch.ps1', import.meta.url), new URL('../dist/src/job-object-launch.ps1', import.meta.url));

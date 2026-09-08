@@ -1,0 +1,42 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-enforcement-seal.test.ts -t preflight throws --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > aborts the turn and refuses every later tool call after a filesystem violation
+ × test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > also seals when worker preflight throws a typed boundary violation before spawn 8ms
+   → promise resolved "{ threadId: 'thread-preflight', …(3) }" instead of rejecting
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > also seals when worker preflight throws a typed boundary violation before spawn
+AssertionError: promise resolved "{ threadId: 'thread-preflight', …(3) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "finalMessage": "",
++   "status": "completed",
++   "threadId": "thread-preflight",
++   "turnId": "turn-preflight",
+  }
+
+ ❯ test/p12-enforcement-seal.test.ts:131:109
+    129|     );
+    130|
+    131|     await expect(session.run({ cwd: 'C:/controller', workspaceCwd: 'C:…
+       |                                                                                                             ^
+    132|       .rejects.toThrow(/CUE_ENFORCEMENT_VIOLATION.*filesystem/u);
+    133|     await nextTick();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  13:55:17
+   Duration  250ms (transform 36ms, setup 0ms, import 81ms, tests 9ms, environment 0ms)
+

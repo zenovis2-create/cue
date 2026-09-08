@@ -1,0 +1,12 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-mutation-harness.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-mutation-harness.test.ts > P12 mutation harness > proves fail-fast, lifecycle, and parent-death tests detect security regressions in disposable copies 19195ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  21:31:13
+   Duration  19.42s (transform 22ms, setup 0ms, import 40ms, tests 19.20s, environment 0ms)
+

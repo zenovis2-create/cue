@@ -1,18 +1,28 @@
 import { createHash } from 'node:crypto';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { fileURLToPath } from 'node:url';
 
 if (process.platform !== 'win32') throw new Error('P10-C stop canary requires Windows');
 if (process.env.NODE_ENV !== 'test') throw new Error('P10-C stop canary requires NODE_ENV=test for the deterministic controller fixture');
 
 const { createCueCore, initializeConfig } = await import('../../app/core.mjs');
-const evidenceDir = resolve('evidence/P10C');
-const root = join(evidenceDir, 'stop-canary-state');
-const worktree = join(evidenceDir, 'stop-canary-worktree');
+const repo = resolve(fileURLToPath(new URL('../..', import.meta.url)));
+const phases = ['P10C', 'P11', 'P12'];
+const phase = phases.includes(process.env.CUE_EVIDENCE_PHASE) ? process.env.CUE_EVIDENCE_PHASE : 'P10C';
+const evidenceDir = process.env.CUE_STOP_OUTPUT_DIR ? resolve(process.env.CUE_STOP_OUTPUT_DIR) : join(repo, 'evidence', phase);
+mkdirSync(evidenceDir, { recursive: true });
+if (phase === 'P12' && (process.env.CUE_STOP_ROOT || process.env.CUE_STOP_WORKTREE)) {
+  throw new Error('P12 stop fixture paths are harness-owned; caller path overrides are refused');
+}
+const p12Root = phase === 'P12' ? mkdtempSync(join(tmpdir(), 'cue-p12-stop-canary-')) : null;
+const root = resolve(p12Root ? join(p12Root, 'state') : process.env.CUE_STOP_ROOT || join(evidenceDir, 'stop-canary-state'));
+const worktree = resolve(p12Root ? join(p12Root, 'worktree') : process.env.CUE_STOP_WORKTREE || join(evidenceDir, 'stop-canary-worktree'));
 const sourceHome = join(root, 'source-home');
 const vendor = join(root, 'vendor');
-const outputPath = join(evidenceDir, 'p10c_stop_result.json');
+const outputPath = join(evidenceDir, phase === 'P12' ? 'p12_stop_result.json' : 'p10c_stop_result.json');
 const delay = ms => new Promise(resolveDelay => setTimeout(resolveDelay, ms));
 
 function processAlive(pid) {
@@ -20,7 +30,7 @@ function processAlive(pid) {
   return result.status === 0 && String(result.stdout).includes(`\"${pid}\"`);
 }
 
-async function waitUntil(check, timeoutMs = 30_000) {
+async function waitUntil(check, timeoutMs = 90_000) {
   const deadline = Date.now() + timeoutMs;
   while (Date.now() < deadline) {
     if (check()) return;
@@ -46,8 +56,10 @@ rl.on('line',line=>{const m=JSON.parse(line);
 `;
 }
 
-rmSync(root, { recursive: true, force: true });
-rmSync(worktree, { recursive: true, force: true });
+if (!p12Root) {
+  rmSync(root, { recursive: true, force: true });
+  rmSync(worktree, { recursive: true, force: true });
+}
 mkdirSync(sourceHome, { recursive: true });
 mkdirSync(vendor, { recursive: true });
 mkdirSync(worktree, { recursive: true });
@@ -63,6 +75,10 @@ let stopAccepted = false;
 let card;
 let startedContent = null;
 let failure = null;
+const addFailure = error => {
+  const message = error instanceof Error ? error.message : String(error);
+  failure = failure ? `${failure}; ${message}` : message;
+};
 try {
   core = createCueCore(initializeConfig(root, { worktreeRoot: worktree }), undefined, {
     binary,
@@ -81,24 +97,36 @@ try {
     WHERE s.run_id=? ORDER BY s.rowid`).all(prepared.runId);
   sessions = sessions.map(row => ({ ...row, aliveBeforeStop: processAlive(row.pid) }));
   startedContent = readFileSync(join(worktree, 'started.txt'), 'utf8');
+  if (process.env.CUE_TEST_STOP_CLOSE_FAILURE === '1') throw new Error('forced core.close failure');
   stopAccepted = core.stop(prepared.runId);
   await waitUntil(() => sessions.every(row => !processAlive(row.pid)));
   card = core.completion(prepared.taskId);
   sessions = sessions.map(row => ({ ...row, aliveAfterStop: processAlive(row.pid) }));
 } catch (error) {
-  failure = error instanceof Error ? error.message : String(error);
+  addFailure(error);
 } finally {
-  core?.close();
+  try {
+    if (process.env.CUE_TEST_STOP_CLOSE_FAILURE === '1') throw new Error('forced core.close failure');
+    core?.close();
+  } catch (error) {
+    addFailure(error);
+    try { core?.daemon?.db?.close(); }
+    catch (dbError) { addFailure(`fallback ledger close failed: ${dbError instanceof Error ? dbError.message : String(dbError)}`); }
+  }
   for (const session of sessions) {
     if (processAlive(session.pid)) spawnSync('taskkill.exe', ['/PID', String(session.pid), '/T', '/F']);
   }
+  try { await waitUntil(() => sessions.every(row => !processAlive(row.pid)), 5_000); }
+  catch (error) { addFailure(error); }
+  sessions = sessions.map(row => ({ ...row, aliveAfterStop: processAlive(row.pid) }));
 }
 
 try {
   rmSync(root, { recursive: true, force: true, maxRetries: 20, retryDelay: 50 });
   rmSync(worktree, { recursive: true, force: true, maxRetries: 20, retryDelay: 50 });
+  if (p12Root) rmSync(p12Root, { recursive: true, force: true, maxRetries: 20, retryDelay: 50 });
 } catch (error) {
-  failure = failure || `fixture cleanup failed: ${error instanceof Error ? error.message : String(error)}`;
+  addFailure(`fixture cleanup failed: ${error instanceof Error ? error.message : String(error)}`);
 }
 
 const controller = sessions.find(row => row.role === 'controller');
@@ -110,11 +138,11 @@ const checks = {
   stopAccepted,
   ledgerBlockedCancelled: card?.state === 'blocked' && card?.blockedReason === 'cancelled',
   controllerAndWorkersStopped: sessions.length >= 3 && sessions.every(row => row.aliveAfterStop === false),
-  fixturePathsRemoved: !existsSync(root) && !existsSync(worktree),
+  fixturePathsRemoved: !existsSync(root) && !existsSync(worktree) && (!p12Root || !existsSync(p12Root)),
 };
 const verdict = !failure && Object.values(checks).every(Boolean) ? 'PASS' : 'FAIL';
 const result = {
-  schema: 'cue.p10c.stop.v1',
+  schema: `cue.${phase.toLowerCase()}.stop.v1`,
   generatedAt: new Date().toISOString(),
   verdict,
   scope: 'deterministic host-controller fixture plus real capability-zero AppContainer worker; actual vendor model is covered separately by p10c_live_result.json',

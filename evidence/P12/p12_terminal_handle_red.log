@@ -1,0 +1,35 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-terminal-transaction.test.ts -t terminalizes its queue --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a user stop when its lease-release transaction aborts
+ × test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'normal completion' quarantines the writer and terminalizes its queue when lease release aborts 198ms
+   → expected "vi.fn()" to be called at least once
+ × test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'controller crash' quarantines the writer and terminalizes its queue when lease release aborts 163ms
+   → expected "vi.fn()" to be called at least once
+ × test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'worker hard-kill' quarantines the writer and terminalizes its queue when lease release aborts 134ms
+   → expected "vi.fn()" to be called at least once
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'normal completion' quarantines the writer and terminalizes its queue when lease release aborts
+ FAIL  test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'controller crash' quarantines the writer and terminalizes its queue when lease release aborts
+ FAIL  test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'worker hard-kill' quarantines the writer and terminalizes its queue when lease release aborts
+AssertionError: expected "vi.fn()" to be called at least once
+ ❯ test/p12-terminal-transaction.test.ts:126:20
+    124|       expect(() => core.execute(queued.runId)).toThrow('daemon blocked…
+    125|       expect(core.daemon.stop(active.runId, 'cleanup')).toBe(false);
+    126|       expect(stop).toHaveBeenCalled();
+       |                    ^
+    127|     } finally {
+    128|       core.daemon.db.exec('DROP TRIGGER IF EXISTS p12_abort_release');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 1 skipped (4)
+   Start at  16:08:43
+   Duration  1.13s (transform 142ms, setup 0ms, import 455ms, tests 497ms, environment 0ms)
+

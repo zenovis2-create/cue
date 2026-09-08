@@ -1,0 +1,12 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-finalizer.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > binds the staged source and exact receipt hashes, then rejects tampering 1326ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  17:39:54
+   Duration  1.58s (transform 23ms, setup 0ms, import 56ms, tests 1.33s, environment 0ms)
+

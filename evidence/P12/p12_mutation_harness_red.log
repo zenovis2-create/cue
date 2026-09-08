@@ -1,0 +1,71 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-mutation-harness.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-mutation-harness.test.ts > P12 mutation harness > proves fail-fast, lifecycle, and parent-death tests detect security regressions in disposable copies 73ms
+   → 
+node:internal/modules/cjs/loader:1433
+  throw err;
+  ^
+
+Error: Cannot find module 'C:\Users\User\cue\daemon\scripts\p12-mutation-proof.mjs'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1430:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+    at Function._load (node:internal/modules/cjs/loader:1216:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v22.23.2
+: expected 1 to be +0 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-mutation-harness.test.ts > P12 mutation harness > proves fail-fast, lifecycle, and parent-death tests detect security regressions in disposable copies
+AssertionError: 
+node:internal/modules/cjs/loader:1433
+  throw err;
+  ^
+
+Error: Cannot find module 'C:\Users\User\cue\daemon\scripts\p12-mutation-proof.mjs'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1430:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+    at Function._load (node:internal/modules/cjs/loader:1216:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v22.23.2
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ test/p12-mutation-harness.test.ts:28:65
+     26|       timeout: 120_000,
+     27|     });
+     28|     expect(result.status, `${result.stdout}\n${result.stderr}`).toBe(0…
+       |                                                                 ^
+     29|     const receipt = JSON.parse(readFileSync(join(output, 'p12_mutation…
+     30|     expect(receipt.verdict).toBe('PASS');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  21:21:36
+   Duration  331ms (transform 20ms, setup 0ms, import 55ms, tests 74ms, environment 0ms)
+

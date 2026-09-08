@@ -1,0 +1,47 @@
+{
+  "schema": "cue.p12.stop.v1",
+  "generatedAt": "2026-09-08T02:18:50.539Z",
+  "verdict": "PASS",
+  "scope": "deterministic host-controller fixture plus real capability-zero AppContainer worker; actual vendor model is covered separately by p10c_live_result.json",
+  "worktree": "D:\\Temp\\User\\cue-p12-stop-canary-W90YGF\\worktree",
+  "startedMarkerSha256": "03494afd4248c42f5fa1237bf2eeebe751ab8d9c977d55405fcb17469dbd91f8",
+  "sessions": [
+    {
+      "pid": 50924,
+      "role": "controller",
+      "boundary": "host-model-only",
+      "aliveBeforeStop": true,
+      "aliveAfterStop": false
+    },
+    {
+      "pid": 56568,
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "aliveBeforeStop": false,
+      "aliveAfterStop": false
+    },
+    {
+      "pid": 56488,
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "aliveBeforeStop": true,
+      "aliveAfterStop": false
+    }
+  ],
+  "card": {
+    "state": "blocked",
+    "blockedReason": "cancelled",
+    "status": "막힘",
+    "stage": "중단됨"
+  },
+  "checks": {
+    "startedMarkerWritten": true,
+    "controllerAliveBeforeStop": true,
+    "liveAppContainerWorkerBeforeStop": true,
+    "stopAccepted": true,
+    "ledgerBlockedCancelled": true,
+    "controllerAndWorkersStopped": true,
+    "fixturePathsRemoved": true
+  },
+  "failure": null
+}

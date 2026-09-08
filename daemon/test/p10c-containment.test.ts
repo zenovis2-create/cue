@@ -4,6 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { openLedger } from '../src/ledger.js';
+import { ownDaemonWorktree } from '../src/daemon-ownership.js';
 import { normalizeEnvelope, type Envelope } from '../src/envelope.js';
 import { createCleanCodexHome } from '../src/tool-home.js';
 import { launchHostCodexRun } from '../src/host-codex-runtime.js';
@@ -17,10 +18,26 @@ function processAlive(pid: number): boolean {
   return result.status === 0 && String(result.stdout).includes(`\"${pid}\"`);
 }
 
-function processIdentity(pid: number): unknown {
+type ProcessIdentity = { ProcessId: number; ParentProcessId: number; created: string };
+function processIdentity(pid: number): ProcessIdentity | null {
   const result = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', `$ErrorActionPreference='Stop'; Get-CimInstance Win32_Process -Filter "ProcessId=${pid}" -ErrorAction Stop | Select-Object ProcessId,ParentProcessId,@{n='created';e={$_.CreationDate.ToUniversalTime().ToString('o')}} | ConvertTo-Json -Compress`], { encoding: 'utf8', windowsHide: true });
   if (result.status !== 0) throw new Error('FAIL: containment process identity query failed');
-  return result.stdout.trim() ? JSON.parse(result.stdout) : null;
+  return result.stdout.trim() ? JSON.parse(result.stdout) as ProcessIdentity : null;
+}
+
+function sameProcessInstance(before: ProcessIdentity | null, after: ProcessIdentity | null): boolean {
+  return before !== null && after !== null
+    && before.ProcessId === after.ProcessId
+    && before.ParentProcessId === after.ParentProcessId
+    && before.created === after.created;
+}
+
+function cueWorkerProfileCount(): number {
+  const registry = 'Registry::HKEY_CURRENT_USER\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\CurrentVersion\\AppContainer\\Mappings';
+  const script = `$items=@(Get-ChildItem '${registry}' | Where-Object {(Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue).Moniker -like 'Cue.Worker.*'}); Write-Output $items.Count`;
+  const result = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', script], { encoding: 'utf8', windowsHide: true });
+  if (result.status !== 0) throw new Error('AppContainer profile count query failed');
+  return Number(result.stdout.trim());
 }
 
 function fakeControllerSource(marker: string, pidPath: string): string {
@@ -98,6 +115,7 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C process containment', 
   }, 30_000);
 
   it('kills the capability-zero worker job when its daemon parent is hard-killed', async () => {
+    const profilesBefore = cueWorkerProfileCount();
     const root = temp(); const worktree = join(root, 'worktree'); mkdirSync(worktree);
     const ledgerPath = join(root, 'worker-ledger.sqlite'); const pidPath = join(root, 'worker-pids.json');
     const harness = join(root, 'worker-parent.mjs');
@@ -110,16 +128,38 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C process containment', 
     const pids = JSON.parse(readFileSync(pidPath, 'utf8')) as { wrapperPid: number; workerPid: number };
     expect(processAlive(pids.wrapperPid)).toBe(true);
     expect(processAlive(pids.workerPid)).toBe(true);
+    const wrapperIdentityBefore = processIdentity(pids.wrapperPid);
     const workerIdentityBefore = processIdentity(pids.workerPid);
+    const killedAt = Date.now();
     const killed = spawnSync('taskkill.exe', ['/PID', String(parent.pid), '/F']);
     expect(killed.status).toBe(0);
     const stopped = Date.now() + 5_000;
     while ((processAlive(pids.wrapperPid) || processAlive(pids.workerPid)) && Date.now() < stopped) await new Promise(resolve => setTimeout(resolve, 50));
+    const terminationObservedAt = Date.now();
     const wrapperAlive = processAlive(pids.wrapperPid); const workerAlive = processAlive(pids.workerPid);
-    console.log('P11_PARENT_DEATH_IDENTITY', JSON.stringify({ parentPid: parent.pid, ...pids, wrapperAlive, workerAlive, workerIdentityBefore, workerIdentityAfter: processIdentity(pids.workerPid) }));
-    if (wrapperAlive) spawnSync('taskkill.exe', ['/PID', String(pids.wrapperPid), '/T', '/F']);
-    if (workerAlive) spawnSync('taskkill.exe', ['/PID', String(pids.workerPid), '/T', '/F']);
-    expect(wrapperAlive).toBe(false);
-    expect(workerAlive).toBe(false);
-  }, 30_000);
+    const wrapperIdentityAfter = processIdentity(pids.wrapperPid);
+    const workerIdentityAfter = processIdentity(pids.workerPid);
+    const originalWrapperAlive = sameProcessInstance(wrapperIdentityBefore, wrapperIdentityAfter);
+    const originalWorkerAlive = sameProcessInstance(workerIdentityBefore, workerIdentityAfter);
+    console.log('P12_PARENT_DEATH_IDENTITY', JSON.stringify({
+      parentPid: parent.pid, ...pids, terminationLatencyMs: terminationObservedAt - killedAt,
+      wrapperAlive, workerAlive, originalWrapperAlive, originalWorkerAlive,
+      wrapperIdentityBefore, wrapperIdentityAfter, workerIdentityBefore, workerIdentityAfter,
+    }));
+    if (originalWrapperAlive) spawnSync('taskkill.exe', ['/PID', String(pids.wrapperPid), '/T', '/F']);
+    if (originalWorkerAlive) spawnSync('taskkill.exe', ['/PID', String(pids.workerPid), '/T', '/F']);
+    expect(originalWrapperAlive).toBe(false);
+    expect(originalWorkerAlive).toBe(false);
+    const recovered = openLedger(ledgerPath);
+    const releaseOwnership = ownDaemonWorktree(worktree, ledgerPath, recovered);
+    try {
+      expect(recovered.prepare("SELECT count(*) AS n FROM artifact WHERE kind='appcontainer_profile_pending'").get()).toEqual({ n: 0 });
+      const profileCleanupDeadline = Date.now() + 15_000;
+      while (cueWorkerProfileCount() !== profilesBefore && Date.now() < profileCleanupDeadline) await new Promise(resolve => setTimeout(resolve, 50));
+      expect(cueWorkerProfileCount()).toBe(profilesBefore);
+    } finally {
+      releaseOwnership();
+      recovered.close();
+    }
+  }, 90_000);
 });

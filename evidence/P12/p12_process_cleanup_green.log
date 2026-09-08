@@ -1,0 +1,13 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-process-ownership.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-process-ownership.test.ts > P12 post-spawn ownership failure > marks an unverified process-tree cleanup as terminal containment failure 2ms
+ ✓ test/p12-process-ownership.test.ts > P12 post-spawn ownership failure > terminates and verifies the spawned process tree when session persistence fails 7885ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  17:50:31
+   Duration  8.19s (transform 46ms, setup 0ms, import 118ms, tests 7.89s, environment 0ms)
+

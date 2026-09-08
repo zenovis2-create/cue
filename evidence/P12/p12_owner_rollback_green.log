@@ -1,0 +1,21 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-writer-lifecycle.test.ts -t failed startup reconciliation --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses writable worktrees containing or inside the trusted Cue runtime
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > normal completion releases the real runtime lease before another writer runs
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > controller crash releases the real runtime lease before another writer runs
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > worker hard-kill releases the real runtime lease before another writer runs
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > a failed startup reconciliation cannot strand a new live ownership record 225ms
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > parent death kills the real AppContainer worker and restart releases the lease without resuming
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 9 skipped (10)
+   Start at  21:19:38
+   Duration  975ms (transform 173ms, setup 0ms, import 563ms, tests 227ms, environment 0ms)
+

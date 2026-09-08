@@ -112,11 +112,19 @@ export class AppDaemon {
   quarantine(runId, error) {
     this.#failedStops.add(runId);
     this.#status = 'blocked/crash';
-    this.#db.transaction(() => {
-      this.#db.prepare("UPDATE task SET state='blocked',blocked_reason='crash' WHERE id=(SELECT task_id FROM run WHERE id=?)").run(runId);
-      this.#db.prepare("INSERT INTO artifact(task_id,run_id,kind,content,created_at) SELECT task_id,?,'termination_failed',?,? FROM run WHERE id=?")
-        .run(runId, redactDiagnostic(error instanceof Error ? error.message : error), new Date().toISOString(), runId);
-    })();
+    try {
+      this.#db.transaction(() => {
+        const now = new Date().toISOString();
+        this.#db.prepare("UPDATE task SET state='blocked',blocked_reason='crash' WHERE id=(SELECT task_id FROM run WHERE id=?)").run(runId);
+        this.#db.prepare("INSERT INTO artifact(task_id,run_id,kind,content,created_at) SELECT r.task_id,r.id,'worker_stopped','crash:queued',? FROM run r JOIN task t ON t.id=r.task_id WHERE t.state='queued'")
+          .run(now);
+        this.#db.prepare("UPDATE task SET state='blocked',blocked_reason='crash' WHERE state='queued'").run();
+        this.#db.prepare("INSERT INTO artifact(task_id,run_id,kind,content,created_at) SELECT task_id,?,'termination_failed',?,? FROM run WHERE id=?")
+          .run(runId, redactDiagnostic(error instanceof Error ? error.message : error), now, runId);
+      })();
+    } catch {
+      // The in-memory quarantine, runtime handle, writer lease, and daemon ownership stay retained.
+    }
   }
 
   stop(runId, reason = 'cancelled') {
@@ -127,15 +135,20 @@ export class AppDaemon {
       if (typeof launched.stop === 'function') launched.stop(reason);
       else terminateVerifiedTree(launched.child?.pid ?? pid);
     } catch (error) { this.quarantine(runId, error); return false; }
+    try {
+      this.#db.transaction(() => {
+        this.#db.prepare('DELETE FROM workspace_write_lease WHERE run_id=?').run(runId);
+        this.#db.prepare('UPDATE run SET write_in_progress=0 WHERE id=?').run(runId);
+        this.#db.prepare("UPDATE task SET state='blocked',blocked_reason=? WHERE id=(SELECT task_id FROM run WHERE id=?) AND state='running'").run(reason, runId);
+        this.#db.prepare("INSERT INTO artifact(task_id,run_id,kind,content,created_at) SELECT task_id,?,'worker_stopped',?,? FROM run WHERE id=?")
+          .run(runId, `${reason}:pid=${pid}`, new Date().toISOString(), runId);
+      })();
+    } catch (error) {
+      this.quarantine(runId, error);
+      return false;
+    }
     this.#failedStops.delete(runId);
     this.#workers.delete(runId);
-    this.#db.transaction(() => {
-      this.#db.prepare('DELETE FROM workspace_write_lease WHERE run_id=?').run(runId);
-      this.#db.prepare('UPDATE run SET write_in_progress=0 WHERE id=?').run(runId);
-      this.#db.prepare("UPDATE task SET state='blocked',blocked_reason=? WHERE id=(SELECT task_id FROM run WHERE id=?) AND state='running'").run(reason, runId);
-      this.#db.prepare("INSERT INTO artifact(task_id,run_id,kind,content,created_at) SELECT task_id,?,'worker_stopped',?,? FROM run WHERE id=?")
-        .run(runId, `${reason}:pid=${pid}`, new Date().toISOString(), runId);
-    })();
     return true;
   }
 
@@ -143,12 +156,21 @@ export class AppDaemon {
     this.#status = 'blocked/crash';
     for (const id of [...this.#workers.keys()]) this.stop(id, reason);
     if (this.#failedStops.size) return;
-    this.#db.transaction(() => {
-      this.#db.prepare("DELETE FROM workspace_write_lease WHERE run_id IN (SELECT id FROM run WHERE task_id IN (SELECT id FROM task WHERE state='running'))").run();
-      this.#db.prepare("UPDATE run SET write_in_progress=0 WHERE task_id IN (SELECT id FROM task WHERE state='running')").run();
-      this.#db.prepare("UPDATE task SET state='blocked',blocked_reason=? WHERE state='running'").run(reason);
-    })();
+    try {
+      this.#db.transaction(() => {
+        const now = new Date().toISOString();
+        this.#db.prepare("INSERT INTO artifact(task_id,run_id,kind,content,created_at) SELECT r.task_id,r.id,'worker_stopped',?,? FROM run r JOIN task t ON t.id=r.task_id WHERE t.state='queued'")
+          .run(`${reason}:queued`, now);
+        this.#db.prepare("DELETE FROM workspace_write_lease WHERE run_id IN (SELECT id FROM run WHERE task_id IN (SELECT id FROM task WHERE state='running'))").run();
+        this.#db.prepare("UPDATE run SET write_in_progress=0 WHERE task_id IN (SELECT id FROM task WHERE state IN ('running','queued'))").run();
+        this.#db.prepare("UPDATE task SET state='blocked',blocked_reason=? WHERE state IN ('running','queued')").run(reason);
+      })();
+    } catch {
+      this.#failedStops.add('__daemon_persistence__');
+      return false;
+    }
     this.#releaseOwnership?.();
+    return true;
   }
 
   close() {
@@ -301,11 +323,10 @@ export function createCueCore(config, daemon, runtime = {}) {
       const task = db.prepare('SELECT state FROM task WHERE id=?').get(run.taskId);
       if (task?.state !== 'running') return;
       if (Date.parse(run.envelope.expires_at) <= Date.now()) {
-        db.transaction(() => {
+        commitTerminal(run, () => {
           recordArtifact(run, 'worker_failure', 'approved envelope expired during execution');
-          releaseWriter(run);
           db.prepare("UPDATE task SET state='blocked',blocked_reason='approval_expired' WHERE id=? AND state='running'").run(run.taskId);
-        })();
+        });
         return;
       }
       attempt += 1;
@@ -331,11 +352,9 @@ export function createCueCore(config, daemon, runtime = {}) {
         daemon.own(run.runId, launched);
         result = await launched.done;
         if (result.failureKind === 'termination') { daemon.quarantine(run.runId, result.error || 'tree termination could not be verified'); return; }
-        daemon.release(run.runId);
       } catch (error) {
         if (error?.code === 'CUE_TERMINATION_UNVERIFIED') { daemon.quarantine(run.runId, error); return; }
         if (!daemon.writerReleaseAllowed(run.runId)) return;
-        if (launched) daemon.release(run.runId);
         let diagnostic = error instanceof Error ? error.message : String(error);
         let failureKind = 'crash';
         if (cleanHome) {
@@ -359,50 +378,55 @@ export function createCueCore(config, daemon, runtime = {}) {
       if (!daemon.writerReleaseAllowed(run.runId)) return;
       if (result.failureKind === 'cleanup') {
         const diagnostic = redactDiagnostic(result.error || 'credential cleanup failed');
-        db.transaction(() => {
+        commitTerminal(run, () => {
           recordArtifact(run, 'credential_cleanup_failed', diagnostic);
-          releaseWriter(run);
           db.prepare("UPDATE task SET state='blocked',blocked_reason='credential_cleanup' WHERE id=?").run(run.taskId);
-        })();
+        });
         return;
       }
 
       if (daemon.status !== 'ready') return;
       const current = db.prepare('SELECT state FROM task WHERE id=?').get(run.taskId);
       if (current?.state !== 'running') {
-        releaseWriter(run);
+        commitTerminal(run, () => {});
+        return;
+      }
+
+      const violations = Number(db.prepare("SELECT count(*) AS n FROM artifact WHERE run_id=? AND kind='enforcement_violation'").get(run.runId)?.n ?? 0);
+      if (result.failureKind === 'enforcement' || violations > 0) {
+        const diagnostic = redactDiagnostic(result.error || result.controllerStderr || 'approved envelope enforcement violation');
+        commitTerminal(run, () => {
+          recordArtifact(run, 'worker_failure', `attempt=${attempt}; kind=enforcement; violations=${violations}; output=${diagnostic}`);
+          db.prepare("UPDATE task SET state='blocked',blocked_reason='enforcement_violation' WHERE id=? AND state='running'").run(run.taskId);
+        });
         return;
       }
 
       if (result.failureKind === 'crash') {
         const diagnostic = redactDiagnostic(result.error || result.controllerStderr || 'controller crashed');
-        db.transaction(() => {
+        commitTerminal(run, () => {
           recordArtifact(run, 'worker_failure', `attempt=${attempt}; kind=crash; output=${diagnostic}`);
-          releaseWriter(run);
           db.prepare("UPDATE task SET state='blocked',blocked_reason='crash' WHERE id=?").run(run.taskId);
-        })();
+        });
         return;
       }
 
-      const violations = Number(db.prepare("SELECT count(*) AS n FROM artifact WHERE run_id=? AND kind='enforcement_violation'").get(run.runId)?.n ?? 0);
       const executionPassed = result.status === 'completed' && result.successfulToolCalls > 0 && violations === 0;
       if (executionPassed && result.goalVerification?.passed !== true) {
         const at = new Date().toISOString();
         const evidence = JSON.stringify(result.goalVerification ?? { passed: false, reason: 'verification_missing', changedPaths: [] });
-        db.transaction(() => {
-          releaseWriter(run);
+        commitTerminal(run, () => {
           db.prepare("UPDATE task SET state='blocked',blocked_reason='verification_failed' WHERE id=?").run(run.taskId);
           db.prepare('INSERT INTO verification(run_id,check_name,verdict,evidence,created_at) VALUES(?,?,?,?,?)')
             .run(run.runId, 'goal_relevant_verification', 'FAIL', evidence, at);
           recordArtifact(run, 'goal_verification_failed', evidence);
-        })();
+        });
         return;
       }
       const verified = executionPassed && result.goalVerification?.passed === true;
       if (verified) {
         const at = new Date().toISOString();
-        db.transaction(() => {
-          releaseWriter(run);
+        commitTerminal(run, () => {
           db.prepare("UPDATE task SET state='completed',blocked_reason=NULL WHERE id=?").run(run.taskId);
           db.prepare('INSERT INTO verification(run_id,check_name,verdict,evidence,created_at) VALUES(?,?,?,?,?)')
             .run(run.runId, 'isolated_agent_execution', 'PASS', JSON.stringify({
@@ -417,12 +441,12 @@ export function createCueCore(config, daemon, runtime = {}) {
             .run(run.runId, 'goal_relevant_verification', 'PASS', JSON.stringify(result.goalVerification), at);
           db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)')
             .run(run.taskId, run.runId, 'agent_result', redactDiagnostic(result.finalMessage), at);
-        })();
+        });
         return;
       }
 
       const diagnostic = redactDiagnostic(result.error || result.controllerStderr || `status=${result.status}`);
-      recordArtifact(run, 'worker_failure', `attempt=${attempt}; status=${result.status}; successful_tools=${result.successfulToolCalls}; output=${diagnostic}`);
+      const failureEvidence = `attempt=${attempt}; status=${result.status}; successful_tools=${result.successfulToolCalls}; output=${diagnostic}`;
       const decision = recovery.recover(
         {
           runId: run.runId,
@@ -432,12 +456,15 @@ export function createCueCore(config, daemon, runtime = {}) {
         },
         `attempt ${attempt}: ${diagnostic || result.status}`,
       );
-      if (decision.action !== 'human' && decision.action !== 'stop') continue;
+      if (decision.action !== 'human' && decision.action !== 'stop') {
+        recordArtifact(run, 'worker_failure', failureEvidence);
+        continue;
+      }
       const reason = decision.action === 'human' ? 'human_required' : 'worker_failed';
-      db.transaction(() => {
-        releaseWriter(run);
+      commitTerminal(run, () => {
+        recordArtifact(run, 'worker_failure', failureEvidence);
         db.prepare("UPDATE task SET state='blocked',blocked_reason=? WHERE id=?").run(reason, run.taskId);
-      })();
+      });
       return;
     }
   }
@@ -447,6 +474,20 @@ export function createCueCore(config, daemon, runtime = {}) {
     db.prepare('DELETE FROM workspace_write_lease WHERE worktree_realpath=? AND run_id=?')
       .run(run.envelope.worktree_realpath, run.runId);
     db.prepare('UPDATE run SET write_in_progress=0 WHERE id=?').run(run.runId);
+  }
+
+  function commitTerminal(run, transition) {
+    try {
+      db.transaction(() => {
+        transition();
+        releaseWriter(run);
+      })();
+    } catch (error) {
+      daemon.quarantine(run.runId, error);
+      return false;
+    }
+    daemon.release(run.runId);
+    return true;
   }
 
   function acquireWriter(run, acquiredAt) {
@@ -526,24 +567,20 @@ export function createCueCore(config, daemon, runtime = {}) {
       integrityVerified = validateEngine();
     } catch (error) {
       const message = redactDiagnostic(error instanceof Error ? error.message : error);
-      db.transaction(() => {
+      const committed = commitTerminal(run, () => {
         recordArtifact(run, 'worker_failure', message);
-        releaseWriter(run);
         db.prepare("UPDATE task SET state='blocked',blocked_reason='launch_configuration' WHERE id=? AND state='running'").run(run.taskId);
-      })();
-      promoteNext();
+      });
+      if (committed) promoteNext();
       return;
     }
     if (integrityVerified) recordArtifact(run, 'binary_integrity', 'sha256:PASS');
     void runWithRecovery(run).catch(error => {
       if (daemon.status !== 'ready') return;
-      try {
-        db.transaction(() => {
-          recordArtifact(run, 'worker_failure', redactDiagnostic(error instanceof Error ? error.message : error));
-          releaseWriter(run);
-          db.prepare("UPDATE task SET state='blocked',blocked_reason='human_required' WHERE id=? AND state='running'").run(run.taskId);
-        })();
-      } catch { /* daemon may already be closing */ }
+      commitTerminal(run, () => {
+        recordArtifact(run, 'worker_failure', redactDiagnostic(error instanceof Error ? error.message : error));
+        db.prepare("UPDATE task SET state='blocked',blocked_reason='human_required' WHERE id=? AND state='running'").run(run.taskId);
+      });
     }).finally(() => {
       if (daemon.status === 'ready') promoteNext();
     });
@@ -567,13 +604,18 @@ export function createCueCore(config, daemon, runtime = {}) {
     const run = prepared.get(runId);
     if (!run || daemon.status !== 'ready') return false;
     let stopped = false;
-    db.transaction(() => {
-      const transition = db.prepare("UPDATE task SET state='blocked',blocked_reason=? WHERE id=? AND state='queued'").run(reason, run.taskId);
-      if (transition.changes !== 1) return;
-      releaseWriter(run);
-      recordArtifact(run, 'worker_stopped', `${reason}:queued`);
-      stopped = true;
-    })();
+    try {
+      db.transaction(() => {
+        const transition = db.prepare("UPDATE task SET state='blocked',blocked_reason=? WHERE id=? AND state='queued'").run(reason, run.taskId);
+        if (transition.changes !== 1) return;
+        releaseWriter(run);
+        recordArtifact(run, 'worker_stopped', `${reason}:queued`);
+        stopped = true;
+      })();
+    } catch (error) {
+      daemon.quarantine(runId, error);
+      return false;
+    }
     if (stopped) promoteNext();
     return stopped;
   }

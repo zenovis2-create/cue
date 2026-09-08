@@ -42,25 +42,29 @@ npm start
 
 ```bash
 npm test
-npm run evidence:p10c:manifest
-npm run evidence:p10c
-npm run live:p10c
-npm run evidence:p10c:stop
-npm run evidence:p10c:source
+npm run evidence:p12:manifest
+npm run evidence:p12
+npm run evidence:p12:electron
+npm run evidence:p12:cancel
+npm run evidence:p12:stop
+npm run evidence:p12:mutation
+npm run evidence:p12:source
 ```
 
-`evidence:p10c`는 실제 Codex 모델로 서로 다른 목표 A/B를 실행하고, `live:p10c`는 실제 Electron UI에서 승인→호스트 controller→AppContainer 작업자 경로를 실행합니다. 두 명령은 모델 사용 비용이 발생할 수 있습니다. `evidence:p10c:stop`은 deterministic host-controller fixture와 실제 capability-zero AppContainer 작업자로 중단·회수를 검증하며 실제 vendor-model A/B 증거를 대체하지 않습니다.
+`evidence:p12`는 실제 Codex 모델로 서로 다른 목표 A/B를 실행하고, `evidence:p12:electron`은 실제 Electron 창을 검증합니다. 모델 실행에는 비용이 발생할 수 있습니다. `evidence:p12:stop`은 deterministic host-controller fixture와 실제 capability-zero AppContainer 작업자로 중단·회수를 검증하며 실제 vendor-model A/B 증거를 대체하지 않습니다. `evidence:p12:mutation`은 checkout 밖 disposable 복사본에서 fail-fast·writer lifecycle·parent-death 안전장치를 각각 제거해 해당 회귀가 테스트에 잡히는지 확인합니다.
+
+릴리스 finalizer는 먼저 stage된 source의 strict index manifest를 다시 계산하고, 같은 source digest의 gate summary와 독립 security/release review, 각 receipt SHA-256을 대조합니다. 불일치·누락·unlisted P12 evidence·unstaged source drift가 있으면 `v01_verdict.json`을 만들지 않습니다.
 
 주요 증거:
 
-- `evidence/P10C/p10c_manifest_proof.json` — pinned Codex 실제 outbound request의 전체 tool manifest와 해시
-- `evidence/P10C/p10c_live_result.json` — 서로 다른 실제 목표 A/B, 봉투, 산출물 해시, controller/worker PID
-- `evidence/P10C/p10c_electron_run.json` — Electron UI 승인부터 완료 카드까지의 실기동 기록
-- `evidence/P10C/p10c_electron_window.png` — 실제 완료 화면
-- `evidence/P10C/p10c_npm_start_result.json` — `npm start` 창·renderer·정상 종료 확인
-- `evidence/P10C/p10c_first_run_cancel.json` — 첫 workspace 선택 취소의 fail-closed 확인
-- `evidence/P10C/p10c_stop_result.json` — live controller와 AppContainer worker의 중단·회수 확인
-- `evidence/P10C/source_tree_manifest.json` — evidence 디렉터리를 제외한 검증 대상 source tree 결속
+- `evidence/P12/p12_manifest.json` — pinned Codex 실제 outbound request의 전체 tool manifest와 해시
+- `evidence/P12/p12_live_result.json` — 서로 다른 실제 목표 A/B, 봉투, 산출물 해시, controller/worker PID, ordered provenance
+- `evidence/P12/p12_electron_window_result.json` / PNG — 실제 Electron 창과 runtime 보안 값
+- `evidence/P12/p12_electron_cancel_result.json` — 첫 workspace 선택 취소의 fail-closed 확인
+- `evidence/P12/p12_stop_result.json` — live controller와 AppContainer worker의 중단·회수 확인
+- `evidence/P12/p12_mutation_result.json` — 세 안전 lane의 mutation sensitivity
+- `evidence/P12/p12_source_manifest.json` — evidence를 제외한 staged source tree 결속
+- `evidence/P12/v01_verdict.json` — source·gate·review·receipt 해시를 묶는 tracked verdict
 
 ## v0.1 한계
 
@@ -69,7 +73,7 @@ npm run evidence:p10c:source
 - **P6-3 PARTIAL:** 프론트도어 종료 후 daemon adapter 전달은 검증했지만 실제 Buzz 전달은 외부 상태 변경을 피하기 위해 실행하지 않았습니다. Buzz는 Cue 앱의 필수 런타임이 아닙니다.
 - **목표 관련 검증 PARTIAL:** 현재 `goal_relevant_verification`은 파일 변경형 목표의 before/after SHA-256, 기대 경로 변경, 최종 보고 상관관계를 검증합니다. 파일을 변경하지 않는 조사·요약 목표를 일반적으로 판정한다고 주장하지 않습니다.
 
-Phase 11 retains these release limitations verbatim:
+Phase 12 retains these release limitations verbatim:
 
 - P3-16 network is detection-only
 - P4-2 `Win32_Process` does not supply cwd
@@ -77,6 +81,4 @@ Phase 11 retains these release limitations verbatim:
 - Worker child processes are prohibited; commands requiring nested subprocesses are unsupported. Request each executable through a separate `cue_workspace` call so Cue can resolve and verify it outside writable worktrees.
 - goal verification is oriented toward file-changing goals
 
-Phase 11 security evidence is in `evidence/P11/`. The generated post-commit
-`v01_verdict.json` binds the final source manifest and independent reviews to HEAD;
-it is ignored by Git because a committed file cannot contain its own commit hash.
+Phase 11의 NO-GO 체크포인트는 `evidence/P11/`에 역사 기록으로 보존됩니다. Phase 12의 `v01_verdict.json`은 ignore하지 않고 source와 evidence를 묶는 동일 release commit에 포함합니다. commit SHA 자체는 순환을 피하기 위해 checkout 밖 post-commit attestation이 HEAD tree에서 source manifest를 재계산해 별도로 결속합니다.

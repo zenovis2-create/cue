@@ -68,6 +68,7 @@ rl.on('line',l=>{const m=JSON.parse(l);if(m.method==='initialize')send({id:m.id,
       await until(() => core.completion(run.taskId).state !== 'running', 25000);
       expect(core.daemon.db.prepare('SELECT count(*) n FROM workspace_write_lease').get()).toEqual({ n: 0 });
       expect(core.daemon.db.prepare('SELECT write_in_progress FROM run WHERE id=?').get(run.runId)).toEqual({ write_in_progress: 0 });
+      expect(core.daemon.db.prepare("SELECT count(*) n FROM artifact WHERE kind='appcontainer_profile_pending'").get()).toEqual({ n: 0 });
       expect(core.completion(run.taskId).state).toBe(mode === 'normal completion' ? 'completed' : 'blocked');
       if (mode === 'controller crash') expect(core.completion(run.taskId).blockedReason).toBe('crash');
       core.close();
@@ -95,11 +96,14 @@ rl.on('line',l=>{const m=JSON.parse(l);if(m.method==='initialize')send({id:m.id,
   });
   it('refuses a second live daemon using another ledger for the same canonical worktree', () => {
     const { root, worktree, daemon } = seeded();
+    daemon.db.prepare("INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)")
+      .run('t', 'r', 'appcontainer_profile_pending', JSON.stringify({ profileName: 'Cue.Worker.00000000000000000000000000000000', ownerPid: process.pid }), new Date().toISOString());
     const config = initializeConfig(join(root, 'other-state'), { worktreeRoot: worktree.toUpperCase() });
     let second: AppDaemon | undefined;
     try { expect(() => { second = new AppDaemon(config); }).toThrow(/worktree.*owned/i); }
     finally { second?.close(); }
     expect(daemon.db.prepare('SELECT count(*) n FROM workspace_write_lease').get()).toEqual({ n: 1 });
+    expect(daemon.db.prepare("SELECT count(*) n FROM artifact WHERE kind='appcontainer_profile_pending'").get()).toEqual({ n: 1 });
   });
   it('a failed startup reconciliation cannot strand a new live ownership record', () => {
     const { daemon, config } = seeded();
@@ -136,6 +140,7 @@ setInterval(()=>{if(worker.session.pid!==worker.child.pid)writeFileSync(${JSON.s
     const restarted = new AppDaemon(config); daemons.push(restarted); assertReleased(restarted);
     expect(restarted.db.prepare("SELECT state,blocked_reason FROM task WHERE id='t'").get()).toEqual({ state: 'blocked', blocked_reason: 'crash' });
     expect(restarted.db.prepare("SELECT outcome FROM recovery_attempt WHERE run_id='r'").get()).toEqual({ outcome: 'blocked_no_auto_resume' });
+    expect(restarted.db.prepare("SELECT count(*) n FROM artifact WHERE kind='appcontainer_profile_pending'").get()).toEqual({ n: 0 });
   }, 40000);
 });
 

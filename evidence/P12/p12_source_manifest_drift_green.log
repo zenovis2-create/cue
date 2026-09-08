@@ -1,0 +1,12 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-source-manifest.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-source-manifest.test.ts > P12 source manifest binding > hashes staged blobs rather than dirty working files and excludes evidence 1129ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  17:33:48
+   Duration  1.39s (transform 23ms, setup 0ms, import 53ms, tests 1.13s, environment 0ms)
+

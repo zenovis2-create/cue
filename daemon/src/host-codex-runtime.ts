@@ -1,4 +1,4 @@
-import { isAbsolute, join } from 'node:path';
+import { basename, isAbsolute, join } from 'node:path';
 import { mkdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -16,6 +16,7 @@ import {
 import {
   launchAppContainerWorker,
   recordEnforcementViolation,
+  WorkerEnforcementViolationError,
   type RunningAppContainerWorker,
 } from './worker-enforcement.js';
 
@@ -35,7 +36,7 @@ export interface HostCodexRuntimeResult extends HostCodexRunResult {
   successfulToolCalls: number;
   controllerStderr: string;
   error?: string;
-  failureKind?: 'crash' | 'cleanup' | 'termination';
+  failureKind?: 'crash' | 'cleanup' | 'termination' | 'enforcement';
   goalVerification: GoalVerificationResult;
 }
 
@@ -74,6 +75,34 @@ function waitForClose(child: OwnedChildProcess, timeoutMs: number): Promise<void
     }, timeoutMs);
     timer.unref?.();
   });
+}
+
+export interface HostRuntimeTeardownError {
+  stage: 'rpc' | 'worker_stop' | 'worker_completion' | 'controller' | 'cleanup';
+  error: unknown;
+}
+
+export async function settleHostRuntimeTeardown(input: {
+  closeRpc(): void;
+  workers: Array<{ stop(reason?: 'interrupted' | 'timeout'): void; completion: Promise<unknown> }>;
+  closeController(): void | Promise<void>;
+  cleanup(): void;
+}): Promise<HostRuntimeTeardownError[]> {
+  const errors: HostRuntimeTeardownError[] = [];
+  try { input.closeRpc(); } catch (error) { errors.push({ stage: 'rpc', error }); }
+  for (const worker of input.workers) {
+    try { worker.stop('interrupted'); } catch (error) { errors.push({ stage: 'worker_stop', error }); }
+  }
+  const settled = await Promise.allSettled(input.workers.map(worker => worker.completion));
+  for (const result of settled) {
+    if (result.status === 'rejected') errors.push({ stage: 'worker_completion', error: result.reason });
+    else if (result.value && typeof result.value === 'object' && (result.value as { failureKind?: unknown }).failureKind === 'termination') {
+      errors.push({ stage: 'worker_completion', error: new Error('worker tree termination could not be verified') });
+    }
+  }
+  try { await input.closeController(); } catch (error) { errors.push({ stage: 'controller', error }); }
+  try { input.cleanup(); } catch (error) { errors.push({ stage: 'cleanup', error }); }
+  return errors;
 }
 
 function diagnostic(error: unknown): string {
@@ -195,9 +224,11 @@ export function launchHostCodexRun(
   const activeWorkers = new Set<RunningAppContainerWorker>();
   const workerPids: number[] = [];
   let successfulToolCalls = 0;
+  let modelToolOrdinal = 0;
   let controllerStderr = '';
   let controllerPidCaptured = false;
   let stopped = false;
+  const stopAttemptErrors: HostRuntimeTeardownError[] = [];
   launched.child.stderr?.on('data', chunk => {
     controllerStderr = appendBoundedControllerStderr(controllerStderr, chunk);
     if (controllerPidCaptured) return;
@@ -214,7 +245,39 @@ export function launchHostCodexRun(
     command: Parameters<typeof launchAppContainerWorker>[3],
     metadata: { purpose: string; modelContext?: { threadId: string; turnId: string; callId: string; signal: AbortSignal } },
   ): Promise<WorkspaceWorkerResult> => {
-    const worker = launchAppContainerWorker(db, envelope, owner, command, { signal: metadata.modelContext?.signal });
+    const startedAt = new Date().toISOString();
+    const ordinal = metadata.modelContext ? ++modelToolOrdinal : null;
+    let worker: RunningAppContainerWorker;
+    try {
+      worker = launchAppContainerWorker(db, envelope, owner, command, { signal: metadata.modelContext?.signal });
+    } catch (error) {
+      if (error instanceof WorkerEnforcementViolationError && db.open) {
+        const finishedAt = new Date().toISOString();
+        db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)').run(
+          owner.task_id,
+          owner.run_id,
+          metadata.modelContext ? 'tool_execution' : 'goal_verification_worker',
+          JSON.stringify({
+            purpose: metadata.purpose,
+            ordinal,
+            callId: metadata.modelContext?.callId ?? null,
+            threadId: metadata.modelContext?.threadId ?? null,
+            turnId: metadata.modelContext?.turnId ?? null,
+            pid: null,
+            exitCode: null,
+            boundary: 'preflight',
+            violation: error.violation,
+            operation: command.operation ?? 'command',
+            program: basename(command.executable).slice(0, 128),
+            argumentCount: command.args.length,
+            startedAt,
+            finishedAt,
+          }),
+          finishedAt,
+        );
+      }
+      throw error;
+    }
     activeWorkers.add(worker);
     try {
       db.prepare('UPDATE session_runtime SET parent_handle=? WHERE handle=?')
@@ -240,6 +303,7 @@ export function launchHostCodexRun(
       metadata.modelContext ? 'tool_execution' : 'goal_verification_worker',
       JSON.stringify({
         purpose: metadata.purpose,
+        ordinal,
         callId: metadata.modelContext?.callId ?? null,
         threadId: metadata.modelContext?.threadId ?? null,
         turnId: metadata.modelContext?.turnId ?? null,
@@ -247,6 +311,11 @@ export function launchHostCodexRun(
         exitCode: result.exitCode,
         boundary: result.enforcement,
         violation: result.violation ?? null,
+        operation: command.operation ?? 'command',
+        program: basename(command.executable).slice(0, 128),
+        argumentCount: command.args.length,
+        startedAt,
+        finishedAt: now,
       }),
       now,
     );
@@ -293,7 +362,7 @@ export function launchHostCodexRun(
       }
     } catch (caught) {
       error = diagnostic(caught);
-      failureKind = 'crash';
+      failureKind = (caught as { code?: unknown })?.code === 'CUE_ENFORCEMENT_VIOLATION' ? 'enforcement' : 'crash';
       result = {
         threadId: '',
         turnId: '',
@@ -301,20 +370,25 @@ export function launchHostCodexRun(
         finalMessage: '',
       };
     } finally {
-      rpc.close();
-      for (const worker of activeWorkers) worker.stop('interrupted');
-      await Promise.all([...activeWorkers].map(worker => worker.completion));
-      await waitForClose(launched.child, 2_000);
-      if (launched.child.exitCode === null && launched.child.signalCode === null) {
-        terminateTree(launched.child);
-        await waitForClose(launched.child, 2_000);
-      }
-      try { safeCleanupCodexHome(options.codexHome); } catch (caught) {
-        const cleanup = diagnostic(caught);
-        controllerStderr += `${controllerStderr ? '\n' : ''}${cleanup}`;
-        error = `credential cleanup failed: ${cleanup}`;
-        failureKind = 'cleanup';
-        result = { threadId: '', turnId: '', status: 'failed', finalMessage: 'credential cleanup failed' };
+      const teardownErrors = [...stopAttemptErrors, ...await settleHostRuntimeTeardown({
+        closeRpc: () => rpc.close(),
+        workers: [...activeWorkers],
+        closeController: async () => {
+          await waitForClose(launched.child, 2_000);
+          if (launched.child.exitCode === null && launched.child.signalCode === null) {
+            terminateTree(launched.child);
+            await waitForClose(launched.child, 2_000);
+          }
+        },
+        cleanup: () => safeCleanupCodexHome(options.codexHome),
+      })];
+      if (teardownErrors.length > 0) {
+        const teardown = teardownErrors.map(entry => `${entry.stage}: ${diagnostic(entry.error)}`).join('; ');
+        controllerStderr += `${controllerStderr ? '\n' : ''}${teardown}`;
+        const terminationFailure = teardownErrors.some(entry => entry.stage !== 'cleanup');
+        error = terminationFailure ? `runtime teardown failed: ${teardown}` : `credential cleanup failed: ${teardown}`;
+        failureKind = terminationFailure ? 'termination' : 'cleanup';
+        result = { threadId: '', turnId: '', status: 'failed', finalMessage: terminationFailure ? 'runtime teardown failed' : 'credential cleanup failed' };
       }
     }
     return {
@@ -333,11 +407,13 @@ export function launchHostCodexRun(
     done,
     stop(): void {
       stopped = true;
-      rpc.interrupt();
-      for (const worker of activeWorkers) worker.stop('interrupted');
-      rpc.close();
-      terminateTree(launched.child);
-      try { safeCleanupCodexHome(options.codexHome); } catch { /* completion path retries cleanup */ }
+      try { rpc.interrupt(); } catch (error) { stopAttemptErrors.push({ stage: 'rpc', error }); }
+      for (const worker of activeWorkers) {
+        try { worker.stop('interrupted'); } catch (error) { stopAttemptErrors.push({ stage: 'worker_stop', error }); }
+      }
+      try { rpc.close(); } catch (error) { stopAttemptErrors.push({ stage: 'rpc', error }); }
+      try { terminateTree(launched.child); } catch (error) { stopAttemptErrors.push({ stage: 'controller', error }); }
+      try { safeCleanupCodexHome(options.codexHome); } catch (error) { stopAttemptErrors.push({ stage: 'cleanup', error }); }
     },
   };
 }

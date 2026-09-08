@@ -1,0 +1,12 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-restart-queue.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-restart-queue.test.ts > P12 restart-safe queued writer lifecycle > terminalizes queued successors with the interrupted active writer 13ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  16:26:49
+   Duration  351ms (transform 51ms, setup 0ms, import 134ms, tests 14ms, environment 0ms)
+

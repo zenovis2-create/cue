@@ -21,9 +21,9 @@ const temp = (): string => { mkdirSync(testStateRoot,{recursive:true}); const pa
 afterEach(() => { for (const path of temporary.splice(0)) rmSync(path,{recursive:true,force:true}); });
 const now = '2026-09-02T00:00:00.000Z';
 
-function seed(db: ReturnType<typeof openLedger>): void {
+function seed(db: ReturnType<typeof openLedger>, worktree = 'C:/work'): void {
   db.prepare('INSERT INTO task VALUES(?,?,?,?)').run('t1','running',null,now);
-  db.prepare('INSERT INTO envelope VALUES(?,?,?,?)').run('eh1','C:/work','[]',now);
+  db.prepare('INSERT INTO envelope VALUES(?,?,?,?)').run('eh1',worktree,'[]',now);
   db.prepare('INSERT INTO run VALUES(?,?,?,?,?)').run('r1','t1','eh1',0,now);
 }
 
@@ -130,7 +130,7 @@ describe('P2-6 sentinel', () => {
 describe('P2-8 crash reconciliation', () => {
   it('blocks an interrupted task, captures actual git status, and records no automatic resume', () => {
     const worktree=temp(); execFileSync('git',['init','--quiet'],{cwd:worktree}); writeFileSync(join(worktree,'file.ts'),'changed');
-    const db=openLedger(); seed(db); db.prepare('UPDATE run SET write_in_progress=1 WHERE id=?').run('r1');
+    const db=openLedger(); seed(db,worktree); db.prepare('UPDATE run SET write_in_progress=1 WHERE id=?').run('r1');
     expect(reconcileInterruptedWrites(db,worktree)).toBe(1);
     expect(db.prepare('SELECT state,blocked_reason FROM task').get()).toEqual({state:'blocked',blocked_reason:'crash'});
     expect((db.prepare("SELECT content FROM artifact WHERE kind='git_status'").get() as {content:string}).content).toContain('file.ts');

@@ -49,10 +49,11 @@ describe.skipIf(process.platform !== 'win32')('P11 executable sealing', () => {
   });
   it('denies a planted executable launched as a shell descendant', async () => {
     const s = setup(), planted = join(s.worktree, 'planted.exe'); copyFileSync(process.execPath, planted);
-    const launched = launchAppContainerWorker(s.db, s.envelope, s.owner, { executable: 'powershell.exe', args: ['-NoProfile', '-NonInteractive', '-Command', `$ErrorActionPreference='Stop'; $p=[Diagnostics.Process]::Start('${planted.replace(/'/gu, "''")}', '-e process.exit(0)'); $p.WaitForExit(); exit $p.ExitCode`], cwd: s.worktree, timeoutMs: 20_000 });
+    const nestedLaunch = `$ErrorActionPreference='Stop'; try { $p=[Diagnostics.Process]::Start('${planted.replace(/'/gu, "''")}', '-e process.exit(0)'); $p.WaitForExit(); exit $p.ExitCode } catch { $e=$_.Exception; while ($e.InnerException) { $e=$e.InnerException }; $native=if ($e -is [ComponentModel.Win32Exception]) { $e.NativeErrorCode } else { -1 }; [Console]::Error.Write("CUE_CHILD_PROCESS_DENIED_NATIVE_ERROR=$native"); exit 91 }`;
+    const launched = launchAppContainerWorker(s.db, s.envelope, s.owner, { executable: 'powershell.exe', args: ['-NoProfile', '-NonInteractive', '-Command', nestedLaunch], cwd: s.worktree, timeoutMs: 20_000 });
     const result = await launched.completion;
     expect(result.exitCode).not.toBe(0);
     expect(result.violation, JSON.stringify(result)).toBe('executable_sealing');
-    expect(result.stderr).toMatch(/not enough quota/iu);
+    expect(result.stderr).toContain('CUE_CHILD_PROCESS_DENIED_NATIVE_ERROR=1816');
   }, 30_000);
 });

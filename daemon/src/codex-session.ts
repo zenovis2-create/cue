@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'node:url';
 import { basename } from 'node:path';
+import { randomUUID } from 'node:crypto';
 import type { Ledger } from './ledger.js';
 import { vendorCodexLaunchSpec } from './tool-home.js';
 import { spawnOwned, type SessionOwner } from './session-spawn.js';
@@ -30,6 +31,7 @@ export function spawnVendorCodexInAppContainer(
     commandLine: [executable, ...spec.args].map(quote).join(' '),
     cwd: owner.cwd,
     parentPid: process.pid,
+    profileName: `Cue.Worker.${randomUUID().replaceAll('-', '')}`,
     grantPaths: [codexHome],
     cleanupPaths: disposableHome ? [codexHome] : [],
   })).toString('base64');

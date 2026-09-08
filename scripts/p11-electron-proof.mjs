@@ -1,17 +1,27 @@
 import { spawn } from 'node:child_process';
-import { createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createWriteStream, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import assert from 'node:assert/strict';
+import { stopProcessTree } from '../daemon/scripts/process-lifecycle.mjs';
 
-const evidence = resolve('evidence/P11');
+const phases = ['P11', 'P12'];
+const phase = phases.includes(process.env.CUE_EVIDENCE_PHASE) ? process.env.CUE_EVIDENCE_PHASE : 'P11';
+const prefix = phase.toLowerCase();
+const outputOverride = process.env.CUE_ELECTRON_PROOF_OUTPUT_DIR;
+const evidence = outputOverride ? resolve(outputOverride) : resolve('evidence', phase);
 const cancel = process.argv.includes('--cancel');
-const port = cancel ? 9438 : 9437;
-const state = join(tmpdir(), `cue-p11-electron-${cancel ? 'cancel' : 'window'}-${Date.now()}`);
+const port = phase === 'P12' ? (cancel ? 9538 : 9537) : (cancel ? 9438 : 9437);
+const state = join(tmpdir(), `cue-${prefix}-electron-${cancel ? 'cancel' : 'window'}-${Date.now()}`);
 const workspace = join(state, 'workspace');
 const userData = join(state, 'state');
+mkdirSync(evidence, { recursive: true });
 mkdirSync(workspace, { recursive: true });
-const log = createWriteStream(join(evidence, cancel ? 'p11_electron_cancel.log' : 'p11_electron_live.log'));
+const resultPath = join(evidence, cancel ? `${prefix}_electron_cancel_result.json` : `${prefix}_electron_window_result.json`);
+const failurePath = join(evidence, cancel ? `${prefix}_electron_cancel_failure.json` : `${prefix}_electron_window_failure.json`);
+const pendingPath = join(evidence, cancel ? `${prefix}_electron_cancel_pending.json` : `${prefix}_electron_window_pending.json`);
+for (const stale of [resultPath, failurePath, pendingPath]) rmSync(stale, { force: true });
+const log = createWriteStream(join(evidence, cancel ? `${prefix}_electron_cancel.log` : `${prefix}_electron_live.log`));
 const env = { ...process.env, CUE_USER_DATA: userData };
 delete env.CUE_LIVE_RUN;
 delete env.CUE_WORKTREE_ROOT;
@@ -19,6 +29,11 @@ delete env.ELECTRON_RUN_AS_NODE;
 if (!cancel) env.CUE_WORKTREE_ROOT = workspace;
 const child = spawn(process.env.ComSpec ?? 'C:\\Windows\\System32\\cmd.exe', ['/d', '/s', '/c', `npm.cmd start -- --inspect=127.0.0.1:${port}`], { env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
 child.stdout.pipe(log, { end: false }); child.stderr.pipe(log, { end: false });
+const childClose = new Promise(resolveClose => child.once('close', resolveClose));
+const logClose = new Promise((resolveClose, rejectClose) => {
+  log.once('finish', resolveClose);
+  log.once('error', rejectClose);
+});
 let exited = false;
 const exit = new Promise(resolveExit => child.once('exit', code => { exited = true; resolveExit(code); }));
 const delay = ms => new Promise(done => setTimeout(done, ms));
@@ -28,6 +43,8 @@ async function until(fn) {
   throw new Error('FAIL: Electron proof timeout');
 }
 let ws;
+let prospectiveRecord = null;
+let proofError = null;
 try {
   const target = await until(async () => {
     if (exited) throw new Error('Electron exited before debugger');
@@ -48,15 +65,15 @@ try {
   }
   await evaluate(`globalThis.p11Electron = process.getBuiltinModule('module').createRequire(process.cwd() + '/package.json')('electron'); true`);
   const pid = await evaluate('process.pid');
-  writeFileSync(join(evidence, cancel ? 'p11_electron_cancel_pending.json' : 'p11_electron_window_pending.json'), JSON.stringify({ pid, userData, workspace }, null, 2));
+  writeFileSync(pendingPath, JSON.stringify({ pid, userData, workspace }, null, 2));
   if (cancel) {
     ws.close();
     console.log(JSON.stringify({ cancelAppPid: pid, userData, deadlineSeconds: 180 }));
     await until(() => exited);
     const code = await exit;
     const record = { command: 'npm.cmd start', pid, exitCode: code, configWritten: existsSync(join(userData, 'cue-config.json')), fallbackFolderCreated: existsSync(userData), userData, workspace, passed: code === 1 && !existsSync(userData) };
-    writeFileSync(join(evidence, 'p11_electron_cancel_result.json'), JSON.stringify(record, null, 2));
     assert.equal(record.passed, true);
+    prospectiveRecord = record;
   } else {
     await until(async () => evaluate(`p11Electron.BrowserWindow.getAllWindows().some(w => !w.webContents.isLoading())`));
     const record = await evaluate(`(async () => {
@@ -68,8 +85,11 @@ try {
       const popupNull = await wc.executeJavaScript("window.open('https://example.invalid/p11-popup') === null");
       await wc.executeJavaScript("location.href = 'https://example.invalid/p11-navigation'; true");
       await new Promise(done => setTimeout(done, 250));
-      const image = await wc.capturePage();
-      process.getBuiltinModule('fs').writeFileSync(${JSON.stringify(join(evidence, 'p11_electron_window.png'))}, image.toPNG());
+      wc.debugger.attach('1.3');
+      try {
+        const capture = await wc.debugger.sendCommand('Page.captureScreenshot', { format: 'png' });
+        process.getBuiltinModule('fs').writeFileSync(${JSON.stringify(join(evidence, `${prefix}_electron_window.png`))}, Buffer.from(capture.data, 'base64'));
+      } finally { if (wc.debugger.isAttached()) wc.debugger.detach(); }
       return { electronVersion: process.versions.electron, pid: process.pid, visible: win.isVisible(), windowCount: p11Electron.BrowserWindow.getAllWindows().length, prefs: {contextIsolation:prefs.contextIsolation,nodeIntegration:prefs.nodeIntegration,sandbox:prefs.sandbox}, renderer, navigation: {event:nav, originalUrl, finalUrl:wc.getURL()}, popupNull };
     })()`);
     assert.deepEqual(record.prefs, { contextIsolation: true, nodeIntegration: false, sandbox: true });
@@ -83,11 +103,36 @@ try {
     ws.close();
     await until(() => exited);
     record.exitCode = await exit; record.passed = record.exitCode === 0;
-    writeFileSync(join(evidence, 'p11_electron_window_result.json'), JSON.stringify(record, null, 2));
     assert.equal(record.passed, true);
-    console.log(JSON.stringify(record));
+    prospectiveRecord = record;
   }
 } catch (error) {
-  writeFileSync(join(evidence, cancel ? 'p11_electron_cancel_failure.json' : 'p11_electron_window_failure.json'), JSON.stringify({ passed: false, error: String(error) }, null, 2));
-  console.error(String(error)); process.exitCode = 1;
-} finally { ws?.close(); log.end(); }
+  proofError = error;
+} finally {
+  ws?.close();
+  const cleanupErrors = [];
+  try { await stopProcessTree(child); } catch (error) { cleanupErrors.push(error); }
+  try {
+    await Promise.race([childClose, delay(10_000).then(() => { throw new Error('Electron child close timeout'); })]);
+  } catch (error) { cleanupErrors.push(error); }
+  log.end();
+  try { await logClose; } catch (error) { cleanupErrors.push(error); }
+  try { rmSync(state, { recursive: true, force: true, maxRetries: 20, retryDelay: 50 }); } catch (error) { cleanupErrors.push(error); }
+  if (process.env.CUE_ELECTRON_PROOF_FORCE_CLEANUP_FAILURE === '1') {
+    cleanupErrors.push(new Error(process.env.NODE_ENV === 'test' ? 'forced cleanup failure' : 'cleanup-failure injection requires NODE_ENV=test'));
+  }
+  if (cleanupErrors.length > 0 && !proofError) proofError = cleanupErrors[0];
+}
+
+rmSync(pendingPath, { force: true });
+if (proofError || !prospectiveRecord?.passed) {
+  rmSync(resultPath, { force: true });
+  const failure = { passed: false, error: String(proofError ?? 'Electron proof did not produce a passing result') };
+  writeFileSync(failurePath, JSON.stringify(failure, null, 2));
+  console.error(failure.error);
+  process.exitCode = 1;
+} else {
+  rmSync(failurePath, { force: true });
+  writeFileSync(resultPath, JSON.stringify(prospectiveRecord, null, 2));
+  console.log(JSON.stringify(prospectiveRecord));
+}

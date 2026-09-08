@@ -11,8 +11,11 @@ node_modules/
 .env
 .env.*
 
-# Post-commit attestation embeds HEAD and cannot be part of its own commit.
+# P11 post-commit attestation embeds HEAD and remains an immutable historical exception.
 /evidence/P11/v01_verdict.json
+
+# Agent/supervisor last-message dumps are harness outputs, not product evidence.
+/evidence/p*_codex_last_message.md
 
 # Runtime/test state can contain copied credentials and ledgers.
 daemon/.test-state-*/

@@ -1,0 +1,39 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-worker-preflight.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies an outside-worktree absolute path as a terminal filesystem violation 19ms
+   → expected Error: filesystem action is outside the a… to match object { …(2) }
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies an outside-worktree absolute path as a terminal filesystem violation
+AssertionError: expected Error: filesystem action is outside the a… to match object { …(2) }
+
+- Expected
++ Received
+
+- {
+-   "code": "CUE_WORKER_ENFORCEMENT_VIOLATION",
+-   "violation": "filesystem",
++ Error {
++   "message": "filesystem action is outside the approved worktree",
+  }
+
+ ❯ test/p12-worker-preflight.test.ts:46:10
+     44|           cwd: worktree,
+     45|         },
+     46|       ))).rejects.toMatchObject({
+       |          ^
+     47|         code: 'CUE_WORKER_ENFORCEMENT_VIOLATION',
+     48|         violation: 'filesystem',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  14:02:48
+   Duration  408ms (transform 71ms, setup 0ms, import 179ms, tests 20ms, environment 0ms)
+

@@ -1,0 +1,40 @@
+npm notice run cue-daemon@0.1.0 npx
+npm notice run vitest run test/p10c-containment.test.ts -t kills the capability-zero worker job when its daemon parent is hard-killed --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p10c-containment.test.ts > Phase 10-C process containment > binds the AppContainer job lifetime to the daemon process handle
+ ↓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the host controller descendant when the owned controller root is hard-killed
+stdout | test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed
+P12_PARENT_DEATH_IDENTITY {"parentPid":62660,"wrapperPid":78612,"workerPid":71552,"terminationLatencyMs":5812,"wrapperAlive":false,"workerAlive":false,"originalWrapperAlive":false,"originalWorkerAlive":false,"wrapperIdentityBefore":{"ProcessId":78612,"ParentProcessId":62660,"created":"2026-09-07T23:30:16.9639120Z"},"wrapperIdentityAfter":null,"workerIdentityBefore":{"ProcessId":71552,"ParentProcessId":78612,"created":"2026-09-07T23:30:17.7288480Z"},"workerIdentityAfter":null}
+
+ × test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed 28944ms
+   → expected 1 to be +0 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ test/p10c-containment.test.ts:154:37
+    152|     const profileCleanupDeadline = Date.now() + 5_000;
+    153|     while (cueWorkerProfileCount() !== profilesBefore && Date.now() < …
+    154|     expect(cueWorkerProfileCount()).toBe(profilesBefore);
+       |                                     ^
+    155|   }, 90_000);
+    156| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  08:30:15
+   Duration  29.44s (transform 120ms, setup 0ms, import 307ms, tests 28.94s, environment 0ms)
+

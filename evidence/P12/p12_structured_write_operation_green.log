@@ -1,0 +1,25 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p10c-host-controller.test.ts -t structured exact-text write --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > removes every host execution environment and exposes only the Cue AppContainer tool
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > disables Codex built-in shell tools in the isolated host controller home
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > steers file-change goals away from child-spawning and ancestor-traversing commands
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > advertises write_text as the preferred exact-file operation on the sole dynamic tool
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > pins dynamic tool execution to the approved worktree and rejects client-controlled cwd
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > translates a structured exact-text write into a sandboxed PowerShell worker command 2ms
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > fails closed on any other dynamic tool identity or malformed argv
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > returns bounded, explicit AppContainer evidence to the model
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > drives app-server and returns dynamic-tool output from the AppContainer runner
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > declines any host-side command or file execution request without invoking the worker runner
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > rejects wrong-thread and duplicate dynamic calls and ignores a mismatched terminal notification
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > does not create an orphan terminal rejection when turn/start itself fails
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > allows only one in-flight dynamic tool call at a time
+ ↓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > rejects a dynamic tool call received after the correlated turn completed
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 13 skipped (14)
+   Start at  14:44:25
+   Duration  329ms (transform 51ms, setup 0ms, import 138ms, tests 4ms, environment 0ms)
+

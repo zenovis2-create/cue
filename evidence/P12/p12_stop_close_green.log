@@ -1,0 +1,13 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-stop-harness.test.ts -t forced core close failure --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > rejects a caller-owned non-empty root without deleting it
+ ✓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > reaps live sessions and emits FAIL after a forced core close failure 32353ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 1 skipped (2)
+   Start at  21:13:14
+   Duration  32.59s (transform 18ms, setup 0ms, import 54ms, tests 32.35s, environment 0ms)
+

@@ -1,0 +1,31 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-stop-harness.test.ts -t forced core close failure --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > rejects a caller-owned non-empty root without deleting it
+ × test/p12-stop-harness.test.ts > P12 stop-canary path ownership > reaps live sessions and emits FAIL after a forced core close failure 155ms
+   → ENOENT: no such file or directory, open 'D:\Temp\User\cue-p12-stop-output-6KOc7t\p12_stop_result.json'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-stop-harness.test.ts > P12 stop-canary path ownership > reaps live sessions and emits FAIL after a forced core close failure
+Error: ENOENT: no such file or directory, open 'D:\Temp\User\cue-p12-stop-output-6KOc7t\p12_stop_result.json'
+ ❯ test/p12-stop-harness.test.ts:47:32
+     45|     });
+     46|     expect(result.status).toBe(2);
+     47|     const receipt = JSON.parse(readFileSync(join(output, 'p12_stop_res…
+       |                                ^
+     48|     expect(receipt).toMatchObject({ verdict: 'FAIL', checks: { fixture…
+     49|     expect(receipt.failure).toContain('forced core.close failure');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -4058, code: 'ENOENT', syscall: 'open', path: 'D:\Temp\User\cue-p12-stop-output-6KOc7t\p12_stop_result.json' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  17:57:12
+   Duration  420ms (transform 25ms, setup 0ms, import 62ms, tests 157ms, environment 0ms)
+

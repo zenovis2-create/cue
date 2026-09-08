@@ -33,7 +33,12 @@ export function fenceInterruptedSessions(db: Ledger): number {
 }
 
 export function reconcileInterruptedWrites(db: Ledger, cwd: string, readGitStatus: GitStatusReader = captureGitStatus): number {
-  const rows = db.prepare("SELECT run.id AS run_id, run.task_id FROM run JOIN task ON task.id=run.task_id WHERE run.write_in_progress=1").all() as Array<{run_id:string; task_id:string}>;
+  const rows = db.prepare(`SELECT run.id AS run_id, run.task_id
+    FROM run
+    JOIN task ON task.id=run.task_id
+    JOIN envelope ON envelope.envelope_hash=run.envelope_hash
+    WHERE envelope.worktree_realpath=? AND (run.write_in_progress=1 OR task.state='queued')`)
+    .all(cwd) as Array<{run_id:string; task_id:string}>;
   if (rows.length === 0) return 0;
   const capture = readGitStatus(cwd);
   const tx = db.transaction(() => {

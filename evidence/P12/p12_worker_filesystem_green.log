@@ -1,0 +1,12 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-worker-preflight.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies an outside-worktree absolute path as a terminal filesystem violation 9ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  14:03:25
+   Duration  308ms (transform 68ms, setup 0ms, import 144ms, tests 10ms, environment 0ms)
+

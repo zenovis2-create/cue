@@ -1,0 +1,12 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-real-restart.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-real-restart.test.ts > P12 real daemon crash restart > hard-kills an active+queued daemon process and terminalizes both on restart 1954ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  17:43:54
+   Duration  2.85s (transform 189ms, setup 0ms, import 619ms, tests 1.96s, environment 0ms)
+

@@ -1,0 +1,425 @@
+{
+  "schema": "cue.p12.parent-death-stress.v1",
+  "generatedAt": "2026-09-08T02:05:19.896850+00:00",
+  "sourceTreeSha256": "9a13bd45dcde050ef39e03afb2855aef8ebb54a9be9eb5930953cb8e4c7d12e7",
+  "passed": true,
+  "sequential": {
+    "runs": 10,
+    "passed": 10
+  },
+  "parallel": {
+    "runs": 4,
+    "passed": 4
+  },
+  "samples": [
+    {
+      "kind": "sequential",
+      "index": 1,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 48724,
+        "wrapperPid": 55804,
+        "workerPid": 20744,
+        "terminationLatencyMs": 1483,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 55804,
+          "ParentProcessId": 48724,
+          "created": "2026-09-08T02:02:42.8952650Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 20744,
+          "ParentProcessId": 55804,
+          "created": "2026-09-08T02:02:43.6223220Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_01.log"
+    },
+    {
+      "kind": "sequential",
+      "index": 2,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 51048,
+        "wrapperPid": 55348,
+        "workerPid": 48768,
+        "terminationLatencyMs": 1581,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 55348,
+          "ParentProcessId": 51048,
+          "created": "2026-09-08T02:02:54.9851210Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 48768,
+          "ParentProcessId": 55348,
+          "created": "2026-09-08T02:02:55.6433360Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_02.log"
+    },
+    {
+      "kind": "sequential",
+      "index": 3,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 55416,
+        "wrapperPid": 55656,
+        "workerPid": 22096,
+        "terminationLatencyMs": 1918,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 55656,
+          "ParentProcessId": 55416,
+          "created": "2026-09-08T02:03:07.7033170Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 22096,
+          "ParentProcessId": 55656,
+          "created": "2026-09-08T02:03:08.3668650Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_03.log"
+    },
+    {
+      "kind": "sequential",
+      "index": 4,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 54688,
+        "wrapperPid": 23408,
+        "workerPid": 10492,
+        "terminationLatencyMs": 1772,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 23408,
+          "ParentProcessId": 54688,
+          "created": "2026-09-08T02:03:21.4467320Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 10492,
+          "ParentProcessId": 23408,
+          "created": "2026-09-08T02:03:22.1144350Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_04.log"
+    },
+    {
+      "kind": "sequential",
+      "index": 5,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 3388,
+        "wrapperPid": 4068,
+        "workerPid": 18288,
+        "terminationLatencyMs": 1676,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 4068,
+          "ParentProcessId": 3388,
+          "created": "2026-09-08T02:03:34.8997880Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 18288,
+          "ParentProcessId": 4068,
+          "created": "2026-09-08T02:03:35.8098590Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_05.log"
+    },
+    {
+      "kind": "sequential",
+      "index": 6,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 14744,
+        "wrapperPid": 30812,
+        "workerPid": 25344,
+        "terminationLatencyMs": 1803,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 30812,
+          "ParentProcessId": 14744,
+          "created": "2026-09-08T02:03:50.2097970Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 25344,
+          "ParentProcessId": 30812,
+          "created": "2026-09-08T02:03:51.0207300Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_06.log"
+    },
+    {
+      "kind": "sequential",
+      "index": 7,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 44264,
+        "wrapperPid": 37724,
+        "workerPid": 51196,
+        "terminationLatencyMs": 1748,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 37724,
+          "ParentProcessId": 44264,
+          "created": "2026-09-08T02:04:03.9623700Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 51196,
+          "ParentProcessId": 37724,
+          "created": "2026-09-08T02:04:04.8059520Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_07.log"
+    },
+    {
+      "kind": "sequential",
+      "index": 8,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 48932,
+        "wrapperPid": 33136,
+        "workerPid": 48908,
+        "terminationLatencyMs": 1834,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 33136,
+          "ParentProcessId": 48932,
+          "created": "2026-09-08T02:04:17.3450120Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 48908,
+          "ParentProcessId": 33136,
+          "created": "2026-09-08T02:04:18.0639070Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_08.log"
+    },
+    {
+      "kind": "sequential",
+      "index": 9,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 27064,
+        "wrapperPid": 39256,
+        "workerPid": 50232,
+        "terminationLatencyMs": 1949,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 39256,
+          "ParentProcessId": 27064,
+          "created": "2026-09-08T02:04:32.8103230Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 50232,
+          "ParentProcessId": 39256,
+          "created": "2026-09-08T02:04:33.8464240Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_09.log"
+    },
+    {
+      "kind": "sequential",
+      "index": 10,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 50468,
+        "wrapperPid": 42864,
+        "workerPid": 28172,
+        "terminationLatencyMs": 1357,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 42864,
+          "ParentProcessId": 50468,
+          "created": "2026-09-08T02:04:46.9879200Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 28172,
+          "ParentProcessId": 42864,
+          "created": "2026-09-08T02:04:47.7915440Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_sequential_10.log"
+    },
+    {
+      "kind": "parallel",
+      "index": 1,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 49920,
+        "wrapperPid": 3560,
+        "workerPid": 29824,
+        "terminationLatencyMs": 1699,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 3560,
+          "ParentProcessId": 49920,
+          "created": "2026-09-08T02:05:00.3228680Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 29824,
+          "ParentProcessId": 3560,
+          "created": "2026-09-08T02:05:01.1820840Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_parallel_01.log"
+    },
+    {
+      "kind": "parallel",
+      "index": 2,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 29772,
+        "wrapperPid": 33564,
+        "workerPid": 8248,
+        "terminationLatencyMs": 1738,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 33564,
+          "ParentProcessId": 29772,
+          "created": "2026-09-08T02:05:00.3293050Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 8248,
+          "ParentProcessId": 33564,
+          "created": "2026-09-08T02:05:01.1735670Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_parallel_02.log"
+    },
+    {
+      "kind": "parallel",
+      "index": 3,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 17576,
+        "wrapperPid": 37720,
+        "workerPid": 22084,
+        "terminationLatencyMs": 1678,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 37720,
+          "ParentProcessId": 17576,
+          "created": "2026-09-08T02:05:00.3292830Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 22084,
+          "ParentProcessId": 37720,
+          "created": "2026-09-08T02:05:01.1710490Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_parallel_03.log"
+    },
+    {
+      "kind": "parallel",
+      "index": 4,
+      "exitCode": 0,
+      "markerCount": 1,
+      "sample": {
+        "parentPid": 46640,
+        "wrapperPid": 48460,
+        "workerPid": 54148,
+        "terminationLatencyMs": 1699,
+        "wrapperAlive": false,
+        "workerAlive": false,
+        "originalWrapperAlive": false,
+        "originalWorkerAlive": false,
+        "wrapperIdentityBefore": {
+          "ProcessId": 48460,
+          "ParentProcessId": 46640,
+          "created": "2026-09-08T02:05:00.2980440Z"
+        },
+        "wrapperIdentityAfter": null,
+        "workerIdentityBefore": {
+          "ProcessId": 54148,
+          "ParentProcessId": 48460,
+          "created": "2026-09-08T02:05:01.1710550Z"
+        },
+        "workerIdentityAfter": null
+      },
+      "log": "evidence/P12/p12_parent_death_parallel_04.log"
+    }
+  ],
+  "limitations": [
+    "Historical P11 pre-instrumentation failure remains not-attributable."
+  ]
+}

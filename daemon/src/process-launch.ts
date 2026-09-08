@@ -59,6 +59,29 @@ export function resolveOwnedExecutable(db: Ledger, owner: SessionOwner, command:
 export type OwnedChildProcess = ChildProcess;
 export type OwnedSpawnSyncResult = SpawnSyncReturns<string>;
 
+interface UnownedTerminationOps {
+  taskkill(pid: number): { status: number | null; stderr?: string | Buffer };
+  processAlive(pid: number): boolean;
+}
+
+function terminationError(message: string): Error {
+  const error = new Error(message) as Error & { code: string };
+  error.code = 'CUE_TERMINATION_UNVERIFIED';
+  return error;
+}
+
+export function terminateUnownedProcessTree(pid: number, overrides: Partial<UnownedTerminationOps> = {}): void {
+  if (!Number.isSafeInteger(pid) || pid <= 0) throw terminationError('invalid unowned process pid');
+  const taskkill = overrides.taskkill ?? (target => spawnSync(resolveSealedExecutable('taskkill.exe'), ['/PID', String(target), '/T', '/F'], { encoding: 'utf8', windowsHide: true }));
+  const processAlive = overrides.processAlive ?? (target => spawnSync(resolveSealedExecutable('powershell.exe'), [
+    '-NoProfile', '-NonInteractive', '-Command', `if (Get-CimInstance Win32_Process -Filter "ProcessId=${target}" -ErrorAction SilentlyContinue) { exit 0 } else { exit 1 }`,
+  ], { encoding: 'utf8', windowsHide: true }).status === 0);
+  const killed = taskkill(pid);
+  if (killed.status !== 0 || processAlive(pid)) {
+    throw terminationError(`unowned process-tree termination could not be verified for pid ${pid}`);
+  }
+}
+
 function launchProcess(command: string, args: readonly string[], options: SpawnOptions = {}): ChildProcess {
   return spawn(resolveSealedExecutable(command, [], options.env), [...args], { ...options, shell: false });
 }
@@ -76,6 +99,9 @@ export function spawnOwned(db: Ledger, owner: SessionOwner, command: string, arg
   try {
     db.prepare('INSERT INTO session_handle(handle,pid,start_time,cwd,task_id,run_id) VALUES(?,?,?,?,?,?)')
       .run(session.handle, session.pid, session.start_time, session.cwd, session.task_id, session.run_id);
-  } catch (error) { child.kill(); throw error; }
+  } catch (error) {
+    terminateUnownedProcessTree(child.pid);
+    throw error;
+  }
   return { child, session };
 }

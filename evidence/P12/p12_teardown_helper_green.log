@@ -1,0 +1,13 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-runtime-enforcement.test.ts -t attempts every teardown --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-runtime-enforcement.test.ts > P12 runtime enforcement provenance > attempts every teardown stage after an earlier worker stop fails 3ms
+ ↓ test/p12-runtime-enforcement.test.ts > P12 runtime enforcement provenance > persists bounded ordered provenance even when preflight seals before a worker PID exists
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 1 skipped (2)
+   Start at  17:54:00
+   Duration  536ms (transform 130ms, setup 0ms, import 319ms, tests 4ms, environment 0ms)
+

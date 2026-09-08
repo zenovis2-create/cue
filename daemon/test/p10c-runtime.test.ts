@@ -122,10 +122,21 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C split runtime tracer',
     });
     const result = await running.done;
     const sessions = db.prepare('SELECT s.pid,s.cwd,r.role,r.boundary,r.parent_handle,s.handle FROM session_handle s JOIN session_runtime r ON r.handle=s.handle ORDER BY s.rowid').all() as Array<Record<string, unknown>>;
+    const toolExecutions = (db.prepare("SELECT content FROM artifact WHERE run_id=? AND kind='tool_execution' ORDER BY rowid").all('run-split') as Array<{ content: string }>)
+      .map(row => JSON.parse(row.content) as Record<string, unknown>);
     db.close();
 
     expect(result).toMatchObject({ status: 'completed', finalMessage: 'split complete', successfulToolCalls: 1 });
     expect(result.goalVerification).toEqual(expect.objectContaining({ passed: true, reason: 'workspace_changed', changedPaths: ['split-result.txt'] }));
+    expect(toolExecutions).toEqual([expect.objectContaining({
+      callId: 'tool-live',
+      ordinal: 1,
+      operation: 'command',
+      program: 'cmd.exe',
+      argumentCount: 3,
+      startedAt: expect.any(String),
+      finishedAt: expect.any(String),
+    })]);
     expect(readFileSync(join(worktree, 'split-result.txt'), 'utf8').trim()).toBe('split-ok');
     expect(sessions.map(row => row.role)).toEqual(['controller', 'tool_worker', 'tool_worker', 'tool_worker']);
     expect(sessions[0]?.boundary).toBe('host-model-only');

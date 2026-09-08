@@ -1,0 +1,32 @@
+npm notice run cue-desktop@0.1.0 evidence:p12:mutation
+npm notice run npm --prefix daemon run build && cross-env NODE_ENV=test CUE_EVIDENCE_PHASE=P12 node daemon/scripts/p12-mutation-proof.mjs
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+{
+  "verdict": "PASS",
+  "outputPath": "C:\\Users\\User\\cue\\evidence\\P12\\p12_mutation_result.json",
+  "mutations": [
+    {
+      "id": "failfast-terminal-seal-removed",
+      "test": "test/p12-enforcement-seal.test.ts",
+      "exitCode": 1,
+      "signal": null,
+      "detected": true
+    },
+    {
+      "id": "writer-stop-transaction-removed",
+      "test": "test/p12-terminal-transaction.test.ts",
+      "exitCode": 1,
+      "signal": null,
+      "detected": true
+    },
+    {
+      "id": "appcontainer-parent-death-kill-removed",
+      "test": "test/p12-parent-sentinel.test.ts",
+      "exitCode": 1,
+      "signal": null,
+      "detected": true
+    }
+  ],
+  "failure": null
+}

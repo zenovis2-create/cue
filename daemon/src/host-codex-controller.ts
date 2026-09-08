@@ -1,20 +1,37 @@
 import { createInterface, type Interface as ReadLineInterface } from 'node:readline';
+import { isAbsolute, relative, resolve, sep } from 'node:path';
 import type { Readable, Writable } from 'node:stream';
 
 export const CUE_WORKSPACE_TOOL = Object.freeze({
   type: 'function',
   name: 'cue_workspace',
-  description: 'Run one program inside Cue\'s capability-zero Windows AppContainer. The working directory is pinned to the approved worktree. Use this for every workspace read, write, build, and test command.',
+  description: 'Perform an exact text write or run one program inside Cue\'s capability-zero Windows AppContainer. The working directory is pinned to the approved worktree. Prefer operation=write_text for exact file creation or replacement.',
   deferLoading: false,
   inputSchema: Object.freeze({
     type: 'object',
-    additionalProperties: false,
-    properties: Object.freeze({
-      program: Object.freeze({ type: 'string', minLength: 1, maxLength: 4096 }),
-      args: Object.freeze({ type: 'array', items: Object.freeze({ type: 'string', maxLength: 32_768 }), maxItems: 256 }),
-      timeoutMs: Object.freeze({ type: 'integer', minimum: 1, maximum: 120_000 }),
-    }),
-    required: Object.freeze(['program', 'args']),
+    oneOf: Object.freeze([
+      Object.freeze({
+        type: 'object',
+        additionalProperties: false,
+        properties: Object.freeze({
+          program: Object.freeze({ type: 'string', minLength: 1, maxLength: 4096 }),
+          args: Object.freeze({ type: 'array', items: Object.freeze({ type: 'string', maxLength: 32_768 }), maxItems: 256 }),
+          timeoutMs: Object.freeze({ type: 'integer', minimum: 1, maximum: 120_000 }),
+        }),
+        required: Object.freeze(['program', 'args']),
+      }),
+      Object.freeze({
+        type: 'object',
+        additionalProperties: false,
+        properties: Object.freeze({
+          operation: Object.freeze({ type: 'string', enum: Object.freeze(['write_text']) }),
+          path: Object.freeze({ type: 'string', minLength: 1, maxLength: 4096 }),
+          content: Object.freeze({ type: 'string', maxLength: 16_384 }),
+          timeoutMs: Object.freeze({ type: 'integer', minimum: 1, maximum: 120_000 }),
+        }),
+        required: Object.freeze(['operation', 'path', 'content']),
+      }),
+    ]),
   }),
 });
 
@@ -64,6 +81,8 @@ export function buildHostThreadStartParams(cwd: string, goal: string, model?: st
       'The tool is pinned to the user-approved worktree and runs inside a capability-zero Windows AppContainer.',
       'The worker OS is Windows. Prefer powershell.exe with -NoProfile and -NonInteractive; each call starts a fresh process in the approved worktree.',
       'Worker child processes are prohibited by the OS job. Request each executable directly in a separate cue_workspace call so Cue resolves and verifies it outside every writable worktree. Commands requiring nested subprocesses are unsupported.',
+      'For exact file creation or replacement, Prefer cue_workspace operation=write_text with a relative path and literal content; Cue encodes the values and the AppContainer worker writes exact UTF-8 bytes. Verify exact file content with a separate PowerShell built-in read.',
+      'Use PowerShell or cmd.exe built-ins only for other file checks. Do not run git, npm, node, python, or repository-discovery commands; they may traverse unapproved ancestor paths or require child processes.',
       'Never invent command output or claim completion without verifying the requested result through cue_workspace.',
       `Complete this approved goal: ${goal}`,
     ].join('\n'),
@@ -82,6 +101,8 @@ export interface CueWorkspaceCommand {
   args: string[];
   cwd: string;
   timeoutMs: number;
+  operation?: 'write_text';
+  inspectedPaths?: string[];
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -93,6 +114,62 @@ export function parseCueWorkspaceCall(params: DynamicToolCallParams, approvedCwd
     throw new Error('unapproved dynamic tool');
   }
   if (!isRecord(params.arguments)) throw new Error('dynamic tool arguments must be an object');
+  const operation = params.arguments.operation;
+  if (operation === 'write_text') {
+    const allowed = new Set(['operation', 'path', 'content', 'timeoutMs']);
+    for (const key of Object.keys(params.arguments)) {
+      if (!allowed.has(key)) throw new Error(`unexpected dynamic tool argument: ${key}`);
+    }
+    const path = params.arguments.path;
+    const content = params.arguments.content;
+    const timeoutMs = params.arguments.timeoutMs ?? 120_000;
+    if (typeof path !== 'string' || !path.trim() || path.length > 4096 || path.includes('\0') || isAbsolute(path)) {
+      throw new Error('write_text path must be a non-empty relative path');
+    }
+    if (Buffer.from(path, 'utf8').toString('utf8') !== path) {
+      throw new Error('write_text path must contain valid Unicode scalar values');
+    }
+    const target = resolve(approvedCwd, path);
+    const relativeTarget = relative(approvedCwd, target);
+    if (!relativeTarget || relativeTarget === '..' || relativeTarget.startsWith(`..${sep}`) || isAbsolute(relativeTarget)) {
+      throw new Error('write_text path escapes the approved worktree');
+    }
+    if (typeof content !== 'string' || Buffer.byteLength(content, 'utf8') > 16_384 || content.includes('\0')) {
+      throw new Error('write_text content must be a UTF-8 string of at most 16384 bytes');
+    }
+    if (Buffer.from(content, 'utf8').toString('utf8') !== content) {
+      throw new Error('write_text content must contain valid Unicode scalar values');
+    }
+    if (!Number.isInteger(timeoutMs) || Number(timeoutMs) < 1 || Number(timeoutMs) > 120_000) {
+      throw new Error('timeoutMs out of range');
+    }
+    const encodedPath = Buffer.from(path, 'utf8').toString('base64');
+    const encodedContent = Buffer.from(content, 'utf8').toString('base64');
+    const script = [
+      "$ErrorActionPreference='Stop'",
+      `$relative=[Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('${encodedPath}'))`,
+      '$target=[IO.Path]::GetFullPath([IO.Path]::Combine([Environment]::CurrentDirectory,$relative))',
+      `$bytes=[Convert]::FromBase64String('${encodedContent}')`,
+      '$parent=[IO.Path]::GetDirectoryName($target)',
+      'if ($parent) {[IO.Directory]::CreateDirectory($parent) | Out-Null}',
+      '[IO.File]::WriteAllBytes($target,$bytes)',
+      "[Console]::Out.Write('CUE_WRITE_OK')",
+    ].join(';');
+    const workerArgs = ['-NoProfile', '-NonInteractive', '-Command', script];
+    const commandLineChars = 'powershell.exe'.length + workerArgs.reduce((total, arg) => total + arg.length + 3, 0);
+    if (commandLineChars > 30_000) {
+      throw new Error('write_text request exceeds the safe Windows command-line budget');
+    }
+    return {
+      executable: 'powershell.exe',
+      args: workerArgs,
+      cwd: approvedCwd,
+      timeoutMs: Number(timeoutMs),
+      operation: 'write_text',
+      inspectedPaths: [target],
+    };
+  }
+  if (operation !== undefined) throw new Error('unsupported cue_workspace operation');
   const allowed = new Set(['program', 'args', 'timeoutMs']);
   for (const key of Object.keys(params.arguments)) {
     if (!allowed.has(key)) throw new Error(`unexpected dynamic tool argument: ${key}`);
@@ -122,6 +199,19 @@ export interface WorkspaceWorkerResult {
   appContainerPid?: number;
   enforcement: string;
   violation?: string;
+}
+
+const TERMINAL_ENFORCEMENT_VIOLATIONS = new Set(['filesystem', 'network_gate', 'executable_sealing']);
+
+export class CueEnforcementViolationError extends Error {
+  readonly code = 'CUE_ENFORCEMENT_VIOLATION';
+  readonly violation: string;
+
+  constructor(violation: string) {
+    super(`CUE_ENFORCEMENT_VIOLATION: ${violation}`);
+    this.name = 'CueEnforcementViolationError';
+    this.violation = violation;
+  }
 }
 
 function boundedDiagnostic(value: string): { text: string; truncated: boolean } {
@@ -201,6 +291,15 @@ function rpcError(error: unknown): Error {
   return new Error(typeof data.message === 'string' ? data.message : String(error));
 }
 
+function thrownEnforcementViolation(error: unknown): string | undefined {
+  const value = record(error);
+  return value.code === 'CUE_WORKER_ENFORCEMENT_VIOLATION'
+    && typeof value.violation === 'string'
+    && TERMINAL_ENFORCEMENT_VIOLATIONS.has(value.violation)
+    ? value.violation
+    : undefined;
+}
+
 function finalAgentText(item: Record<string, unknown>): string | undefined {
   if (item.type !== 'agentMessage') return undefined;
   if (typeof item.text === 'string') return item.text;
@@ -233,6 +332,8 @@ export class HostCodexRpcSession {
     timer: NodeJS.Timeout;
   };
   #earlyTerminal?: HostCodexRunResult;
+  #fatalError?: Error;
+  #enforcementViolation?: string;
   #turnCompleted = false;
   #closed = false;
   #ran = false;
@@ -281,6 +382,18 @@ export class HostCodexRpcSession {
     this.#send({ id, error: { code, message } });
   }
 
+  #sealEnforcement(id: unknown, violation: string, response: unknown): void {
+    // Poison the turn before returning the denial. PassThrough transports can
+    // deliver a follow-up request re-entrantly while #respond is writing.
+    this.#enforcementViolation = violation;
+    this.#abort.abort();
+    this.#respond(id, response);
+    if (this.#threadId && this.#turnId && !this.#closed) {
+      void this.#request('turn/interrupt', { threadId: this.#threadId, turnId: this.#turnId }).catch(() => undefined);
+    }
+    this.#fail(new CueEnforcementViolationError(violation));
+  }
+
   #receive(line: string): void {
     let message: Record<string, unknown>;
     try {
@@ -324,6 +437,7 @@ export class HostCodexRpcSession {
       const params = record(message.params);
       try {
         if (this.#turnCompleted) throw new Error('dynamic tool call after turn completion');
+        if (this.#enforcementViolation) throw new Error(`dynamic tool call after enforcement violation: ${this.#enforcementViolation}`);
         if (typeof params.threadId !== 'string' || params.threadId !== this.#threadId) throw new Error('dynamic tool thread mismatch');
         if (typeof params.turnId !== 'string' || params.turnId !== this.#turnId) throw new Error('dynamic tool turn mismatch');
         if (typeof params.callId !== 'string' || !params.callId || params.callId.length > 256) throw new Error('dynamic tool call id required');
@@ -336,16 +450,29 @@ export class HostCodexRpcSession {
         this.#activeToolCalls += 1;
         let result: WorkspaceWorkerResult;
         try {
-          result = await this.#runner(command, {
-            threadId: params.threadId,
-            turnId: params.turnId,
-            callId: params.callId,
-            signal: this.#abort.signal,
-          });
+          try {
+            result = await this.#runner(command, {
+              threadId: params.threadId,
+              turnId: params.turnId,
+              callId: params.callId,
+              signal: this.#abort.signal,
+            });
+          } catch (error) {
+            const violation = thrownEnforcementViolation(error);
+            if (!violation) throw error;
+            const diagnostic = boundedDiagnostic(rpcError(error).message).text;
+            this.#sealEnforcement(id, violation, { contentItems: [{ type: 'inputText', text: diagnostic }], success: false });
+            return;
+          }
         } finally {
           this.#activeToolCalls -= 1;
         }
-        this.#respond(id, workspaceToolResponse(result));
+        const response = workspaceToolResponse(result);
+        if (result.violation && TERMINAL_ENFORCEMENT_VIOLATIONS.has(result.violation)) {
+          this.#sealEnforcement(id, result.violation, response);
+          return;
+        }
+        this.#respond(id, response);
       } catch (error) {
         const diagnostic = boundedDiagnostic(rpcError(error).message).text;
         this.#respond(id, { contentItems: [{ type: 'inputText', text: diagnostic }], success: false });
@@ -389,6 +516,7 @@ export class HostCodexRpcSession {
   }
 
   #fail(error: Error): void {
+    this.#fatalError ??= error;
     this.#earlyTerminal = undefined;
     for (const [id, pending] of this.#pending) {
       this.#pending.delete(id);
@@ -422,6 +550,7 @@ export class HostCodexRpcSession {
     }));
     const returnedTurnId = String(record(turnResult.turn).id ?? '');
     if (!returnedTurnId || returnedTurnId !== this.#turnId) throw new Error('turn/start returned inconsistent turn id');
+    if (this.#fatalError) throw this.#fatalError;
     const terminal = new Promise<HostCodexRunResult>((resolve, reject) => {
       const timer = setTimeout(() => {
         this.#terminal = undefined;

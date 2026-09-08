@@ -1,0 +1,69 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-finalizer.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > binds the staged source and exact receipt hashes, then rejects tampering 696ms
+   → node:internal/modules/cjs/loader:1433
+  throw err;
+  ^
+
+Error: Cannot find module 'C:\Users\User\cue\scripts\p12-finalize.mjs'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1430:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+    at Function._load (node:internal/modules/cjs/loader:1216:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v22.23.2
+: expected 1 to be +0 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > binds the staged source and exact receipt hashes, then rejects tampering
+AssertionError: node:internal/modules/cjs/loader:1433
+  throw err;
+  ^
+
+Error: Cannot find module 'C:\Users\User\cue\scripts\p12-finalize.mjs'
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1430:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1040:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1045:22)
+    at Function._load (node:internal/modules/cjs/loader:1216:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v22.23.2
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ test/p12-finalizer.test.ts:53:42
+     51|     const args = [finalizer, '--source-manifest', sourceManifest, '--g…
+     52|     const result = spawnSync(process.execPath, args, { cwd: resolve('.…
+     53|     expect(result.status, result.stderr).toBe(0);
+       |                                          ^
+     54|     const verdict = JSON.parse(readFileSync(output, 'utf8'));
+     55|     expect(verdict).toMatchObject({ verdict: 'GO', passed: true, sourc…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  17:37:05
+   Duration  934ms (transform 22ms, setup 0ms, import 53ms, tests 698ms, environment 0ms)
+

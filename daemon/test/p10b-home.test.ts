@@ -98,14 +98,14 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-B source-home lifecycle'
     const core = createCueCore(config, daemon, { binary, codexHome: sourceHome, controllerArgs: [server] });
     const prepared = core.prepareGoal('always fail so the recovery ladder runs', 3); core.approve(prepared.runId); core.execute(prepared.runId);
     const card = await waitForTerminal(core, prepared.taskId);
-    const sessions = daemon.db.prepare('SELECT s.pid,r.role FROM session_handle s JOIN session_runtime r ON r.handle=s.handle WHERE s.run_id=? ORDER BY s.rowid').all(prepared.runId) as Array<{ pid:number; role:string }>;
+    const sessions = daemon.db.prepare('SELECT s.pid,s.start_time,r.role FROM session_handle s JOIN session_runtime r ON r.handle=s.handle WHERE s.run_id=? ORDER BY s.rowid').all(prepared.runId) as Array<{ pid:number; start_time:string; role:string }>;
     const automated = (daemon.db.prepare('SELECT count(*) AS n FROM recovery_attempt_v2 WHERE run_id=? AND rung<4').get(prepared.runId) as {n:number}).n;
     const escalations = (daemon.db.prepare('SELECT count(*) AS n FROM recovery_attempt_v2 WHERE run_id=? AND rung=4').get(prepared.runId) as {n:number}).n;
     core.close();
     expect(card.blockedReason).toBe('human_required');
     expect(sessions.filter(row => row.role === 'controller')).toHaveLength(4);
     expect(sessions.filter(row => row.role === 'tool_worker')).toHaveLength(8);
-    expect(new Set(sessions.map(row => row.pid)).size).toBe(12);
+    expect(new Set(sessions.map(row => `${row.pid}:${row.start_time}`)).size).toBe(12);
     expect(automated).toBe(3);
     expect(escalations).toBe(1);
   }, 120_000);

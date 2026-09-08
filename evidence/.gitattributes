@@ -1,0 +1,2 @@
+# Preserve cryptographic evidence bytes across platforms.
+P12/** -text

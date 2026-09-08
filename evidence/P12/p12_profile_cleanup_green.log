@@ -1,0 +1,16 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-parent-sentinel.test.ts > P12 AppContainer parent sentinel > terminates the worker when the monitored sentinel dies while the launcher parent remains alive 16088ms
+ ↓ test/p10c-containment.test.ts > Phase 10-C process containment > binds the AppContainer job lifetime to the daemon process handle
+ ↓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the host controller descendant when the owned controller root is hard-killed
+stdout | test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed
+P12_PARENT_DEATH_IDENTITY {"parentPid":96596,"wrapperPid":94520,"workerPid":55536,"terminationLatencyMs":5558,"wrapperAlive":false,"workerAlive":false,"originalWrapperAlive":false,"originalWorkerAlive":false,"wrapperIdentityBefore":{"ProcessId":94520,"ParentProcessId":96596,"created":"2026-09-08T01:15:25.3757820Z"},"wrapperIdentityAfter":null,"workerIdentityBefore":{"ProcessId":55536,"ParentProcessId":94520,"created":"2026-09-08T01:15:26.2415470Z"},"workerIdentityAfter":null}
+
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed 29552ms
+
+ Test Files  2 passed (2)
+      Tests  2 passed | 2 skipped (4)
+   Start at  10:15:07
+   Duration  46.65s (transform 233ms, setup 0ms, import 488ms, tests 45.64s, environment 0ms)
+

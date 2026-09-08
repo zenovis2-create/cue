@@ -1,0 +1,13 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-enforcement-seal.test.ts test/p12-enforcement-core.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > aborts the turn and refuses every later tool call after a filesystem violation 11ms
+ ✓ test/p12-enforcement-core.test.ts > P12 enforcement terminal state > never retries an approved run after an enforcement violation poisons its turn 176ms
+
+ Test Files  2 passed (2)
+      Tests  2 passed (2)
+   Start at  13:49:35
+   Duration  787ms (transform 188ms, setup 0ms, import 512ms, tests 189ms, environment 0ms)
+

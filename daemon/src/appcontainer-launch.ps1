@@ -10,6 +10,9 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 public static class CueAppContainer {
+  const uint WAIT_OBJECT_0 = 0x00000000;
+  const uint WAIT_TIMEOUT = 0x00000102;
+  const uint WAIT_FAILED = 0xffffffff;
   [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
   public struct STARTUPINFO {
     public Int32 cb; public string lpReserved; public string lpDesktop; public string lpTitle;
@@ -86,7 +89,13 @@ public static class CueAppContainer {
       Console.WriteLine("CUE_APPCONTAINER_PID=" + process.dwProcessId + ";START_TIME=" + DateTime.UtcNow.ToString("o"));
       Console.Out.Flush();
       uint signaled = WaitForMultipleObjects(2, new IntPtr[] { process.hProcess, parent }, false, 0xffffffff);
-      if (signaled == 1) { TerminateJobObject(job, 114); WaitForSingleObject(process.hProcess, 0xffffffff); }
+      if (signaled == 1) {
+        if (!TerminateJobObject(job, 114)) throw new Win32Exception(Marshal.GetLastWin32Error());
+        uint workerStopped = WaitForSingleObject(process.hProcess, 5000);
+        if (workerStopped == WAIT_TIMEOUT) throw new TimeoutException("AppContainer worker did not terminate within 5000ms after parent death");
+        if (workerStopped == WAIT_FAILED) throw new Win32Exception(Marshal.GetLastWin32Error());
+        if (workerStopped != WAIT_OBJECT_0) throw new InvalidOperationException("unexpected worker termination wait result: " + workerStopped);
+      }
       else if (signaled != 0) { int error = Marshal.GetLastWin32Error(); TerminateJobObject(job, 115); throw new Win32Exception(error); }
       uint exitCode; if (!GetExitCodeProcess(process.hProcess, out exitCode)) throw new Win32Exception(Marshal.GetLastWin32Error()); return unchecked((int)exitCode);
     } finally {
@@ -103,15 +112,18 @@ public static class CueAppContainer {
 $payload = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($PayloadBase64)) | ConvertFrom-Json
 $icacls = [IO.Path]::Combine([Environment]::GetFolderPath('Windows'), 'System32', 'icacls.exe')
 if (-not [IO.File]::Exists($icacls)) { throw 'sealed icacls executable missing' }
-$profile = 'Cue.Worker.' + [Guid]::NewGuid().ToString('N')
+$profile = [string]$payload.profileName
+if ($profile -notmatch '^Cue\.Worker\.[0-9a-f]{32}$') { throw 'invalid Cue AppContainer profile name' }
 $sid = [IntPtr]::Zero
 $sidText = $null
 $aceAdded = $false
+$profileCreated = $false
 $grantedPaths = @()
 $cleanupPaths = @()
 try {
   $hr = [CueAppContainer]::CreateAppContainerProfile($profile, 'Cue worker', 'Ephemeral Cue worker boundary', [IntPtr]::Zero, 0, [ref]$sid)
   if ($hr -ne 0) { throw "CreateAppContainerProfile failed: 0x$('{0:X8}' -f $hr)" }
+  $profileCreated = $true
   $identity = New-Object Security.Principal.SecurityIdentifier($sid)
   $sidText = $identity.Value
   & $icacls $payload.cwd /grant "*$sidText`:(OI)(CI)M" /Q | Out-Null
@@ -139,5 +151,13 @@ try {
   if ($aceAdded -and $sidText) { & $icacls $payload.cwd /remove "*$sidText" /Q | Out-Null }
   foreach ($grantPath in $grantedPaths) { & $icacls $grantPath /remove "*$sidText" /Q | Out-Null }
   if ($sid -ne [IntPtr]::Zero) { [CueAppContainer]::LocalFree($sid) | Out-Null }
-  [CueAppContainer]::DeleteAppContainerProfile($profile) | Out-Null
+  if ($profileCreated) {
+    $deleteCode = -1
+    for ($attempt = 0; $attempt -lt 50; $attempt++) {
+      $deleteCode = [CueAppContainer]::DeleteAppContainerProfile($profile)
+      if ($deleteCode -eq 0) { break }
+      Start-Sleep -Milliseconds 100
+    }
+    if ($deleteCode -ne 0) { throw "DeleteAppContainerProfile failed: 0x$('{0:X8}' -f $deleteCode)" }
+  }
 }

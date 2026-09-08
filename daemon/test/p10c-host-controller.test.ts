@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { CLEAN_CONFIG } from '../src/tool-home.js';
 import {
   buildHostThreadStartParams,
+  CUE_WORKSPACE_TOOL,
   HostCodexRpcSession,
   parseCueWorkspaceCall,
   workspaceToolResponse,
@@ -36,8 +37,11 @@ describe('Phase 10-C host control/model plane contract', () => {
         name: 'cue_workspace',
         deferLoading: false,
         inputSchema: expect.objectContaining({
-          additionalProperties: false,
-          required: ['program', 'args'],
+          type: 'object',
+          oneOf: [
+            expect.objectContaining({ additionalProperties: false, required: ['program', 'args'] }),
+            expect.objectContaining({ additionalProperties: false, required: ['operation', 'path', 'content'] }),
+          ],
         }),
       }),
     ]);
@@ -48,6 +52,24 @@ describe('Phase 10-C host control/model plane contract', () => {
   it('disables Codex built-in shell tools in the isolated host controller home', () => {
     expect(CLEAN_CONFIG).toMatch(/(?:^|\n)shell_tool = false(?:\n|$)/u);
     expect(CLEAN_CONFIG).toMatch(/(?:^|\n)request_permissions_tool = false(?:\n|$)/u);
+  });
+
+  it('steers file-change goals away from child-spawning and ancestor-traversing commands', () => {
+    const params = buildHostThreadStartParams('C:/worktree', 'write result.txt', 'gpt-5.6-sol');
+    expect(params.developerInstructions).toContain('Do not run git, npm, node, python');
+    expect(params.developerInstructions).toContain('PowerShell or cmd.exe built-ins');
+    expect(params.developerInstructions).toContain('exact file content');
+  });
+
+  it('advertises write_text as the preferred exact-file operation on the sole dynamic tool', () => {
+    const properties = Object.assign({}, ...CUE_WORKSPACE_TOOL.inputSchema.oneOf.map(branch => branch.properties)) as Record<string, unknown>;
+    expect(properties).toHaveProperty('operation');
+    expect(properties).toHaveProperty('path');
+    expect(properties).toHaveProperty('content');
+    expect(JSON.stringify(CUE_WORKSPACE_TOOL.inputSchema)).toContain('write_text');
+    const params = buildHostThreadStartParams('C:/approved', 'write alpha.txt', 'gpt-5.5');
+    expect(params.dynamicTools.map(tool => tool.name)).toEqual(['cue_workspace']);
+    expect(params.developerInstructions).toContain('Prefer cue_workspace operation=write_text');
   });
 
   it('pins dynamic tool execution to the approved worktree and rejects client-controlled cwd', () => {
@@ -67,6 +89,22 @@ describe('Phase 10-C host control/model plane contract', () => {
       tool: 'cue_workspace',
       arguments: { program: 'cmd.exe', args: ['/c', 'echo escape'], cwd: 'C:/outside' },
     }, 'C:/approved')).toThrow('unexpected dynamic tool argument: cwd');
+  });
+
+  it('translates a structured exact-text write into a sandboxed PowerShell worker command', () => {
+    const command = parseCueWorkspaceCall({
+      namespace: null,
+      tool: 'cue_workspace',
+      arguments: { operation: 'write_text', path: 'alpha-live.txt', content: 'alpha-from-cue' },
+    }, 'C:/approved');
+
+    expect(command.executable).toBe('powershell.exe');
+    expect(command.operation).toBe('write_text');
+    expect(command.cwd).toBe('C:/approved');
+    expect(command.args.slice(0, 3)).toEqual(['-NoProfile', '-NonInteractive', '-Command']);
+    expect(command.args.join(' ')).not.toContain('alpha-from-cue');
+    expect(command.inspectedPaths).toHaveLength(1);
+    expect(command.inspectedPaths?.[0]?.toLowerCase()).toMatch(/approved[\\/]alpha-live\.txt$/u);
   });
 
   it('fails closed on any other dynamic tool identity or malformed argv', () => {

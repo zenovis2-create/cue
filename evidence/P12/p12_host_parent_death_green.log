@@ -1,0 +1,13 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-parent-death.test.ts -t host-controller --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-parent-death.test.ts > P12 parent-death fail-closed contract > checks host-controller job termination and bounds its parent-loss wait 2ms
+ ↓ test/p12-parent-death.test.ts > P12 parent-death fail-closed contract > checks job termination and bounds the worker-death wait after parent loss
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 1 skipped (2)
+   Start at  16:24:02
+   Duration  279ms (transform 19ms, setup 0ms, import 63ms, tests 3ms, environment 0ms)
+

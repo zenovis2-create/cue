@@ -1,0 +1,69 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-live-harness.test.ts -t keeps the committed verdict --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-live-harness.test.ts > P12 live evidence harness contract > keeps the committed verdict tracked while excluding supervisor output dumps 7ms
+   → expected '__pycache__/\n*.pyc\n.venv/\nnode_mod…' not to contain '/evidence/P12/v01_verdict.json'
+ ↓ test/p12-live-harness.test.ts > P12 live evidence harness contract > supports an external approved workspace and ordered fail-fast tool provenance
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-live-harness.test.ts > P12 live evidence harness contract > keeps the committed verdict tracked while excluding supervisor output dumps
+AssertionError: expected '__pycache__/\n*.pyc\n.venv/\nnode_mod…' not to contain '/evidence/P12/v01_verdict.json'
+
+- Expected
++ Received
+
++ __pycache__/
++ *.pyc
++ .venv/
++ node_modules/
++
++ # Credential homes and path-shaped credential material must never be staged.
++ .codex/
++ **/codex-home-*/
++ **/auth.json
++ **/credentials.json
++ .env
++ .env.*
++
++ # Post-commit attestation embeds HEAD and cannot be part of its own commit.
++ /evidence/P11/v01_verdict.json
+  /evidence/P12/v01_verdict.json
++
++ # Agent/supervisor last-message dumps are harness outputs, not product evidence.
++ /evidence/p*_codex_last_message.md
++
++ # Runtime/test state can contain copied credentials and ledgers.
++ daemon/.test-state-*/
++ evidence/**/live-state/
++ evidence/**/live-worktree/
++ evidence/**/electron-state/
++ evidence/**/electron-worktree/
++ evidence/**/manual-start-state/
++ evidence/**/npm-start-state/
++ evidence/**/npm-start-worktree/
++ evidence/**/stop-canary-state/
++ evidence/**/stop-canary-worktree/
++ evidence/**/*.sqlite
++ evidence/**/*.sqlite-*
++ evidence/**/*console.log
++
+
+ ❯ test/p12-live-harness.test.ts:8:24
+      6|   it('keeps the committed verdict tracked while excluding supervisor o…
+      7|     const ignore = readFileSync(join(process.cwd(), '..', '.gitignore'…
+      8|     expect(ignore).not.toContain('/evidence/P12/v01_verdict.json');
+       |                        ^
+      9|     expect(ignore).toContain('/evidence/p*_codex_last_message.md');
+     10|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  15:21:00
+   Duration  230ms (transform 14ms, setup 0ms, import 47ms, tests 8ms, environment 0ms)
+
