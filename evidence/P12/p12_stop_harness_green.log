@@ -1,0 +1,14 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-live-harness.test.ts -t tracked P12 stop receipt --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p12-live-harness.test.ts > P12 live evidence harness contract > keeps the committed verdict tracked while excluding supervisor output dumps
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > supports a tracked P12 stop receipt with disposable fixture paths outside the checkout 2ms
+ ↓ test/p12-live-harness.test.ts > P12 live evidence harness contract > supports an external approved workspace and ordered fail-fast tool provenance
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 2 skipped (3)
+   Start at  15:23:52
+   Duration  208ms (transform 15ms, setup 0ms, import 31ms, tests 3ms, environment 0ms)
+

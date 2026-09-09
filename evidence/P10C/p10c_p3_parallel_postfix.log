@@ -1,0 +1,33 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p3b.test.ts test/p3c.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > contains paths by canonical realpath and has no string-prefix path comparison 12ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > blocks a write reached through a symlink or junction 8ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > reproduces P1-2: an accepted absolute outside write is stopped before the real process runs 7ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > does not complete a task after an outside-envelope change is detected 6ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a runtime-computed outside path in a non-Node worker 2499ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > blocks a runtime-computed outside path in a non-Node worker 2407ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > reproduces P1-2: example.com fails with no egress in the envelope 969ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > allows only the named host and blocks another host using a real local socket 197ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > prevents completion when gate failure is detected 8ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > blocks a non-Node worker from a real local socket when egress is empty 370ms
+ ✓ test/p3b.test.ts > P3-17 approval and execution accounting > records them separately and alerts when one permissions approval precedes three executions 12ms
+ ✓ test/p3b.test.ts > P3-17 approval and execution accounting > uses a composite null-safe execution replay key, not itemId alone 9ms
+ ✓ test/p3b.test.ts > P3-11 decline without killing task > keeps the task running after an outside-envelope request 11ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > blocks after the same digest twice 1ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > blocks when an approval stalls 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > offers exactly three choices 1ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > does not focus expand by default 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > continue suppresses the same digest 0ms
+ ✓ test/p3b.test.ts > P3-15 ledger-derived completion counter > renders approval totals from ledger queries 11ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a non-Node worker from a real local socket when egress is empty 391ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > allows a non-Node worker to write inside and removes its ephemeral ACE 1279ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > records execution from the real worker lifecycle 999ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > renders the ledger label through the completion-card path 10ms
+
+ Test Files  2 passed (2)
+      Tests  23 passed (23)
+   Start at  09:10:54
+   Duration  5.54s (transform 163ms, setup 0ms, import 343ms, tests 9.21s, environment 0ms)

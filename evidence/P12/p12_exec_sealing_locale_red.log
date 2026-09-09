@@ -1,0 +1,38 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-exec-sealing.test.ts -t shell descendant --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p11-exec-sealing.test.ts > P11 executable sealing > rejects PATH and junction aliases into a writable worktree and verifies existence
+ ↓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses a planted absolute worker binary and records a violation before launch
+ ↓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses an owned launch from another writable worktree in the ledger
+ × test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant 1591ms
+   → {"exitCode":91,"stdout":"CUE_APPCONTAINER_PID=42648;START_TIME=2026-09-07T06:07:32.2981453Z\r\nCUE_APPCONTAINER_EXIT=91\r\n","stderr":"CUE_CHILD_PROCESS_DENIED_NATIVE_ERROR=1816","appContainerPid":42648,"enforcement":"appcontainer-capability-zero"}: expected undefined to be 'executable_sealing' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant
+AssertionError: {"exitCode":91,"stdout":"CUE_APPCONTAINER_PID=42648;START_TIME=2026-09-07T06:07:32.2981453Z\r\nCUE_APPCONTAINER_EXIT=91\r\n","stderr":"CUE_CHILD_PROCESS_DENIED_NATIVE_ERROR=1816","appContainerPid":42648,"enforcement":"appcontainer-capability-zero"}: expected undefined to be 'executable_sealing' // Object.is equality
+
+- Expected:
+"executable_sealing"
+
++ Received:
+undefined
+
+ ❯ test/p11-exec-sealing.test.ts:56:54
+     54|     const result = await launched.completion;
+     55|     expect(result.exitCode).not.toBe(0);
+     56|     expect(result.violation, JSON.stringify(result)).toBe('executable_…
+       |                                                      ^
+     57|     expect(result.stderr).toContain('CUE_CHILD_PROCESS_DENIED_NATIVE_E…
+     58|   }, 30_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:07:31
+   Duration  1.95s (transform 72ms, setup 0ms, import 179ms, tests 1.59s, environment 0ms)
+

@@ -1,0 +1,42 @@
+{
+  "verdict": "NO-GO",
+  "finalCounts": {
+    "filesPassed": 29,
+    "testsPassed": 280,
+    "testsSkipped": 5,
+    "testsFailed": 0,
+    "exitCode": 0,
+    "failingTests": [],
+    "rawLog": "evidence/P11/p11_full_regression.log",
+    "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca"
+  },
+  "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca",
+  "remainingBlockers": [
+    "Original R1 RED-first ordering was missed for three lifecycle exit tests.",
+    "Live A/B goal A recorded a filesystem violation and remained blocked.",
+    "An earlier parent-death worker-alive assertion failed; later checks passed but the cause remains unexplained."
+  ],
+  "reviews": {
+    "security": {
+      "valid": true,
+      "passed": false,
+      "path": "p11_review_security.json"
+    },
+    "release": {
+      "valid": true,
+      "passed": false,
+      "path": "p11_review_release.json"
+    }
+  },
+  "limitations": [
+    "P3-16 network is detection-only",
+    "P4-2 `Win32_Process` does not supply cwd",
+    "P6-3 real Buzz delivery unverified",
+    "goal verification is oriented toward file-changing goals"
+  ],
+  "additionalLimitations": [
+    "Worker child processes are prohibited; each executable must use a separate sealed cue_workspace call.",
+    "Successful stop proof covers a live goal-preparation worker; the model-requested marker attempt failed."
+  ],
+  "revisionBinding": "Single final source/evidence commit follows reviews. Ignored v01_verdict.json will bind exact HEAD and measured source bytes after committing."
+}

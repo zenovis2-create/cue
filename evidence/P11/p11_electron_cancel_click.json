@@ -1,0 +1,55 @@
+{
+  "id": "77c3b80d-bc73-42e9-99ec-88f729a87b18",
+  "ok": true,
+  "result": {
+    "snapshot": {
+      "id": "cf77a3d5-8ac3-43aa-ba08-9ee87fd80fcb",
+      "app": {
+        "name": "electron",
+        "bundleId": "electron",
+        "pid": 60792
+      },
+      "window": {
+        "title": "Cue에서 작업할 프로젝트 폴더를 선택하세요",
+        "id": 166988748,
+        "index": null,
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1200,
+        "isMinimized": null,
+        "isOffscreen": null,
+        "screenIndex": null
+      },
+      "coordinateSpace": "window",
+      "treeText": "App=electron (pid 60792)\nWindow: \"Cue에서 작업할 프로젝트 폴더를 선택하세요\", App: electron.\n\n0 window Cue에서 작업할 프로젝트 폴더를 선택하세요\n\t1 pane\n\t\t2 도구 모음 명령 모듈, Secondary Actions: SetValue\n\t\t\t3 단추 도움말(&H), Secondary Actions: SetValue\n\t\t\t4 분할 단추 자세히, Secondary Actions: SetValue\n\t\t\t\t5 단추 슬라이더 보기, Secondary Actions: SetValue\n\t\t\t6 단추 구성, Secondary Actions: SetValue\n\t\t\t7 단추 새 폴더, Secondary Actions: SetValue\n\t\t8 pane 호스트 제어\n\t\t\t9 pane 탐색 창\n\t\t10 pane 셸 폴더 보기\n\t\t\t11 LIST 항목 보기, Secondary Actions: SetValue, Scroll\n\t\t\t\t12 머리글 머리글, Secondary Actions: SetValue\n\t\t\t\t\t13 분할 단추 이름, Secondary Actions: SetValue\n\t\t\t\t\t\t14 단추 필터 드롭다운, Secondary Actions: SetValue\n\t\t\t\t\t15 분할 단추 수정한 날짜, Secondary Actions: SetValue\n\t\t\t\t\t\t16 단추 필터 드롭다운, Secondary Actions: SetValue\n\t\t\t\t\t17 분할 단추 유형, Secondary Actions: SetValue\n\t\t\t\t\t\t18 단추 필터 드롭다운, Secondary Actions: SetValue\n\t\t\t\t\t19 분할 단추 크기, Secondary Actions: SetValue\n\t\t\t\t\t\t20 단추 필터 드롭다운, Secondary Actions: SetValue\n\t\t\t\t21 그룹 지난 주\n\t\t\t\t\t22 그룹 헤더 지난 주, Secondary Actions: SetValue\n\t\t\t\t\t\t23 단추 그룹 축소, Secondary Actions: SetValue\n\t\t\t\t\t\t24 편집 이름, Value: 지난 주, Secondary Actions: SetValue\n\t\t\t\t\t25 목록 항목 Telegram Desktop, Secondary Actions: SetValue, Select\n\t\t\t\t\t\t26 편집 이름, Value: Telegram Desktop, Secondary Actions: SetValue\n\t\t\t\t\t\t27 편집 수정한 날짜, Value: ‎2026-‎08-‎31 ‏‎오전 11:22, Secondary Actions: SetValue\n\t\t\t\t\t\t28 편집 유형, Value: 파일 폴더, Secondary Actions: SetValue\n\t\t\t\t\t\t29 편집 크기, Secondary Actions: SetValue\n\t\t\t\t30 그룹 지난 달\n\t\t\t\t\t31 그룹 헤더 지난 달, Secondary Actions: SetValue\n\t\t\t\t\t\t32 단추 그룹 축소, Secondary Actions: SetValue\n\t\t\t\t\t\t33 편집 이름, Value: 지난 달, Secondary Actions: SetValue\n\t\t\t\t\t34 목록 항목 SystemUpdates-20260829, Secondary Actions: SetValue, Select\n\t\t\t\t\t\t35 편집 이름, Value: SystemUpdates-20260829, Secondary Actions: SetValue\n\t\t\t\t\t\t36 편집 수정한 날짜, Value: ‎2026-‎08-‎29 ‏‎오전 9:13, Secondary Actions: SetValue\n\t\t\t\t\t\t37 편집 유형, Value: 파일 폴더, Secondary Actions: SetValue\n\t\t\t\t\t\t38 편집 크기, Secondary Actions: SetValue\n\t\t\t\t\t39 목록 항목 godot-mcp-pro-backups, Secondary Actions: SetValue, Select\n\t\t\t\t\t\t40 편집 이름, Value: godot-mcp-pro-backups, Secondary Actions: SetValue\n\t\t\t\t\t\t41 편집 수정한 날짜, Value: ‎2026-‎08-‎24 ‏‎오후 4:42, Secondary Actions: SetValue\n\t\t\t\t\t\t42 편집 유형, Value: 파일 폴더, Secondary Actions: SetValue\n\t\t\t\t\t\t43 편집 크기, Secondary Actions: SetValue\n\t\t\t\t\t44 목록 항목 godot-mcp-pro-v1.16.0, Secondary Actions: SetValue, Select\n\t\t\t\t\t\t45 편집 이름, Value: godot-mcp-pro-v1.16.0, Secondary Actions: SetValue\n\t\t\t\t\t\t46 편집 수정한 날짜, Value: ‎2026-‎08-‎24 ‏‎오후 4:37, Secondary Actions: SetValue\n\t\t\t\t\t\t47 편집 유형, Value: 파일 폴더, Secondary Actions: SetValue\n\t\t\t\t\t\t48 편집 크기, Secondary Actions: SetValue\n\t\t49 트리 응용 프로그램 컨트롤, Secondary Actions: SetValue\n\t50 pane 폴더:\n\t51 pane 1152\n\t52 pane 이 폴더 사용\n\t53 pane 취소\n\t54 pane 40965\n\t\t55 pane 탐색 단추\n\t\t56 pane 업밴드\n\t\t57 pane 41477\n\t\t\t58 pane\n\t\t\t\t59 pane 주소: 다운로드\n\t\t\t\t60 pane 주소 대역\n\t\t61 pane\n\t\t\t62 편집 검색창, Secondary Actions: SetValue\n\t\t\t63 단추 검색, Secondary Actions: SetValue",
+      "elementCount": 64,
+      "focusedElementId": null,
+      "truncation": {
+        "truncated": false,
+        "maxNodes": 1200,
+        "maxDepth": 64,
+        "maxDepthReached": false
+      }
+    },
+    "screenshot": null,
+    "screenshotStatus": {
+      "state": "skipped",
+      "reason": "no_screenshot_flag"
+    },
+    "action": {
+      "path": "synthetic",
+      "actionName": null,
+      "fallbackReason": "actionUnsupported",
+      "targetWindowId": 166988748,
+      "targetWindowIndex": null,
+      "verification": {
+        "state": "unverified",
+        "reason": "synthetic_input"
+      }
+    }
+  },
+  "_meta": {
+    "runtimeId": "8d09ff1c-a16c-4be3-8be5-ae06f8e2e1bf"
+  }
+}

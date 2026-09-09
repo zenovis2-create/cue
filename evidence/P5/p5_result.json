@@ -1,0 +1,14 @@
+[
+  {"id":"P5-1","verdict":"PASS","evidence":"p5_test_output.log: P5-1 grades deterministic signal sources without treating worker-read as truth","note":"gate-list/exit-code/task-list는 conclusive, terminal-wait/worker-read는 candidate로 고정했다."},
+  {"id":"P5-2","verdict":"PASS","evidence":"p5_test_output.log: P5-2 invokes diagnosis only after two candidate signals","note":"후보 1건은 0회, 2건은 1회 호출을 실측했다."},
+  {"id":"P5-3","verdict":"PASS","evidence":"p5_test_output.log: P5-3 requires empty page, threshold exceeded, and live worker together","note":"3개 음성 조합과 1개 양성 조합을 검증했다."},
+  {"id":"P5-4","verdict":"PASS","evidence":"p5_test_output.log: P5-4 uses task-type threshold data, with no global idle constant path","note":"유형별 데이터 스펙과 서로 다른 동작을 검증했다."},
+  {"id":"P5-5","verdict":"PASS","evidence":"p5_test_output.log: P5-5 records four-rung lineage and escalates at the immutable cap","note":"1→2→3→4 계보, parent 연결, 새 가설, 상한 후 사람 전이를 조회했다."},
+  {"id":"P5-6","verdict":"PASS","evidence":"p5_test_output.log: P5-6 fences and hashes state before restart while preserving actual worker work","note":"base SHA/diff hash/fence 순서를 콜백 내부에서 확인했고 실제 파일 내용 보존 및 src 전체 금지 문자열 부재를 검증했다."},
+  {"id":"P5-7","verdict":"PASS","evidence":"p5_test_output.log: P5-7 validates handoff schema and has no automatic handoff executor","note":"스키마 양/음성 검증과 src 전체 자동 handoff 실행 함수 부재를 검사했다."},
+  {"id":"P5-8","verdict":"PASS","evidence":"p5_test_output.log: P5-8 always sends an open decision gate to a human, including autonomy 3","note":"자율성 1/2/3 모두 human_required다."},
+  {"id":"P5-9","verdict":"PASS","evidence":"p5_test_output.log: three P5-9 autonomy lineage cases","note":"동일 실패에서 수준별 계보가 다르고 수준 1 attempt는 0건이다."},
+  {"id":"P5-10","verdict":"PASS","evidence":"p5_test_output.log: P5-10 autonomy 3 cannot widen envelope, retry cap, or task contract","note":"봉투 밖 network 요청 decline, 계약 불변, retry_cap 불변 및 계약 필드 대입 경로 부재를 검증했다."},
+  {"id":"P5-11","verdict":"PASS","evidence":"p5_test_output.log: P5-11 rejects in-run increases and applies plus records decreases immediately","note":"하향은 즉시 반영·기록되고 상향은 stop_new_run으로 기록되며 현재 수준은 유지된다."},
+  {"id":"P5-12","verdict":"PASS","evidence":"p5_test_output.log: P5-12 stores and retrieves the autonomy level for each run id; P5 ledger upgrades an existing pre-P5 database idempotently","note":"run_id별 수준/상한 조회 및 기존 DB의 idempotent 002 마이그레이션을 검증했다."}
+]

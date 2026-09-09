@@ -1,0 +1,56 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p10c-runtime.test.ts -t keeps the controller --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > keeps the controller on the host and executes the real tool in AppContainer 4528ms
+   → expected [ Array(1) ] to deeply equal [ ObjectContaining{…} ]
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > terminates and reaps a worker when parent linkage fails after spawn
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > bounds host controller stderr retained in memory
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > fails independent goal verification after a successful but read-only no-op tool call
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects a workspace mutation that does not touch the output path named by the goal
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects an expected-path change when the agent reports that it could not complete the goal
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > changes a model-completed result to cleanup failure when the credential home cannot be safely removed
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > keeps the controller on the host and executes the real tool in AppContainer
+AssertionError: expected [ Array(1) ] to deeply equal [ ObjectContaining{…} ]
+
+- Expected
++ Received
+
+  [
+    {
+-     "argumentCount": 4,
++     "boundary": "appcontainer-capability-zero",
+      "callId": "tool-live",
+-     "finishedAt": Any<String>,
+-     "ordinal": 1,
+-     "program": "cmd.exe",
+-     "startedAt": Any<String>,
++     "exitCode": 0,
++     "pid": 83112,
++     "purpose": "model_tool_call",
++     "threadId": "thread-live",
++     "turnId": "turn-live",
++     "violation": null,
+    },
+  ]
+
+ ❯ test/p10c-runtime.test.ts:131:28
+    129|     expect(result).toMatchObject({ status: 'completed', finalMessage: …
+    130|     expect(result.goalVerification).toEqual(expect.objectContaining({ …
+    131|     expect(toolExecutions).toEqual([expect.objectContaining({
+       |                            ^
+    132|       callId: 'tool-live',
+    133|       ordinal: 1,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 skipped (7)
+   Start at  14:10:16
+   Duration  4.95s (transform 105ms, setup 0ms, import 257ms, tests 4.53s, environment 0ms)
+

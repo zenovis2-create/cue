@@ -1,0 +1,41 @@
+{
+  "schema": "cue.p11.stop.v1",
+  "generatedAt": "2026-09-07T03:41:43.392Z",
+  "verdict": "PASS",
+  "scope": "real vendor Codex host controller and real capability-zero AppContainer worker; stop at first observed live worker, including goal preparation; marker is diagnostic only",
+  "taskId": "8d4b242a-1115-47ca-8dad-6fd5cf7f0162",
+  "runId": "206de449-46e5-4e62-a84a-547ec4a73ba7",
+  "markerSha256": null,
+  "sessions": [
+    {
+      "pid": 80612,
+      "role": "controller",
+      "boundary": "host-model-only",
+      "aliveBeforeStop": true,
+      "aliveAfterStop": false
+    },
+    {
+      "pid": 52844,
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero",
+      "aliveBeforeStop": true,
+      "aliveAfterStop": false
+    }
+  ],
+  "card": {
+    "state": "blocked",
+    "blockedReason": "cancelled"
+  },
+  "checks": {
+    "controllerAliveBeforeStop": true,
+    "appContainerWorkerAliveBeforeStop": true,
+    "allObservedProcessesDeadAfterStop": true,
+    "stopAccepted": true,
+    "ledgerBlockedCancelled": true,
+    "leaseReleased": true
+  },
+  "failure": null,
+  "observedWorkerPurposes": [],
+  "modelRequestedToolCallsBeforeStop": 0,
+  "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca"
+}

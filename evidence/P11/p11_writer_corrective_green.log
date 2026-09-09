@@ -1,0 +1,92 @@
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-writer-corrective.test.ts test/p11-writer-lifecycle.test.ts test/p10c-core.test.ts test/p10c-worker.test.ts test/p9.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: parent then child 210ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: child then parent 185ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: junction child alias 169ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed stop quarantines the daemon and retains the writer lease 124ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through late completion after stop failure 234ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination rejection 220ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination result 216ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed initial process query cannot be mistaken for a dead session 96ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected state 5ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected sourceHome 5ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected missing homeRoot under junction 6ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker 5970ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates 11955ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker 23943ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a controller crash without automatically resuming it 2732ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > reconciles a previously running write as blocked/crash without auto-resume on restart 210ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fences a verified live session before reconciling an interrupted run on startup 9339ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > refuses to kill a reused PID whose process start time does not match the ledger identity 5727ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks completion immediately when the controller credential-home cleanup fails 838ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks when cleanup fails after controller launch setup throws 756ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when independent goal verification finds no relevant workspace change 681ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when an explicitly requested exact file content is wrong 4740ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fails closed before launch when the host Codex binary hash does not match the pin 480ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > queues a second write run for the same worktree and starts it after the first releases 970ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > cancels a queued write without launching it 932ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks queued writes when the app closes so restart cannot strand them 685ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 8255ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks an expired approval without spawning a controller or recording execution 145ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses writable worktrees containing or inside the trusted Cue runtime 12ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > normal completion releases the real runtime lease before another writer runs 4634ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > controller crash releases the real runtime lease before another writer runs 2221ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > worker hard-kill releases the real runtime lease before another writer runs 5170ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime 87ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume 96ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash 148ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree 172ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > a failed startup reconciliation cannot strand a new live ownership record 194ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > parent death kills the real AppContainer worker and restart releases the lease without resuming 4519ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > rejects an expired envelope before spawning any worker 11ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > runs the actual command in capability-zero AppContainer and records its real PID 922ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > removes host credential variables from the AppContainer worker environment 1319ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > lets the OS boundary deny an obfuscated write outside the approved worktree 2161ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > denies a junction escape even when its destination is hidden from preflight parsing 2630ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > proves capability-zero AppContainer network denial with a real socket attempt 2546ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > bounds captured stdout and stderr before returning them to the host 1392ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > terminates a spawned worker when post-spawn runtime ledger insertion fails 7057ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-1 has npm start and a main entrypoint 3ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-2 seals BrowserWindow and exposes an explicit preload API only 2ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-3 freezes channels, rejects unknown channels, and cannot execute before approval 90ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 first-run setup chooses a workspace once and reuses the persisted choice 11ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 treats a cancelled workspace picker as cancellation and persists nothing 2ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 rejects a tampered persisted config instead of trusting stale paths 10ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 creates first-run config once, reuses it, and stores no credentials 11ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-5 closes the owned daemon and never restarts after crash 77ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-6/P9-7 records approval and default autonomy without widening the envelope 78ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-8 emits no notification during normal progress 73ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-9 polls ledger-backed status and exposes an actual stop control 1ms
+ × test/p9.test.ts > Phase 9 Electron shell > P9-10 builds completion totals only from ledger rows 7734ms
+   → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-11 app core has no static Buzz dependency 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p9.test.ts > Phase 9 Electron shell > P9-10 builds completion totals only from ledger rows
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/p9.test.ts:125:3
+    123|   });
+    124|
+    125|   it('P9-10 builds completion totals only from ledger rows', () => {
+       |   ^
+    126|     const root = temp(); const config = initializeConfig(join(root, 'd…
+    127|     const prepared = core.prepareGoal('one file', 2); core.approve(pre…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 59 passed (60)
+   Start at  12:19:56
+   Duration  125.39s (transform 380ms, setup 0ms, import 1.03s, tests 123.23s, environment 1ms)
+
+EXIT_CODE=1

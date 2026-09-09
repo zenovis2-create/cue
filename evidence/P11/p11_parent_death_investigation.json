@@ -1,0 +1,15 @@
+{
+  "canonicalFailure": "p11_parent_death_regression_failure.json",
+  "diagnosticSetupFailure": {
+    "log": "p11_parent_death_diagnostic.log",
+    "result": "FAIL",
+    "reason": "root --root daemon invocation did not change cwd; harness expected daemon cwd"
+  },
+  "isolatedCorrectCwd": {
+    "log": "p11_parent_death_correct_cwd.log",
+    "testsPassed": 1,
+    "testsFailed": 0,
+    "exitCode": 0
+  },
+  "resolutionStatus": "Unreproduced full-suite numeric-PID observation; not relabeled PASS. Added before/after OS process identities and successful parent-kill assertion; original workerAlive=false assertion remains. Full rerun required."
+}

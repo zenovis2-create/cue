@@ -1,0 +1,32 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-source-manifest.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-source-manifest.test.ts > P12 source manifest binding > hashes staged blobs rather than dirty working files and excludes evidence 1199ms
+   → expected 'working-tree' to be 'head' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-source-manifest.test.ts > P12 source manifest binding > hashes staged blobs rather than dirty working files and excludes evidence
+AssertionError: expected 'working-tree' to be 'head' // Object.is equality
+
+Expected: "head"
+Received: "working-tree"
+
+ ❯ test/p12-source-manifest.test.ts:71:31
+     69|     expect(headResult.status, headResult.stderr).toBe(0);
+     70|     const headManifest = JSON.parse(readFileSync(headOutput, 'utf8'));
+     71|     expect(headManifest.mode).toBe('head');
+       |                               ^
+     72|     expect(headManifest.sourceTreeSha256).toBe(manifest.sourceTreeSha2…
+     73|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  17:34:32
+   Duration  1.48s (transform 20ms, setup 0ms, import 63ms, tests 1.20s, environment 0ms)
+

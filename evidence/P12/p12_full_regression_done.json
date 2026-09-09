@@ -1,0 +1,11 @@
+{
+  "schema": "cue.p12.full-regression.v1",
+  "generatedAt": "2026-09-08T01:59:24.839Z",
+  "sourceTreeSha256": "9a13bd45dcde050ef39e03afb2855aef8ebb54a9be9eb5930953cb8e4c7d12e7",
+  "exitCode": 0,
+  "testFilesPassed": 47,
+  "testsPassed": 326,
+  "testsSkipped": 5,
+  "testsFailed": 0,
+  "passed": true
+}

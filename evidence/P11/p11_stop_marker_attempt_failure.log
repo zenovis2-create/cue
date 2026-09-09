@@ -1,0 +1,1 @@
+{"verdict":"FAIL","checks":{"controllerAliveBeforeStop":false,"appContainerWorkerAliveBeforeStop":false,"allObservedProcessesDeadAfterStop":false,"stopAccepted":false,"ledgerBlockedCancelled":false,"leaseReleased":false},"failure":"stop canary terminated before live worker observation: verification_failed"}

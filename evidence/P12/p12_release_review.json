@@ -1,0 +1,77 @@
+{
+  "schema": "cue.p12.review.v1",
+  "role": "release",
+  "reviewFunction": "release-readiness",
+  "valid": true,
+  "passed": true,
+  "sourceTreeSha256": "9a13bd45dcde050ef39e03afb2855aef8ebb54a9be9eb5930953cb8e4c7d12e7",
+  "reviewer": {
+    "kind": "independent-hermes-subagent",
+    "delegationId": "deleg_43914641",
+    "task": 0,
+    "readOnly": true,
+    "apiCalls": 5,
+    "transcriptSha256": "d988ec321506d09cf844815c2e72cacbd8cc9356e3679dbbd4e3a8a16783808e"
+  },
+  "blockers": [],
+  "nonBlockingFindings": [
+    {
+      "severity": "informational",
+      "title": "Finalization is sequenced after review",
+      "evidence": "This passing receipt replaces the superseded failed review before finalizer execution and the final commit."
+    },
+    {
+      "severity": "informational",
+      "title": "Finalizer probe ordering is narrower than initially stated",
+      "evidence": "The prior failed-review probe directly proved corrected source and gate-summary acceptance; staged-manifest recomputation and receipt checks occur after review validation and are exercised by the final passing invocation."
+    },
+    {
+      "severity": "informational",
+      "title": "Accepted v0.1 limitations remain explicit",
+      "evidence": "P3-16 is detect-and-stop, nested child processes are unsupported under ActiveProcessLimit=1, stop-canary scope is bounded, and true process CWD observation is not promoted to PASS."
+    },
+    {
+      "severity": "informational",
+      "title": "Regression includes accepted skips",
+      "evidence": "The canonical regression records 47 test files, 326 passed, 5 skipped, and 0 failed."
+    }
+  ],
+  "checks": [
+    {
+      "name": "corrected gate-summary contract",
+      "passed": true,
+      "evidence": "The summary now uses cue.p12.gates.v1, passed true, the exact source digest, 14 literal-true gates, and receipts with path plus SHA-256."
+    },
+    {
+      "name": "receipt inventory integrity",
+      "passed": true,
+      "evidence": "All 247 unique receipt paths were present and freshly matched their recorded hashes; no unsafe path was found."
+    },
+    {
+      "name": "staged source identity",
+      "passed": true,
+      "evidence": "The manifest records index mode, base HEAD e50d4eb7517eaa3eca2fc8639e3aafcbcb69c58e, 170 non-evidence files, and exact digest 9a13bd45dcde050ef39e03afb2855aef8ebb54a9be9eb5930953cb8e4c7d12e7; the independent security review reconstructed all 170 blobs."
+    },
+    {
+      "name": "technical and runtime evidence continuity",
+      "passed": true,
+      "evidence": "Build, regression, two actual A/B runs, one-tool manifest, Electron, cancellation, stop, mutation, parent-death stress, audits, credential hygiene, and zero process/profile residue remain passing."
+    },
+    {
+      "name": "terminal security review",
+      "passed": true,
+      "evidence": "p12_security_review.json is valid, passed, bound to the exact source digest, and has no blockers."
+    },
+    {
+      "name": "package finalizer wiring and sole blocker closure",
+      "passed": true,
+      "evidence": "The package command targets the canonical files, and the predecessor's old schema/object-gate/receipt.file incompatibilities are all corrected without source change."
+    },
+    {
+      "name": "runtime residue scope",
+      "passed": true,
+      "evidence": "No P12 SQLite state, nested runtime directory, or temporary registered Git worktree remains."
+    }
+  ],
+  "summary": "PASS: the evidence-only correction closes the sole release-readiness blocker for the exact staged source digest."
+}

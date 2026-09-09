@@ -1,0 +1,33 @@
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+
+# Credential homes and path-shaped credential material must never be staged.
+.codex/
+**/codex-home-*/
+**/auth.json
+**/credentials.json
+.env
+.env.*
+
+# P11 post-commit attestation embeds HEAD and remains an immutable historical exception.
+/evidence/P11/v01_verdict.json
+
+# Agent/supervisor last-message dumps are harness outputs, not product evidence.
+/evidence/p*_codex_last_message.md
+
+# Runtime/test state can contain copied credentials and ledgers.
+daemon/.test-state-*/
+evidence/**/live-state/
+evidence/**/live-worktree/
+evidence/**/electron-state/
+evidence/**/electron-worktree/
+evidence/**/manual-start-state/
+evidence/**/npm-start-state/
+evidence/**/npm-start-worktree/
+evidence/**/stop-canary-state/
+evidence/**/stop-canary-worktree/
+evidence/**/*.sqlite
+evidence/**/*.sqlite-*
+evidence/**/*console.log

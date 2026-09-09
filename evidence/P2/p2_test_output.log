@@ -1,0 +1,31 @@
+npm notice run cue-daemon@1.0.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@1.0.0 test
+npm notice run vitest run --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > migrates an empty database and inserts and reads every table 5ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > rejects every envelope update 1ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > prevents replay even when approval id is null 1ms
+ ✓ test/p2.test.ts > P2-2 IPC > uses a protected 256-bit token, rejects missing auth and bad schemas, and binds loopback 69ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > has six states and blocks budget only at a token threshold from the two allowed event shapes 1ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > contains no monetary conversion or display path in source 31ms
+ ✓ test/p2.test.ts > P2-4 process identity and heartbeat > stops refreshing after the identified process is killed so age grows 165ms
+ ✓ test/p2.test.ts > P2-5 named health vector > names the failed component 0ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only heartbeat is expired 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only connection fails 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > emits the exact fixture from a separate process and creates a marker when relay is blocked 68ms
+ ✓ test/p2.test.ts > P2-8 crash reconciliation > blocks an interrupted task, captures actual git status, and records no automatic resume 78ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > creates only copied auth and Cue config with all extension surfaces disabled 5ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > accepts only an absolute vendor binary path, never an npm shim 0ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > launches the absolute vendor binary with the isolated tool home 1911ms
+ ✓ test/p2.test.ts > P2-7 scope > documents design without creating a scheduled task 0ms
+
+ Test Files  1 passed (1)
+      Tests  16 passed (16)
+   Start at  20:52:48
+   Duration  2.59s (transform 59ms, setup 0ms, import 106ms, tests 2.34s, environment 0ms)
+

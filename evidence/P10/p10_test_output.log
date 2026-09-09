@@ -1,0 +1,44 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p10.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-1 derives immutable actions from each goal and removes the old literal
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-2 records real sessions, executions, and AppContainer PIDs
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-3 produces distinct goal-reflecting artifacts in distinct processes
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-4 stop terminates the owned live process and ledgers cancellation
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-5 blocks an AppContainer junction escape and records violation
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-6 detects forbidden network and stops with the preserved detection-layer grade
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-7 reads running then completed status from ledger-backed cards
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-8 attempts bounded recovery only at autonomy ③
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-9 preserves approval and immutable-envelope gates
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-10 strips credential-like parent environment values
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-11 has no progress notification path
+ ↓ test/p10.test.ts > Phase 10 real engine connection > P10-12 keeps the historical PARTIAL labels intact
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p10.test.ts > Phase 10 real engine connection
+AssertionError: expected 'blocked' to be 'completed' // Object.is equality
+
+Expected: "completed"
+Received: "blocked"
+
+ ❯ live test/p10.test.ts:21:136
+
+ ❯ test/p10.test.ts:28:138
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/p10.test.ts > Phase 10 real engine connection
+Error: EBUSY: resource busy or locked, unlink 'C:\Users\User\cue\daemon\.test-state-p10-goal-7aFBLa\data\cue-ledger.sqlite'
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -4082, code: 'EBUSY', syscall: 'unlink', path: 'C:\Users\User\cue\daemon\.test-state-p10-goal-7aFBLa\data\cue-ledger.sqlite' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  12 skipped (12)
+   Start at  11:13:24
+   Duration  1.42s (transform 96ms, setup 0ms, import 248ms, tests 1.01s, environment 0ms)
+

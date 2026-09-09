@@ -1,0 +1,242 @@
+{
+  "schema": "cue.p11.release-review.v1",
+  "generatedAt": "2026-09-07T03:44:18.043Z",
+  "reviewer": {
+    "identity": "/root/release_review",
+    "kind": "native independent agent",
+    "role": "release-readiness reviewer",
+    "independentOfImplementation": true,
+    "authentication": "Native review agent completed normally; no external reviewer CLI or failed authentication used."
+  },
+  "valid": true,
+  "passed": false,
+  "verdict": "NO-GO",
+  "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca",
+  "sourceVerification": {
+    "recomputed": true,
+    "fileCount": 147,
+    "scope": "all tracked and non-ignored untracked regular files except evidence/**; paths sorted by Unicode code point; digest is SHA-256 of compact JSON files array",
+    "gitNormalization": "Digest describes measured working-tree bytes, not Git object bytes. Git newline normalization can change clone checkout bytes; post-commit working-tree recomputation remains required."
+  },
+  "finalCounts": {
+    "filesPassed": 29,
+    "testsPassed": 280,
+    "testsSkipped": 5,
+    "testsFailed": 0,
+    "exitCode": 0,
+    "failingTests": [],
+    "rawLog": "evidence/P11/p11_full_regression.log",
+    "sourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca"
+  },
+  "findings": [
+    {
+      "id": "P11-REL-001",
+      "severity": "high",
+      "requirement": "R1",
+      "path": "evidence/P11/p11_writer_lifecycle.json",
+      "reason": "Mandatory RED-first coverage was not completed for every exit path. Normal completion, controller crash, and worker hard-kill explicit lease assertions were added after the first source fix and first recorded GREEN. Later passing behavioral and corrective tests do not repair this chronology.",
+      "evidence": [
+        "evidence/P11/p11_writer_lifecycle.json: redFirstComplete=false, passed=false, proceduralLimitation",
+        "evidence/P11/p11_writer_lifecycle_red.log"
+      ],
+      "blocksRelease": true
+    },
+    {
+      "id": "P11-REL-002",
+      "severity": "high",
+      "requirement": "R5 live A/B",
+      "path": "evidence/P11/p11_live_result.json",
+      "reason": "The final real-engine A/B run is FAIL. A produced the expected artifact but ended blocked/worker_failed and recorded a filesystem enforcement violation. B completed. Correct file content does not satisfy the required completed goals and zero-enforcement-violation gate.",
+      "evidence": [
+        "evidence/P11/p11_live_result.json: verdict=FAIL; invariants.zeroEnforcementViolations=false; runs[0].card.state=blocked; violations[0].content=filesystem"
+      ],
+      "blocksRelease": true
+    },
+    {
+      "id": "P11-REL-003",
+      "severity": "medium",
+      "requirement": "R1 parent death reliability",
+      "path": "evidence/P11/p11_parent_death_investigation.json",
+      "reason": "A preserved full canonical run failed because workerAlive remained true after the five-second parent-death observation while the wrapper was dead. The isolated original assertions and latest canonical run pass, but the earlier observation remains unexplained. Added process identity diagnostics and parent-kill assertions improve evidence without resolving the historical failure cause.",
+      "evidence": [
+        "evidence/P11/p11_parent_death_regression_failure.json: 279 passed, 5 skipped, 1 failed",
+        "evidence/P11/p11_parent_death_investigation.json: resolutionStatus",
+        "evidence/P11/p11_full_regression.log: latest 280 passed, 5 skipped"
+      ],
+      "blocksRelease": true
+    }
+  ],
+  "gates": {
+    "R0": {
+      "passed": true,
+      "counts": {
+        "filesPassed": 23,
+        "testsPassed": 244,
+        "testsSkipped": 5,
+        "testsFailed": 0,
+        "exitCode": 0,
+        "failingTests": [],
+        "rawLog": "evidence/P11/p11_baseline_regression.log"
+      }
+    },
+    "R1": {
+      "passed": false,
+      "behavioralPassed": true,
+      "redFirstComplete": false,
+      "correctiveReviewPassed": true
+    },
+    "R2": {
+      "passed": true,
+      "qualification": "Every child executable must use a separately sealed tool call; nested worker subprocesses are prohibited."
+    },
+    "R3": {
+      "passed": true,
+      "finalLiveRuntimePassed": true,
+      "screenshotInspected": true,
+      "firstRunCancel": {
+        "command": "npm.cmd start",
+        "pid": 60792,
+        "exitCode": 1,
+        "configWritten": false,
+        "fallbackFolderCreated": false,
+        "userData": "D:\\Temp\\User\\cue-p11-electron-cancel-1788750225711\\state",
+        "workspace": "D:\\Temp\\User\\cue-p11-electron-cancel-1788750225711\\workspace",
+        "passed": true
+      },
+      "finalSourceTreeSha256": "d38f71b68c2112d7c192a18ad8d8cb8ac165f9d599dba1f059380b500483f3ca"
+    },
+    "R4": {
+      "passed": true,
+      "independentCredentialCheckPassed": true
+    },
+    "R5": {
+      "canonicalPassed": true,
+      "liveABPassed": false,
+      "manifestPassed": true,
+      "stopPassed": true,
+      "sourceMatches": true
+    },
+    "R6": {
+      "thisIndependentReviewValid": true,
+      "thisIndependentReviewPassed": false,
+      "securityReview": "Separate independent review is required; this reviewer does not self-certify that review."
+    },
+    "R7R8": {
+      "status": "deferred until both reviews complete",
+      "requirement": "Single commit with observed counts and limitations, clean status, then ignored post-commit verdict bound to HEAD."
+    }
+  },
+  "observations": [
+    "Fresh security corrections for overlapping worktrees, failed termination quarantine, failed startup process queries, and protected state/credential-home overlap were reviewed in source and corrective evidence; the recorded corrective gate passes.",
+    "Existing P3B filesystem violation and absent-target assertions remain intact; only timeout changed. P9-10 ledger-total assertions remain intact with recorded 5-second timeout FAIL and justified 20-second ceiling.",
+    "Final stop proof observes a real vendor host controller and a real capability-zero worker alive before stop, both dead afterward, blocked/cancelled ledger, and released lease. It stops the first live goal-preparation worker. It does not establish completion of the model-requested long task. The earlier marker-dependent probe FAIL is retained.",
+    "Electron live runtime values show contextIsolation true, nodeIntegration false, sandbox true, exactly approve/execute/prepare/stop functions, restrictive CSP, blocked navigation and denied popup; final window exit is zero. Native first-run cancellation records exit one with no settings/fallback.",
+    "No source changes, credential-value reads, OS registration, external messages, or product implementation were performed by this reviewer."
+  ],
+  "limitations": [
+    "P3-16 network is detection-only",
+    "P4-2 `Win32_Process` does not supply cwd",
+    "P6-3 real Buzz delivery unverified",
+    "goal verification is oriented toward file-changing goals"
+  ],
+  "additionalLimitations": [
+    "Worker child processes are prohibited; commands requiring nested subprocesses are unsupported. Request each executable through a separate cue_workspace call."
+  ],
+  "evidenceFiles": [
+    {
+      "path": "evidence/P11/p11_baseline.json",
+      "bytes": 191,
+      "sha256": "363031ca7052480f82628c315edeba5871ad234338839e27ea4370f0c7f4b10a"
+    },
+    {
+      "path": "evidence/P11/p11_baseline_regression.log",
+      "bytes": 34955,
+      "sha256": "4cd83b0c98c39ba41bdfc0b2d4cb713ad561a96d8188a9771fb788634791ac96"
+    },
+    {
+      "path": "evidence/P11/p11_writer_lifecycle.json",
+      "bytes": 3741,
+      "sha256": "30f867796423e9679087a6f0813c5a82f430b64d5f1ba5f54d5afb0a2b0c5e60"
+    },
+    {
+      "path": "evidence/P11/p11_writer_lifecycle_red.log",
+      "bytes": 5038,
+      "sha256": "7ec7a9a5b91dce513048e2ddf9b738485f6504875c801add1f4b28326c407cb8"
+    },
+    {
+      "path": "evidence/P11/p11_writer_lifecycle_corrective.json",
+      "bytes": 4419,
+      "sha256": "c10a52687773cd2c633b90751a95ed6861fdfa406e07d12abf0241be5d09035a"
+    },
+    {
+      "path": "evidence/P11/p11_exec_sealing.json",
+      "bytes": 6523,
+      "sha256": "944155db2da31cc90a57d9393567886bd4dca3e87d18edb7f0d8a9b3cb9d0174"
+    },
+    {
+      "path": "evidence/P11/p11_electron.json",
+      "bytes": 9926,
+      "sha256": "04c0a13a2651fd387a68dc9fb482c4b9084774876d61699779ac87863840bc36"
+    },
+    {
+      "path": "evidence/P11/p11_electron_window.png",
+      "bytes": 77155,
+      "sha256": "d9facf79d7b2823ebc9fde079a4a6998de165a6b6c786c2be63df9905b0a2981"
+    },
+    {
+      "path": "evidence/P11/p11_credential_hygiene.json",
+      "bytes": 1845,
+      "sha256": "9b6a467cbc7de36bdb9cdd1c73168f1e86027e4954c0f8b06b3d66b350872d83"
+    },
+    {
+      "path": "evidence/P11/p11_credential_independent_check.json",
+      "bytes": 737,
+      "sha256": "e24f42dc7ff9a7bd24e9968c14ffc6addfe25a45c9bfbba8950987fdd5fd5548"
+    },
+    {
+      "path": "evidence/P11/p11_full_regression.json",
+      "bytes": 278,
+      "sha256": "f9146074ceda61f76db00fb33621bb7f58e84b4bec26f6f233688dd5f2a9496e"
+    },
+    {
+      "path": "evidence/P11/p11_full_regression.log",
+      "bytes": 40646,
+      "sha256": "b89715c8e5c778cc6a8fb133063bdfe00e1557193b9c89f1410da569370bfd79"
+    },
+    {
+      "path": "evidence/P11/p11_live_result.json",
+      "bytes": 12054,
+      "sha256": "e14fb85d25ce1aae7988e0ce8ee84f2bba8687c4d96d82e331c4d2a8a9067006"
+    },
+    {
+      "path": "evidence/P11/p11_manifest_proof.json",
+      "bytes": 1183,
+      "sha256": "4a56c7be378321cd57e39eecb3fa50777e875bd1385c63681b9b84dd13040eb2"
+    },
+    {
+      "path": "evidence/P11/p11_stop_result.json",
+      "bytes": 1301,
+      "sha256": "025594a8cdd6cccffc59058157a97cda5239ebfdef0b925ab147a9704b68247e"
+    },
+    {
+      "path": "evidence/P11/p11_parent_death_regression_failure.json",
+      "bytes": 531,
+      "sha256": "57d0415c78212c18946a610de6dfb8f1b1db77b02b999f720c6f3a5cf21c3552"
+    },
+    {
+      "path": "evidence/P11/p11_parent_death_investigation.json",
+      "bytes": 661,
+      "sha256": "7cdac078415c9b3f3f338d793888a92fff5c6d6ff991329aa727203768bccf12"
+    },
+    {
+      "path": "evidence/P11/p11_stop_marker_attempt_failure.json",
+      "bytes": 692,
+      "sha256": "c739d2c9792da675b504d6bc1f2d9436b7a5c7d5132839fc6b42ce6fa038d5c2"
+    },
+    {
+      "path": "evidence/P11/source_tree_manifest.json",
+      "bytes": 24036,
+      "sha256": "ce0ec66a9bf0212677b87e20c329cd2d7e01aef0653b05d2871079bee81f5c96"
+    }
+  ]
+}

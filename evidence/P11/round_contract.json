@@ -1,0 +1,8 @@
+{
+  "done": "R0-R8 observed on disk; all blockers closed, canonical regression exit 0, required live proofs, two independent passed reviews, single final source commit, clean status, revision-bound verdict",
+  "attemptCapPerBlocker": 3,
+  "eachPass": "Record RED where missing behavior fails; fix with a new hypothesis; run smallest decisive targeted checks and save raw log before claiming results. Final serial npm.cmd test after R1-R4.",
+  "failureRule": "Timeout is FAIL. Never weaken security assertions. Keep unresolved findings and failed attempts in evidence.",
+  "credentialGate": "Path-only staged guard rejects forced credential path; purge inventory paths from all refs and unreachable objects; git fsck and fresh clone contain no identified blobs; no credential values emitted",
+  "revisionBinding": "Final source/evidence commit excludes only generated evidence/P11/v01_verdict.json via .gitignore. That post-commit attestation records the exact commit hash and allows the required clean git status without a self-referential commit hash."
+}

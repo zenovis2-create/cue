@@ -1,0 +1,18 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p10c-runtime.test.ts -t keeps the controller --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > keeps the controller on the host and executes the real tool in AppContainer 4205ms
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > terminates and reaps a worker when parent linkage fails after spawn
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > bounds host controller stderr retained in memory
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > fails independent goal verification after a successful but read-only no-op tool call
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects a workspace mutation that does not touch the output path named by the goal
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects an expected-path change when the agent reports that it could not complete the goal
+ ↓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > changes a model-completed result to cleanup failure when the credential home cannot be safely removed
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 6 skipped (7)
+   Start at  14:11:24
+   Duration  4.71s (transform 140ms, setup 0ms, import 328ms, tests 4.21s, environment 0ms)
+

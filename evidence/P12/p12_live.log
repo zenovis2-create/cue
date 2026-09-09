@@ -1,0 +1,22 @@
+npm notice run cue-desktop@0.1.0 evidence:p12
+npm notice run npm --prefix daemon run build && cross-env CUE_EVIDENCE_PHASE=P12 node daemon/scripts/p10c-live.mjs
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+{
+  "verdict": "PASS",
+  "resultPath": "C:\\Users\\User\\cue\\evidence\\P12\\p12_live_result.json",
+  "runs": [
+    {
+      "name": "A",
+      "state": "completed",
+      "file": "alpha-live.txt",
+      "sha256": "ade9b72d5e64f5f4305af7caef33b109473c83676c10eecdbfdccb7577a84aca"
+    },
+    {
+      "name": "B",
+      "state": "completed",
+      "file": "beta-live.txt",
+      "sha256": "bd7efc04367a1bd70a941acc7979fae5f1b4b9779ac772a16e87338d673ace8e"
+    }
+  ]
+}

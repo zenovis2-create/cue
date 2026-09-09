@@ -1,0 +1,41 @@
+{
+  "electronVersion": "44.2.0",
+  "pid": 83464,
+  "visible": true,
+  "windowCount": 1,
+  "prefs": {
+    "contextIsolation": true,
+    "nodeIntegration": false,
+    "sandbox": true
+  },
+  "renderer": {
+    "title": "Cue",
+    "readyState": "complete",
+    "api": [
+      "approve",
+      "execute",
+      "prepare",
+      "stop"
+    ],
+    "types": [
+      "function",
+      "function",
+      "function",
+      "function"
+    ],
+    "csp": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'",
+    "requireType": "undefined",
+    "processType": "undefined"
+  },
+  "navigation": {
+    "event": {
+      "url": "https://example.invalid/p11-navigation",
+      "prevented": true
+    },
+    "originalUrl": "file:///C:/Users/User/cue/app/renderer/index.html",
+    "finalUrl": "file:///C:/Users/User/cue/app/renderer/index.html"
+  },
+  "popupNull": true,
+  "exitCode": 0,
+  "passed": true
+}

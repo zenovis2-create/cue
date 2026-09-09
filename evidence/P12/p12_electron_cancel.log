@@ -1,0 +1,9 @@
+npm notice run cue-desktop@0.1.0 prestart
+npm notice run npm --prefix daemon run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p{"cancelAppPid":50820,"userData":"D:\\Temp\\User\\cue-p12-electron-cancel-1788833773006\\state","deadlineSeconds":180}
+{"command":"npm.cmd start","pid":50820,"exitCode":1,"configWritten":false,"fallbackFolderCreated":false,"userData":"D:\\Temp\\User\\cue-p12-electron-cancel-1788833773006\\state","workspace":"D:\\Temp\\User\\cue-p12-electron-cancel-1788833773006\\workspace","passed":true}
+, see: https://nodejs.org/learn/getting-started/debugging
+Cue startup failed: Error: workspace selection cancelled
+    at initializeFirstRunConfig (file:///C:/Users/User/cue/app/first-run.mjs:12:24)
+    at async file:///C:/Users/User/cue/app/main.mjs:88:18

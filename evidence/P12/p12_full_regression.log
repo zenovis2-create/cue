@@ -1,0 +1,371 @@
+npm notice run cue-desktop@0.1.0 test
+npm notice run npm --prefix daemon test
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+
+> cue-daemon@0.1.0 build
+> tsc -p tsconfig.json && node scripts/copy-assets.mjs
+
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker 7999ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates 15729ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker 11826ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a controller crash without automatically resuming it 2138ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > reconciles a previously running write as blocked/crash without auto-resume on restart 146ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fences a verified live session before reconciling an interrupted run on startup 3635ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > refuses to kill a reused PID whose process start time does not match the ledger identity 2256ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks completion immediately when the controller credential-home cleanup fails 729ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks when cleanup fails after controller launch setup throws 639ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when independent goal verification finds no relevant workspace change 733ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when an explicitly requested exact file content is wrong 5557ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fails closed before launch when the host Codex binary hash does not match the pin 552ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > queues a second write run for the same worktree and starts it after the first releases 778ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > cancels a queued write without launching it 947ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks queued writes when the app closes so restart cannot strand them 593ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 4335ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks an expired approval without spawning a controller or recording execution 172ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > keeps the controller on the host and executes the real tool in AppContainer 5994ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > terminates and reaps a worker when parent linkage fails after spawn 4463ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > bounds host controller stderr retained in memory 4077ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > fails independent goal verification after a successful but read-only no-op tool call 5531ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects a workspace mutation that does not touch the output path named by the goal 5889ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects an expected-path change when the agent reports that it could not complete the goal 5479ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > changes a model-completed result to cleanup failure when the credential home cannot be safely removed 4189ms
+ ✓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > rejects a caller-owned non-empty root without deleting it 93ms
+ ✓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > reaps live sessions and emits FAIL after a forced core close failure 12670ms
+ ✓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > does not leak an AppContainer profile after a normal stop 20742ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses writable worktrees containing or inside the trusted Cue runtime 9ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > normal completion releases the real runtime lease before another writer runs 6218ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > controller crash releases the real runtime lease before another writer runs 2199ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > worker hard-kill releases the real runtime lease before another writer runs 4401ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime 139ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume 143ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash 139ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree 202ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > a failed startup reconciliation cannot strand a new live ownership record 229ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > parent death kills the real AppContainer worker and restart releases the lease without resuming 4554ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > rejects an expired envelope before spawning any worker 10ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > runs the actual command in capability-zero AppContainer and records its real PID 1687ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > removes host credential variables from the AppContainer worker environment 1931ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > lets the OS boundary deny an obfuscated write outside the approved worktree 3051ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > denies a junction escape even when its destination is hidden from preflight parsing 3699ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > proves capability-zero AppContainer network denial with a real socket attempt 3223ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > bounds captured stdout and stderr before returning them to the host 1920ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > terminates a spawned worker when post-spawn runtime ledger insertion fails 3660ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > rolls back a partially created home when credential staging fails 217ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > removes only disposable codex-home directories 205ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > stages a disposable controller home without granting or deleting the source Codex home 6007ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > starts three real replacement controller/worker pairs before autonomy 3 escalates 16805ms
+ ✓ test/p12-mutation-harness.test.ts > P12 mutation harness > proves fail-fast, lifecycle, and parent-death tests detect security regressions in disposable copies 15562ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > binds the AppContainer job lifetime to the daemon process handle 3ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the host controller descendant when the owned controller root is hard-killed 3939ms
+stdout | test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed
+P12_PARENT_DEATH_IDENTITY {"parentPid":41276,"wrapperPid":36668,"workerPid":7664,"terminationLatencyMs":1643,"wrapperAlive":false,"workerAlive":false,"originalWrapperAlive":false,"originalWorkerAlive":false,"wrapperIdentityBefore":{"ProcessId":36668,"ParentProcessId":41276,"created":"2026-09-08T01:57:40.0324490Z"},"wrapperIdentityAfter":null,"workerIdentityBefore":{"ProcessId":7664,"ParentProcessId":36668,"created":"2026-09-08T01:57:40.7093780Z"},"workerIdentityAfter":null}
+
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed 10806ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-1/S-3 keeps one child_process boundary and only owned public spawn APIs 10ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-3 positive control rejects a newly introduced direct spawn 18ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 asks the OS for the AppContainer worker parent PID 9378ms
+ ↓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 OS cwd query (SKIPPED on Windows: Win32_Process exposes no cwd)
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-3/P4-5 automatically starts the owned queued request after lease promotion 3758ms
+ ✓ test/p12-electron-proof-result.test.ts > P12 Electron proof final receipt ordering > does not emit passed:true when cleanup fails after the UI checks pass 12158ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a runtime-computed outside path in a non-Node worker 3300ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a non-Node worker from a real local socket when egress is empty 376ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > allows a non-Node worker to write inside and removes its ephemeral ACE 1924ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > records execution from the real worker lifecycle 1625ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > renders the ledger label through the completion-card path 10ms
+ ✓ test/p12-parent-sentinel.test.ts > P12 AppContainer parent sentinel > terminates the worker when the monitored sentinel dies while the launcher parent remains alive 6146ms
+stdout | test/release.test.ts > v0.1 release gates > R-1 preserves original P1 evidence and now carries a re-run P1-3 record
+R-1 PASS: P1-3 재실행 기록 존재 verdict=FAIL outside_write=true network=true appcontainer_used=false
+
+stdout | test/release.test.ts > v0.1 release gates > R-2 scans all src and proves a disposable forbidden string makes the scanner fail
+R-2 POSITIVE_CONTROL_RED observed=true
+
+stdout | test/release.test.ts > v0.1 release gates > R-3 uses a junction to attempt a real OS-blocked outside write
+R-3 LIVE app_pid=54672 junction=C:\Users\User\cue\daemon\.test-state-release-r3-work-fRtuXj\escape outside=C:\Users\User\cue\daemon\.test-state-release-r3-out-9A1YM2 os_exit=1 outside_written=false
+
+ ✓ test/release.test.ts > v0.1 release gates > R-1 preserves original P1 evidence and now carries a re-run P1-3 record 3ms
+ ✓ test/release.test.ts > v0.1 release gates > R-2 scans all src and proves a disposable forbidden string makes the scanner fail 22ms
+ ✓ test/release.test.ts > v0.1 release gates > R-3 uses a junction to attempt a real OS-blocked outside write 1915ms
+stdout | test/release.test.ts > v0.1 release gates > R-4 kills and restarts a real daemon process, leaving blocked/crash and a git-status report
+R-4 LIVE killed_pid=51992 restarted_pid=5584 state=blocked/crash git_status="?? work.txt"
+
+stdout | test/release.test.ts > v0.1 release gates > R-6 performs approval, dispatch, real worker execution, verification, and ledger-derived Korean reporting
+R-6 LIVE app_pid=51460 완료: 파일 생성과 검증을 마쳤습니다. | 판정 경로: 카테고리 일치 → codex 디스패치 (routing.yaml 파일 생성 규칙) | 자동 승인 1건 · 거부 0건
+
+ ✓ test/release.test.ts > v0.1 release gates > R-4 kills and restarts a real daemon process, leaving blocked/crash and a git-status report 426ms
+ ✓ test/release.test.ts > v0.1 release gates > R-5 alerts only when heartbeat expiry and connection failure are both true 2ms
+stdout | test/release.test.ts > v0.1 release gates > R-9 runs the same real process task at autonomy ③ and ① with equal envelope decisions and different lineage
+R-9 LIVE pids=24528,52240 envelope=outside_envelope,outside_envelope attempts=1,0
+
+ ✓ test/release.test.ts > v0.1 release gates > R-6 performs approval, dispatch, real worker execution, verification, and ledger-derived Korean reporting 2001ms
+ ✓ test/release.test.ts > v0.1 release gates > R-7 has no monetary-budget emission path while retaining token-budget state 7ms
+ ✓ test/release.test.ts > v0.1 release gates > R-9 runs the same real process task at autonomy ③ and ① with equal envelope decisions and different lineage 539ms
+ ✓ test/release.test.ts > release improvements > I-1 selects a matching category without refinement escape and asks on ambiguity 7ms
+ ✓ test/release.test.ts > release improvements > I-2 requires the decision path in both completion and blocked reports 6ms
+ ✓ test/release.test.ts > release improvements > I-3 commits certain recovery artifacts before a separately failing borderline write 197ms
+ ✓ test/release.test.ts > release improvements > I-4 grants execution authority only from an accepted approval record 200ms
+ ✓ test/release.test.ts > release improvements > I-5 judges preference requests by effect, not workflow-friendly wording 1ms
+ ✓ test/release.test.ts > release improvements > I-6 documents confirmed/candidate source grading as a binding design rule 1ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-1 has npm start and a main entrypoint 2ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-2 seals BrowserWindow and exposes an explicit preload API only 2ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-3 freezes channels, rejects unknown channels, and cannot execute before approval 97ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 first-run setup chooses a workspace once and reuses the persisted choice 10ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 treats a cancelled workspace picker as cancellation and persists nothing 1ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 rejects a tampered persisted config instead of trusting stale paths 9ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 creates first-run config once, reuses it, and stores no credentials 8ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-5 closes the owned daemon and never restarts after crash 87ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-6/P9-7 records approval and default autonomy without widening the envelope 105ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-8 emits no notification during normal progress 101ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-9 polls ledger-backed status and exposes an actual stop control 1ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-10 builds completion totals only from ledger rows 5131ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-11 app core has no static Buzz dependency 1ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > contains paths by canonical realpath and has no string-prefix path comparison 17ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > blocks a write reached through a symlink or junction 13ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > reproduces P1-2: an accepted absolute outside write is stopped before the real process runs 9ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > does not complete a task after an outside-envelope change is detected 9ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > blocks a runtime-computed outside path in a non-Node worker 3304ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > reproduces P1-2: example.com fails with no egress in the envelope 1536ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > allows only the named host and blocks another host using a real local socket 170ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > prevents completion when gate failure is detected 3ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > blocks a non-Node worker from a real local socket when egress is empty 317ms
+ ✓ test/p3b.test.ts > P3-17 approval and execution accounting > records them separately and alerts when one permissions approval precedes three executions 13ms
+ ✓ test/p3b.test.ts > P3-17 approval and execution accounting > uses a composite null-safe execution replay key, not itemId alone 11ms
+ ✓ test/p3b.test.ts > P3-11 decline without killing task > keeps the task running after an outside-envelope request 9ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > blocks after the same digest twice 1ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > blocks when an approval stalls 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > offers exactly three choices 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > does not focus expand by default 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > continue suppresses the same digest 0ms
+ ✓ test/p3b.test.ts > P3-15 ledger-derived completion counter > renders approval totals from ledger queries 11ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > migrates an empty database and inserts and reads every table 7ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > rejects every envelope update 3ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > prevents replay even when approval id is null 2ms
+ ✓ test/p2.test.ts > P2-2 IPC > uses a protected 256-bit token, rejects missing auth and bad schemas, and binds loopback 58ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > has six states and blocks budget only at a token threshold from the two allowed event shapes 1ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > contains no monetary conversion or display path in source 46ms
+ ✓ test/p2.test.ts > P2-4 process identity and heartbeat > stops refreshing after the identified process is killed so age grows 149ms
+ ✓ test/p2.test.ts > P2-5 named health vector > names the failed component 0ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only heartbeat is expired 2ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only connection fails 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > emits the exact fixture from a separate process and creates a marker when relay is blocked 83ms
+ ✓ test/p2.test.ts > P2-8 crash reconciliation > blocks an interrupted task, captures actual git status, and records no automatic resume 136ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > creates only copied auth and Cue config with all extension surfaces disabled 6ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > disables parent-side browser, app, plugin, update, and web-search capabilities explicitly 1ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > accepts only an absolute vendor binary path, never an npm shim 1ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > redirects every writable profile and temp variable into the isolated home 4ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > launches the absolute vendor binary with the isolated tool home 1331ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > closes the launcher stdin for non-interactive vendor execution 1368ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > removes the isolated tool home after the vendor worker exits 1532ms
+ ✓ test/p2.test.ts > P2-7 scope > documents design without creating a scheduled task 1ms
+ ✓ test/p12-process-ownership.test.ts > P12 post-spawn ownership failure > marks an unverified process-tree cleanup as terminal containment failure 3ms
+ ✓ test/p12-process-ownership.test.ts > P12 post-spawn ownership failure > terminates and verifies the spawned process tree when session persistence fails 3445ms
+ ✓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > writes literal UTF-8 bytes without shell-quoting changes inside AppContainer 3069ms
+ ✓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects text that cannot round-trip as exact UTF-8 bytes 1ms
+ ✓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects paths that cannot round-trip as exact UTF-8 bytes 1ms
+ ✓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects a structured write whose encoded Windows command line exceeds the safe budget 1ms
+ ✓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects traversal before any worker can launch 1ms
+ ✓ test/p11-termination.test.ts > P11 fail-closed process termination > brands a thrown launch-resolution error as unverified termination 2ms
+ ✓ test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination when the process-tree observation fails 0ms
+ ✓ test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination after a failed kill while the attributed process is alive 2005ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > rejects PATH and junction aliases into a writable worktree and verifies existence 41ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses a planted absolute worker binary and records a violation before launch 45ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses an owned launch from another writable worktree in the ledger 37ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant 2136ms
+ ✓ test/p12-runtime-enforcement.test.ts > P12 runtime enforcement provenance > attempts every teardown stage after an earlier worker stop fails 3ms
+ ✓ test/p12-runtime-enforcement.test.ts > P12 runtime enforcement provenance > persists bounded ordered provenance even when preflight seals before a worker PID exists 2439ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > writes the root evidence command to the repository evidence directory 2ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > observes only cue_workspace in the actual model request 1433ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: parent then child 124ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: child then parent 115ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: junction child alias 118ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: dotdot-named child 154ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed stop quarantines the daemon and retains the writer lease 123ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through late completion after stop failure 259ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination rejection 239ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination result 201ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed initial process query cannot be mistaken for a dead session 81ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected state 3ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected sourceHome 3ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot 3ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected missing homeRoot under junction 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot named ..homes 3ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > a protected-path refusal permits a corrected core for the same workspace immediately 68ms
+ ✓ test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > wires the root npm finalizer command to the required argument contract 2ms
+ ✓ test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > binds the staged source and exact receipt hashes, then rejects tampering 1229ms
+ ✓ test/p12-real-restart.test.ts > P12 real daemon crash restart > hard-kills an active+queued daemon process and terminalizes both on restart 932ms
+ ✓ test/p12-source-manifest.test.ts > P12 source manifest binding > hashes staged blobs rather than dirty working files and excludes evidence 966ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > releases the settled runtime handle after an unexpected recovery exception commits 121ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines launch-configuration terminalization when lease release aborts 110ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a queued stop when its terminal transaction aborts 79ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a user stop when its lease-release transaction aborts 72ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'normal completion' quarantines the writer and terminalizes its queue when lease release aborts 115ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'controller crash' quarantines the writer and terminalizes its queue when lease release aborts 125ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'worker hard-kill' quarantines the writer and terminalizes its queue when lease release aborts 129ms
+ ✓ test/p10c-renderer.test.ts > renderer ledger-grounded transport errors > keeps the last running ledger card and retries after a polling transport failure 704ms
+ ✓ test/p10c-renderer.test.ts > renderer ledger-grounded transport errors > preserves running state and re-enables stop when stop transport fails 91ms
+ ✓ test/p10c-manifest-lifecycle.test.ts > manifest proof process lifecycle > waits for the child to close before its current working directory is removed 796ms
+ ✓ test/p12-crash-queue.test.ts > P12 crash-safe queued writer lifecycle > retains daemon ownership when crash-state persistence aborts 132ms
+ ✓ test/p12-crash-queue.test.ts > P12 crash-safe queued writer lifecycle > terminalizes queued approvals and never promotes them after the active controller settles 237ms
+ ✓ test/p11-credential-hygiene.test.ts > P11 credential path staging guard > refuses any credential-shaped path staged in the actual repository 80ms
+ ✓ test/p11-credential-hygiene.test.ts > P11 credential path staging guard > fails for a forced staged credential-home path without reading values, and accepts its removal 265ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > tolerates literal JSON control characters inside strings 2ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > round-trips the exact create, ps, task-list, stop, and abandon argv 2ms
+ ↓ test/p4.test.ts > P4-1 Orca adapter > round-trips the installed Orca worktree ps without mutation
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > records the composite session identity and launches with the worktree cwd 102ms
+ ↓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > launches the real vendor Codex through the AppContainer supervisor
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > has one production spawn boundary and no direct spawn call elsewhere 35ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > queues a second writer, then admits it after release 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > does not lease reads and reaps an expired holder 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > reclaims a writer through the P2 heartbeat age primitive 3ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > records still_unsafe and does not succeed when close fails 3ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > succeeds only after a successful close 3ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > lists an unowned live process after ledger reopen and leaves it alive 125ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > contains no automatic orphan kill path 1ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > dispatches a match and asks for an unmatched task without spawning 3ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > asks when routing.yaml is missing or malformed 7ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > wires ask_me into dispatch and proves no tool is spawned 3ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-1 renders conversation and current-work containers in the default two-column screen 111ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-2 replaces only the left conversation with an annotation canvas and preserves rail node identity 15ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-3 keeps progress/stage vocabulary and invokes the real stop callback after canvas transition 16ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps queued to exact status 유휴 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps running to exact status 작업 중 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps blocked to exact status 막힘 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps completed to exact status 완료 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps every ledger state and fails visibly for an unknown state 2ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-5 looks up recent work by task_id, never by a session id 5ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-6 omits the orphan badge node when the ledger count is zero 15ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-6 shows an orphan badge whose count equals the ledger query 17ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-7 renders exact approval totals for completed and 자세히 opens a detail node 14ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-7 renders exact approval totals for blocked and 자세히 opens a detail node 12ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-8 displays autonomy ③ and exactly three ledgered recovery attempts 11ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8 safety gate keeps UI imports read-only and tests use real DOM queries/clicks 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5 ledger upgrades an existing pre-P5 database idempotently 75ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-1 grades deterministic signal sources without treating worker-read as truth 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-2 invokes diagnosis only after two candidate signals 0ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-2 production dispatcher integrates observation without adding a launch path 4ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-3 requires empty page, threshold exceeded, and live worker together 0ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-4 uses task-type threshold data, with no global idle constant path 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-5 records four-rung lineage and escalates at the immutable cap 3ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-6 fences and hashes state before a real owned restart while preserving actual worker work 59ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-7 validates handoff schema and has no automatic handoff executor 5ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-8 always sends an open decision gate to a human, including autonomy 3 8ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 1 has distinct lineage 3ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 2 has distinct lineage 3ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 3 has distinct lineage 3ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-10 autonomy 3 cannot widen envelope, retry cap, or task contract 9ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-11 rejects in-run increases and applies plus records decreases immediately 3ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-12 stores and retrieves the autonomy level for each run id 3ms
+ ✓ test/p12-enforcement-core.test.ts > P12 enforcement terminal state > never retries an approved run after an enforcement violation poisons its turn 168ms
+ ✓ test/p3a.test.ts > P3-1 canonical envelope > is stable across key and array order and changes for one field 6ms
+ ✓ test/p3a.test.ts > P3-2 adapters are transport only > carries raw values and imports no decision or policy module 1ms
+ ✓ test/p3a.test.ts > P3-3 fail closed mapping > declines random unknown methods and has no default allow branch 7ms
+ ✓ test/p3a.test.ts > P3-4 decision response whitelist > enumerates only the three response decisions and source has no prohibited response or bypass spelling 6ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > accepts only a nonempty concrete contained path and fixes turn scope and strict review 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines empty entries 3ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines glob entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines outside entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special root entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special arbitrary entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > models nonempty entries at the type boundary and source constructs no empty accept entries 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null cwd 3ms
+ ✓ test/p3a.test.ts > P3-6 preflight > wrong cwd 3ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null command 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > extra outside 3ms
+ ✓ test/p3a.test.ts > P3-6 preflight > outside grant 3ms
+ ✓ test/p3a.test.ts > P3-6 preflight > auth gate 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > tool 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > elicitation 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > judges writeStdin independently of a parent command decision 5ms
+ ✓ test/p3a.test.ts > P3-7 replay prevention > declines a duplicate null approval id and appends a replay alert 6ms
+ ✓ test/p3a.test.ts > P3-8 lifetime > declines after expiry and after run end without inheritance 4ms
+ ✓ test/p3a.test.ts > P3-10 byte-owned payload classification > classifies actual bytes and cancels opaque, encrypted, and invalid binary payloads 5ms
+ ✓ test/p3a.test.ts > P3-13 cancel is danger-only > returns cancel only for the three enumerated reasons across all mapped and rejected paths 10ms
+ ✓ test/p3a.test.ts > P3-14 execution profile > generates on-request argv without prohibited flags and source passes grep 1ms
+ ✓ test/p3a.test.ts > P3-18 advisory tools > marks Codex non-enforcing and core enforcement has no tool-kind bypass 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > removes every host execution environment and exposes only the Cue AppContainer tool 3ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > disables Codex built-in shell tools in the isolated host controller home 0ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > steers file-change goals away from child-spawning and ancestor-traversing commands 0ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > advertises write_text as the preferred exact-file operation on the sole dynamic tool 0ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > pins dynamic tool execution to the approved worktree and rejects client-controlled cwd 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > translates a structured exact-text write into a sandboxed PowerShell worker command 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > fails closed on any other dynamic tool identity or malformed argv 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > returns bounded, explicit AppContainer evidence to the model 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > drives app-server and returns dynamic-tool output from the AppContainer runner 6ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > declines any host-side command or file execution request without invoking the worker runner 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > rejects wrong-thread and duplicate dynamic calls and ignores a mismatched terminal notification 19ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > does not create an orphan terminal rejection when turn/start itself fails 2ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > allows only one in-flight dynamic tool call at a time 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > rejects a dynamic tool call received after the correlated turn completed 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-1 fails closed before an outbound attempt when @cue identity is absent 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 exposes exactly conversation and daemon API, denying worker and edit tools 6ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 reaches running only through the injected daemon API and frontdoor has no launch path 4ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 daemon API fails closed when the approved envelope does not match the run ledger 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-3 daemon sends after the frontdoor session is closed and needs no session handle 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-4 pins channel and thread at approval and rejects later mutation 3ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-5 serializes concurrent channels without mixing their state 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-6 renders exactly Korean three lines plus one envelope line without configuration markup 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-7 asks at most three envelope-changing questions and narrows other uncertainty 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-8 stays silent while healthy; time alone cannot emit an outbound message 6ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-9 reports dead Orca before refusing task acceptance 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-10 has no canvas writer or annotation path on the conversation surface 0ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-11 defaults to level 3 and records the selected level in the P5 ledger table 5ms
+ ↓ test/p6.test.ts > Phase 6 conversation surface > P6 external Buzz live delivery and @cue registration — SKIPPED: would mutate an external system
+ ✓ test/p10c-electron-security.test.ts > Electron renderer defense in depth > ships a restrictive CSP that allows only packaged scripts and styles 2ms
+ ✓ test/p10c-electron-security.test.ts > Electron renderer defense in depth > allows only the packaged renderer URL and denies every new window 19ms
+ ✓ test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies an outside-worktree absolute path as a terminal filesystem violation 11ms
+ ✓ test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies a network preflight denial as a terminal network violation 5ms
+ ✓ test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies a worktree-local executable denial as terminal executable sealing 6ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-1 renders all three views from the same changed result record 2ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 escapes HTML injection <script>alert(1)</script> 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 escapes HTML injection <img src=x onerror=alert(1)> 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 escapes HTML injection javascript:alert(1) 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 escapes HTML injection <iframe src=x></iframe> 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-2 uses a frozen component allowlist and rejects nodes outside it 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 secret scan rejects token 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 secret scan rejects key 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 secret scan rejects .env 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 secret scan rejects absolute user path 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 enforces all five ordered steps and cannot share without human approval 2ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-3 fails closed when the scanner throws 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-4 shared HTML contains content only, with no annotation controls, scripts, or origin overlay path 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-5 converts image plus Korean text on 'work' surface to a task 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-5 converts image plus Korean text on 'explain' surface to a task 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-10 rejects missing and blank surface values 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-10 uses exclusive identities for explain and work at runtime and type level 2ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-11 sends explain code-change requests through the unchanged envelope decision 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-12 keeps old annotations pinned after regeneration and exposes no direct HTML edit path 8ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-6 binds screenshot, snapshot, and current tab to one capture id 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-6 rejects the entire capture if any one adapter call fails 0ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-7 requires page id rather than URL and accepts selector-free screenshot records 1ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-8 backs up while blocked and flushes to the ledger on reconnect 3ms
+ ✓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7-8 Orca backup uses storage local get/set and has no annotation eval call 1ms
+ ↓ test/p7.test.ts > Phase 7 reporting, annotation, and publishing > P7 external artifacts share and real Orca capture — SKIPPED: would mutate or require an external system
+ ✓ test/p12-restart-queue.test.ts > P12 restart-safe queued writer lifecycle > terminalizes queued successors with the interrupted active writer 12ms
+ ✓ test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > aborts the turn and refuses every later tool call after a filesystem violation 7ms
+ ✓ test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > also seals when worker preflight throws a typed boundary violation before spawn 2ms
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-1 records two goal-derived immutable action sets and removes the old literal 3ms
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-2/P10-3 records distinct inspected artifacts and real controller/worker PIDs 1ms
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-4 through P10-8 remain executable OS-level gates in the replacement suites 1ms
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-9 through P10-11 preserves explicit approval, standalone Electron completion, and no progress notification 2ms
+ ✓ test/p10.test.ts > Phase 10 real engine evidence (superseded by split Phase 10-C runtime) > P10-12 keeps the historical PARTIAL labels intact 1ms
+ ✓ test/p11-electron-surface.test.ts > P11 four-function renderer boundary > exposes exactly the original four functions at preload execution 3ms
+ ✓ test/p11-electron-surface.test.ts > P11 four-function renderer boundary > status reads cannot execute and unknown operations are refused 2ms
+ ✓ test/p12-parent-death.test.ts > P12 parent-death fail-closed contract > checks host-controller job termination and bounds its parent-loss wait 2ms
+ ✓ test/p12-parent-death.test.ts > P12 parent-death fail-closed contract > checks job termination and bounds the worker-death wait after parent loss 0ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > keeps the committed verdict tracked while excluding supervisor output dumps 2ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > supports a tracked P12 stop receipt with disposable fixture paths outside the checkout 1ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > supports P12 Electron window and cancellation receipts without overwriting P11 evidence 0ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > closes a failed Electron child and its log before the proof returns 0ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > captures Electron evidence through the renderer DevTools protocol rather than the failing Viz path 0ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > supports an external approved workspace and ordered fail-fast tool provenance 0ms
+
+ Test Files  47 passed (47)
+      Tests  326 passed | 5 skipped (331)
+   Start at  10:54:08
+   Duration  315.82s (transform 1.19s, setup 0ms, import 5.52s, tests 302.17s, environment 4ms)
+

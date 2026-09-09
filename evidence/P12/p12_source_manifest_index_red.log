@@ -1,0 +1,35 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-source-manifest.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-source-manifest.test.ts > P12 source manifest binding > hashes staged blobs rather than dirty working files and excludes evidence 775ms
+   → expected undefined to be 'index' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-source-manifest.test.ts > P12 source manifest binding > hashes staged blobs rather than dirty working files and excludes evidence
+AssertionError: expected undefined to be 'index' // Object.is equality
+
+- Expected:
+"index"
+
++ Received:
+undefined
+
+ ❯ test/p12-source-manifest.test.ts:46:27
+     44|     expect(result.status, result.stderr).toBe(0);
+     45|     const manifest = JSON.parse(readFileSync(output, 'utf8'));
+     46|     expect(manifest.mode).toBe('index');
+       |                           ^
+     47|     expect(manifest.files.map((file: { path: string }) => file.path)).…
+     48|     expect(manifest.files[0]).toMatchObject({ path: 'source.txt', sha2…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  16:27:58
+   Duration  1.05s (transform 21ms, setup 0ms, import 66ms, tests 776ms, environment 0ms)
+

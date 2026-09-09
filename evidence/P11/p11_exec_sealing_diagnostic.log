@@ -1,0 +1,37 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-exec-sealing.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses a planted absolute worker binary and records a violation before launch 53ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses an owned launch from another writable worktree in the ledger 43ms
+ × test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant 2120ms
+   → {"exitCode":1,"stdout":"CUE_APPCONTAINER_PID=80472;START_TIME=2026-09-07T03:02:21.0474644Z\r\nCUE_APPCONTAINER_EXIT=1\r\n","stderr":"& : The term '.\\planted.exe' is not recognized as the name of a cmdlet, function, script file, or operable program. Che\r\nck the spelling of the name, or if a path was included, verify that the path is correct and try again.\r\nAt line:1 char:34\r\n+ $ErrorActionPreference='Stop'; & .\\planted.exe -e 'process.exit(0)';  ...\r\n+                                  ~~~~~~~~~~~~~\r\n    + CategoryInfo          : ObjectNotFound: (.\\planted.exe:String) [], ParentContainsErrorRecordException\r\n    + FullyQualifiedErrorId : CommandNotFoundException\r\n \r\n","appContainerPid":80472,"enforcement":"appcontainer-capability-zero"}: expected undefined to be 'filesystem' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant
+AssertionError: {"exitCode":1,"stdout":"CUE_APPCONTAINER_PID=80472;START_TIME=2026-09-07T03:02:21.0474644Z\r\nCUE_APPCONTAINER_EXIT=1\r\n","stderr":"& : The term '.\\planted.exe' is not recognized as the name of a cmdlet, function, script file, or operable program. Che\r\nck the spelling of the name, or if a path was included, verify that the path is correct and try again.\r\nAt line:1 char:34\r\n+ $ErrorActionPreference='Stop'; & .\\planted.exe -e 'process.exit(0)';  ...\r\n+                                  ~~~~~~~~~~~~~\r\n    + CategoryInfo          : ObjectNotFound: (.\\planted.exe:String) [], ParentContainsErrorRecordException\r\n    + FullyQualifiedErrorId : CommandNotFoundException\r\n \r\n","appContainerPid":80472,"enforcement":"appcontainer-capability-zero"}: expected undefined to be 'filesystem' // Object.is equality
+
+- Expected:
+"filesystem"
+
++ Received:
+undefined
+
+ ❯ test/p11-exec-sealing.test.ts:46:54
+     44|     const result = await launched.completion;
+     45|     expect(result.exitCode).not.toBe(0);
+     46|     expect(result.violation, JSON.stringify(result)).toBe('filesystem'…
+       |                                                      ^
+     47|   }, 30_000);
+     48| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  12:02:18
+   Duration  2.60s (transform 75ms, setup 0ms, import 161ms, tests 2.22s, environment 0ms)
+

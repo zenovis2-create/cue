@@ -1,0 +1,17 @@
+{
+  "id": "b41a8d92-9296-42a9-8096-7ae34eaabca2",
+  "ok": false,
+  "error": {
+    "code": "window_not_focused",
+    "message": "window_not_focused: keyboard input requires the target window to be focused; retry with --restore-window",
+    "data": {
+      "nextSteps": [
+        "Retry once with `--restore-window`.",
+        "If `--restore-window` was already used, stop retrying restore; bring the app forward manually, check permissions, or prefer `set-value` for editable fields."
+      ]
+    }
+  },
+  "_meta": {
+    "runtimeId": "8d09ff1c-a16c-4be3-8be5-ae06f8e2e1bf"
+  }
+}

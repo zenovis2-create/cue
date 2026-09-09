@@ -1,0 +1,41 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-enforcement-seal.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > aborts the turn and refuses every later tool call after a filesystem violation 9ms
+   → promise resolved "{ threadId: 'thread-seal', …(3) }" instead of rejecting
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > aborts the turn and refuses every later tool call after a filesystem violation
+AssertionError: promise resolved "{ threadId: 'thread-seal', …(3) }" instead of rejecting
+
+- Expected
++ Received
+
+- Error {
+-   "message": "rejected promise",
++ {
++   "finalMessage": "",
++   "status": "completed",
++   "threadId": "thread-seal",
++   "turnId": "turn-seal",
+  }
+
+ ❯ test/p12-enforcement-seal.test.ts:66:112
+     64|     );
+     65|
+     66|     await expect(session.run({ cwd: 'C:/controller', workspaceCwd: 'C:…
+       |                                                                                                                ^
+     67|       .rejects.toThrow(/CUE_ENFORCEMENT_VIOLATION.*filesystem/u);
+     68|     await nextTick();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  13:46:21
+   Duration  271ms (transform 37ms, setup 0ms, import 76ms, tests 10ms, environment 0ms)
+

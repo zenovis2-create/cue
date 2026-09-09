@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-09-06T00:01:15.657Z",
+  "verdict": "PASS",
+  "binarySha256": "cf68265897197ac5f3bff6a10c168eec159842b353129726da5e3ed6b91ef0f4",
+  "requestEndpoint": "/v1/responses",
+  "model": "cue-manifest-model",
+  "toolNames": [
+    "cue_workspace"
+  ],
+  "hostExecutionTools": [],
+  "toolManifest": [
+    {
+      "type": "function",
+      "name": "cue_workspace",
+      "description": "Run one program inside Cue's capability-zero Windows AppContainer. The working directory is pinned to the approved worktree. Use this for every workspace read, write, build, and test command.",
+      "strict": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "program": {
+            "type": "string"
+          },
+          "timeoutMs": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "program",
+          "args"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "toolManifestSha256": "8015e26177f3a5e428f6d34fbd0d129e5c403deb035e6bfef81e252a79a1f95d"
+}

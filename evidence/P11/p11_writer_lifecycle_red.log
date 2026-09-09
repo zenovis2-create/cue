@@ -1,0 +1,114 @@
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+test/p11-writer-lifecycle.test.ts(40,12): error TS2339: Property 'own' does not exist on type 'AppDaemon'.
+test/p11-writer-lifecycle.test.ts(46,41): error TS2339: Property 'own' does not exist on type 'AppDaemon'.
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-writer-lifecycle.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime 110ms
+   → expected { n: 1 } to deeply equal { n: +0 }
+ × test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume 72ms
+   → expected { n: 1 } to deeply equal { n: +0 }
+ × test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash 70ms
+   → expected { n: 1 } to deeply equal { n: +0 }
+ × test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree 134ms
+   → expected [Function] to throw an error
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > parent death kills the real AppContainer worker and restart releases the lease without resuming 4991ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime
+AssertionError: expected { n: 1 } to deeply equal { n: +0 }
+
+- Expected
++ Received
+
+  {
+-   "n": 0,
++   "n": 1,
+  }
+
+ ❯ assertReleased test/p11-writer-lifecycle.test.ts:33:83
+     31| }
+     32| function assertReleased(daemon: AppDaemon) {
+     33|   expect(daemon.db.prepare('SELECT count(*) n FROM workspace_write_lea…
+       |                                                                                   ^
+     34|   expect(daemon.db.prepare("SELECT write_in_progress FROM run WHERE id…
+     35| }
+ ❯ test/p11-writer-lifecycle.test.ts:42:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume
+AssertionError: expected { n: 1 } to deeply equal { n: +0 }
+
+- Expected
++ Received
+
+  {
+-   "n": 0,
++   "n": 1,
+  }
+
+ ❯ assertReleased test/p11-writer-lifecycle.test.ts:33:83
+     31| }
+     32| function assertReleased(daemon: AppDaemon) {
+     33|   expect(daemon.db.prepare('SELECT count(*) n FROM workspace_write_lea…
+       |                                                                                   ^
+     34|   expect(daemon.db.prepare("SELECT write_in_progress FROM run WHERE id…
+     35| }
+ ❯ test/p11-writer-lifecycle.test.ts:47:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash
+AssertionError: expected { n: 1 } to deeply equal { n: +0 }
+
+- Expected
++ Received
+
+  {
+-   "n": 0,
++   "n": 1,
+  }
+
+ ❯ assertReleased test/p11-writer-lifecycle.test.ts:33:83
+     31| }
+     32| function assertReleased(daemon: AppDaemon) {
+     33|   expect(daemon.db.prepare('SELECT count(*) n FROM workspace_write_lea…
+       |                                                                                   ^
+     34|   expect(daemon.db.prepare("SELECT write_in_progress FROM run WHERE id…
+     35| }
+ ❯ test/p11-writer-lifecycle.test.ts:54:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ test/p11-writer-lifecycle.test.ts:62:61
+     60|     const config = initializeConfig(join(root, 'other-state'), { workt…
+     61|     let second: AppDaemon | undefined;
+     62|     try { expect(() => { second = new AppDaemon(config); }).toThrow(/w…
+       |                                                             ^
+     63|     finally { second?.close(); }
+     64|     expect(daemon.db.prepare('SELECT count(*) n FROM workspace_write_l…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 1 passed (5)
+   Start at  12:00:31
+   Duration  5.97s (transform 141ms, setup 0ms, import 395ms, tests 5.38s, environment 0ms)
+

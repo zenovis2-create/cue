@@ -1,0 +1,2 @@
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs

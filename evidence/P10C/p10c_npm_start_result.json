@@ -1,0 +1,26 @@
+{
+  "schema": "cue.p10c.npm-start.v2",
+  "generatedAt": "2026-09-05T08:09:55Z",
+  "command": "npm.cmd start -- --remote-debugging-port=9333",
+  "environmentBoundary": {
+    "CUE_USER_DATA": "evidence/P10C/npm-start-state",
+    "CUE_WORKTREE_ROOT": "evidence/P10C/npm-start-worktree"
+  },
+  "prestart": "npm --prefix daemon run build",
+  "entrypoint": "electron .",
+  "windowVerified": true,
+  "windowTitle": "Cue",
+  "electronPid": 51556,
+  "observedExecutable": "C:\\Users\\User\\cue\\node_modules\\electron\\dist\\electron.exe",
+  "rendererUrl": "file:///C:/Users/User/cue/app/renderer/index.html",
+  "rendererReadyState": "complete",
+  "visibleMarkers": [
+    "목표",
+    "실행 봉투",
+    "상태"
+  ],
+  "screenshot": "evidence/P10C/p10c_npm_start_window.png",
+  "stoppedAfterVerification": true,
+  "normalExitClaimed": true,
+  "exitCode": 0
+}

@@ -1,0 +1,28 @@
+{
+  "release": "v0.1",
+  "verdict": "FAIL",
+  "test_summary": "165 passed, 5 skipped",
+  "test_log_sha256": "35e9f1a138c2d346f9daa24e20eb25b9fe4fcf3fd6fe264c3e006b29bf3b6332",
+  "items": {
+    "R-1": { "verdict": "FAIL", "evidence": "evidence/P1에 P1-1/P1-2 원문은 있으나 P1-3 판정 원문 기록이 없으며 새로 만들지 않았다." },
+    "R-2": { "verdict": "PASS", "evidence": "src 전체 금지 문자열 0건이며 임시 acceptForSession 양성 대조가 실제 적발된 뒤 삭제됐다." },
+    "R-3": { "verdict": "PASS", "evidence": "밖을 가리키는 junction을 통한 런타임 계산 쓰기를 실제 AppContainer PID 86964에서 시도해 exit 1, outside_written=false를 관측했다." },
+    "R-4": { "verdict": "PASS", "evidence": "실제 데몬 PID 59080을 kill하고 PID 53452로 재시작해 blocked/crash, blocked_no_auto_resume 1행, git status '?? work.txt'를 확인했다." },
+    "R-5": { "verdict": "PASS", "evidence": "heartbeat 만료와 연결 실패 중 하나만 참인 두 대조군은 무알림이고 둘 다 참일 때만 알림과 marker가 생성됐다." },
+    "R-6": { "verdict": "PASS", "evidence": "세 줄 승인, routing dispatch, 실제 AppContainer PID 66996 파일 생성, verification, run/approval 각 1행과 '자동 승인 1건 · 거부 0건' 보고 일치를 확인했다." },
+    "R-7": { "verdict": "PASS", "evidence": "src에서 budget과 통화 단위/기호가 결합된 방출 경로 0건이며 토큰 blocked/budget만 유지됐다." },
+    "R-8": { "verdict": "PASS", "evidence": "2026-09-02의 evidence/P8/p8_result.json PASS와 SHA-256 기록을 변경하지 않았다." },
+    "R-9": { "verdict": "PASS", "evidence": "같은 exit-23 실제 프로세스를 ③ PID 100900과 ① PID 85644에서 실행해 봉투 판정은 동일하고 attempt 수는 1/0이었다." },
+    "I-1": { "verdict": "PASS", "evidence": "일치 카테고리는 예외 문구가 있어도 고정 경로로 가고 서로 다른 복수 일치는 ask_me로 닫힌다." },
+    "I-2": { "verdict": "PASS", "evidence": "완료·막힘 보고가 verdict, route, reason의 판정 경로를 필수로 요구하며 누락 시 예외를 낸다." },
+    "I-3": { "verdict": "PASS", "evidence": "확실한 복구 artifact를 먼저 별도 트랜잭션으로 커밋하고 경계선 writer 실패 뒤에도 앞선 base 행이 남았다." },
+    "I-4": { "verdict": "PASS", "evidence": "claimed_approval artifact만 있을 때 권한은 false이고 accept approval_event를 넣은 뒤에만 true가 됐다." },
+    "I-5": { "verdict": "PASS", "evidence": "효율 명목의 확인 생략 요청을 효과 skip_confirmation으로 판정해 권한 확대 승인 없이는 거부했다." },
+    "I-6": { "verdict": "PASS", "evidence": "docs/P5_SPEC.md에 confirmed 결정 관측과 candidate 해석의 비승격·단독 상태전이 금지 규칙을 명문화했다." }
+  },
+  "remaining_partials": {
+    "P3-16": "PARTIAL — 네트워크 탐지·즉시 중단만 검증됐고 syscall 수준 강제는 아니다.",
+    "P4-2": "PARTIAL — Windows에서 worker cwd의 독립 OS 확인은 불가하다.",
+    "P6-3": "PARTIAL — 실제 Buzz 전달은 외부 상태 변경 금지로 미검증이다."
+  }
+}

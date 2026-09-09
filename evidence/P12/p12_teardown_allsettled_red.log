@@ -1,0 +1,33 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-runtime-enforcement.test.ts -t attempts every teardown --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-runtime-enforcement.test.ts > P12 runtime enforcement provenance > attempts every teardown stage after an earlier worker stop fails 7ms
+   → expected 'undefined' to be 'function' // Object.is equality
+ ↓ test/p12-runtime-enforcement.test.ts > P12 runtime enforcement provenance > persists bounded ordered provenance even when preflight seals before a worker PID exists
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-runtime-enforcement.test.ts > P12 runtime enforcement provenance > attempts every teardown stage after an earlier worker stop fails
+AssertionError: expected 'undefined' to be 'function' // Object.is equality
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ test/p12-runtime-enforcement.test.ts:34:29
+     32|   it('attempts every teardown stage after an earlier worker stop fails…
+     33|     const teardown = (hostRuntime as any).settleHostRuntimeTeardown;
+     34|     expect(typeof teardown).toBe('function');
+       |                             ^
+     35|     const secondStop = vi.fn();
+     36|     const controller = vi.fn(() => { throw new Error('controller close…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  17:52:35
+   Duration  507ms (transform 115ms, setup 0ms, import 322ms, tests 8ms, environment 0ms)
+

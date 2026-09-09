@@ -1,0 +1,28 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-enforcement-core.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-enforcement-core.test.ts > P12 enforcement terminal state > never retries an approved run after an enforcement violation poisons its turn 163ms
+   → expected "vi.fn()" to be called 1 times, but got 4 times
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-enforcement-core.test.ts > P12 enforcement terminal state > never retries an approved run after an enforcement violation poisons its turn
+AssertionError: expected "vi.fn()" to be called 1 times, but got 4 times
+ ❯ test/p12-enforcement-core.test.ts:72:26
+     70|       await until(() => core.completion(prepared.taskId).state !== 'ru…
+     71|
+     72|       expect(launchHost).toHaveBeenCalledTimes(1);
+       |                          ^
+     73|       expect(core.completion(prepared.taskId)).toMatchObject({
+     74|         state: 'blocked',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  13:48:13
+   Duration  691ms (transform 125ms, setup 0ms, import 358ms, tests 164ms, environment 0ms)
+

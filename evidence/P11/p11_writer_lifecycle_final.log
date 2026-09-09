@@ -1,0 +1,41 @@
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-writer-lifecycle.test.ts test/p10c-core.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker 5092ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates 10057ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker 13863ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a controller crash without automatically resuming it 1917ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > reconciles a previously running write as blocked/crash without auto-resume on restart 337ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fences a verified live session before reconciling an interrupted run on startup 8413ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > refuses to kill a reused PID whose process start time does not match the ledger identity 5278ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks completion immediately when the controller credential-home cleanup fails 743ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks when cleanup fails after controller launch setup throws 693ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when independent goal verification finds no relevant workspace change 748ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when an explicitly requested exact file content is wrong 4298ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fails closed before launch when the host Codex binary hash does not match the pin 629ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > queues a second write run for the same worktree and starts it after the first releases 901ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > cancels a queued write without launching it 949ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks queued writes when the app closes so restart cannot strand them 723ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 3668ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks an expired approval without spawning a controller or recording execution 193ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses writable worktrees containing or inside the trusted Cue runtime 9ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > normal completion releases the real runtime lease before another writer runs 3950ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > controller crash releases the real runtime lease before another writer runs 1697ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > worker hard-kill releases the real runtime lease before another writer runs 4706ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime 151ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume 150ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash 144ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree 245ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > a failed startup reconciliation cannot strand a new live ownership record 292ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > parent death kills the real AppContainer worker and restart releases the lease without resuming 5156ms
+
+ Test Files  2 passed (2)
+      Tests  27 passed (27)
+   Start at  12:09:17
+   Duration  75.97s (transform 217ms, setup 0ms, import 584ms, tests 75.01s, environment 0ms)
+
+EXIT_CODE=0

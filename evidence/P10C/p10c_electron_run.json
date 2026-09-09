@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-09-05T08:03:17.527Z",
+  "pid": 55596,
+  "windowCreated": true,
+  "adapterMode": "none",
+  "task": "standalone Electron approval to host model controller to AppContainer worker",
+  "taskId": "1377eb1a-444f-43a5-9393-1b653c3d7674",
+  "state": "completed",
+  "blockedReason": null,
+  "rendered": {
+    "state": "completed",
+    "stateTitle": "완료",
+    "stage": "완료 · 마침",
+    "approvalSummary": "자동 승인 1건 · 거부 0건",
+    "autonomySummary": "자율성: ③ · 자동 복구 0회",
+    "toolSummary": "격리 도구 4회 · PID 66744, 68184, 67040, 66256, 54908, 60796",
+    "resultSummary": "Created `electron-live.txt` and verified it contains exactly `electron-from-cue`.\n\nVerification: 17 bytes, UTF-8 text matches, no extra newline or BOM."
+  },
+  "sessions": [
+    {
+      "pid": 63848,
+      "role": "controller",
+      "boundary": "host-model-only"
+    },
+    {
+      "pid": 66744,
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero"
+    },
+    {
+      "pid": 68184,
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero"
+    },
+    {
+      "pid": 67040,
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero"
+    },
+    {
+      "pid": 66256,
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero"
+    },
+    {
+      "pid": 54908,
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero"
+    },
+    {
+      "pid": 60796,
+      "role": "tool_worker",
+      "boundary": "appcontainer-capability-zero"
+    }
+  ],
+  "binaryIntegrityPinned": true
+}

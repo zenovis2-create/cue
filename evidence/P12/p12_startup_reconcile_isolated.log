@@ -1,0 +1,41 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-writer-lifecycle.test.ts -t failed startup reconciliation --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses writable worktrees containing or inside the trusted Cue runtime
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > normal completion releases the real runtime lease before another writer runs
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > controller crash releases the real runtime lease before another writer runs
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > worker hard-kill releases the real runtime lease before another writer runs
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree
+ × test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > a failed startup reconciliation cannot strand a new live ownership record 144ms
+   → worktree already owned by a live daemon
+ ↓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > parent death kills the real AppContainer worker and restart releases the lease without resuming
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > a failed startup reconciliation cannot strand a new live ownership record
+Error: worktree already owned by a live daemon
+ ❯ Function.<anonymous> dist/src/daemon-ownership.js:43:27
+     41|                 // A reused PID is conservatively treated as live; nev…
+     42|                 if (live(previous.pid) && !(previous.pid === process.p…
+     43|                     throw new Error('worktree already owned by a live …
+       |                           ^
+     44|             }
+     45|             for (const previous of overlapping) {
+ ❯ Function.sqliteTransaction node_modules/better-sqlite3/lib/methods/transaction.js:65:24
+ ❯ ownDaemonWorktree dist/src/daemon-ownership.js:63:12
+ ❯ new AppDaemon ../app/core.mjs:98:36
+ ❯ test/p11-writer-lifecycle.test.ts:110:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  21:18:26
+   Duration  874ms (transform 169ms, setup 0ms, import 539ms, tests 145ms, environment 0ms)
+

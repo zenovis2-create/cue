@@ -1,0 +1,72 @@
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-writer-corrective.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: parent then child 194ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: child then parent 154ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: junction child alias 172ms
+ × test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: dotdot-named child 179ms
+   → expected [Function] to throw an error
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed stop quarantines the daemon and retains the writer lease 112ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through late completion after stop failure 273ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination rejection 210ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination result 209ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed initial process query cannot be mistaken for a dead session 104ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected state 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected sourceHome 5ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected missing homeRoot under junction 6ms
+ × test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot named ..homes 77ms
+   → expected [Function] to throw an error
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > a protected-path refusal permits a corrected core for the same workspace immediately 75ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: dotdot-named child
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ test/p11-writer-corrective.test.ts:44:131
+     42|       const first = new AppDaemon(initializeConfig(join(root, 'first-s…
+     43|       let second: AppDaemon | undefined;
+     44|       try { expect(() => { second = new AppDaemon(initializeConfig(joi…
+       |                                                                                                                                   ^
+     45|       finally { second?.close(); }
+     46|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot named ..homes
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ test/p11-writer-corrective.test.ts:95:126
+     93|       if (kind === 'missing homeRoot under junction') { const alias = …
+     94|       let core: ReturnType<typeof createCueCore> | undefined;
+     95|       try { expect(() => { core = createCueCore(initializeConfig(state…
+       |                                                                                                                              ^
+     96|       finally { core?.close(); }
+     97|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 13 passed (15)
+   Start at  12:22:54
+   Duration  2.44s (transform 162ms, setup 0ms, import 461ms, tests 1.78s, environment 0ms)
+
+EXIT_CODE=1

@@ -1,0 +1,4 @@
+npm notice run cue-desktop@0.1.0 evidence:p12:manifest
+npm notice run npm --prefix daemon run build && cross-env CUE_EVIDENCE_PHASE=P12 node daemon/scripts/p10c-manifest-proof.mjs --output evidence/P12/p12_manifest.json
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs

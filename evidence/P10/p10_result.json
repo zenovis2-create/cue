@@ -1,0 +1,19 @@
+{
+  "phase": "P10",
+  "verdict": "FAIL",
+  "items": {
+    "P10-1": { "verdict": "PASS", "evidence": "app/ scan found zero cue-p9-live.txt and zero writeFileSync; allowed_actions uses a goal-derived slug plus hash." },
+    "P10-2": { "verdict": "PARTIAL", "evidence": "Real AppContainer PID 103284 and execution/session ledger rows were recorded, but Codex exited before doing work." },
+    "P10-3": { "verdict": "FAIL", "evidence": "Goal A was launched but produced no artifact; Goal B was not launched after the prerequisite failure." },
+    "P10-4": { "verdict": "SKIPPED", "evidence": "Two-goal live prerequisite failed before the cancellation test ran." },
+    "P10-5": { "verdict": "SKIPPED", "evidence": "Two-goal live prerequisite failed before the outside-write test ran." },
+    "P10-6": { "verdict": "SKIPPED", "evidence": "Two-goal live prerequisite failed before the detection-layer network test ran; P3-16 remains PARTIAL." },
+    "P10-7": { "verdict": "PARTIAL", "evidence": "Ledger changed from running to blocked/human_required, not completed." },
+    "P10-8": { "verdict": "PARTIAL", "evidence": "The failed level-3 launch ledgered bounded recovery through human escalation, but the level-1 contrast test did not run." },
+    "P10-9": { "verdict": "SKIPPED", "evidence": "P10 suite prerequisite failed; unchanged P9 approval tests pass in the 174-test regression." },
+    "P10-10": { "verdict": "PARTIAL", "evidence": "Credential-like parent environment fields are stripped in source, but the dedicated P10 assertion did not run." },
+    "P10-11": { "verdict": "SKIPPED", "evidence": "Dedicated P10 assertion did not run; unchanged P9 silence assertion passes." },
+    "P10-12": { "verdict": "PASS", "evidence": "Historical suite excluding the new failing P10 suite: 174 passed and 5 skipped." }
+  },
+  "test_log_sha256": "eb2fb5b698d7b5fee2f336aa37d68b8960a5a84e87a8881be512b9a9c1cb0659"
+}

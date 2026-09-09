@@ -1,0 +1,37 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-structured-write.test.ts -t round-trip as exact UTF-8 --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > writes literal UTF-8 bytes without shell-quoting changes inside AppContainer
+ × test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects text that cannot round-trip as exact UTF-8 bytes 4ms
+   → expected [Function] to throw an error
+ ↓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects traversal before any worker can launch
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects text that cannot round-trip as exact UTF-8 bytes
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ test/p12-structured-write.test.ts:64:24
+     62|       tool: 'cue_workspace',
+     63|       arguments: { operation: 'write_text', path: 'invalid.txt', conte…
+     64|     }, 'C:/approved')).toThrow('write_text content must contain valid …
+       |                        ^
+     65|   });
+     66|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  15:51:09
+   Duration  387ms (transform 86ms, setup 0ms, import 207ms, tests 5ms, environment 0ms)
+

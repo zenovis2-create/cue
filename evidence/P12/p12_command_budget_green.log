@@ -1,0 +1,15 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-structured-write.test.ts -t encoded Windows command line --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > writes literal UTF-8 bytes without shell-quoting changes inside AppContainer
+ ↓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects text that cannot round-trip as exact UTF-8 bytes
+ ✓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects a structured write whose encoded Windows command line exceeds the safe budget 3ms
+ ↓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects traversal before any worker can launch
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 3 skipped (4)
+   Start at  15:53:11
+   Duration  420ms (transform 90ms, setup 0ms, import 247ms, tests 5ms, environment 0ms)
+

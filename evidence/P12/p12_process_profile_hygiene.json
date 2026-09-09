@@ -1,0 +1,29 @@
+{
+    "schema":  "cue.p12.process-profile-hygiene.v3",
+    "generatedAt":  "2026-09-08T02:25:52.9494740Z",
+    "sourceTreeSha256":  "9a13bd45dcde050ef39e03afb2855aef8ebb54a9be9eb5930953cb8e4c7d12e7",
+    "passed":  true,
+    "checks":  {
+                   "repositoryOwnedProcessesAbsent":  true,
+                   "cueWorkerProfilesAbsentWithoutPostHocCleanup":  true,
+                   "knownDisposablePathsAbsent":  true
+               },
+    "counts":  {
+                   "evidencePidsRecorded":  15,
+                   "evidencePidsCurrentlyAllocated":  0,
+                   "repositoryOwnedProcesses":  0,
+                   "cueWorkerProfiles":  0,
+                   "knownDisposablePathsChecked":  3,
+                   "knownDisposablePathsRemaining":  0
+               },
+    "currentlyAllocatedEvidencePids":  [
+
+                                       ],
+    "repositoryOwnedProcesses":  [
+
+                                 ],
+    "cueWorkerProfiles":  [
+
+                          ],
+    "note":  "No post-hoc profile deletion was performed. Pass requires zero exact Cue.Worker.\u003c32 lowercase hex\u003e profiles. Recorded PIDs are informational only because PID reuse cannot identify a process; ownership findings include PID, PPID, creation time, executable, and a command-line hash. Unrelated codex.exe processes were neither classified nor terminated by name, count, or age."
+}

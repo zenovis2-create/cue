@@ -1,0 +1,56 @@
+{
+  "schema": "cue.p12.post-commit-attestation.v1",
+  "generatedAt": "2026-09-08T07:21:28Z",
+  "passed": true,
+  "target": {
+    "commit": "ea6fa9c4d1f51e4b7f5b1ca7623043659d579470",
+    "parent": "e50d4eb7517eaa3eca2fc8639e3aafcbcb69c58e",
+    "tree": "be82a47f60c4e382042aa71c825414c059cdb663",
+    "subject": "Release Cue v0.1 with P12 verified evidence"
+  },
+  "source": {
+    "manifestMode": "head",
+    "manifestBaseHead": "ea6fa9c4d1f51e4b7f5b1ca7623043659d579470",
+    "fileCount": 170,
+    "sourceTreeSha256": "9a13bd45dcde050ef39e03afb2855aef8ebb54a9be9eb5930953cb8e4c7d12e7",
+    "excludedPrefixes": [
+      "evidence/"
+    ]
+  },
+  "boundEvidence": {
+    "verdict": {
+      "path": "evidence/P12/v01_verdict.json",
+      "sha256": "a3b601bd6bad8f0c7116f28ef01635a55bbe0184774efbebfeab38f2b98d023d"
+    },
+    "sourceManifest": {
+      "path": "evidence/P12/p12_source_manifest.json",
+      "sha256": "785c169a9a4edc3467b50022d8de3139332d359fe498df64cbe40664342d856d"
+    },
+    "gateSummary": {
+      "path": "evidence/P12/p12_gate_summary.json",
+      "sha256": "82523610235461853379e45beefc97c5dfdca502db6ad54a6ca33c5b1fe018fb"
+    },
+    "securityReview": {
+      "path": "evidence/P12/p12_security_review.json",
+      "sha256": "7678c022fc1d496c9a8cd0e73672809a17c9899ecfaa49889fd5bebdf765d3af"
+    },
+    "releaseReview": {
+      "path": "evidence/P12/p12_release_review.json",
+      "sha256": "0d99a134b7aaf39796ba6b0df14582ad455ca1b9a898a1ab5394515ee3549dcd"
+    }
+  },
+  "checks": {
+    "targetCommitResolved": true,
+    "targetHeadManifestMode": true,
+    "manifestBaseHeadEqualsTargetCommit": true,
+    "sourceFileCountIs170": true,
+    "sourceTreeDigestMatchesPreCommitIndex": true,
+    "p12VerdictIsGo": true,
+    "securityReviewPassed": true,
+    "releaseReviewPassed": true,
+    "all247ReceiptHashesMatchTargetCommit": true,
+    "forbiddenP12RuntimeArtifactsAbsent": true,
+    "workingTreeCleanAtAttestation": true
+  },
+  "scope": "This attestation binds the already-created target commit to the post-commit HEAD manifest and committed P12 evidence. It is stored in a child metadata commit and intentionally does not claim to attest its own commit hash."
+}

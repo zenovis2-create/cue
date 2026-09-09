@@ -1,0 +1,38 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-terminal-transaction.test.ts -t quarantines a user stop --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a user stop when its lease-release transaction aborts 88ms
+   → expected [Function] to not throw an error but 'SqliteError: forced stop release fail…' was thrown
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'normal completion' quarantines the writer and terminalizes its queue when lease release aborts
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'controller crash' quarantines the writer and terminalizes its queue when lease release aborts
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'worker hard-kill' quarantines the writer and terminalizes its queue when lease release aborts
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a user stop when its lease-release transaction aborts
+AssertionError: expected [Function] to not throw an error but 'SqliteError: forced stop release fail…' was thrown
+
+- Expected:
+undefined
+
++ Received:
+"SqliteError: forced stop release failure"
+
+ ❯ test/p12-terminal-transaction.test.ts:76:64
+     74|
+     75|       let stopped;
+     76|       expect(() => { stopped = core.stop(active.runId); }).not.toThrow…
+       |                                                                ^
+     77|       expect(stopped).toBe(false);
+     78|       expect(core.daemon.status).toBe('blocked/crash');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  16:06:57
+   Duration  676ms (transform 128ms, setup 0ms, import 420ms, tests 89ms, environment 0ms)
+

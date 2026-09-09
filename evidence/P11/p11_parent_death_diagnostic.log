@@ -1,0 +1,35 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p10c-containment.test.ts > Phase 10-C process containment > binds the AppContainer job lifetime to the daemon process handle
+ ↓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the host controller descendant when the owned controller root is hard-killed
+ × test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed 15027ms
+   → expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/p10c-containment.test.ts:103:33
+    101|     const deadline = Date.now() + 15_000;
+    102|     while (!existsSync(pidPath) && Date.now() < deadline) await new Pr…
+    103|     expect(existsSync(pidPath)).toBe(true);
+       |                                 ^
+    104|     const pids = JSON.parse(readFileSync(pidPath, 'utf8')) as { wrappe…
+    105|     expect(processAlive(pids.wrapperPid)).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  12:30:18
+   Duration  15.58s (transform 128ms, setup 0ms, import 316ms, tests 15.03s, environment 0ms)
+

@@ -1,0 +1,59 @@
+[
+  {
+    "id": "P1-4",
+    "question": "orca orchestration worker-read가 기존 완료 워커 출력을 커서로 페이징하고 소진 뒤 재개할 수 있는가; 소스 변경은 어떻게 드러나는가?",
+    "commands_run": [
+      "orca orchestration worker-read --help",
+      "orca orchestration worker-show --dispatch ctx_462f43f3380e --json",
+      "orca orchestration worker-read --dispatch ctx_462f43f3380e --limit 2 --json",
+      "orca orchestration worker-read --dispatch ctx_462f43f3380e --cursor <page-1-cursor> --limit 2 --json",
+      "orca orchestration worker-read --dispatch ctx_462f43f3380e --source terminal --cursor <page-2-cursor> --limit 2 --json",
+      "orca orchestration worker-read --dispatch ctx_462f43f3380e --cursor <page-2-cursor> --limit 100 --json",
+      "orca orchestration worker-read --dispatch ctx_462f43f3380e --cursor <exhausted-cursor> --limit 2 --json"
+    ],
+    "finding": "기존 completed/succeeded dispatch의 archived transcript에서 top-level result.cursor(동일 값이 result.transcript.nextCursor에도 존재)를 실제로 두 번 이상 되넣어 재개했다. --limit 2는 매 페이지 returnedMessageCount=2를 만들었고, 마지막 데이터 페이지는 limited=false/returnedMessageCount=42, 끝 커서 재조회는 limited=false/returnedMessageCount=0 및 동일 cursor를 반환했다. source_changed 또는 유사 필드는 관측되지 않았다. transcript 커서를 --source terminal과 함께 쓰자 source_changed가 아니라 terminal output was released라는 runtime_error가 반환됐다.",
+    "evidence_excerpt": "page1: result.transcript.returnedMessageCount=2, limited=true, result.cursor=owr1_...pIjoyfQ; page2: returnedMessageCount=2, cursor=owr1_...pIjo0fQ; exhausted replay: returnedMessageCount=0, limited=false, cursor=owr1_...pIjo0Nn0. Warnings also report oversized transcript records skipped/clipped.",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "id": "P1-5",
+    "question": "Codex/Orca가 실행 하나의 토큰 또는 비용 회계를 노출하는가?",
+    "commands_run": [
+      "rg -n -i usage|token|cost|price|billing|inputTokens|outputTokens evidence/P1/p1_1_ledger.log evidence/P1/p1_2_ledger.log",
+      "orca orchestration run-show --id run_6a3a832eebc9 --json",
+      "orca orchestration task-list --run run_6a3a832eebc9 --json",
+      "orca orchestration worker-show --dispatch ctx_462f43f3380e --json",
+      "<vendor codex.exe> exec --json --skip-git-repo-check --cd <temporary-cwd> Reply with exactly: CUE-P1-5-OK"
+    ],
+    "finding": "Codex app-server와 codex exec는 토큰 회계를 실제로 노출한다. app-server 경로는 thread/tokenUsage/updated.params.tokenUsage.last 및 rawResponse/completed.params.usage이고, exec 경로는 turn.completed.usage이다. exec 실제 값은 input_tokens=20297, cached_input_tokens=11008, output_tokens=12, reasoning_output_tokens=0이었다. 조사한 Codex 출력에는 통화 비용 필드가 없고 usageMetadata는 null이었다. 조사한 Orca run/task/worker JSON에는 usage/cost/token 회계 필드가 없었다.",
+    "evidence_excerpt": "app-server: params.tokenUsage.last.totalTokens=20609 (inputTokens=20468, cachedInputTokens=9216, outputTokens=141). exec: {\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":20297,\"cached_input_tokens\":11008,\"cache_write_input_tokens\":0,\"output_tokens\":12,\"reasoning_output_tokens\":0}}.",
+    "verdict": "SUPPORTED"
+  },
+  {
+    "id": "P1-6",
+    "question": "Hermes가 실행 중 작업의 이벤트를 외부로 내보내고 외부 메시지 개입을 허용하는가?",
+    "commands_run": [
+      "hermes --version",
+      "hermes --help",
+      "hermes webhook --help",
+      "hermes webhook list",
+      "hermes logs --help",
+      "hermes logs list",
+      "hermes logs agent -n 5",
+      "hermes serve --help",
+      "hermes serve --status",
+      "hermes gateway --help",
+      "hermes gateway status",
+      "hermes monitoring --help",
+      "hermes monitoring status",
+      "hermes mcp serve --help",
+      "hermes acp --help",
+      "hermes send --help",
+      "hermes send --list",
+      "rg source/config for websocket, JSON-RPC, event subscriber, /api/pty, /steer, interrupt"
+    ],
+    "finding": "Hermes v0.21.0에는 실제 파일 로그와 tail -f, backend JSON-RPC/WebSocket, dashboard event subscriber WebSocket, PTY WebSocket 입력, 그리고 TUI busy_input_mode의 interrupt/queue/steer 경로가 존재한다. agent.log에서 tui_gateway.ws 연결 accept/close도 실제 관측했다. 다만 현재 hermes serve와 messaging gateway는 모두 꺼져 있었고 webhook platform도 비활성화 상태였다. webhook CLI는 외부로 실행 이벤트를 내보내는 기능이 아니라 이벤트로 agent를 활성화하는 inbound subscription이다. 특정 기존 실행에 붙는 안정적인 headless CLI 메시지 주입 왕복은 발견하거나 실제 실행하지 못했다.",
+    "evidence_excerpt": "hermes serve --status: No hermes dashboard or serve processes running. hermes gateway status: Gateway is not running. logs: tui_gateway.ws: ws accepted ... messages=1. Config/source: busy_input_mode supports interrupt|queue|steer; /steer calls agent.steer(payload); dashboard source documents event subscriber and /api/pty WebSocket.",
+    "verdict": "INCONCLUSIVE"
+  }
+]

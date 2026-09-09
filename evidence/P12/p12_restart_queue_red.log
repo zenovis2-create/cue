@@ -1,0 +1,35 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-restart-queue.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-restart-queue.test.ts > P12 restart-safe queued writer lifecycle > terminalizes queued successors with the interrupted active writer 27ms
+   → expected 1 to be 2 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-restart-queue.test.ts > P12 restart-safe queued writer lifecycle > terminalizes queued successors with the interrupted active writer
+AssertionError: expected 1 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ test/p12-restart-queue.test.ts:26:64
+     24|     db.prepare('INSERT INTO workspace_write_lease VALUES(?,?,?)').run(…
+     25|
+     26|     expect(reconcileInterruptedWrites(db, worktree, () => '')).toBe(2);
+       |                                                                ^
+     27|     expect(db.prepare('SELECT id,state,blocked_reason FROM task ORDER …
+     28|       { id: 'active-task', state: 'blocked', blocked_reason: 'crash' },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  16:26:17
+   Duration  411ms (transform 53ms, setup 0ms, import 157ms, tests 29ms, environment 0ms)
+

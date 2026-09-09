@@ -1,0 +1,17 @@
+npm notice run cue-desktop@0.1.0 evidence:p12:stop
+npm notice run npm --prefix daemon run build && cross-env NODE_ENV=test CUE_EVIDENCE_PHASE=P12 node daemon/scripts/p10c-stop-canary.mjs
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+{
+  "verdict": "FAIL",
+  "outputPath": "C:\\Users\\User\\cue\\evidence\\P12\\p12_stop_result.json",
+  "checks": {
+    "startedMarkerWritten": true,
+    "controllerAliveBeforeStop": true,
+    "liveAppContainerWorkerBeforeStop": true,
+    "stopAccepted": true,
+    "ledgerBlockedCancelled": true,
+    "controllerAndWorkersStopped": true,
+    "fixturePathsRemoved": true
+  }
+}

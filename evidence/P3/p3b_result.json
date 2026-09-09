@@ -1,0 +1,38 @@
+[
+  {
+    "id": "P3-9",
+    "verdict": "FAIL",
+    "evidence": "p3b_test_output.log: canonical/junction/visible absolute-path tests pass, but 'blocks a runtime-computed outside path in a non-Node worker' fails; the real file was created before test cleanup.",
+    "note": "argv preflight is not a filesystem syscall boundary and is not connected to spawnVendorCodex."
+  },
+  {
+    "id": "P3-11",
+    "verdict": "PASS",
+    "evidence": "p3b_test_output.log: 'keeps the task running after an outside-envelope request' passed against the SQLite task row.",
+    "note": "The approval is declined and task.state remains running."
+  },
+  {
+    "id": "P3-12",
+    "verdict": "PASS",
+    "evidence": "p3b_test_output.log: five state/choice-model tests passed for duplicate digest, approval stall, three choices, default focus, and digest suppression.",
+    "note": "This verdict is limited to the requested UI-free state/selection model."
+  },
+  {
+    "id": "P3-15",
+    "verdict": "FAIL",
+    "evidence": "The ledger-derived label unit test passed, but independent review found no completion-card production caller.",
+    "note": "The query is implemented; actual completion-card integration is absent."
+  },
+  {
+    "id": "P3-16",
+    "verdict": "FAIL",
+    "evidence": "p3b_test_output.log: Node fetch and allowlist helper tests pass, but 'blocks a non-Node worker from a real local socket when egress is empty' fails.",
+    "note": "NODE_OPTIONS monkey-patching does not constrain PowerShell, curl, vendor Codex, or arbitrary descendants."
+  },
+  {
+    "id": "P3-17",
+    "verdict": "FAIL",
+    "evidence": "SQLite tests pass for separate approval/execution rows, 1 approval + 3 executions alerts, and a composite null-safe replay key; independent review found no production execution-event caller.",
+    "note": "Ledger mechanics exist, but approval-versus-execution accounting is not connected to the real worker lifecycle."
+  }
+]

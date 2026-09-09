@@ -1,0 +1,78 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-exec-sealing.test.ts test/p2.test.ts test/p45.test.ts test/p10c-worker.test.ts test/p10c-runtime.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > rejects PATH and junction aliases into a writable worktree and verifies existence 46ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses a planted absolute worker binary and records a violation before launch 52ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses an owned launch from another writable worktree in the ledger 47ms
+ × test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant 1616ms
+   → {"exitCode":1,"stdout":"CUE_APPCONTAINER_PID=56172;START_TIME=2026-09-07T03:07:28.4408874Z\r\nCUE_APPCONTAINER_EXIT=1\r\n","stderr":"Exception calling \"Start\" with \"2\" argument(s): \"Not enough quota is available to process this command\"\r\nAt line:1 char:32\r\n+ ... nce='Stop'; $p=[Diagnostics.Process]::Start('D:\\Temp\\User\\cue-p11-exe ...\r\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (:) [], ParentContainsErrorRecordException\r\n    + FullyQualifiedErrorId : Win32Exception\r\n \r\n","appContainerPid":56172,"enforcement":"appcontainer-capability-zero"}: expected undefined to be 'filesystem' // Object.is equality
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > keeps the controller on the host and executes the real tool in AppContainer 4093ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > terminates and reaps a worker when parent linkage fails after spawn 7178ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > bounds host controller stderr retained in memory 3346ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > fails independent goal verification after a successful but read-only no-op tool call 4114ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects a workspace mutation that does not touch the output path named by the goal 4249ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects an expected-path change when the agent reports that it could not complete the goal 4408ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > changes a model-completed result to cleanup failure when the credential home cannot be safely removed 3202ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > rejects an expired envelope before spawning any worker 11ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > runs the actual command in capability-zero AppContainer and records its real PID 929ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > removes host credential variables from the AppContainer worker environment 1158ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > lets the OS boundary deny an obfuscated write outside the approved worktree 2437ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > denies a junction escape even when its destination is hidden from preflight parsing 2879ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > proves capability-zero AppContainer network denial with a real socket attempt 2653ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > bounds captured stdout and stderr before returning them to the host 1095ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > terminates a spawned worker when post-spawn runtime ledger insertion fails 4514ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-1/S-3 keeps one child_process boundary and only owned public spawn APIs 11ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-3 positive control rejects a newly introduced direct spawn 25ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 asks the OS for the AppContainer worker parent PID 9534ms
+ ↓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 OS cwd query (SKIPPED on Windows: Win32_Process exposes no cwd)
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-3/P4-5 automatically starts the owned queued request after lease promotion 3884ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > migrates an empty database and inserts and reads every table 8ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > rejects every envelope update 3ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > prevents replay even when approval id is null 3ms
+ ✓ test/p2.test.ts > P2-2 IPC > uses a protected 256-bit token, rejects missing auth and bad schemas, and binds loopback 72ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > has six states and blocks budget only at a token threshold from the two allowed event shapes 1ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > contains no monetary conversion or display path in source 51ms
+ ✓ test/p2.test.ts > P2-4 process identity and heartbeat > stops refreshing after the identified process is killed so age grows 176ms
+ ✓ test/p2.test.ts > P2-5 named health vector > names the failed component 0ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only heartbeat is expired 2ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only connection fails 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > emits the exact fixture from a separate process and creates a marker when relay is blocked 70ms
+ ✓ test/p2.test.ts > P2-8 crash reconciliation > blocks an interrupted task, captures actual git status, and records no automatic resume 89ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > creates only copied auth and Cue config with all extension surfaces disabled 12ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > disables parent-side browser, app, plugin, update, and web-search capabilities explicitly 0ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > accepts only an absolute vendor binary path, never an npm shim 0ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > redirects every writable profile and temp variable into the isolated home 3ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > launches the absolute vendor binary with the isolated tool home 1481ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > closes the launcher stdin for non-interactive vendor execution 1504ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > removes the isolated tool home after the vendor worker exits 1559ms
+ ✓ test/p2.test.ts > P2-7 scope > documents design without creating a scheduled task 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant
+AssertionError: {"exitCode":1,"stdout":"CUE_APPCONTAINER_PID=56172;START_TIME=2026-09-07T03:07:28.4408874Z\r\nCUE_APPCONTAINER_EXIT=1\r\n","stderr":"Exception calling \"Start\" with \"2\" argument(s): \"Not enough quota is available to process this command\"\r\nAt line:1 char:32\r\n+ ... nce='Stop'; $p=[Diagnostics.Process]::Start('D:\\Temp\\User\\cue-p11-exe ...\r\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (:) [], ParentContainsErrorRecordException\r\n    + FullyQualifiedErrorId : Win32Exception\r\n \r\n","appContainerPid":56172,"enforcement":"appcontainer-capability-zero"}: expected undefined to be 'filesystem' // Object.is equality
+
+- Expected:
+"filesystem"
+
++ Received:
+undefined
+
+ ❯ test/p11-exec-sealing.test.ts:55:54
+     53|     const result = await launched.completion;
+     54|     expect(result.exitCode).not.toBe(0);
+     55|     expect(result.violation, JSON.stringify(result)).toBe('executable_…
+       |                                                      ^
+     56|     expect(result.stderr).toMatch(/not enough quota/iu);
+     57|   }, 30_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 42 passed | 1 skipped (44)
+   Start at  12:07:27
+   Duration  68.27s (transform 335ms, setup 0ms, import 819ms, tests 66.53s, environment 0ms)
+

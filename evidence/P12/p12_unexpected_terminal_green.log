@@ -1,0 +1,18 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-terminal-transaction.test.ts -t unexpected recovery exception --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > releases the settled runtime handle after an unexpected recovery exception commits 136ms
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines launch-configuration terminalization when lease release aborts
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a queued stop when its terminal transaction aborts
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a user stop when its lease-release transaction aborts
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'normal completion' quarantines the writer and terminalizes its queue when lease release aborts
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'controller crash' quarantines the writer and terminalizes its queue when lease release aborts
+ ↓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'worker hard-kill' quarantines the writer and terminalizes its queue when lease release aborts
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 6 skipped (7)
+   Start at  16:17:58
+   Duration  820ms (transform 160ms, setup 0ms, import 491ms, tests 137ms, environment 0ms)
+

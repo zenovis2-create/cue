@@ -1,0 +1,72 @@
+{
+  "schema": "cue.p12.review.v1",
+  "role": "security",
+  "reviewFunction": "defensive-security",
+  "valid": true,
+  "passed": true,
+  "sourceTreeSha256": "9a13bd45dcde050ef39e03afb2855aef8ebb54a9be9eb5930953cb8e4c7d12e7",
+  "reviewer": {
+    "kind": "independent-hermes-subagent",
+    "delegationId": "deleg_7a2c4768",
+    "task": 0,
+    "readOnly": true,
+    "apiCalls": 12,
+    "transcriptSha256": "48d8e251448499629e3f9cca684f0e0ede77a6ce753a3aa877bf212bee5dfd03"
+  },
+  "blockers": [],
+  "nonBlockingFindings": [
+    {
+      "severity": "informational",
+      "title": "Legacy network gate is detect-and-stop",
+      "evidence": "P3-16 remains detection-and-stop rather than a syscall-denial claim; the live tool-worker path separately uses capability-zero AppContainer confinement."
+    },
+    {
+      "severity": "informational",
+      "title": "Nested child processes are unsupported",
+      "evidence": "ActiveProcessLimit=1 is an explicit v0.1 limitation."
+    },
+    {
+      "severity": "informational",
+      "title": "Stop evidence has bounded scope",
+      "evidence": "The stop canary covers the first live capability-zero worker during goal preparation."
+    },
+    {
+      "severity": "informational",
+      "title": "True process CWD observation remains unverified",
+      "evidence": "P4-2 is retained as a limitation rather than promoted to PASS."
+    }
+  ],
+  "checks": [
+    {
+      "name": "staged source and canonical evidence identity",
+      "passed": true,
+      "evidence": "Independent reconstruction matched all 170 staged non-evidence blobs and source SHA-256; all 247 canonical receipt sizes and hashes matched with no nested runtime state."
+    },
+    {
+      "name": "AppContainer profile and ACE lifecycle",
+      "passed": true,
+      "evidence": "Exact Cue.Worker.<32 lowercase hex> ownership, pending-before-launch journaling, normal/rollback/stop/restart cleanup, live-owner refusal, derived-SID ACE removal, and exact-profile deletion were verified."
+    },
+    {
+      "name": "parent-death containment and identity",
+      "passed": true,
+      "evidence": "Canonical stress passed 10/10 sequential and 4/4 parallel samples using PID, PPID, creation time, and original-instance death checks."
+    },
+    {
+      "name": "terminal sealing, executable pin, and writer lease",
+      "passed": true,
+      "evidence": "Typed terminal violations seal RPC execution; host executable realpath and SHA-256 are verified before launch; terminalization and lease release are transactional and quarantine on failure."
+    },
+    {
+      "name": "credential, model, Electron, and hygiene boundaries",
+      "passed": true,
+      "evidence": "History/staged/fresh-clone secret checks passed; only cue_workspace is model-facing; Electron isolation settings passed; final owned-process and Cue profile counts were zero without post-hoc deletion."
+    },
+    {
+      "name": "live and regression evidence",
+      "passed": true,
+      "evidence": "47 test files and 326 tests passed with zero failures; two distinct vendor-Codex goals completed with exact different hashes, bounded provenance, and zero violations."
+    }
+  ],
+  "summary": "GO: bounded independent read-only security review found no unresolved blocker or high-severity finding."
+}

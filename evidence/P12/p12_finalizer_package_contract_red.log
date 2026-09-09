@@ -1,0 +1,28 @@
+npm notice run cue-daemon@0.1.0 npx
+npm notice run vitest run test/p12-finalizer.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > wires the root npm finalizer command to the required argument contract 10ms
+   → expected 'node scripts/p12-finalize.mjs --sourc…' to be 'node scripts/p12-finalize.mjs --sourc…' // Object.is equality
+ ✓ test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > binds the staged source and exact receipt hashes, then rejects tampering 1907ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > wires the root npm finalizer command to the required argument contract
+AssertionError: expected 'node scripts/p12-finalize.mjs --sourc…' to be 'node scripts/p12-finalize.mjs --sourc…' // Object.is equality
+
+Expected: "node scripts/p12-finalize.mjs --source-manifest evidence/P12/p12_source_manifest.json --gate-summary evidence/P12/p12_gate_summary.json --security-review evidence/P12/p12_security_review.json --release-review evidence/P12/p12_release_review.json --output evidence/P12/v01_verdict.json"
+Received: "node scripts/p12-finalize.mjs --source evidence/P12/p12_source_manifest.json --gates evidence/P12/p12_gate_summary.json --security evidence/P12/p12_security_review.json --release evidence/P12/p12_release_review.json --output evidence/P12/v01_verdict.json"
+
+ ❯ test/p12-finalizer.test.ts:17:60
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  07:52:49
+   Duration  2.27s (transform 32ms, setup 0ms, import 78ms, tests 1.92s, environment 0ms)
+

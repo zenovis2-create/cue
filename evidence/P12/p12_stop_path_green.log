@@ -1,0 +1,12 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-stop-harness.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > rejects a caller-owned non-empty root without deleting it 87ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  15:58:03
+   Duration  282ms (transform 15ms, setup 0ms, import 32ms, tests 88ms, environment 0ms)
+

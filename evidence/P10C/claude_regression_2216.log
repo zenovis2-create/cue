@@ -1,0 +1,43 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ❯ test/p3b.test.ts (18 tests | 1 failed) 8227ms
+     × blocks a runtime-computed outside path in a non-Node worker 5352ms
+ ❯ test/p3c.test.ts (5 tests | 1 failed) 10742ms
+     × blocks a runtime-computed outside path in a non-Node worker 5562ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p3b.test.ts > P3-9 canonical filesystem enforcement > blocks a runtime-computed outside path in a non-Node worker
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/p3b.test.ts:58:3
+     56|     expect(s.db.prepare('SELECT state FROM task WHERE id=?').get('t3b'…
+     57|   });
+     58|   it('blocks a runtime-computed outside path in a non-Node worker',()=…
+       |   ^
+     59|     const s=setup(), outside=temp('p3b-runtime-out-'), target=join(out…
+     60|     const encoded=Buffer.from(target).toString('base64');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a runtime-computed outside path in a non-Node worker
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ test/p3c.test.ts:26:3
+     24|
+     25| describe('Phase 3C AppContainer enforcement', () => {
+     26|   it('blocks a runtime-computed outside path in a non-Node worker', ()…
+       |   ^
+     27|     const s = setup(), outside = temp('p3c-runtime-out-'), target = jo…
+     28|     const encoded = Buffer.from(target).toString('base64');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 21 passed (23)
+      Tests  2 failed | 236 passed | 5 skipped (243)
+   Start at  22:13:44
+   Duration  56.75s (transform 5.43s, setup 0ms, import 17.91s, tests 227.97s, environment 4ms)

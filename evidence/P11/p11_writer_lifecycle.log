@@ -1,0 +1,41 @@
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p11-writer-lifecycle.test.ts test/p10c-core.test.ts test/p10c-containment.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > normal completion releases the real runtime lease before another writer runs 4557ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > controller crash releases the real runtime lease before another writer runs 1822ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > worker hard-kill releases the real runtime lease before another writer runs 4610ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime 163ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume 157ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash 137ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree 222ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > parent death kills the real AppContainer worker and restart releases the lease without resuming 4649ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker 5224ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates 11592ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker 13655ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a controller crash without automatically resuming it 1836ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > reconciles a previously running write as blocked/crash without auto-resume on restart 170ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fences a verified live session before reconciling an interrupted run on startup 8490ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > refuses to kill a reused PID whose process start time does not match the ledger identity 5420ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks completion immediately when the controller credential-home cleanup fails 739ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks when cleanup fails after controller launch setup throws 555ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when independent goal verification finds no relevant workspace change 635ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when an explicitly requested exact file content is wrong 4168ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fails closed before launch when the host Codex binary hash does not match the pin 558ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > queues a second write run for the same worktree and starts it after the first releases 892ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > cancels a queued write without launching it 882ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks queued writes when the app closes so restart cannot strand them 807ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 3637ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks an expired approval without spawning a controller or recording execution 218ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > binds the AppContainer job lifetime to the daemon process handle 17ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the host controller descendant when the owned controller root is hard-killed 7189ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed 11757ms
+
+ Test Files  3 passed (3)
+      Tests  28 passed (28)
+   Start at  12:05:07
+   Duration  96.33s (transform 414ms, setup 0ms, import 899ms, tests 94.77s, environment 0ms)
+

@@ -1,0 +1,10 @@
+{
+  "command": "npm.cmd start",
+  "pid": 50820,
+  "exitCode": 1,
+  "configWritten": false,
+  "fallbackFolderCreated": false,
+  "userData": "D:\\Temp\\User\\cue-p12-electron-cancel-1788833773006\\state",
+  "workspace": "D:\\Temp\\User\\cue-p12-electron-cancel-1788833773006\\workspace",
+  "passed": true
+}

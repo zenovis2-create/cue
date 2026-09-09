@@ -1,0 +1,35 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-terminal-transaction.test.ts --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'normal completion' quarantines the writer and terminalizes its queue when lease release aborts 2186ms
+   → terminal transaction quarantine timeout
+ × test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'controller crash' quarantines the writer and terminalizes its queue when lease release aborts 2162ms
+   → terminal transaction quarantine timeout
+ × test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'worker hard-kill' quarantines the writer and terminalizes its queue when lease release aborts 2214ms
+   → terminal transaction quarantine timeout
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'normal completion' quarantines the writer and terminalizes its queue when lease release aborts
+ FAIL  test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'controller crash' quarantines the writer and terminalizes its queue when lease release aborts
+ FAIL  test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'worker hard-kill' quarantines the writer and terminalizes its queue when lease release aborts
+Error: terminal transaction quarantine timeout
+ ❯ until test/p12-terminal-transaction.test.ts:13:39
+     11|   const deadline = Date.now() + timeoutMs;
+     12|   while (!check()) {
+     13|     if (Date.now() >= deadline) throw new Error('terminal transaction …
+       |                                       ^
+     14|     await delay(20);
+     15|   }
+ ❯ test/p12-terminal-transaction.test.ts:79:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  14:51:58
+   Duration  7.15s (transform 128ms, setup 0ms, import 413ms, tests 6.56s, environment 0ms)
+

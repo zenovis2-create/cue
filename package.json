@@ -1,0 +1,33 @@
+{
+  "name": "cue-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "app/main.mjs",
+  "scripts": {
+    "prestart": "npm --prefix daemon run build",
+    "start": "electron .",
+    "test": "npm --prefix daemon test",
+    "live:p9": "npm run live:p10c",
+    "live:p10c": "node scripts/prepare-electron-live.mjs && npm --prefix daemon run build && cross-env CUE_LIVE_RUN=1 CUE_WORKTREE_ROOT=evidence/P10C/electron-worktree CUE_USER_DATA=evidence/P10C/electron-state CUE_MODEL=gpt-5.5 electron .",
+    "evidence:p10c": "npm --prefix daemon run build && node daemon/scripts/p10c-live.mjs",
+    "evidence:p10c:manifest": "npm --prefix daemon run build && node daemon/scripts/p10c-manifest-proof.mjs --output evidence/P10C/p10c_manifest_proof.json",
+    "evidence:p10c:stop": "npm --prefix daemon run build && cross-env NODE_ENV=test node daemon/scripts/p10c-stop-canary.mjs",
+    "evidence:p10c:source": "node scripts/p10c-source-manifest.mjs",
+    "evidence:p12": "npm --prefix daemon run build && cross-env CUE_EVIDENCE_PHASE=P12 node daemon/scripts/p10c-live.mjs",
+    "evidence:p12:manifest": "npm --prefix daemon run build && cross-env CUE_EVIDENCE_PHASE=P12 node daemon/scripts/p10c-manifest-proof.mjs --output evidence/P12/p12_manifest.json",
+    "evidence:p12:electron": "cross-env CUE_EVIDENCE_PHASE=P12 node scripts/p11-electron-proof.mjs",
+    "evidence:p12:cancel": "cross-env CUE_EVIDENCE_PHASE=P12 node scripts/p11-electron-proof.mjs --cancel",
+    "evidence:p12:stop": "npm --prefix daemon run build && cross-env NODE_ENV=test CUE_EVIDENCE_PHASE=P12 node daemon/scripts/p10c-stop-canary.mjs",
+    "evidence:p12:mutation": "npm --prefix daemon run build && cross-env NODE_ENV=test CUE_EVIDENCE_PHASE=P12 node daemon/scripts/p12-mutation-proof.mjs",
+    "evidence:p12:source": "node scripts/p10c-source-manifest.mjs evidence/P12/p12_source_manifest.json --index",
+    "evidence:p12:finalize": "node scripts/p12-finalize.mjs --source-manifest evidence/P12/p12_source_manifest.json --gate-summary evidence/P12/p12_gate_summary.json --security-review evidence/P12/p12_security_review.json --release-review evidence/P12/p12_release_review.json --output evidence/P12/v01_verdict.json"
+  },
+  "devDependencies": {
+    "cross-env": "^10.0.0",
+    "electron": "44.2.0"
+  },
+  "allowScripts": {
+    "electron@44.2.0": true
+  }
+}

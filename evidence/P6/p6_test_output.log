@@ -1,0 +1,131 @@
+npm notice run cue-daemon@1.0.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@1.0.0 test
+npm notice run vitest run --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-1 fails closed before an outbound attempt when @cue identity is absent 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 exposes exactly conversation and daemon API, denying worker and edit tools 7ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 reaches running only through the injected daemon API and frontdoor has no launch path 6ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 daemon API fails closed when the approved envelope does not match the run ledger 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-3 daemon sends after the frontdoor session is closed and needs no session handle 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-4 pins channel and thread at approval and rejects later mutation 3ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-5 serializes concurrent channels without mixing their state 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-6 renders exactly Korean three lines plus one envelope line without configuration markup 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-7 asks at most three envelope-changing questions and narrows other uncertainty 0ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-8 stays silent while healthy; time alone cannot emit an outbound message 5ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-9 reports dead Orca before refusing task acceptance 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-10 has no canvas writer or annotation path on the conversation surface 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-11 defaults to level 3 and records the selected level in the P5 ledger table 6ms
+ ↓ test/p6.test.ts > Phase 6 conversation surface > P6 external Buzz live delivery and @cue registration — SKIPPED: would mutate an external system
+ ✓ test/p3a.test.ts > P3-1 canonical envelope > is stable across key and array order and changes for one field 5ms
+ ✓ test/p3a.test.ts > P3-2 adapters are transport only > carries raw values and imports no decision or policy module 1ms
+ ✓ test/p3a.test.ts > P3-3 fail closed mapping > declines random unknown methods and has no default allow branch 11ms
+ ✓ test/p3a.test.ts > P3-4 decision response whitelist > enumerates only the three response decisions and source has no prohibited response or bypass spelling 8ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > accepts only a nonempty concrete contained path and fixes turn scope and strict review 5ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines empty entries 3ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines glob entries 5ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines outside entries 6ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special root entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special arbitrary entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > models nonempty entries at the type boundary and source constructs no empty accept entries 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null cwd 3ms
+ ✓ test/p3a.test.ts > P3-6 preflight > wrong cwd 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null command 6ms
+ ✓ test/p3a.test.ts > P3-6 preflight > extra outside 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > outside grant 6ms
+ ✓ test/p3a.test.ts > P3-6 preflight > auth gate 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > tool 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > elicitation 7ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > migrates an empty database and inserts and reads every table 8ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > rejects every envelope update 3ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > prevents replay even when approval id is null 2ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5 ledger upgrades an existing pre-P5 database idempotently 69ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-1 grades deterministic signal sources without treating worker-read as truth 0ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-2 invokes diagnosis only after two candidate signals 0ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-2 production dispatcher integrates observation without adding a launch path 4ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-3 requires empty page, threshold exceeded, and live worker together 0ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-4 uses task-type threshold data, with no global idle constant path 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-5 records four-rung lineage and escalates at the immutable cap 3ms
+ ✓ test/p3a.test.ts > P3-6 preflight > judges writeStdin independently of a parent command decision 6ms
+ ✓ test/p3a.test.ts > P3-7 replay prevention > declines a duplicate null approval id and appends a replay alert 8ms
+ ✓ test/p3a.test.ts > P3-8 lifetime > declines after expiry and after run end without inheritance 3ms
+ ✓ test/p3a.test.ts > P3-10 byte-owned payload classification > classifies actual bytes and cancels opaque, encrypted, and invalid binary payloads 8ms
+ ✓ test/p3a.test.ts > P3-13 cancel is danger-only > returns cancel only for the three enumerated reasons across all mapped and rejected paths 12ms
+ ✓ test/p3a.test.ts > P3-14 execution profile > generates on-request argv without prohibited flags and source passes grep 1ms
+ ✓ test/p3a.test.ts > P3-18 advisory tools > marks Codex non-enforcing and core enforcement has no tool-kind bypass 1ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-1/S-3 keeps one child_process boundary and only owned public spawn APIs 12ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-3 positive control rejects a newly introduced direct spawn 27ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > tolerates literal JSON control characters inside strings 2ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > round-trips the exact create, ps, task-list, stop, and abandon argv 1ms
+ ↓ test/p4.test.ts > P4-1 Orca adapter > round-trips the installed Orca worktree ps without mutation
+ ✓ test/p2.test.ts > P2-2 IPC > uses a protected 256-bit token, rejects missing auth and bad schemas, and binds loopback 100ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > has six states and blocks budget only at a token threshold from the two allowed event shapes 1ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > contains no monetary conversion or display path in source 55ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-6 fences and hashes state before a real owned restart while preserving actual worker work 91ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-7 validates handoff schema and has no automatic handoff executor 6ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-8 always sends an open decision gate to a human, including autonomy 3 5ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 1 has distinct lineage 2ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 2 has distinct lineage 2ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 3 has distinct lineage 2ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-10 autonomy 3 cannot widen envelope, retry cap, or task contract 10ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-11 rejects in-run increases and applies plus records decreases immediately 2ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-12 stores and retrieves the autonomy level for each run id 2ms
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > records the composite session identity and launches with the worktree cwd 130ms
+ ↓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > launches the real vendor Codex through the AppContainer supervisor
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > has one production spawn boundary and no direct spawn call elsewhere 34ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > queues a second writer, then admits it after release 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > does not lease reads and reaps an expired holder 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > reclaims a writer through the P2 heartbeat age primitive 3ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > records still_unsafe and does not succeed when close fails 3ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > succeeds only after a successful close 2ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > lists an unowned live process after ledger reopen and leaves it alive 116ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > contains no automatic orphan kill path 1ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > dispatches a match and asks for an unmatched task without spawning 4ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > asks when routing.yaml is missing or malformed 3ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > wires ask_me into dispatch and proves no tool is spawned 2ms
+ ✓ test/p2.test.ts > P2-4 process identity and heartbeat > stops refreshing after the identified process is killed so age grows 184ms
+ ✓ test/p2.test.ts > P2-5 named health vector > names the failed component 0ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only heartbeat is expired 2ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only connection fails 2ms
+ ✓ test/p2.test.ts > P2-6 sentinel > emits the exact fixture from a separate process and creates a marker when relay is blocked 79ms
+ ✓ test/p2.test.ts > P2-8 crash reconciliation > blocks an interrupted task, captures actual git status, and records no automatic resume 103ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > creates only copied auth and Cue config with all extension surfaces disabled 7ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > accepts only an absolute vendor binary path, never an npm shim 1ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > contains paths by canonical realpath and has no string-prefix path comparison 12ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > blocks a write reached through a symlink or junction 9ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > reproduces P1-2: an accepted absolute outside write is stopped before the real process runs 8ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > does not complete a task after an outside-envelope change is detected 5ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > launches the absolute vendor binary with the isolated tool home 2106ms
+ ✓ test/p2.test.ts > P2-7 scope > documents design without creating a scheduled task 1ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a runtime-computed outside path in a non-Node worker 2482ms
+ ✓ test/p3b.test.ts > P3-9 canonical filesystem enforcement > blocks a runtime-computed outside path in a non-Node worker 2422ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > reproduces P1-2: example.com fails with no egress in the envelope 836ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > allows only the named host and blocks another host using a real local socket 229ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > prevents completion when gate failure is detected 7ms
+ ✓ test/p3b.test.ts > P3-16 process network gate > blocks a non-Node worker from a real local socket when egress is empty 372ms
+ ✓ test/p3b.test.ts > P3-17 approval and execution accounting > records them separately and alerts when one permissions approval precedes three executions 10ms
+ ✓ test/p3b.test.ts > P3-17 approval and execution accounting > uses a composite null-safe execution replay key, not itemId alone 9ms
+ ✓ test/p3b.test.ts > P3-11 decline without killing task > keeps the task running after an outside-envelope request 9ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > blocks after the same digest twice 1ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > blocks when an approval stalls 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > offers exactly three choices 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > does not focus expand by default 0ms
+ ✓ test/p3b.test.ts > P3-12 deadlock choice model > continue suppresses the same digest 0ms
+ ✓ test/p3b.test.ts > P3-15 ledger-derived completion counter > renders approval totals from ledger queries 11ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a non-Node worker from a real local socket when egress is empty 369ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > allows a non-Node worker to write inside and removes its ephemeral ACE 1268ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > records execution from the real worker lifecycle 981ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > renders the ledger label through the completion-card path 7ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 asks the OS for the AppContainer worker parent PID 10183ms
+ ↓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 OS cwd query (SKIPPED on Windows: Win32_Process exposes no cwd)
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-3/P4-5 automatically starts the owned queued request after lease promotion 4778ms
+
+ Test Files  8 passed (8)
+      Tests  112 passed | 4 skipped (116)
+   Start at  10:05:17
+   Duration  15.38s (transform 665ms, setup 0ms, import 1.16s, tests 27.39s, environment 1ms)
+

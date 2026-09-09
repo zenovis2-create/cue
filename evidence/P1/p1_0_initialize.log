@@ -1,0 +1,27 @@
+IN  {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"clientInfo": {"name": "cue-probe", "title": "Cue P1 probe", "version": "0.0.1"}}}
+ERR 2026-09-02T09:02:23.677286Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `explorer` declared in the same config layer
+ERR 2026-09-02T09:02:23.677347Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `lazycodex-clone-fidelity-reviewer` declared in the same config layer
+ERR 2026-09-02T09:02:23.677352Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `lazycodex-code-reviewer` declared in the same config layer
+ERR 2026-09-02T09:02:23.677359Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `lazycodex-gate-reviewer` declared in the same config layer
+ERR 2026-09-02T09:02:23.677365Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `lazycodex-qa-executor` declared in the same config layer
+ERR 2026-09-02T09:02:23.677368Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `lazycodex-worker-high` declared in the same config layer
+ERR 2026-09-02T09:02:23.677372Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `lazycodex-worker-low` declared in the same config layer
+ERR 2026-09-02T09:02:23.677377Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `lazycodex-worker-medium` declared in the same config layer
+ERR 2026-09-02T09:02:23.677384Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `librarian` declared in the same config layer
+ERR 2026-09-02T09:02:23.677388Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `metis` declared in the same config layer
+ERR 2026-09-02T09:02:23.677394Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `momus` declared in the same config layer
+ERR 2026-09-02T09:02:23.677400Z ERROR codex_app_server: Ignoring malformed agent role definition: duplicate agent role name `plan` declared in the same config layer
+OUT {"id":1,"result":{"userAgent":"cue-probe/0.151.0 (Windows 10.0.26200; x86_64) Orca/1.4.191 (cue-probe; 0.0.1)","codexHome":"C:\\Users\\User\\AppData\\Roaming\\orca\\codex-accounts\\94124ce4-bf33-491f-8167-704b05a61092\\home","platformFamily":"windows","platformOs":"windows"}}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `explorer` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `lazycodex-clone-fidelity-reviewer` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `lazycodex-code-reviewer` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `lazycodex-gate-reviewer` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `lazycodex-qa-executor` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `lazycodex-worker-high` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `lazycodex-worker-low` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `lazycodex-worker-medium` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `librarian` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `metis` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `momus` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"configWarning","params":{"summary":"Ignoring malformed agent role definition: duplicate agent role name `plan` declared in the same config layer","details":null},"emittedAtMs":1788339743718}
+OUT {"method":"remoteControl/status/changed","params":{"status":"disabled","serverName":"zenovis","installationId":"55ea3eb9-3fc5-4c9e-9191-f08a889437dc","environmentId":null},"emittedAtMs":1788339743718}

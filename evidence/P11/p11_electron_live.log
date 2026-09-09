@@ -1,0 +1,12 @@
+npm notice run cue-desktop@1.0.0 prestart
+npm notice run npm --prefix daemon run build
+npm notice run cue-daemon@1.0.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-desktop@1.0.0 start
+npm notice run electron . --inspect=127.0.0.1:9437
+
+Debugger listening on ws://127.0.0.1:9437/e149eca8-8468-4a41-9dbb-260922ee9b32
+For help, see: https://nodejs.org/learn/getting-started/debugging
+Debugger attached.
+Debugger ending on ws://127.0.0.1:9437/e149eca8-8468-4a41-9dbb-260922ee9b32
+For help, see: https://nodejs.org/learn/getting-started/debugging

@@ -1,0 +1,38 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-structured-write.test.ts -t encoded Windows command line --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > writes literal UTF-8 bytes without shell-quoting changes inside AppContainer
+ ↓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects text that cannot round-trip as exact UTF-8 bytes
+ × test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects a structured write whose encoded Windows command line exceeds the safe budget 6ms
+   → expected [Function] to throw an error
+ ↓ test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects traversal before any worker can launch
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-structured-write.test.ts > P12 structured exact-text worker operation > rejects a structured write whose encoded Windows command line exceeds the safe budget
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ test/p12-structured-write.test.ts:73:24
+     71|       tool: 'cue_workspace',
+     72|       arguments: { operation: 'write_text', path: longRelativePath, co…
+     73|     }, 'C:/approved')).toThrow('write_text request exceeds the safe Wi…
+       |                        ^
+     74|   });
+     75|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 skipped (4)
+   Start at  15:52:33
+   Duration  430ms (transform 92ms, setup 0ms, import 236ms, tests 7ms, environment 0ms)
+

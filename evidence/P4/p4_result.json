@@ -1,0 +1,44 @@
+[
+  {
+    "id": "P4-1",
+    "verdict": "PARTIAL",
+    "evidence": "p4_test_output.log: installed Orca worktree ps round-trip PASS; tolerant parser and exact argv tests PASS",
+    "note": "worktree create, worker-stop, worker-abandon were not invoked against live Orca because no isolated orchestration dispatch fixture was created; they are unit-tested only"
+  },
+  {
+    "id": "P4-2",
+    "verdict": "FAIL",
+    "evidence": "p4_test_output.log: real vendor codex.exe launched successfully through appcontainer-launch.ps1 and ledger cwd matched the temporary worktree",
+    "note": "the test observes the AppContainer child PID announcement but does not independently query the OS process tree; legacy spawnVendorCodex remains a non-AppContainer path"
+  },
+  {
+    "id": "P4-3",
+    "verdict": "PARTIAL",
+    "evidence": "p4_test_output.log: writer running/queued/release and heartbeatExpired-based reclaim tests PASS",
+    "note": "lease transition is wired into Dispatcher, but automatic spawning of the promoted queued request is not yet covered end-to-end"
+  },
+  {
+    "id": "P4-4",
+    "verdict": "FAIL",
+    "evidence": "p4_test_output.log: composite session row and sole spawn boundary architecture tests PASS; AppContainer reports actual child pid/start_time into the ledger",
+    "note": "the legacy Phase 2 spawnVendorCodex API remains callable without ledger ownership, although Phase 4 dispatch uses the owned AppContainer path"
+  },
+  {
+    "id": "P4-5",
+    "verdict": "PARTIAL",
+    "evidence": "p4_test_output.log: injected close failure produces failed + still_unsafe; successful close produces completed/succeeded result",
+    "note": "Dispatcher.finish uses the tested closeTask helper, but the dispatcher spawner is not yet constrained to the owned/enforced session path"
+  },
+  {
+    "id": "P4-6",
+    "verdict": "PARTIAL",
+    "evidence": "p4_test_output.log: reopened-ledger orphan is listed, kill(0) proves it remains alive, and orphan module has no kill path",
+    "note": "Dispatcher.restart delegates only to listOrphanSessions, but production process discovery is still supplied externally and the no-kill grep is module-local"
+  },
+  {
+    "id": "P4-7",
+    "verdict": "PASS",
+    "evidence": "p4_test_output.log: match dispatch, unmatched/missing/malformed ask_me, and zero-spawn Dispatcher test PASS",
+    "note": "routing.yaml is read-only and every parser/load failure closes to ask_me"
+  }
+]

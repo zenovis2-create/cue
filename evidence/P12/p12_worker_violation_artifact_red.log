@@ -1,0 +1,40 @@
+npm notice run cue-daemon@1.0.0 npx
+npm notice run vitest run test/p12-worker-preflight.test.ts -t outside-worktree absolute --reporter=verbose
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies an outside-worktree absolute path as a terminal filesystem violation 17ms
+   → expected [] to deep equally contain { kind: 'enforcement_violation', …(1) }
+ ↓ test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies a network preflight denial as a terminal network violation
+ ↓ test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies a worktree-local executable denial as terminal executable sealing
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p12-worker-preflight.test.ts > P12 typed worker boundary violations > classifies an outside-worktree absolute path as a terminal filesystem violation
+AssertionError: expected [] to deep equally contain { kind: 'enforcement_violation', …(1) }
+
+- Expected:
+{
+  "content": "filesystem",
+  "kind": "enforcement_violation",
+}
+
++ Received:
+[]
+
+ ❯ test/p12-worker-preflight.test.ts:50:114
+     48|         violation: 'filesystem',
+     49|       });
+     50|       expect(db.prepare("SELECT kind,content FROM artifact WHERE run_i…
+       |                                                                                                                  ^
+     51|         kind: 'enforcement_violation',
+     52|         content: 'filesystem',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  14:06:00
+   Duration  374ms (transform 64ms, setup 0ms, import 180ms, tests 18ms, environment 0ms)
+
