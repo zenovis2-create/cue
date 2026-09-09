@@ -1,0 +1,6 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+test/p13-measurement-subject.test.ts(11,8): error TS2307: Cannot find module '../src/measurement-subject.js' or its corresponding type declarations.
+exit=2

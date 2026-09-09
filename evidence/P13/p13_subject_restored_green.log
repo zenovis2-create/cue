@@ -1,0 +1,57 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-measurement-subject p13-lifecycle-barrier p3a
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S1 produces a digest that is independent of property insertion order 9ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S2 changes the digest when ANY single component changes 44ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S3 refuses to build a subject when a component is missing or blank 12ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S4 refuses to build a subject from a file that does not exist 6ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S5 invalidates a bound probe result once any fingerprint moves 9ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S6 invalidates a bound result when only the probe suite changes 6ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S7 hashes the resolved target, not the link path 6ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L1 close does not resolve until every owned runtime has settled its teardown 242ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L2 stop retains the runtime handle until its teardown settles 168ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L3 the runtime stop path signals termination without deleting the credential home 1ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L4 the Electron quit path blocks the first quit and awaits the close barrier 155ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L6 a failed stop makes close reject and preserves the handle, db and ownership 94ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L7 a failing close never reaches app.quit and surfaces the failure 123ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L5 main.mjs delegates quit to the guarded barrier instead of a fire-and-forget close 1ms
+ ✓ test/p3a.test.ts > P3-1 canonical envelope > is stable across key and array order and changes for one field 6ms
+ ✓ test/p3a.test.ts > P3-2 adapters are transport only > carries raw values and imports no decision or policy module 1ms
+ ✓ test/p3a.test.ts > P3-3 fail closed mapping > declines random unknown methods and has no default allow branch 8ms
+ ✓ test/p3a.test.ts > P3-4 decision response whitelist > enumerates only the three response decisions and source has no prohibited response or bypass spelling 6ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > accepts only a nonempty concrete contained path and fixes turn scope and strict review 5ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines empty entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines glob entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines outside entries 5ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special root entries 5ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special arbitrary entries 5ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > models nonempty entries at the type boundary and source constructs no empty accept entries 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null cwd 8ms
+ ✓ test/p3a.test.ts > P3-6 preflight > wrong cwd 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null command 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > extra outside 7ms
+ ✓ test/p3a.test.ts > P3-6 preflight > outside grant 8ms
+ ✓ test/p3a.test.ts > P3-6 preflight > auth gate 6ms
+ ✓ test/p3a.test.ts > P3-6 preflight > tool 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > elicitation 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > judges writeStdin independently of a parent command decision 5ms
+ ✓ test/p3a.test.ts > P3-7 replay prevention > declines a duplicate null approval id and appends a replay alert 7ms
+ ✓ test/p3a.test.ts > P3-8 lifetime > declines after expiry and after run end without inheritance 5ms
+ ✓ test/p3a.test.ts > P3-10 byte-owned payload classification > classifies actual bytes and cancels opaque, encrypted, and invalid binary payloads 10ms
+ ✓ test/p3a.test.ts > P3-13 cancel is danger-only > returns cancel only for the three enumerated reasons across all mapped and rejected paths 15ms
+ ✓ test/p3a.test.ts > P3-14 execution profile > generates on-request argv without prohibited flags and source passes grep 1ms
+ ✓ test/p3a.test.ts > P3-18 no tool may declare its own capability > registry entries carry identity only and declare no eligibility field 1ms
+ ✓ test/p3a.test.ts > P3-18b approval core is blind to tool identity and capability > takes no tool, adapter or eligibility input and always runs mandatoryChecks 0ms
+
+ Test Files  3 passed (3)
+      Tests  41 passed (41)
+   Start at  13:38:40
+   Duration  2.66s (transform 288ms, setup 0ms, import 936ms, tests 1.03s, environment 1ms)
+
+exit=0

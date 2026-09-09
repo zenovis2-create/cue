@@ -1,0 +1,23 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-measurement-subject
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S1 produces a digest that is independent of property insertion order 18ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S2 changes the digest when ANY single component changes 102ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S3 refuses to build a subject when a component is missing or blank 10ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S4 refuses to build a subject from a file that does not exist 4ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S5 invalidates a bound probe result once any fingerprint moves 10ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S6 invalidates a bound result when only the probe suite changes 17ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S7 hashes the resolved target, not the link path 4ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  13:38:12
+   Duration  496ms (transform 40ms, setup 0ms, import 99ms, tests 166ms, environment 0ms)
+
+exit=0

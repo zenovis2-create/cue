@@ -1,0 +1,13 @@
+CUE_VENDOR_CODEX=C:/Users/User/cue-toolchain/node_modules/@openai/codex-win32-x64/vendor/x86_64-pc-windows-msvc/bin/codex.exe
+cf68265897197ac5f3bff6a10c168eec159842b353129726da5e3ed6b91ef0f4 *C:/Users/User/cue-toolchain/node_modules/@openai/codex-win32-x64/vendor/x86_64-pc-windows-msvc/bin/codex.exe
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker 8237ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates 18298ms

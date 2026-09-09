@@ -1,0 +1,78 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-measurement-subject
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S1 produces a digest that is independent of property insertion order 9ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S2 changes the digest when ANY single component changes 30ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S3 refuses to build a subject when a component is missing or blank 11ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S4 refuses to build a subject from a file that does not exist 5ms
+ × test/p13-measurement-subject.test.ts > P13 measurement subject > S5 invalidates a bound probe result once any fingerprint moves 16ms
+   → expected { P1: true, P2: true, P3: true, …(2) } to be null
+ × test/p13-measurement-subject.test.ts > P13 measurement subject > S6 invalidates a bound result when only the probe suite changes 10ms
+   → expected { P1: true, P2: true, P3: true, …(2) } to be null
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S7 hashes the resolved target, not the link path 6ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p13-measurement-subject.test.ts > P13 measurement subject > S5 invalidates a bound probe result once any fingerprint moves
+AssertionError: expected { P1: true, P2: true, P3: true, …(2) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "P1": true,
+  "P2": true,
+  "P3": true,
+  "P4": true,
+  "P5": true,
+}
+
+ ❯ test/p13-measurement-subject.test.ts:114:41
+    112|     expect(subjectDigest(now)).not.toBe(subjectDigest(subject));
+    113|     // Rule 1: unmeasured, therefore null - never the stale PASS.
+    114|     expect(readProbeResult(bound, now)).toBeNull();
+       |                                         ^
+    115|   });
+    116|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/p13-measurement-subject.test.ts > P13 measurement subject > S6 invalidates a bound result when only the probe suite changes
+AssertionError: expected { P1: true, P2: true, P3: true, …(2) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "P1": true,
+  "P2": true,
+  "P3": true,
+  "P4": true,
+  "P5": true,
+}
+
+ ❯ test/p13-measurement-subject.test.ts:123:46
+    121|     writeFileSync(files.probe, 'export const probe = 2; // stricter');
+    122|     const stricter = buildMeasurementSubject(baseInput());
+    123|     expect(readProbeResult(bound, stricter)).toBeNull();
+       |                                              ^
+    124|   });
+    125|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 5 passed (7)
+   Start at  13:38:33
+   Duration  486ms (transform 66ms, setup 0ms, import 133ms, tests 89ms, environment 0ms)
+
+exit=1

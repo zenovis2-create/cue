@@ -1,0 +1,20 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-termination-scope
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-termination-scope.test.ts > P13 termination scope > T1 never places this process or an ancestor inside a foreign tree closure 2199ms
+ ✓ test/p13-termination-scope.test.ts > P13 termination scope > T2 requires a child to be younger than the parent it is attributed to 2214ms
+ ✓ test/p13-termination-scope.test.ts > P13 termination scope > T3 refuses to terminate a tree whose closure reaches this process 2221ms
+ ✓ test/p13-termination-scope.test.ts > P13 termination scope > T4 rejects an invalid pid instead of guessing 1ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  14:38:33
+   Duration  6.96s (transform 40ms, setup 0ms, import 125ms, tests 6.64s, environment 0ms)
+
+exit=0
