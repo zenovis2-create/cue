@@ -13,7 +13,14 @@ function temp() { const root = mkdtempSync(join(tmpdir(), 'cue-p11-corrective-')
 afterEach(() => {
   vi.restoreAllMocks();
   for (const fn of restore.splice(0)) fn();
-  for (const daemon of daemons.splice(0)) if (daemon.db.open) daemon.close();
+  for (const daemon of daemons.splice(0)) {
+    if (!daemon.db.open) continue;
+    // These daemons are deliberately quarantined, so close() rejects instead of
+    // reporting a clean teardown. Release the handle explicitly here; never
+    // relax close() into succeeding just to make afterEach simpler.
+    void Promise.resolve(daemon.close()).catch(() => {});
+    if (daemon.db.open) daemon.db.close();
+  }
   for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true, maxRetries: 20, retryDelay: 50 });
 });
 function seed() {

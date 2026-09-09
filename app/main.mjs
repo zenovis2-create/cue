@@ -6,6 +6,7 @@ import { createCueCore } from './core.mjs';
 import { initializeFirstRunConfig } from './first-run.mjs';
 import { registerIpcHandlers } from './ipc.mjs';
 import { applyNavigationGuards } from './electron-security.mjs';
+import { registerQuitGuard } from './quit-guard.mjs';
 
 const appDir = fileURLToPath(new URL('.', import.meta.url));
 let mainWindow;
@@ -107,5 +108,5 @@ app.whenReady().then(async () => {
   app.exit(1);
 });
 
-app.on('before-quit', () => { core?.close(); });
+registerQuitGuard(app, () => core);
 app.on('window-all-closed', () => app.quit());

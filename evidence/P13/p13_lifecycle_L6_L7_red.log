@@ -1,0 +1,70 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-lifecycle
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L1 close does not resolve until every owned runtime has settled its teardown 184ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L2 stop retains the runtime handle until its teardown settles 153ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L3 the runtime stop path signals termination without deleting the credential home 1ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L4 the Electron quit path blocks the first quit and awaits the close barrier 131ms
+ × test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L6 a failed stop makes close reject and preserves the handle, db and ownership 88ms
+   → expected 'resolved' to be 'rejected' // Object.is equality
+   → EBUSY: resource busy or locked, unlink 'D:\Temp\User\cue-p13-8pyc7i\data\cue-ledger.sqlite'
+ × test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L7 a failing close never reaches app.quit and surfaces the failure 132ms
+   → expected 1 to be +0 // Object.is equality
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L5 main.mjs delegates quit to the guarded barrier instead of a fire-and-forget close 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L6 a failed stop makes close reject and preserves the handle, db and ownership
+AssertionError: expected 'resolved' to be 'rejected' // Object.is equality
+
+Expected: "rejected"
+Received: "resolved"
+
+ ❯ test/p13-lifecycle-barrier.test.ts:122:21
+    120|     // A close that cannot tear down must not report success: the ledg…
+    121|     // is still open and the runtime is still owned.
+    122|     expect(outcome).toBe('rejected');
+       |                     ^
+    123|     expect(daemon.status).not.toBe('closed');
+    124|     expect(daemon.db.open).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L6 a failed stop makes close reject and preserves the handle, db and ownership
+Error: EBUSY: resource busy or locked, unlink 'D:\Temp\User\cue-p13-8pyc7i\data\cue-ledger.sqlite'
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -4082, code: 'EBUSY', syscall: 'unlink', path: 'D:\Temp\User\cue-p13-8pyc7i\data\cue-ledger.sqlite' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L7 a failing close never reaches app.quit and surfaces the failure
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ test/p13-lifecycle-barrier.test.ts:144:19
+    142|     listeners.get('before-quit')!({ preventDefault() {} });
+    143|     await tick(120);
+    144|     expect(quits).toBe(0);
+       |                   ^
+    145|     expect(guard.state).toBe('failed');
+    146|     expect(guard.error).toMatch(/synthetic close failure/u);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 5 passed (7)
+   Start at  09:52:22
+   Duration  1.37s (transform 180ms, setup 0ms, import 443ms, tests 692ms, environment 0ms)
+
+exit=1

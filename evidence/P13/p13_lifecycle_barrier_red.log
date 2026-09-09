@@ -1,0 +1,242 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-lifecycle
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ × test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L1 close does not resolve until every owned runtime has settled its teardown 216ms
+   → expected true to be false // Object.is equality
+ × test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L2 stop retains the runtime handle until its teardown settles 134ms
+   → the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+   → EBUSY: resource busy or locked, unlink 'D:\Temp\User\cue-p13-gl9EYy\data\cue-ledger.sqlite'
+ × test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L3 the runtime stop path signals termination without deleting the credential home 2ms
+   → expected 'stop(): void {\n      stopped = true;…' not to match /safeCleanupCodexHome/u
+ × test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L4 the Electron quit path blocks the first quit and awaits the close barrier 7ms
+   → Cannot find module 'file:///C:/Users/User/cue/app/quit-guard.mjs' imported from C:/Users/User/cue/daemon/test/p13-lifecycle-barrier.test.ts
+ × test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L5 main.mjs delegates quit to the guarded barrier instead of a fire-and-forget close 1ms
+   → expected 'import { app, BrowserWindow, dialog, …' to match /registerQuitGuard/u
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L1 close does not resolve until every owned runtime has settled its teardown
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/p13-lifecycle-barrier.test.ts:44:20
+     42|     expect(runtime.stopCalls).toBeGreaterThan(0);
+     43|     expect(runtime.cleanupRan).toBe(false);
+     44|     expect(closed).toBe(false);
+       |                    ^
+     45|
+     46|     runtime.settle();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L2 stop retains the runtime handle until its teardown settles
+AssertionError: the given combination of arguments (undefined and string) is invalid for this assertion. You can use an array, a map, an object, a set, a string, or a weakset instead of a string
+ ❯ test/p13-lifecycle-barrier.test.ts:61:35
+     59|     expect(daemon.stop('run-retain', 'cancelled')).toBe(true);
+     60|     await tick();
+     61|     expect(daemon.settlingRunIds).toContain('run-retain');
+       |                                   ^
+     62|
+     63|     runtime.settle();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L2 stop retains the runtime handle until its teardown settles
+Error: EBUSY: resource busy or locked, unlink 'D:\Temp\User\cue-p13-gl9EYy\data\cue-ledger.sqlite'
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { errno: -4082, code: 'EBUSY', syscall: 'unlink', path: 'D:\Temp\User\cue-p13-gl9EYy\data\cue-ledger.sqlite' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L3 the runtime stop path signals termination without deleting the credential home
+AssertionError: expected 'stop(): void {\n      stopped = true;…' not to match /safeCleanupCodexHome/u
+
+- Expected:
+/safeCleanupCodexHome/u
+
++ Received:
+"stop(): void {
+      stopped = true;
+      try { rpc.interrupt(); } catch (error) { stopAttemptErrors.push({ stage: 'rpc', error }); }
+      for (const worker of activeWorkers) {
+        try { worker.stop('interrupted'); } catch (error) { stopAttemptErrors.push({ stage: 'worker_stop', error }); }
+      }
+      try { rpc.close(); } catch (error) { stopAttemptErrors.push({ stage: 'rpc', error }); }
+      try { terminateTree(launched.child); } catch (error) { stopAttemptErrors.push({ stage: 'controller', error }); }
+      try { safeCleanupCodexHome(options.codexHome); } catch (error) { stopAttemptErrors.push({ stage: 'cleanup', error }); }
+    },
+  };
+}
+"
+
+ ❯ test/p13-lifecycle-barrier.test.ts:72:26
+     70|     const source = readFileSync(repoFile('daemon', 'src', 'host-codex-…
+     71|     const stopBody = source.slice(source.indexOf('stop(): void {'));
+     72|     expect(stopBody).not.toMatch(/safeCleanupCodexHome/u);
+       |                          ^
+     73|     const teardownBody = source.slice(source.indexOf('settleHostRuntim…
+     74|     expect(teardownBody).toMatch(/cleanup:\s*\(\)\s*=>\s*safeCleanupCo…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L4 the Electron quit path blocks the first quit and awaits the close barrier
+Error: Cannot find module 'file:///C:/Users/User/cue/app/quit-guard.mjs' imported from C:/Users/User/cue/daemon/test/p13-lifecycle-barrier.test.ts
+ ❯ test/p13-lifecycle-barrier.test.ts:79:35
+     77|   it('P13-L4 the Electron quit path blocks the first quit and awaits t…
+     78|     const quitGuardModule = new URL('../../app/quit-guard.mjs', import…
+     79|     const { registerQuitGuard } = await import(/* @vite-ignore */ quit…
+       |                                   ^
+     80|       registerQuitGuard: (app: unknown, resolveCore: () => { close(): …
+     81|     };
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L5 main.mjs delegates quit to the guarded barrier instead of a fire-and-forget close
+AssertionError: expected 'import { app, BrowserWindow, dialog, …' to match /registerQuitGuard/u
+
+- Expected:
+/registerQuitGuard/u
+
++ Received:
+"import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { join, resolve } from 'node:path';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { createCueCore } from './core.mjs';
+import { initializeFirstRunConfig } from './first-run.mjs';
+import { registerIpcHandlers } from './ipc.mjs';
+import { applyNavigationGuards } from './electron-security.mjs';
+
+const appDir = fileURLToPath(new URL('.', import.meta.url));
+let mainWindow;
+let core;
+
+export function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 1180,
+    height: 760,
+    show: true,
+    webPreferences: {
+      preload: join(appDir, 'preload.cjs'),
+      contextIsolation: true,
+      nodeIntegration: false,
+      sandbox: true,
+    },
+  });
+  const rendererPath = join(appDir, 'renderer', 'index.html');
+  applyNavigationGuards(mainWindow.webContents, pathToFileURL(rendererPath).href);
+  mainWindow.loadFile(rendererPath);
+  return mainWindow;
+}
+
+async function runLiveCanary() {
+  await new Promise(resolveReady => mainWindow.webContents.once('did-finish-load', resolveReady));
+  const rendered = await mainWindow.webContents.executeJavaScript(`(async () => {
+    document.querySelector('#goal').value = 'Create electron-live.txt in the approved workspace with exactly this UTF-8 text and no extra characters: electron-from-cue';
+    document.querySelector('#goal-form').requestSubmit();
+    const deadline = Date.now() + 660000;
+    while (document.querySelector('#approve').disabled) {
+      if (Date.now() > deadline) throw new Error('prepare timeout');
+      await new Promise(done => setTimeout(done, 50));
+    }
+    document.querySelector('#approve').click();
+    while (!document.querySelector('#result').dataset.state || document.querySelector('#result').dataset.state === 'running') {
+      if (Date.now() > deadline) throw new Error('execution timeout');
+      await new Promise(done => setTimeout(done, 100));
+    }
+    return {
+      state: document.querySelector('#result').dataset.state,
+      stateTitle: document.querySelector('#state-title').textContent,
+      stage: document.querySelector('#stage').textContent,
+      approvalSummary: document.querySelector('#approval-summary').textContent,
+      autonomySummary: document.querySelector('#autonomy-summary').textContent,
+      toolSummary: document.querySelector('#tool-summary').textContent,
+      resultSummary: document.querySelector('#result-summary').textContent,
+    };
+  })()`);
+  const latest = core.daemon.db.prepare('SELECT id,state,blocked_reason AS blockedReason FROM task ORDER BY created_at DESC LIMIT 1').get();
+  const sessions = core.daemon.db.prepare(`SELECT s.pid,r.role,r.boundary
+    FROM session_handle s JOIN session_runtime r ON r.handle=s.handle
+    WHERE s.task_id=? ORDER BY s.rowid`).all(latest.id);
+  const binaryIntegrityPinned = Boolean(core.daemon.db.prepare(\"SELECT 1 FROM artifact WHERE task_id=? AND kind='binary_integrity' AND content='sha256:PASS'\").get(latest.id));
+  mainWindow.webContents.debugger.attach('1.3');
+  const capture = await mainWindow.webContents.debugger.sendCommand('Page.captureScreenshot', { format: 'png' });
+  mainWindow.webContents.debugger.detach();
+  const evidenceDir = resolve('evidence/P10C');
+  await mkdir(evidenceDir, { recursive: true });
+  await writeFile(join(evidenceDir, 'p10c_electron_window.png'), Buffer.from(capture.data, 'base64'));
+  const record = {
+    generatedAt: new Date().toISOString(),
+    pid: process.pid,
+    windowCreated: Boolean(mainWindow && !mainWindow.isDestroyed()),
+    adapterMode: process.env.CUE_ADAPTER_MODE || 'none',
+    task: 'standalone Electron approval to host model controller to AppContainer worker',
+    taskId: latest.id,
+    state: latest.state,
+    blockedReason: latest.blockedReason,
+    rendered,
+    sessions,
+    binaryIntegrityPinned,
+  };
+  await writeFile(join(evidenceDir, 'p10c_electron_run.json'), `${JSON.stringify(record, null, 2)}\\n`);
+  if (latest.state !== 'completed' || !binaryIntegrityPinned) process.exitCode = 2;
+  app.quit();
+}
+
+app.whenReady().then(async () => {
+  const userData = process.env.CUE_USER_DATA || app.getPath('userData');
+  const config = await initializeFirstRunConfig(userData, {
+    worktreeOverride: process.env.CUE_WORKTREE_ROOT,
+    defaultRoot: process.cwd(),
+    chooseDirectory: process.env.CUE_LIVE_RUN === '1' ? undefined : async () => {
+      const selection = await dialog.showOpenDialog({
+        title: 'Cue에서 작업할 프로젝트 폴더를 선택하세요',
+        buttonLabel: '이 폴더 사용',
+        properties: ['openDirectory', 'createDirectory'],
+      });
+      return selection.canceled ? undefined : selection.filePaths[0];
+    },
+  });
+  core = createCueCore(config);
+  registerIpcHandlers(ipcMain, core);
+  createWindow();
+  if (process.env.CUE_LIVE_RUN === '1') await runLiveCanary();
+}).catch(error => {
+  console.error('Cue startup failed:', error);
+  dialog.showErrorBox('Cue 시작 실패', error instanceof Error ? error.message : '알 수 없는 오류');
+  app.exit(1);
+});
+
+app.on('before-quit', () => { core?.close(); });
+app.on('window-all-closed', () => app.quit());
+"
+
+ ❯ test/p13-lifecycle-barrier.test.ts:110:18
+    108|   it('P13-L5 main.mjs delegates quit to the guarded barrier instead of…
+    109|     const main = readFileSync(repoFile('app', 'main.mjs'), 'utf8');
+    110|     expect(main).toMatch(/registerQuitGuard/u);
+       |                  ^
+    111|     expect(main).not.toMatch(/on\('before-quit',\s*\(\)\s*=>\s*\{\s*co…
+    112|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  09:39:57
+   Duration  1.04s (transform 159ms, setup 0ms, import 481ms, tests 362ms, environment 0ms)
+
+exit=1

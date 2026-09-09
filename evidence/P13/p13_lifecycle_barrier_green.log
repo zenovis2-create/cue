@@ -1,0 +1,21 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-lifecycle
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L1 close does not resolve until every owned runtime has settled its teardown 181ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L2 stop retains the runtime handle until its teardown settles 169ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L3 the runtime stop path signals termination without deleting the credential home 1ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L4 the Electron quit path blocks the first quit and awaits the close barrier 158ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L5 main.mjs delegates quit to the guarded barrier instead of a fire-and-forget close 2ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  09:40:51
+   Duration  1.22s (transform 182ms, setup 0ms, import 489ms, tests 513ms, environment 0ms)
+
+exit=0

@@ -86,12 +86,21 @@ export function initializeConfig(userDataPath, defaults = {}) {
   return config;
 }
 
+// Upper bound on how long close() waits for ordered teardown before failing.
+const CLOSE_BARRIER_TIMEOUT_MS = Number(process.env.CUE_CLOSE_BARRIER_TIMEOUT_MS ?? 15_000);
+
 export class AppDaemon {
   #db;
   #status = 'ready';
   #workers = new Map();
   #releaseOwnership;
   #failedStops = new Set();
+  // Runtime handles whose termination was signalled but whose ordered teardown
+  // (worker completion -> controller close -> credential home cleanup) is still
+  // running. The handle is retained here so close() has something to await;
+  // dropping it at stop() time would make close() return before cleanup ends.
+  #settling = new Map();
+  #closing;
 
   constructor(config) {
     this.#db = openLedger(config.ledgerPath);
@@ -149,7 +158,23 @@ export class AppDaemon {
     }
     this.#failedStops.delete(runId);
     this.#workers.delete(runId);
+    this.#retainUntilSettled(runId, launched);
     return true;
+  }
+
+  #retainUntilSettled(runId, launched) {
+    const done = launched?.done;
+    if (!done || typeof done.then !== 'function') return;
+    const settled = Promise.resolve(done).then(() => {}, () => {}).finally(() => {
+      if (this.#settling.get(runId) === settled) this.#settling.delete(runId);
+    });
+    this.#settling.set(runId, settled);
+  }
+
+  get settlingRunIds() { return Object.freeze([...this.#settling.keys()]); }
+
+  async settled() {
+    while (this.#settling.size) await Promise.all([...this.#settling.values()]);
   }
 
   crash(reason = 'crash') {
@@ -173,10 +198,59 @@ export class AppDaemon {
     return true;
   }
 
+  // Lifecycle barrier: signal termination for every owned runtime, then wait for
+  // each ordered teardown to finish before the ledger handle is released. A
+  // close() that returned early would let callers delete a home directory whose
+  // SQLite handles are still open.
   close() {
-    if (this.#status === 'closed') return;
+    if (this.#status === 'closed') return Promise.resolve();
+    if (this.#closing) return this.#closing;
     for (const id of [...this.#workers.keys()]) this.stop(id, 'app_closed');
-    if (this.#failedStops.size) return;
+    // Fast path is only legal when there is provably nothing left to tear down.
+    // A failed stop leaves the handle owned and the ledger open, so reporting a
+    // successful close there would manufacture the evidence that it worked.
+    if (this.#teardownBlocked()) return this.#rejectClose();
+    if (this.#settling.size === 0) { this.#finishClose(); return Promise.resolve(); }
+    // The wait is bounded so a runtime that never settles cannot hang the quit
+    // path forever. A deadline hit is a FAILED close, never a silent success:
+    // the ledger stays open and the caller sees the unsettled run ids.
+    this.#closing = this.#settledWithin(CLOSE_BARRIER_TIMEOUT_MS)
+      .then(() => {
+        if (this.#teardownBlocked()) throw this.#teardownError();
+        this.#finishClose();
+      })
+      .finally(() => { this.#closing = undefined; });
+    return this.#handled(this.#closing);
+  }
+
+  #settledWithin(ms) {
+    let timer;
+    const deadline = new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error(
+        `close timed out after ${ms}ms: runtimes still settling (${JSON.stringify([...this.#settling.keys()])})`,
+      )), ms);
+      timer.unref?.();
+    });
+    return Promise.race([this.settled(), deadline]).finally(() => clearTimeout(timer));
+  }
+
+  #teardownBlocked() { return this.#workers.size > 0 || this.#failedStops.size > 0; }
+
+  #teardownError() {
+    const owned = [...this.#workers.keys()];
+    const failed = [...this.#failedStops];
+    return new Error(`close blocked: runtimes not torn down (owned=${JSON.stringify(owned)} failedStops=${JSON.stringify(failed)})`);
+  }
+
+  #rejectClose() { return this.#handled(Promise.reject(this.#teardownError())); }
+
+  // Legacy call sites invoke close() without awaiting. Attaching a terminal
+  // handler keeps a genuine rejection from becoming an unhandled rejection,
+  // while the returned promise still rejects for callers that do await.
+  #handled(promise) { promise.catch(() => {}); return promise; }
+
+  #finishClose() {
+    if (this.#status === 'closed' || this.#failedStops.size) return;
     this.#db.close();
     this.#releaseOwnership?.();
     this.#status = 'closed';
@@ -621,10 +695,10 @@ export function createCueCore(config, daemon, runtime = {}) {
   }
 
   function closeCore() {
-    if (closing) return;
+    if (closing) return daemon.settled();
     closing = true;
     for (const run of prepared.values()) stopRun(run.runId, 'app_closed');
-    daemon.close();
+    return daemon.close();
   }
 
   function completion(taskId) {

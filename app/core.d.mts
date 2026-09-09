@@ -10,9 +10,15 @@ export class AppDaemon {
   constructor(config: CueConfig);
   readonly db: any;
   readonly status: string;
+  /** Run ids whose runtime handle is retained until its teardown settles. */
+  readonly settlingRunIds: readonly string[];
+  own(runId: string, launched: any): void;
+  release(runId: string): void;
   crash(reason?: string): void;
   stop(runId: string, reason?: string): boolean;
-  close(): void;
+  /** Resolves once every retained runtime handle has settled its teardown. */
+  settled(): Promise<void>;
+  close(): Promise<void>;
 }
 export interface CueCore {
   prepareGoal(goal: string, autonomy?: 1 | 2 | 3): PreparedGoal;
@@ -21,7 +27,7 @@ export interface CueCore {
   stop(runId: string): boolean;
   completion(taskId: string): any;
   readonly daemon: AppDaemon;
-  close(): void;
+  close(): Promise<void>;
 }
 export function initializeConfig(userDataPath: string, defaults?: Partial<Pick<CueConfig, 'ledgerPath' | 'worktreeRoot'>>): CueConfig;
 export interface CueRuntime {

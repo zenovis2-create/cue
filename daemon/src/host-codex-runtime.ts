@@ -413,7 +413,9 @@ export function launchHostCodexRun(
       }
       try { rpc.close(); } catch (error) { stopAttemptErrors.push({ stage: 'rpc', error }); }
       try { terminateTree(launched.child); } catch (error) { stopAttemptErrors.push({ stage: 'controller', error }); }
-      try { safeCleanupCodexHome(options.codexHome); } catch (error) { stopAttemptErrors.push({ stage: 'cleanup', error }); }
+      // Credential-home cleanup stays in the single ordered teardown inside
+      // done.finally. Deleting it here would race that teardown, which still
+      // holds live SQLite handles under the same root.
     },
   };
 }

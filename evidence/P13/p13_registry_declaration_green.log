@@ -1,0 +1,43 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p3a
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p3a.test.ts > P3-1 canonical envelope > is stable across key and array order and changes for one field 7ms
+ ✓ test/p3a.test.ts > P3-2 adapters are transport only > carries raw values and imports no decision or policy module 1ms
+ ✓ test/p3a.test.ts > P3-3 fail closed mapping > declines random unknown methods and has no default allow branch 11ms
+ ✓ test/p3a.test.ts > P3-4 decision response whitelist > enumerates only the three response decisions and source has no prohibited response or bypass spelling 9ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > accepts only a nonempty concrete contained path and fixes turn scope and strict review 6ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines empty entries 5ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines glob entries 5ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines outside entries 6ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special root entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > declines special arbitrary entries 4ms
+ ✓ test/p3a.test.ts > P3-5 permissions response > models nonempty entries at the type boundary and source constructs no empty accept entries 1ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null cwd 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > wrong cwd 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > null command 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > extra outside 7ms
+ ✓ test/p3a.test.ts > P3-6 preflight > outside grant 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > auth gate 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > tool 5ms
+ ✓ test/p3a.test.ts > P3-6 preflight > elicitation 4ms
+ ✓ test/p3a.test.ts > P3-6 preflight > judges writeStdin independently of a parent command decision 5ms
+ ✓ test/p3a.test.ts > P3-7 replay prevention > declines a duplicate null approval id and appends a replay alert 5ms
+ ✓ test/p3a.test.ts > P3-8 lifetime > declines after expiry and after run end without inheritance 4ms
+ ✓ test/p3a.test.ts > P3-10 byte-owned payload classification > classifies actual bytes and cancels opaque, encrypted, and invalid binary payloads 6ms
+ ✓ test/p3a.test.ts > P3-13 cancel is danger-only > returns cancel only for the three enumerated reasons across all mapped and rejected paths 12ms
+ ✓ test/p3a.test.ts > P3-14 execution profile > generates on-request argv without prohibited flags and source passes grep 1ms
+ ✓ test/p3a.test.ts > P3-18 no tool may declare its own capability > registry entries carry identity only and declare no eligibility field 1ms
+ ✓ test/p3a.test.ts > P3-18b approval core is blind to tool identity and capability > takes no tool, adapter or eligibility input and always runs mandatoryChecks 1ms
+
+ Test Files  1 passed (1)
+      Tests  27 passed (27)
+   Start at  21:38:07
+   Duration  702ms (transform 154ms, setup 0ms, import 341ms, tests 136ms, environment 0ms)
+
+exit=0

@@ -1,0 +1,19 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p10c-manifest
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > writes the root evidence command to the repository evidence directory 2ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > observes only cue_workspace in the actual model request 3104ms
+ ✓ test/p10c-manifest-lifecycle.test.ts > manifest proof process lifecycle > waits for the child to close before its current working directory is removed 1898ms
+
+ Test Files  2 passed (2)
+      Tests  3 passed (3)
+   Start at  12:42:54
+   Duration  6.48s (transform 38ms, setup 0ms, import 115ms, tests 5.01s, environment 0ms)
+
+exit=0

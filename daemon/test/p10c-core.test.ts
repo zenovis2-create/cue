@@ -128,12 +128,16 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
     const prepared = core.prepareGoal('always fails after a real isolated tool call', 3);
     core.approve(prepared.runId); core.execute(prepared.runId);
     const card = await terminalCard(core, prepared.taskId);
-    const sessions = core.daemon.db.prepare('SELECT s.pid,r.role FROM session_handle s JOIN session_runtime r ON r.handle=s.handle ORDER BY s.rowid').all() as Array<{ pid: number; role: string }>;
+    // Process identity on Windows is (pid, start_time), never pid alone: the OS
+    // recycles pids, so two genuinely distinct processes can share one. Counting
+    // distinct pids alone would report a phantom relaunch failure.
+    const sessions = core.daemon.db.prepare('SELECT s.pid,s.start_time,r.role FROM session_handle s JOIN session_runtime r ON r.handle=s.handle ORDER BY s.rowid').all() as Array<{ pid: number; start_time: string; role: string }>;
     const recovery = Number((core.daemon.db.prepare('SELECT count(*) AS n FROM recovery_attempt_v2 WHERE run_id=?').get(prepared.runId) as { n: number }).n);
     core.close();
 
-    const controllers = sessions.filter(row => row.role === 'controller').map(row => row.pid);
-    const workers = sessions.filter(row => row.role === 'tool_worker').map(row => row.pid);
+    const identity = (row: { pid: number; start_time: string }) => `${row.pid}@${row.start_time}`;
+    const controllers = sessions.filter(row => row.role === 'controller').map(identity);
+    const workers = sessions.filter(row => row.role === 'tool_worker').map(identity);
     expect(card).toMatchObject({ state: 'blocked', blockedReason: 'human_required' });
     expect(controllers).toHaveLength(4);
     expect(workers).toHaveLength(8);
@@ -370,7 +374,9 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
     const launchHost = vi.fn((_db, owner) => ({
       child: { pid: 78000 + pending.length },
       session: { handle: `lease-${pending.length}`, pid: 78000 + pending.length, cwd: owner.cwd, task_id: owner.task_id, run_id: owner.run_id },
-      stop() {},
+      // A faithful double: a real runtime settles its teardown after stop(),
+      // which is what the close() barrier waits on.
+      stop() { const settle = pending.pop(); settle?.({ status: 'stopped' }); },
       done: new Promise(resolve => pending.push(resolve)),
     }));
     const core = createCueCore(initializeConfig(join(root, 'state'), { worktreeRoot: worktree }), undefined, {
@@ -417,7 +423,9 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
     const launchHost = vi.fn((_db, owner) => ({
       child: { pid: 78100 + pending.length },
       session: { handle: `cancel-queue-${pending.length}`, pid: 78100 + pending.length, cwd: owner.cwd, task_id: owner.task_id, run_id: owner.run_id },
-      stop() {},
+      // A faithful double: a real runtime settles its teardown after stop(),
+      // which is what the close() barrier waits on.
+      stop() { const settle = pending.pop(); settle?.({ status: 'stopped' }); },
       done: new Promise(resolve => pending.push(resolve)),
     }));
     const core = createCueCore(initializeConfig(join(root, 'state'), { worktreeRoot: worktree }), undefined, {
@@ -442,7 +450,8 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
     expect(launchCount).toBe(1);
   });
 
-  it('blocks queued writes when the app closes so restart cannot strand them', () => {
+  it('blocks queued writes when the app closes so restart cannot strand them', async () => {
+    let settleClose: ((value: unknown) => void) | undefined;
     const root = temp(); const worktree = join(root, 'worktree'); const sourceHome = join(root, 'source-home'); const vendor = join(root, 'vendor');
     mkdirSync(worktree); mkdirSync(sourceHome); mkdirSync(vendor); writeFileSync(join(sourceHome, 'auth.json'), 'credential-placeholder');
     const binary = join(vendor, 'codex.exe'); copyFileSync(process.execPath, binary);
@@ -450,14 +459,14 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
     const launchHost = vi.fn((_db, owner) => ({
       child: { pid: 78200 },
       session: { handle: 'close-queue', pid: 78200, cwd: owner.cwd, task_id: owner.task_id, run_id: owner.run_id },
-      stop() {},
-      done: new Promise(() => {}),
+      stop() { settleClose?.({ status: 'stopped' }); },
+      done: new Promise(resolve => { settleClose = resolve; }),
     }));
     const config = initializeConfig(join(root, 'state'), { worktreeRoot: worktree });
     const core = createCueCore(config, undefined, { binary, binarySha256, codexHome: sourceHome, launchHost } as any);
     const first = core.prepareGoal('Create first.txt', 1); const queued = core.prepareGoal('Create queued.txt', 1);
     core.approve(first.runId); core.approve(queued.runId); core.execute(first.runId); core.execute(queued.runId);
-    core.close();
+    await core.close();
 
     const restarted = createCueCore(config, undefined, { binary, binarySha256, codexHome: sourceHome, launchHost } as any);
     const queuedCard = restarted.completion(queued.taskId);
@@ -481,7 +490,9 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
     expect(executions).toBe(1);
     core.stop(prepared.runId);
     const flag = core.daemon.db.prepare('SELECT write_in_progress FROM run WHERE id=?').get(prepared.runId) as { write_in_progress: number };
-    core.close();
+    // A real controller was launched here, so close() has an ordered teardown
+    // to await before afterEach may delete the ledger root.
+    await core.close();
     expect(flag.write_in_progress).toBe(0);
   }, 30_000);
 

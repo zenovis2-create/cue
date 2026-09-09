@@ -107,7 +107,7 @@ try {
 } finally {
   try {
     if (process.env.CUE_TEST_STOP_CLOSE_FAILURE === '1') throw new Error('forced core.close failure');
-    core?.close();
+    await core?.close();
   } catch (error) {
     addFailure(error);
     try { core?.daemon?.db?.close(); }

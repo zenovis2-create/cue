@@ -122,8 +122,22 @@ describe('P3-14 execution profile', () => {
   });
 });
 
-describe('P3-18 advisory tools', () => {
-  it('marks Codex non-enforcing and core enforcement has no tool-kind bypass', () => {
-    expect(adapterRegistry).toContainEqual({name:'codex',enforcement_capable:false}); const core=readFileSync(resolve('src/approval-engine.ts'),'utf8'); expect(core).not.toMatch(/tool(?:Name|_name|Kind|_kind)|enforcement_capable/); expect(core).toContain('mandatoryChecks(request, active, now)');
+describe('P3-18 no tool may declare its own capability', () => {
+  it('registry entries carry identity only and declare no eligibility field', () => {
+    const declared = ['enforcement_capable','implementationEligible','modelOnlyEligible','writes_capable','capable','eligible'];
+    for (const entry of adapterRegistry) {
+      expect(Object.keys(entry)).toEqual(['name']);
+      for (const field of declared) expect(entry).not.toHaveProperty(field);
+    }
+    const src = readFileSync(resolve('src/adapters/registry.ts'),'utf8');
+    for (const field of declared) expect(src).not.toContain(field);
+  });
+});
+
+describe('P3-18b approval core is blind to tool identity and capability', () => {
+  it('takes no tool, adapter or eligibility input and always runs mandatoryChecks', () => {
+    const core = readFileSync(resolve('src/approval-engine.ts'),'utf8');
+    expect(core).not.toMatch(/tool(?:Name|_name|Kind|_kind)|adapter|enforcement_capable|implementationEligible|modelOnlyEligible|eligib/i);
+    expect(core).toContain('mandatoryChecks(request, active, now)');
   });
 });

@@ -122,11 +122,14 @@ describe('Phase 9 Electron shell', () => {
     expect(renderer).toContain('expires_at');
   });
 
-  it('P9-10 builds completion totals only from ledger rows', () => {
+  it('P9-10 builds completion totals only from ledger rows', async () => {
     const root = temp(); const config = initializeConfig(join(root, 'data'), { worktreeRoot: temp() }); const core = createCueCore(config);
     const prepared = core.prepareGoal('one file', 2); core.approve(prepared.runId); const card = core.execute(prepared.runId);
     expect(card.approvalSummary).toBe('자동 승인 1건 · 거부 0건');
-    expect(card.autonomySummary).toBe('자율성: ② · 자동 복구 0회'); core.close();
+    // close() is a lifecycle barrier: this run owns a runtime whose ordered
+    // teardown still holds SQLite handles, so afterEach may only delete the
+    // root once the barrier has resolved.
+    expect(card.autonomySummary).toBe('자율성: ② · 자동 복구 0회'); await core.close();
   }, 20_000);
 
   it('P9-11 app core has no static Buzz dependency', () => {

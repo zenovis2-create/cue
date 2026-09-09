@@ -12,7 +12,11 @@ const args = process.argv.slice(2);
 const outputAt = args.indexOf('--output');
 const output = outputAt >= 0 ? resolve(args[outputAt + 1]) : resolve('..', 'evidence', 'P10C', 'p10c_manifest_proof.json');
 const expectedSha256 = 'cf68265897197ac5f3bff6a10c168eec159842b353129726da5e3ed6b91ef0f4';
-const binary = join(process.env.APPDATA || '', 'npm', 'node_modules', '@openai', 'codex', 'node_modules', '@openai', 'codex-win32-x64', 'vendor', 'x86_64-pc-windows-msvc', 'bin', 'codex.exe');
+// The pin is the hash, never the path. CUE_VENDOR_CODEX only says WHERE to look,
+// so a side-by-side toolchain can be measured without touching the shared global
+// install; the hash check below still decides whether it is the pinned artifact.
+const binary = process.env.CUE_VENDOR_CODEX
+  || join(process.env.APPDATA || '', 'npm', 'node_modules', '@openai', 'codex', 'node_modules', '@openai', 'codex-win32-x64', 'vendor', 'x86_64-pc-windows-msvc', 'bin', 'codex.exe');
 if (!existsSync(binary)) throw new Error('pinned Codex binary is unavailable');
 const binarySha256 = createHash('sha256').update(readFileSync(binary)).digest('hex');
 if (binarySha256 !== expectedSha256) throw new Error('pinned Codex binary hash mismatch');
