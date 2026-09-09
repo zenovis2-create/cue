@@ -1,0 +1,43 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-lifecycle-harness p4.test p45.test
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-1/S-3 keeps one child_process boundary and only owned public spawn APIs 302ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-3 positive control rejects a newly introduced direct spawn 18ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 asks the OS for the AppContainer worker parent PID 9657ms
+ ↓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 OS cwd query (SKIPPED on Windows: Win32_Process exposes no cwd)
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-3/P4-5 automatically starts the owned queued request after lease promotion 3998ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > tolerates literal JSON control characters inside strings 3ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > round-trips the exact create, ps, task-list, stop, and abandon argv 2ms
+ ↓ test/p4.test.ts > P4-1 Orca adapter > round-trips the installed Orca worktree ps without mutation
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > records the composite session identity and launches with the worktree cwd 126ms
+ ↓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > launches the real vendor Codex through the AppContainer supervisor
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > has one production spawn boundary and no direct spawn call elsewhere 104ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > queues a second writer, then admits it after release 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > does not lease reads and reaps an expired holder 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > reclaims a writer through the P2 heartbeat age primitive 4ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > records still_unsafe and does not succeed when close fails 3ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > succeeds only after a successful close 4ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > lists an unowned live process after ledger reopen and leaves it alive 199ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > contains no automatic orphan kill path 1ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > dispatches a match and asks for an unmatched task without spawning 17ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > asks when routing.yaml is missing or malformed 10ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > wires ask_me into dispatch and proves no tool is spawned 3ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H1 RED: P1 fails when the tool leaves a child running after a stop request 18874ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H2 GREEN: P1 passes when the tool takes its children down with it 14848ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H3 RED: P3 fails when a child outlives a hard-killed supervisor 17588ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H4 GREEN: P3 passes when nothing outlives a hard-killed supervisor 12886ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H5 the verdict ignores identical processes outside this run 26423ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H6 a stop budget that expires is a FAIL, not an inconclusive result 13213ms
+
+ Test Files  3 passed (3)
+      Tests  24 passed | 3 skipped (27)
+   Start at  20:36:22
+   Duration  120.73s (transform 461ms, setup 0ms, import 1.08s, tests 118.29s, environment 0ms)
+
+exit=0

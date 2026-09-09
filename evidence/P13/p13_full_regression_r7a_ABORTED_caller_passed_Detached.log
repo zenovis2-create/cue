@@ -1,0 +1,7 @@
+﻿runner_pid=35552
+started=2026-09-09T18:06:30.5168755+09:00
+deadline_seconds=1500
+CUE_VENDOR_CODEX=C:/Users/User/cue-toolchain/node_modules/@openai/codex-win32-x64/vendor/x86_64-pc-windows-msvc/bin/codex.exe
+vendor_sha256=CF68265897197AC5F3BFF6A10C168EEC159842B353129726DA5E3ED6B91EF0F4
+head_before=a65aa611d844995ce94cd1590c7258b0ab6b55c7
+worktree_before=E4499FDFA8EEBB3FC4E8C56C8784E9E7AD3B353D3D568E6A888C5E5DD0B1EF2E
