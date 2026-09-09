@@ -1,7 +1,7 @@
 // P13 R-7a fixture: an OBEDIENT tool.
 // Spawns one child that watches its parent and exits when the parent dies, so both
 // stop on request and nothing survives a hard kill of the root.
-// argv: [childCount]
+// argv: [childCount, lifetimeMs?]  lifetimeMs => the root exits on its own (B5 normal path)
 import { spawn } from 'node:child_process';
 
 const count = Number(process.argv[2] ?? 1);
@@ -15,4 +15,6 @@ for (let i = 0; i < count; i += 1) {
   `], { stdio: 'ignore', detached: false });
 }
 process.stdout.write(`obedient ready pid=${process.pid}\n`);
-setInterval(() => {}, 1000);
+const lifetime = Number(process.argv[3] ?? 0);
+if (lifetime > 0) setTimeout(() => process.exit(0), lifetime);
+else setInterval(() => {}, 1000);

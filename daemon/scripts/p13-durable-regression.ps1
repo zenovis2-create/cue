@@ -39,16 +39,31 @@ if (-not $Detached) {
 
 function Get-SourceState {
   $digest = & git -C $repo rev-parse HEAD 2>&1
+  # A porcelain-status hash only proves the SET of dirty paths is unchanged - editing
+  # a file that was already dirty leaves it identical. Hash actual CONTENT instead:
+  # every tracked + untracked source file, path and bytes.
   # evidence/P13 is written BY the run, so it must not count as the source moving.
   # Everything else - including any other evidence path - still does.
-  $dirty = & git -C $repo status --porcelain -- ':(exclude)evidence/P13' 2>&1
-  # .NET directly: Get-FileHash lives in a module whose autoload can fail, and a
-  # runner that dies before writing its header leaves no evidence at all.
-  $dirtyHash = if ([string]::IsNullOrWhiteSpace(($dirty -join "`n"))) { 'clean' } else {
-    $bytes = [Text.Encoding]::UTF8.GetBytes(($dirty -join "`n"))
-    [BitConverter]::ToString([Security.Cryptography.SHA256]::Create().ComputeHash($bytes)).Replace('-','')
+  $files = & git -C $repo ls-files -co --exclude-standard -- ':(exclude)evidence/P13' 2>&1 |
+    Where-Object { $_ -is [string] -and $_.Trim() -ne '' } | Sort-Object -CaseSensitive
+  $sha = [Security.Cryptography.SHA256]::Create()
+  $lines = New-Object System.Text.StringBuilder
+  $counted = 0
+  foreach ($rel in $files) {
+    $full = Join-Path $repo $rel
+    if (-not (Test-Path -LiteralPath $full -PathType Leaf)) {
+      # deleted-but-tracked still moves the source; record it as such.
+      [void]$lines.Append("$rel`tABSENT`n"); $counted++
+      continue
+    }
+    $stream = [IO.File]::OpenRead($full)
+    try { $h = [BitConverter]::ToString($sha.ComputeHash($stream)).Replace('-','') } finally { $stream.Dispose() }
+    [void]$lines.Append("$rel`t$h`n"); $counted++
   }
-  return @{ head = ($digest -join ''); worktree = $dirtyHash }
+  if ($counted -eq 0) { throw 'source manifest is empty - refusing to certify an unmeasured tree' }
+  $bytes = [Text.Encoding]::UTF8.GetBytes($lines.ToString())
+  $manifest = [BitConverter]::ToString([Security.Cryptography.SHA256]::Create().ComputeHash($bytes)).Replace('-','')
+  return @{ head = ($digest -join ''); worktree = $manifest; files = $counted }
 }
 
 $vendor = 'C:/Users/User/cue-toolchain/node_modules/@openai/codex-win32-x64/vendor/x86_64-pc-windows-msvc/bin/codex.exe'
@@ -69,6 +84,7 @@ Set-Content -Path $log -Encoding utf8 -Value @(
   "vendor_sha256=$vendorHash"
   "head_before=$($before.head)"
   "worktree_before=$($before.worktree)"
+  "source_files=$($before.files)"
 )
 
 $outLog = "$log.stdout"

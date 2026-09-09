@@ -1,0 +1,28 @@
+﻿runner_pid=50212
+started=2026-09-09T21:44:56.1461837+09:00
+deadline_seconds=30
+CUE_VENDOR_CODEX=C:/Users/User/cue-toolchain/node_modules/@openai/codex-win32-x64/vendor/x86_64-pc-windows-msvc/bin/codex.exe
+vendor_sha256=CF68265897197AC5F3BFF6A10C168EEC159842B353129726DA5E3ED6B91EF0F4
+head_before=8f32c49de017488b58ae3c4da33507731205c6b8
+worktree_before=EACD18F6093189BCEB609C3D34979B2A603AF691AA15A5B937D35BFEB37B3906
+source_files=637
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ??test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H1 RED: P1 fails when the tool leaves a child running after a stop request 18902ms
+
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+head_after=8f32c49de017488b58ae3c4da33507731205c6b8
+worktree_after=14A81095596278F2CC4EF3F2CAF99AD494F6189549A46BD5B23EA0234E154305
+source_stable=False
+timed_out=True
+containment=verified_dead
+exit=124
+finished=2026-09-09T21:45:32.3896908+09:00
+VERDICT=INVALID: source tree changed during the run; this log is not evidence for either state

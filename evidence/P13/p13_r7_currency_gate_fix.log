@@ -1,0 +1,2045 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 release.test p13-lifecycle-harness
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+stdout | test/release.test.ts > v0.1 release gates > R-1 preserves original P1 evidence and now carries a re-run P1-3 record
+R-1 PASS: P1-3 재실행 기록 존재 verdict=FAIL outside_write=true network=true appcontainer_used=false
+
+stdout | test/release.test.ts > v0.1 release gates > R-2 scans all src and proves a disposable forbidden string makes the scanner fail
+R-2 POSITIVE_CONTROL_RED observed=true
+
+stdout | test/release.test.ts > v0.1 release gates > R-3 uses a junction to attempt a real OS-blocked outside write
+R-3 LIVE app_pid=44268 junction=C:\Users\User\cue\daemon\.test-state-release-r3-work-qpIIVS\escape outside=C:\Users\User\cue\daemon\.test-state-release-r3-out-1duNEy os_exit=1 outside_written=false
+
+ ✓ test/release.test.ts > v0.1 release gates > R-1 preserves original P1 evidence and now carries a re-run P1-3 record 3ms
+ ✓ test/release.test.ts > v0.1 release gates > R-2 scans all src and proves a disposable forbidden string makes the scanner fail 32ms
+ ✓ test/release.test.ts > v0.1 release gates > R-3 uses a junction to attempt a real OS-blocked outside write 2242ms
+stdout | test/release.test.ts > v0.1 release gates > R-4 kills and restarts a real daemon process, leaving blocked/crash and a git-status report
+R-4 LIVE killed_pid=83264 restarted_pid=30920 state=blocked/crash git_status="?? work.txt"
+
+stdout | test/release.test.ts > v0.1 release gates > R-6 performs approval, dispatch, real worker execution, verification, and ledger-derived Korean reporting
+R-6 LIVE app_pid=46556 완료: 파일 생성과 검증을 마쳤습니다. | 판정 경로: 카테고리 일치 → codex 디스패치 (routing.yaml 파일 생성 규칙) | 자동 승인 1건 · 거부 0건
+
+ ✓ test/release.test.ts > v0.1 release gates > R-4 kills and restarts a real daemon process, leaving blocked/crash and a git-status report 503ms
+ ✓ test/release.test.ts > v0.1 release gates > R-5 alerts only when heartbeat expiry and connection failure are both true 2ms
+stdout | test/release.test.ts > v0.1 release gates > R-9 runs the same real process task at autonomy ③ and ① with equal envelope decisions and different lineage
+R-9 LIVE pids=83456,78524 envelope=outside_envelope,outside_envelope attempts=1,0
+
+ ✓ test/release.test.ts > v0.1 release gates > R-6 performs approval, dispatch, real worker execution, verification, and ledger-derived Korean reporting 2491ms
+ × test/release.test.ts > v0.1 release gates > R-7 has no monetary-budget emission path while retaining token-budget state 13ms
+   → expected 'export interface RawApprovalRequest {…' not to match /(?:budget.{0,80}(?:USD|KRW|dollars?…/iu
+ ✓ test/release.test.ts > v0.1 release gates > R-9 runs the same real process task at autonomy ③ and ① with equal envelope decisions and different lineage 448ms
+ ✓ test/release.test.ts > release improvements > I-1 selects a matching category without refinement escape and asks on ambiguity 9ms
+ ✓ test/release.test.ts > release improvements > I-2 requires the decision path in both completion and blocked reports 4ms
+ ✓ test/release.test.ts > release improvements > I-3 commits certain recovery artifacts before a separately failing borderline write 148ms
+ ✓ test/release.test.ts > release improvements > I-4 grants execution authority only from an accepted approval record 139ms
+ ✓ test/release.test.ts > release improvements > I-5 judges preference requests by effect, not workflow-friendly wording 1ms
+ ✓ test/release.test.ts > release improvements > I-6 documents confirmed/candidate source grading as a binding design rule 0ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H1 RED: P1 fails when the tool leaves a child running after a stop request 15667ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H2 GREEN: P1 passes when the tool takes its children down with it 11305ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H3 RED: P3 fails when a child outlives a hard-killed supervisor 15261ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H4 GREEN: P3 passes when nothing outlives a hard-killed supervisor 11064ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H5 the verdict ignores identical processes outside this run 20134ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H6 a stop budget that expires is a FAIL, not an inconclusive result 11092ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H7 GREEN: an obedient tool leaves no residue on the NORMAL exit path 19032ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H8 RED: the normal path catches residue the stop path would hide 40124ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H9 RED: a subject that never exits is a FAIL, not a clean normal path 15125ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H10 B5 needs all three paths; two green paths do not carry the third 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H11 B5 GREEN only when all three paths are independently clean 37907ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H12 B5 RED: one dirty path sinks the verdict even if the others are clean 42115ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/release.test.ts > v0.1 release gates > R-7 has no monetary-budget emission path while retaining token-budget state
+AssertionError: expected 'export interface RawApprovalRequest {…' not to match /(?:budget.{0,80}(?:USD|KRW|dollars?…/iu
+
+- Expected:
+/(?:budget.{0,80}(?:USD|KRW|dollars?|won|currency|[$€₩])|(?:USD|KRW|dollars?|won|currency|[$€₩]).{0,80}budget)/iu
+
++ Received:
+"export interface RawApprovalRequest { method: string; params: unknown }
+
+export function carryRawRequest(method: string, params: unknown): RawApprovalRequest {
+  return { method, params };
+}
+
+export function codexArgv(appServerArgs: readonly string[] = []): string[] {
+  return ['-a', 'on-request', 'app-server', ...appServerArgs];
+}
+
+import { runProcessSync } from '../process-launch.js';
+
+export type OrcaExec = (args: readonly string[]) => string;
+const defaultExec: OrcaExec = args => runProcessSync('orca', args, { encoding: 'utf8', windowsHide: true }).stdout;
+
+export function parseOrcaJson(text: string): unknown {
+  let quoted = false, escaped = false, clean = '';
+  for (const char of text) {
+    if (quoted && char.charCodeAt(0) < 0x20 && char !== '\\t' && char !== '\\n' && char !== '\\r') clean += `\\\\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`;
+    else clean += char;
+    if (escaped) escaped = false;
+    else if (char === '\\\\' && quoted) escaped = true;
+    else if (char === '\"') quoted = !quoted;
+  }
+  return JSON.parse(clean);
+}
+
+function invoke(exec: OrcaExec, args: readonly string[]): unknown { return parseOrcaJson(exec([...args, '--json'])); }
+export function createWorktree(name: string, repo: string, exec: OrcaExec = defaultExec): unknown { return invoke(exec, ['worktree','create','--name',name,'--repo',repo,'--setup','skip']); }
+export function worktreePs(exec: OrcaExec = defaultExec): unknown { return invoke(exec, ['worktree','ps']); }
+export function taskList(runId: string, exec: OrcaExec = defaultExec): unknown { return invoke(exec, ['orchestration','task-list','--run',runId]); }
+export function workerStop(dispatchId: string, exec: OrcaExec = defaultExec): unknown { return invoke(exec, ['orchestration','worker-stop','--dispatch',dispatchId]); }
+export function workerAbandon(dispatchId: string, exec: OrcaExec = defaultExec): unknown { return invoke(exec, ['orchestration','worker-abandon','--dispatch',dispatchId]); }
+
+// Registry records what tools exist. It does NOT record what they are allowed to do.
+// Eligibility is never declared here; it is derived only from measured capability probes
+// (see docs/P13_SPEC.md). A value that can be written down can be written down falsely.
+export const adapterRegistry = Object.freeze([
+  Object.freeze({ name: 'codex' }),
+]);
+
+param(
+  [Parameter(Mandatory=$true)][string]$PayloadBase64
+)
+
+$ErrorActionPreference = 'Stop'
+
+Add-Type -TypeDefinition @'
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+
+public static class CueAppContainer {
+  const uint WAIT_OBJECT_0 = 0x00000000;
+  const uint WAIT_TIMEOUT = 0x00000102;
+  const uint WAIT_FAILED = 0xffffffff;
+  [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
+  public struct STARTUPINFO {
+    public Int32 cb; public string lpReserved; public string lpDesktop; public string lpTitle;
+    public Int32 dwX; public Int32 dwY; public Int32 dwXSize; public Int32 dwYSize;
+    public Int32 dwXCountChars; public Int32 dwYCountChars; public Int32 dwFillAttribute;
+    public Int32 dwFlags; public Int16 wShowWindow; public Int16 cbReserved2;
+    public IntPtr lpReserved2; public IntPtr hStdInput; public IntPtr hStdOutput; public IntPtr hStdError;
+  }
+  [StructLayout(LayoutKind.Sequential)] public struct STARTUPINFOEX { public STARTUPINFO StartupInfo; public IntPtr lpAttributeList; }
+  [StructLayout(LayoutKind.Sequential)] public struct PROCESS_INFORMATION { public IntPtr hProcess; public IntPtr hThread; public Int32 dwProcessId; public Int32 dwThreadId; }
+  [StructLayout(LayoutKind.Sequential)] public struct SECURITY_CAPABILITIES { public IntPtr AppContainerSid; public IntPtr Capabilities; public Int32 CapabilityCount; public Int32 Reserved; }
+  [StructLayout(LayoutKind.Sequential)] public struct JOBOBJECT_BASIC_LIMIT_INFORMATION {
+    public Int64 PerProcessUserTimeLimit; public Int64 PerJobUserTimeLimit; public UInt32 LimitFlags;
+    public UIntPtr MinimumWorkingSetSize; public UIntPtr MaximumWorkingSetSize; public UInt32 ActiveProcessLimit;
+    public IntPtr Affinity; public UInt32 PriorityClass; public UInt32 SchedulingClass;
+  }
+  [StructLayout(LayoutKind.Sequential)] public struct IO_COUNTERS {
+    public UInt64 ReadOperationCount; public UInt64 WriteOperationCount; public UInt64 OtherOperationCount;
+    public UInt64 ReadTransferCount; public UInt64 WriteTransferCount; public UInt64 OtherTransferCount;
+  }
+  [StructLayout(LayoutKind.Sequential)] public struct JOBOBJECT_EXTENDED_LIMIT_INFORMATION {
+    public JOBOBJECT_BASIC_LIMIT_INFORMATION BasicLimitInformation; public IO_COUNTERS IoInfo;
+    public UIntPtr ProcessMemoryLimit; public UIntPtr JobMemoryLimit; public UIntPtr PeakProcessMemoryUsed; public UIntPtr PeakJobMemoryUsed;
+  }
+
+  [DllImport(\"userenv.dll\", CharSet=CharSet.Unicode)] public static extern int CreateAppContainerProfile(string name, string display, string description, IntPtr capabilities, int count, out IntPtr sid);
+  [DllImport(\"userenv.dll\", CharSet=CharSet.Unicode)] public static extern int DeleteAppContainerProfile(string name);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool InitializeProcThreadAttributeList(IntPtr list, int count, int flags, ref IntPtr size);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool UpdateProcThreadAttribute(IntPtr list, uint flags, IntPtr attribute, IntPtr value, IntPtr size, IntPtr previous, IntPtr returned);
+  [DllImport(\"kernel32.dll\")] static extern void DeleteProcThreadAttributeList(IntPtr list);
+  [DllImport(\"kernel32.dll\", CharSet=CharSet.Unicode, SetLastError=true)] static extern bool CreateProcess(string app, string commandLine, IntPtr processAttributes, IntPtr threadAttributes, bool inheritHandles, uint flags, IntPtr environment, string cwd, ref STARTUPINFOEX startup, out PROCESS_INFORMATION process);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern uint WaitForSingleObject(IntPtr handle, uint milliseconds);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern uint WaitForMultipleObjects(uint count, IntPtr[] handles, bool waitAll, uint milliseconds);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool GetExitCodeProcess(IntPtr process, out uint exitCode);
+  [DllImport(\"kernel32.dll\", CharSet=CharSet.Unicode, SetLastError=true)] static extern IntPtr CreateJobObject(IntPtr attributes, string name);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool SetInformationJobObject(IntPtr job, int informationClass, ref JOBOBJECT_EXTENDED_LIMIT_INFORMATION information, uint length);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool AssignProcessToJobObject(IntPtr job, IntPtr process);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool TerminateJobObject(IntPtr job, uint exitCode);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern IntPtr OpenProcess(uint access, bool inheritHandle, int processId);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern uint ResumeThread(IntPtr thread);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool TerminateProcess(IntPtr process, uint exitCode);
+  [DllImport(\"kernel32.dll\")] static extern bool CloseHandle(IntPtr handle);
+  [DllImport(\"kernel32.dll\")] public static extern IntPtr LocalFree(IntPtr value);
+
+  public static int Launch(string app, string commandLine, string cwd, IntPtr sid, int parentPid) {
+    IntPtr size = IntPtr.Zero;
+    InitializeProcThreadAttributeList(IntPtr.Zero, 1, 0, ref size);
+    IntPtr list = Marshal.AllocHGlobal(size);
+    IntPtr capsPtr = IntPtr.Zero;
+    IntPtr job = IntPtr.Zero;
+    IntPtr parent = IntPtr.Zero;
+    PROCESS_INFORMATION process = new PROCESS_INFORMATION();
+    bool processCreated = false;
+    try {
+      if (!InitializeProcThreadAttributeList(list, 1, 0, ref size)) throw new Win32Exception(Marshal.GetLastWin32Error());
+      SECURITY_CAPABILITIES caps = new SECURITY_CAPABILITIES { AppContainerSid=sid, Capabilities=IntPtr.Zero, CapabilityCount=0, Reserved=0 };
+      capsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(caps)); Marshal.StructureToPtr(caps, capsPtr, false);
+      if (!UpdateProcThreadAttribute(list, 0, (IntPtr)0x20009, capsPtr, (IntPtr)Marshal.SizeOf(caps), IntPtr.Zero, IntPtr.Zero)) throw new Win32Exception(Marshal.GetLastWin32Error());
+      STARTUPINFOEX startup = new STARTUPINFOEX(); startup.StartupInfo.cb = Marshal.SizeOf(startup); startup.lpAttributeList = list;
+      job = CreateJobObject(IntPtr.Zero, null);
+      if (job == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
+      JOBOBJECT_EXTENDED_LIMIT_INFORMATION limits = new JOBOBJECT_EXTENDED_LIMIT_INFORMATION();
+      // A worker cannot bypass host executable sealing with its own child launch.
+      // Additional programs must be separate cue_workspace calls.
+      limits.BasicLimitInformation.LimitFlags = 0x00002000 | 0x00000008;
+      limits.BasicLimitInformation.ActiveProcessLimit = 1;
+      if (!SetInformationJobObject(job, 9, ref limits, (uint)Marshal.SizeOf(limits))) throw new Win32Exception(Marshal.GetLastWin32Error());
+      if (!CreateProcess(app, commandLine, IntPtr.Zero, IntPtr.Zero, false, 0x00080004, IntPtr.Zero, cwd, ref startup, out process)) throw new Win32Exception(Marshal.GetLastWin32Error());
+      processCreated = true;
+      if (!AssignProcessToJobObject(job, process.hProcess)) { TerminateProcess(process.hProcess, 111); throw new Win32Exception(Marshal.GetLastWin32Error()); }
+      parent = OpenProcess(0x00100000, false, parentPid);
+      if (parent == IntPtr.Zero) { int error = Marshal.GetLastWin32Error(); TerminateJobObject(job, 112); throw new Win32Exception(error); }
+      if (ResumeThread(process.hThread) == 0xffffffff) { TerminateProcess(process.hProcess, 112); throw new Win32Exception(Marshal.GetLastWin32Error()); }
+      Console.WriteLine(\"CUE_APPCONTAINER_PID=\" + process.dwProcessId + \";START_TIME=\" + DateTime.UtcNow.ToString(\"o\"));
+      Console.Out.Flush();
+      uint signaled = WaitForMultipleObjects(2, new IntPtr[] { process.hProcess, parent }, false, 0xffffffff);
+      if (signaled == 1) {
+        if (!TerminateJobObject(job, 114)) throw new Win32Exception(Marshal.GetLastWin32Error());
+        uint workerStopped = WaitForSingleObject(process.hProcess, 5000);
+        if (workerStopped == WAIT_TIMEOUT) throw new TimeoutException(\"AppContainer worker did not terminate within 5000ms after parent death\");
+        if (workerStopped == WAIT_FAILED) throw new Win32Exception(Marshal.GetLastWin32Error());
+        if (workerStopped != WAIT_OBJECT_0) throw new InvalidOperationException(\"unexpected worker termination wait result: \" + workerStopped);
+      }
+      else if (signaled != 0) { int error = Marshal.GetLastWin32Error(); TerminateJobObject(job, 115); throw new Win32Exception(error); }
+      uint exitCode; if (!GetExitCodeProcess(process.hProcess, out exitCode)) throw new Win32Exception(Marshal.GetLastWin32Error()); return unchecked((int)exitCode);
+    } finally {
+      if (processCreated) { CloseHandle(process.hThread); CloseHandle(process.hProcess); }
+      if (parent != IntPtr.Zero) CloseHandle(parent);
+      if (job != IntPtr.Zero) CloseHandle(job);
+      if (capsPtr != IntPtr.Zero) Marshal.FreeHGlobal(capsPtr);
+      if (list != IntPtr.Zero) { DeleteProcThreadAttributeList(list); Marshal.FreeHGlobal(list); }
+    }
+  }
+}
+'@
+
+$payload = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($PayloadBase64)) | ConvertFrom-Json
+$icacls = [IO.Path]::Combine([Environment]::GetFolderPath('Windows'), 'System32', 'icacls.exe')
+if (-not [IO.File]::Exists($icacls)) { throw 'sealed icacls executable missing' }
+$profile = [string]$payload.profileName
+if ($profile -notmatch '^Cue\\.Worker\\.[0-9a-f]{32}$') { throw 'invalid Cue AppContainer profile name' }
+$sid = [IntPtr]::Zero
+$sidText = $null
+$aceAdded = $false
+$profileCreated = $false
+$grantedPaths = @()
+$cleanupPaths = @()
+try {
+  $hr = [CueAppContainer]::CreateAppContainerProfile($profile, 'Cue worker', 'Ephemeral Cue worker boundary', [IntPtr]::Zero, 0, [ref]$sid)
+  if ($hr -ne 0) { throw \"CreateAppContainerProfile failed: 0x$('{0:X8}' -f $hr)\" }
+  $profileCreated = $true
+  $identity = New-Object Security.Principal.SecurityIdentifier($sid)
+  $sidText = $identity.Value
+  & $icacls $payload.cwd /grant \"*$sidText`:(OI)(CI)M\" /Q | Out-Null
+  if ($LASTEXITCODE -ne 0) { throw \"icacls grant failed: $LASTEXITCODE\" }
+  $aceAdded = $true
+  foreach ($grantPath in @($payload.grantPaths)) {
+    if (-not $grantPath) { continue }
+    & $icacls $grantPath /grant \"*$sidText`:(OI)(CI)M\" /Q | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw \"icacls grant failed for extra path: $LASTEXITCODE\" }
+    $grantedPaths += $grantPath
+  }
+  foreach ($cleanupPath in @($payload.cleanupPaths)) {
+    if (-not $cleanupPath) { continue }
+    $resolvedCleanup = [IO.Path]::GetFullPath([string]$cleanupPath)
+    $leaf = [IO.Path]::GetFileName($resolvedCleanup.TrimEnd([IO.Path]::DirectorySeparatorChar))
+    if (-not $leaf.StartsWith('codex-home-', [StringComparison]::Ordinal)) { throw \"unsafe cleanup path refused: $resolvedCleanup\" }
+    if ($resolvedCleanup -eq [IO.Path]::GetFullPath([string]$payload.cwd)) { throw \"worktree cleanup refused\" }
+    $cleanupPaths += $resolvedCleanup
+  }
+  $exitCode = [CueAppContainer]::Launch($payload.executable, $payload.commandLine, $payload.cwd, $sid, [int]$payload.parentPid)
+  Write-Output \"CUE_APPCONTAINER_EXIT=$exitCode\"
+  exit $exitCode
+} finally {
+  foreach ($cleanupPath in $cleanupPaths) { if (Test-Path -LiteralPath $cleanupPath) { Remove-Item -LiteralPath $cleanupPath -Recurse -Force } }
+  if ($aceAdded -and $sidText) { & $icacls $payload.cwd /remove \"*$sidText\" /Q | Out-Null }
+  foreach ($grantPath in $grantedPaths) { & $icacls $grantPath /remove \"*$sidText\" /Q | Out-Null }
+  if ($sid -ne [IntPtr]::Zero) { [CueAppContainer]::LocalFree($sid) | Out-Null }
+  if ($profileCreated) {
+    $deleteCode = -1
+    for ($attempt = 0; $attempt -lt 50; $attempt++) {
+      $deleteCode = [CueAppContainer]::DeleteAppContainerProfile($profile)
+      if ($deleteCode -eq 0) { break }
+      Start-Sleep -Milliseconds 100
+    }
+    if ($deleteCode -ne 0) { throw \"DeleteAppContainerProfile failed: 0x$('{0:X8}' -f $deleteCode)\" }
+  }
+}
+
+param(
+  [Parameter(Mandatory=$true)][string]$ProfileName,
+  [Parameter(Mandatory=$true)][string]$Worktree
+)
+
+$ErrorActionPreference = 'Stop'
+if ($ProfileName -notmatch '^Cue\\.Worker\\.[0-9a-f]{32}$') { throw 'invalid Cue AppContainer profile name' }
+$canonicalWorktree = [IO.Path]::GetFullPath($Worktree)
+$root = [IO.Path]::GetPathRoot($canonicalWorktree)
+if ($canonicalWorktree.TrimEnd([IO.Path]::DirectorySeparatorChar) -eq $root.TrimEnd([IO.Path]::DirectorySeparatorChar)) {
+  throw 'drive-root AppContainer cleanup is forbidden'
+}
+
+Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public static class CueAppContainerCleanup {
+  [DllImport(\"userenv.dll\", CharSet=CharSet.Unicode)] public static extern int DeriveAppContainerSidFromAppContainerName(string name, out IntPtr sid);
+  [DllImport(\"userenv.dll\", CharSet=CharSet.Unicode)] public static extern int DeleteAppContainerProfile(string name);
+  [DllImport(\"kernel32.dll\")] public static extern IntPtr LocalFree(IntPtr value);
+}
+'@
+
+$mappingRoot = 'Registry::HKEY_CURRENT_USER\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\CurrentVersion\\AppContainer\\Mappings'
+function Get-CueProfileCount {
+  if (-not (Test-Path $mappingRoot)) { return 0 }
+  return @(
+    Get-ChildItem $mappingRoot | Where-Object { (Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue).Moniker -eq $ProfileName }
+  ).Count
+}
+
+$sid = [IntPtr]::Zero
+try {
+  $derived = [CueAppContainerCleanup]::DeriveAppContainerSidFromAppContainerName($ProfileName, [ref]$sid)
+  if ($derived -ne 0) { throw \"DeriveAppContainerSidFromAppContainerName failed: 0x$('{0:X8}' -f $derived)\" }
+  $sidText = (New-Object Security.Principal.SecurityIdentifier($sid)).Value
+  if (Test-Path -LiteralPath $canonicalWorktree) {
+    $icacls = [IO.Path]::Combine([Environment]::GetFolderPath('Windows'), 'System32', 'icacls.exe')
+    if (-not [IO.File]::Exists($icacls)) { throw 'sealed icacls executable missing' }
+    & $icacls $canonicalWorktree /remove \"*$sidText\" /Q | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw \"icacls remove failed: $LASTEXITCODE\" }
+    $aclText = (& $icacls $canonicalWorktree 2>&1 | Out-String)
+    if ($LASTEXITCODE -ne 0) { throw \"icacls verification failed: $LASTEXITCODE\" }
+    if ($aclText.IndexOf($sidText, [StringComparison]::OrdinalIgnoreCase) -ge 0) { throw 'AppContainer worktree ACE cleanup could not be verified' }
+  }
+
+  $deleteCode = -1
+  for ($attempt = 0; $attempt -lt 50; $attempt++) {
+    $deleteCode = [CueAppContainerCleanup]::DeleteAppContainerProfile($ProfileName)
+    if ($deleteCode -eq 0 -or (Get-CueProfileCount) -eq 0) { $deleteCode = 0; break }
+    Start-Sleep -Milliseconds 100
+  }
+  if ($deleteCode -ne 0) { throw \"DeleteAppContainerProfile failed: 0x$('{0:X8}' -f $deleteCode)\" }
+  if ((Get-CueProfileCount) -ne 0) { throw 'AppContainer profile cleanup could not be verified' }
+  Write-Output 'CUE_APPCONTAINER_PROFILE_CLEANUP=PASS'
+} finally {
+  if ($sid -ne [IntPtr]::Zero) { [CueAppContainerCleanup]::LocalFree($sid) | Out-Null }
+}
+
+import type { Ledger } from './ledger.js';
+import type { Envelope } from './envelope.js';
+import { classifyPayload } from './payload.js';
+import { buildPermissionsAccept, isConcreteContainedPath, type PermissionsAccept } from './permissions-response.js';
+import { isCanonicalContained } from './worker-enforcement.js';
+
+export type Decision = { decision: 'accept' } | { decision: 'decline'; reason: string } | { decision: 'cancel'; reason: 'credential_request' | 'outside_grant_root' | 'uninspectable_payload' } | PermissionsAccept;
+export interface ApprovalIdentity { thread_id: string; item_id: string; approval_id: string | null; request_ordinal: number }
+export interface ApprovalRequest extends ApprovalIdentity {
+  method: string;
+  cwd: string | null;
+  command?: string | null;
+  entries?: unknown;
+  additionalPermissions?: unknown;
+  grantRoot?: unknown;
+  payloadBytes?: Uint8Array;
+  opaque?: boolean;
+  encrypted?: boolean;
+}
+export interface RunEnvelope { envelope: Envelope; envelope_hash: string; ended_at?: string }
+
+const actionByMethod: Readonly<Record<string, string>> = Object.freeze({
+  'permissions/request': 'permissions',
+  'commandExecution/request': 'command',
+  'fileChange/request': 'file_change',
+  'writeStdin/request': 'write_stdin',
+  'network/request': 'egress',
+});
+
+function contained(worktree: string, candidate: string): boolean {
+  return isCanonicalContained(worktree, candidate);
+}
+
+function mandatoryChecks(request: ApprovalRequest, active: RunEnvelope, now: Date): Decision | undefined {
+  if (active.ended_at || now.getTime() >= new Date(active.envelope.expires_at).getTime()) return { decision: 'decline', reason: 'inactive_envelope' };
+  if (request.cwd === null || !contained(active.envelope.worktree_realpath, request.cwd)) return { decision: 'decline', reason: 'cwd_mismatch' };
+  if (request.method === 'chatgptAuthTokens/refresh') return { decision: 'cancel', reason: 'credential_request' };
+  if (request.method.startsWith('item/tool/') || request.method === 'mcpServer/elicitation/request') return { decision: 'decline', reason: 'forbidden_method' };
+  if (request.grantRoot !== undefined && (typeof request.grantRoot !== 'string' || !contained(active.envelope.worktree_realpath, request.grantRoot))) return { decision: 'cancel', reason: 'outside_grant_root' };
+  if (request.opaque || request.encrypted || (request.payloadBytes && classifyPayload(request.payloadBytes) === undefined)) return { decision: 'cancel', reason: 'uninspectable_payload' };
+  const action = actionByMethod[request.method];
+  if (action === undefined) return { decision: 'decline', reason: 'unknown_action' };
+  if (!active.envelope.allowed_actions.includes(action)) return { decision: 'decline', reason: 'outside_envelope' };
+  if (request.method === 'commandExecution/request' && request.command == null) return { decision: 'decline', reason: 'missing_command' };
+  return undefined;
+}
+
+function inspectAdditional(worktree: string, value: unknown): boolean {
+  if (value === undefined) return true;
+  if (!Array.isArray(value)) return false;
+  return value.every(item => item && typeof item === 'object' && !('special' in item) && isConcreteContainedPath(worktree, (item as Record<string, unknown>).path));
+}
+
+function record(db: Ledger, active: RunEnvelope, request: ApprovalRequest, decision: Decision, now: Date): Decision {
+  try {
+    db.prepare('INSERT INTO approval_event(run_id,envelope_hash,thread_id,item_id,approval_id,request_ordinal,decision,created_at) VALUES(?,?,?,?,?,?,?,?)')
+      .run(active.envelope.run_id, active.envelope_hash, request.thread_id, request.item_id, request.approval_id, request.request_ordinal, decision.decision === 'accept' ? 'accept' : 'decline', now.toISOString());
+    return decision;
+  } catch (error) {
+    if (!(error instanceof Error) || !/UNIQUE/.test(error.message)) throw error;
+    const run = db.prepare('SELECT task_id FROM run WHERE id=?').get(active.envelope.run_id) as { task_id: string };
+    db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)')
+      .run(run.task_id, active.envelope.run_id, 'replay_alert', JSON.stringify({ thread_id: request.thread_id, item_id: request.item_id, approval_id: request.approval_id, request_ordinal: request.request_ordinal }), now.toISOString());
+    return { decision: 'decline', reason: 'replay' };
+  }
+}
+
+export function decideApproval(db: Ledger, active: RunEnvelope, request: ApprovalRequest, now = new Date()): Decision {
+  let decision = mandatoryChecks(request, active, now);
+  if (!decision && !inspectAdditional(active.envelope.worktree_realpath, request.additionalPermissions)) decision = { decision: 'decline', reason: 'additional_permissions' };
+  if (!decision && request.method === 'permissions/request') decision = buildPermissionsAccept(active.envelope.worktree_realpath, request.entries) ?? { decision: 'decline', reason: 'invalid_permissions' };
+  if (!decision) decision = { decision: 'accept' };
+  return record(db, active, request, decision, now);
+}
+
+export type AutonomyLevel = 1 | 2 | 3;
+export interface ApprovalCopy {
+  readonly what: string;
+  readonly extent: string;
+  readonly excluded: string;
+  readonly envelopeSummary: string;
+  readonly autonomy?: AutonomyLevel;
+}
+
+export function renderApproval(copy: ApprovalCopy): string {
+  const level = copy.autonomy ?? 3;
+  return [
+    `무엇을: ${copy.what}`,
+    `어디까지: ${copy.extent}`,
+    `안 건드릴 것: ${copy.excluded}`,
+    `봉투: ${copy.envelopeSummary} · 자율성 ③`.replace('③', ['','①','②','③'][level]),
+  ].join('\\n');
+}
+
+export interface InterviewCandidate { readonly question: string; readonly changesEnvelope: boolean }
+export function interview(candidates: readonly InterviewCandidate[]): readonly string[] {
+  return candidates.filter(candidate => candidate.changesEnvelope).slice(0, 3).map(candidate => candidate.question);
+}
+
+export function narrowUncertainty(copy: ApprovalCopy, uncertainArea: string): ApprovalCopy {
+  return Object.freeze({...copy, excluded: `${copy.excluded}; 불확실: ${uncertainArea}`});
+}
+
+export interface PreferenceRequest { readonly text: string; readonly effect: 'presentation_only'|'skip_confirmation'|'expand_scope' }
+export function assessPreference(request: PreferenceRequest): { allowed: boolean; requiresApproval: boolean; reason: string } {
+  if (request.effect !== 'presentation_only') return {allowed:false,requiresApproval:true,reason:'effect_would_expand_authority'};
+  return {allowed:true,requiresApproval:false,reason:'presentation_only'};
+}
+
+export interface CueIdentityConfig {
+  readonly identity: '@cue';
+  readonly relayEndpoint: string;
+  readonly credentialRef: string;
+}
+
+export interface BuzzMessage {
+  readonly channel_id: string;
+  readonly thread_root: string;
+  readonly text: string;
+}
+
+export type BuzzSend = (config: CueIdentityConfig, message: BuzzMessage) => Promise<void>;
+
+export class CueBuzzAdapter {
+  constructor(private readonly config: CueIdentityConfig | undefined, private readonly sendViaRelay: BuzzSend) {}
+
+  async send(message: BuzzMessage): Promise<'sent' | 'identity_unconfigured'> {
+    if (!this.config) return 'identity_unconfigured';
+    await this.sendViaRelay(this.config, message);
+    return 'sent';
+  }
+}
+
+import { fileURLToPath } from 'node:url';
+import { basename } from 'node:path';
+import { randomUUID } from 'node:crypto';
+import type { Ledger } from './ledger.js';
+import { vendorCodexLaunchSpec } from './tool-home.js';
+import { spawnOwned, type SessionOwner } from './session-spawn.js';
+import { resolveOwnedExecutable } from './process-launch.js';
+
+function quote(value: string): string {
+  return value.length && !/[\\s\"]/u.test(value)
+    ? value
+    : `\"${value.replace(/(\\\\*)\"/gu, '$1$1\\\\\"').replace(/(\\\\+)$/u, '$1$1')}\"`;
+}
+
+/** Legacy whole-Codex launcher retained for compatibility probes only.
+ * Production Cue v0.1 uses host-codex-runtime plus AppContainer tool workers.
+ */
+export function spawnVendorCodexInAppContainer(
+  db: Ledger,
+  owner: SessionOwner,
+  binary: string,
+  codexHome: string,
+  args: readonly string[],
+) {
+  const spec = vendorCodexLaunchSpec(binary, args, codexHome);
+  const executable = resolveOwnedExecutable(db, owner, spec.command, [codexHome], spec.env);
+  const launcher = resolveOwnedExecutable(db, owner, fileURLToPath(new URL('./appcontainer-launch.ps1', import.meta.url)));
+  const disposableHome = basename(codexHome).startsWith('codex-home-');
+  const payload = Buffer.from(JSON.stringify({
+    executable,
+    commandLine: [executable, ...spec.args].map(quote).join(' '),
+    cwd: owner.cwd,
+    parentPid: process.pid,
+    profileName: `Cue.Worker.${randomUUID().replaceAll('-', '')}`,
+    grantPaths: [codexHome],
+    cleanupPaths: disposableHome ? [codexHome] : [],
+  })).toString('base64');
+  const launched = spawnOwned(
+    db,
+    owner,
+    'powershell.exe',
+    ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', launcher, '-PayloadBase64', payload],
+    { env: spec.env, stdio: 'pipe' },
+  );
+  launched.child.stdin?.end();
+  let pending = '';
+  launched.child.stdout?.on('data', chunk => {
+    pending += String(chunk);
+    const match = pending.match(/CUE_APPCONTAINER_PID=(\\d+);START_TIME=([^\\r\\n]+)/u);
+    if (!match) return;
+    launched.session.pid = Number(match[1]);
+    launched.session.start_time = match[2];
+    if (db.open) {
+      db.prepare('UPDATE session_handle SET pid=?,start_time=? WHERE handle=?')
+        .run(launched.session.pid, launched.session.start_time, launched.session.handle);
+    }
+    pending = '';
+  });
+  return launched;
+}
+
+import type { Ledger } from './ledger.js';
+import type { HealthVector } from './health.js';
+import { failedComponents } from './health.js';
+import type { AutonomyLevel } from './approval-surface.js';
+import type { BuzzMessage, CueBuzzAdapter } from './buzz-adapter.js';
+
+export interface AcceptedConversationRun {
+  readonly taskId: string;
+  readonly runId: string;
+  readonly envelopeHash: string;
+  readonly channelId: string;
+  readonly threadRoot: string;
+  readonly autonomy?: AutonomyLevel;
+  readonly retryCap: number;
+}
+
+export class ConversationDaemonApi {
+  private serial: Promise<void> = Promise.resolve();
+  constructor(private readonly db: Ledger, private readonly outbound: CueBuzzAdapter) {}
+
+  accept(request: AcceptedConversationRun, health: HealthVector, now = new Date()): {accepted:true; autonomy:AutonomyLevel}|{accepted:false; message:string} {
+    const dead = failedComponents(health);
+    if (dead.length) return {accepted:false, message:`작업을 수락하지 않았습니다. 죽은 구성요소: ${dead.join(', ')}`};
+    const run = this.db.prepare('SELECT task_id,envelope_hash FROM run WHERE id=?').get(request.runId) as {task_id:string;envelope_hash:string}|undefined;
+    if (!run || run.task_id !== request.taskId || run.envelope_hash !== request.envelopeHash) return {accepted:false, message:'작업을 수락하지 않았습니다. 실행 봉투가 원장과 일치하지 않습니다.'};
+    const level = request.autonomy ?? 3;
+    this.db.transaction(() => {
+      this.db.prepare('INSERT INTO conversation_route(run_id,channel_id,thread_root,approved_at) VALUES(?,?,?,?)').run(request.runId, request.channelId, request.threadRoot, now.toISOString());
+      this.db.prepare('INSERT INTO run_autonomy(run_id,level,retry_cap,recorded_at) VALUES(?,?,?,?)').run(request.runId, level, request.retryCap, now.toISOString());
+      this.db.prepare(\"UPDATE task SET state='running' WHERE id=?\").run(request.taskId);
+    })();
+    return {accepted:true, autonomy:level};
+  }
+
+  sendResult(runId: string, text: string): Promise<'sent'|'identity_unconfigured'> {
+    const route = this.db.prepare('SELECT channel_id,thread_root FROM conversation_route WHERE run_id=?').get(runId) as {channel_id:string;thread_root:string}|undefined;
+    if (!route) return Promise.resolve('identity_unconfigured');
+    const message: BuzzMessage = {...route, text};
+    const operation = this.serial.then(() => this.outbound.send(message));
+    this.serial = operation.then(() => undefined, () => undefined);
+    return operation;
+  }
+
+  enqueue<T>(channelId:string, work:()=>Promise<T>):Promise<{channelId:string;value:T}> {
+    const operation=this.serial.then(async()=>({channelId,value:await work()}));
+    this.serial=operation.then(()=>undefined,()=>undefined);
+    return operation;
+  }
+}
+
+import Database from 'better-sqlite3';
+import { mkdirSync, realpathSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join, relative, isAbsolute } from 'node:path';
+import { randomUUID } from 'node:crypto';
+import { openLedger, type Ledger } from './ledger.js';
+import { fenceInterruptedSessions, reconcileInterruptedWrites } from './recovery.js';
+import { cleanupInterruptedAppContainerProfiles } from './worker-enforcement.js';
+
+const localOwners = new Map<string, Ledger>();
+function live(pid: number): boolean {
+  try { process.kill(pid, 0); return true; }
+  catch (error) { return (error as NodeJS.ErrnoException).code !== 'ESRCH'; }
+}
+
+/** Refuse a second daemon before it can fence or launch work in an owned tree. */
+export function ownDaemonWorktree(worktree: string, ledgerPath: string, ledger: Ledger): () => void {
+  const root = realpathSync.native(worktree);
+  const guardRoot = join(process.env.LOCALAPPDATA ?? homedir(), 'Cue', 'writer-ownership');
+  mkdirSync(guardRoot, { recursive: true });
+  const guard = realpathSync.native(guardRoot);
+  const rel = relative(root, guard);
+  if (rel === '' || (rel.split(/[\\\\/]/u)[0] !== '..' && !isAbsolute(rel))) throw new Error('worktree contains daemon ownership storage');
+  const db = new Database(join(guard, 'ownership.sqlite'), { timeout: 15000 });
+  db.exec('CREATE TABLE IF NOT EXISTS owner(worktree TEXT PRIMARY KEY, identity TEXT NOT NULL, pid INTEGER NOT NULL, ledger_path TEXT NOT NULL)');
+  const key = process.platform === 'win32' ? root.toLowerCase() : root;
+  const contains = (parent: string, child: string): boolean => {
+    const path = relative(parent, child);
+    return path === '' || (path.split(/[\\\\/]/u)[0] !== '..' && !isAbsolute(path));
+  };
+  const identity = randomUUID();
+  const staleLocalIdentities: string[] = [];
+  try {
+    db.transaction(() => {
+      const overlapping = (db.prepare('SELECT worktree,identity,pid,ledger_path FROM owner').all() as Array<{ worktree: string; identity: string; pid: number; ledger_path: string }>)
+        .filter(previous => contains(previous.worktree, key) || contains(key, previous.worktree));
+      for (const previous of overlapping) {
+        const local = localOwners.get(previous.identity);
+        // A reused PID is conservatively treated as live; never kill an unrelated owner.
+        if (live(previous.pid) && !(previous.pid === process.pid && local && !local.open)) throw new Error('worktree already owned by a live daemon');
+      }
+      for (const previous of overlapping) {
+        const interrupted = previous.ledger_path === ledgerPath ? ledger : openLedger(previous.ledger_path);
+        try {
+          fenceInterruptedSessions(interrupted);
+          cleanupInterruptedAppContainerProfiles(interrupted, previous.worktree);
+          reconcileInterruptedWrites(interrupted, previous.worktree);
+        } finally { if (interrupted !== ledger) interrupted.close(); }
+        db.prepare('DELETE FROM owner WHERE worktree=? AND identity=?').run(previous.worktree, previous.identity);
+        staleLocalIdentities.push(previous.identity);
+      }
+      // Startup recovery is part of ownership acquisition: a failed fence cannot
+      // publish a live owner or permit a replacement daemon to start writing.
+      fenceInterruptedSessions(ledger);
+      cleanupInterruptedAppContainerProfiles(ledger, root);
+      reconcileInterruptedWrites(ledger, root);
+      db.prepare('INSERT OR REPLACE INTO owner VALUES(?,?,?,?)').run(key, identity, process.pid, ledgerPath);
+    }).immediate();
+    for (const staleIdentity of staleLocalIdentities) localOwners.delete(staleIdentity);
+    localOwners.set(identity, ledger);
+  } finally { db.close(); }
+  return () => {
+    const release = new Database(join(guard, 'ownership.sqlite'), { timeout: 15000 });
+    try { release.prepare('DELETE FROM owner WHERE worktree=? AND identity=?').run(key, identity); }
+    finally { release.close(); localOwners.delete(identity); }
+  };
+}
+
+export type DeadlockChoice = 'continue' | 'expand' | 'stop';
+export interface DeadlockState { status: 'running' | '막힘 — 봉투 밖'; digestCounts: Record<string,number>; suppressed: string[]; choices: readonly ['이 상태로 계속','범위 넓히기','중단']; defaultChoice: DeadlockChoice }
+
+export function initialDeadlockState(): DeadlockState { return {status:'running',digestCounts:{},suppressed:[],choices:['이 상태로 계속','범위 넓히기','중단'],defaultChoice:'continue'}; }
+export function noteOutsideRequest(state: DeadlockState, digest: string, stalledAfterApproval = false): DeadlockState {
+  if (state.suppressed.includes(digest)) return state;
+  const count=(state.digestCounts[digest] ?? 0)+1;
+  return {...state,digestCounts:{...state.digestCounts,[digest]:count},status:count>=2||stalledAfterApproval?'막힘 — 봉투 밖':'running'};
+}
+export function chooseDeadlock(state: DeadlockState, choice: DeadlockChoice, digest: string): DeadlockState {
+  if(choice==='continue') return {...state,status:'running',suppressed:[...new Set([...state.suppressed,digest])]};
+  return {...state,status:choice==='stop'?'막힘 — 봉투 밖':'running'};
+}
+
+import type { Ledger } from './ledger.js';
+import { routeTask } from './routing.js';
+import { WorkspaceLeases } from './workspace-lease.js';
+import { closeTask } from './task-close.js';
+import { listOrphanSessions, } from './orphan-sessions.js';
+import type { SessionRecord } from './session-spawn.js';
+import { spawnVendorCodexInAppContainer } from './codex-session.js';
+import { classifyIdle, collectSignals, diagnoseCandidates, type IdleObservation, type SignalSource, type WatchSignal } from './watcher.js';
+
+export interface DispatchRequest { routingPath:string; description:string; taskId:string; runId:string; worktree:string; readOnly:boolean; binary?:string; codexHome?:string; args?:readonly string[] }
+
+export class Dispatcher {
+  private readonly queued = new Map<string,{tool:string;request:DispatchRequest}>();
+  constructor(private readonly db:Ledger, private readonly leases:WorkspaceLeases) {}
+  inspectWorker(observations:Partial<Record<SignalSource,unknown>>, idle:IdleObservation, diagnose:(signals:readonly WatchSignal[])=>unknown):{state:'blocked/idle'|'observing';diagnosis:unknown|undefined;signals:WatchSignal[]} {
+    const signals=collectSignals(observations);
+    return {state:classifyIdle(idle),diagnosis:diagnoseCandidates(signals,diagnose),signals};
+  }
+  private spawnTool(tool:string, request:DispatchRequest): void {
+    if (tool !== 'codex') throw new Error(`unsupported tool: ${tool}`);
+    const binary=request.binary ?? process.env.CUE_VENDOR_CODEX, codexHome=request.codexHome ?? process.env.CODEX_HOME;
+    if (!binary || !codexHome) throw new Error('owned Codex launch configuration required');
+    spawnVendorCodexInAppContainer(this.db,{cwd:request.worktree,task_id:request.taskId,run_id:request.runId},binary,codexHome,request.args ?? []);
+  }
+  dispatch(request:DispatchRequest): 'ask_me'|'queued'|'running' {
+    const route=routeTask(request.routingPath,request.description);
+    if (route.state==='ask_me') {
+      this.db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)').run(request.taskId,request.runId,'ask_me','no routing rule',new Date().toISOString());
+      return 'ask_me';
+    }
+    const state=this.leases.acquire({taskId:request.taskId,worktree:request.worktree,readOnly:request.readOnly});
+    this.db.prepare('UPDATE task SET state=? WHERE id=?').run(state,request.taskId);
+    if (state==='running') this.spawnTool(route.tool,request); else this.queued.set(request.taskId,{tool:route.tool,request});
+    return state;
+  }
+  finish(request:DispatchRequest, close:()=>boolean): 'succeeded'|'still_unsafe' {
+    const result=closeTask(this.db,request.taskId,request.runId,close);
+    if (!request.readOnly) {
+      const next=this.leases.release(request.worktree,request.taskId), queued=next ? this.queued.get(next) : undefined;
+      if (queued) { this.queued.delete(next!); this.db.prepare('UPDATE task SET state=? WHERE id=?').run('running',next); this.spawnTool(queued.tool,queued.request); }
+    }
+    return result;
+  }
+  restart(observed:readonly SessionRecord[]):SessionRecord[] { return listOrphanSessions(this.db,observed); }
+}
+
+import { createHash } from 'node:crypto';
+import { realpathSync } from 'node:fs';
+
+export type AutonomyLevel = 'supervised' | 'bounded';
+
+export interface Envelope {
+  run_id: string;
+  worktree_realpath: string;
+  egress: string[];
+  expires_at: string;
+  autonomy_level: AutonomyLevel;
+  allowed_actions: string[];
+}
+
+export function normalizeEnvelope(value: Envelope): Envelope {
+  return {
+    allowed_actions: [...new Set(value.allowed_actions)].sort(),
+    autonomy_level: value.autonomy_level,
+    egress: [...new Set(value.egress)].sort(),
+    expires_at: new Date(value.expires_at).toISOString(),
+    run_id: value.run_id,
+    worktree_realpath: realpathSync.native(value.worktree_realpath),
+  };
+}
+
+export function envelopeHash(value: Envelope): string {
+  return createHash('sha256').update(JSON.stringify(normalizeEnvelope(value))).digest('hex');
+}
+
+import type { Ledger } from './ledger.js';
+
+export interface ExecutionIdentity { run_id: string; thread_id: string; item_id: string | null; approval_id: string | null; execution_id: string; execution_ordinal: number }
+
+export function hasAcceptedApproval(db: Ledger, event: Pick<ExecutionIdentity,'run_id'|'thread_id'|'item_id'|'approval_id'>): boolean {
+  const row = db.prepare(`SELECT 1 AS authorized FROM approval_event
+    WHERE run_id=? AND thread_id=? AND item_id IS ? AND approval_id IS ? AND decision='accept' LIMIT 1`)
+    .get(event.run_id,event.thread_id,event.item_id,event.approval_id) as {authorized:1}|undefined;
+  return row?.authorized === 1;
+}
+
+export function recordExecution(db: Ledger, event: ExecutionIdentity, now = new Date()): void {
+  db.prepare('INSERT INTO execution_event(run_id,thread_id,item_id,approval_id,execution_id,execution_ordinal,created_at) VALUES(?,?,?,?,?,?,?)')
+    .run(event.run_id,event.thread_id,event.item_id,event.approval_id,event.execution_id,event.execution_ordinal,now.toISOString());
+  const approvals = db.prepare(\"SELECT count(*) n FROM approval_event WHERE run_id=? AND decision='accept'\").get(event.run_id) as {n:number};
+  const executions = db.prepare('SELECT count(*) n FROM execution_event WHERE run_id=?').get(event.run_id) as {n:number};
+  if (executions.n > approvals.n) {
+    const run = db.prepare('SELECT task_id FROM run WHERE id=?').get(event.run_id) as {task_id:string};
+    db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)')
+      .run(run.task_id,event.run_id,'execution_over_approval',JSON.stringify({approvals:approvals.n,executions:executions.n}),now.toISOString());
+  }
+}
+
+export function completionApprovalLabel(db: Ledger, taskId: string): string {
+  const counts = db.prepare(\"SELECT sum(decision='accept') accepted,sum(decision='decline') declined FROM approval_event JOIN run ON run.id=approval_event.run_id WHERE run.task_id=?\").get(taskId) as {accepted:number|null;declined:number|null};
+  return `자동 승인 ${counts.accepted ?? 0}건 · 거부 ${counts.declined ?? 0}건`;
+}
+
+import type { HealthVector } from './health.js';
+import type { AcceptedConversationRun, ConversationDaemonApi } from './conversation-daemon.js';
+
+export const frontdoorTools = Object.freeze(['conversation', 'daemon_api'] as const);
+export type FrontdoorTool = typeof frontdoorTools[number];
+
+export function authorizeFrontdoorTool(tool: string): tool is FrontdoorTool {
+  return (frontdoorTools as readonly string[]).includes(tool);
+}
+
+export class FrontdoorSession {
+  private closed = false;
+  constructor(private readonly daemonApi: Pick<ConversationDaemonApi, 'accept'>) {}
+  close():void { this.closed=true; }
+  isClosed():boolean { return this.closed; }
+  request(tool:string, run:AcceptedConversationRun, health:HealthVector):ReturnType<ConversationDaemonApi['accept']> {
+    if (!authorizeFrontdoorTool(tool)) throw new Error('frontdoor tool denied');
+    if (tool !== 'daemon_api') throw new Error('conversation cannot start a run');
+    return this.daemonApi.accept(run,health);
+  }
+}
+
+export const componentNames = ['orca', 'codex_app_server', 'daemon', 'sentinel'] as const;
+export type ComponentName = typeof componentNames[number];
+export type HealthVector = Record<ComponentName, { name: ComponentName; alive: boolean }>;
+export function healthVector(status: Record<ComponentName, boolean>): HealthVector {
+  return Object.fromEntries(componentNames.map(name => [name, { name, alive: status[name] }])) as HealthVector;
+}
+export function failedComponents(vector: HealthVector): ComponentName[] {
+  return componentNames.filter(name => !vector[name].alive);
+}
+
+import { writeHeartbeat } from './heartbeat.js';
+const [path, start] = process.argv.slice(2);
+if (!path || !start) throw new Error('heartbeat path and start time required');
+const tick = (): void => writeHeartbeat(path, { pid: process.pid, start_time: start });
+tick();
+setInterval(tick, 30);
+
+import { mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from 'node:fs';
+import { dirname } from 'node:path';
+
+export type ProcessIdentity = { pid: number; start_time: string };
+export type Heartbeat = ProcessIdentity & { written_at: string };
+
+export function writeHeartbeat(path: string, identity: ProcessIdentity, now = new Date()): void {
+  mkdirSync(dirname(path), { recursive: true });
+  const temp = `${path}.${identity.pid}.tmp`;
+  writeFileSync(temp, JSON.stringify({ ...identity, written_at: now.toISOString() } satisfies Heartbeat));
+  renameSync(temp, path);
+}
+export function readHeartbeat(path: string): Heartbeat { return JSON.parse(readFileSync(path, 'utf8')) as Heartbeat; }
+export function heartbeatAgeMs(path: string, nowMs = Date.now()): number { return nowMs - statSync(path).mtimeMs; }
+export function heartbeatExpired(path: string, maxAgeMs: number, nowMs = Date.now()): boolean { return heartbeatAgeMs(path, nowMs) > maxAgeMs; }
+
+import { createInterface, type Interface as ReadLineInterface } from 'node:readline';
+import { isAbsolute, relative, resolve, sep } from 'node:path';
+import type { Readable, Writable } from 'node:stream';
+
+export const CUE_WORKSPACE_TOOL = Object.freeze({
+  type: 'function',
+  name: 'cue_workspace',
+  description: 'Perform an exact text write or run one program inside Cue\\'s capability-zero Windows AppContainer. The working directory is pinned to the approved worktree. Prefer operation=write_text for exact file creation or replacement.',
+  deferLoading: false,
+  inputSchema: Object.freeze({
+    type: 'object',
+    oneOf: Object.freeze([
+      Object.freeze({
+        type: 'object',
+        additionalProperties: false,
+        properties: Object.freeze({
+          program: Object.freeze({ type: 'string', minLength: 1, maxLength: 4096 }),
+          args: Object.freeze({ type: 'array', items: Object.freeze({ type: 'string', maxLength: 32_768 }), maxItems: 256 }),
+          timeoutMs: Object.freeze({ type: 'integer', minimum: 1, maximum: 120_000 }),
+        }),
+        required: Object.freeze(['program', 'args']),
+      }),
+      Object.freeze({
+        type: 'object',
+        additionalProperties: false,
+        properties: Object.freeze({
+          operation: Object.freeze({ type: 'string', enum: Object.freeze(['write_text']) }),
+          path: Object.freeze({ type: 'string', minLength: 1, maxLength: 4096 }),
+          content: Object.freeze({ type: 'string', maxLength: 16_384 }),
+          timeoutMs: Object.freeze({ type: 'integer', minimum: 1, maximum: 120_000 }),
+        }),
+        required: Object.freeze(['operation', 'path', 'content']),
+      }),
+    ]),
+  }),
+});
+
+export interface HostThreadStartParams {
+  cwd: string;
+  model?: string;
+  ephemeral: true;
+  sandbox: 'read-only';
+  environments: readonly [];
+  approvalsReviewer: 'user';
+  approvalPolicy: {
+    granular: {
+      mcp_elicitations: false;
+      request_permissions: false;
+      rules: false;
+      sandbox_approval: false;
+      skill_approval: false;
+    };
+  };
+  developerInstructions: string;
+  dynamicTools: readonly [typeof CUE_WORKSPACE_TOOL];
+}
+
+export function buildHostThreadStartParams(cwd: string, goal: string, model?: string): HostThreadStartParams {
+  if (!cwd.trim()) throw new Error('worktree cwd required');
+  if (!goal.trim()) throw new Error('goal required');
+  return Object.freeze({
+    cwd,
+    ...(model ? { model } : {}),
+    ephemeral: true,
+    sandbox: 'read-only',
+    environments: Object.freeze([]) as readonly [],
+    approvalsReviewer: 'user',
+    approvalPolicy: Object.freeze({
+      granular: Object.freeze({
+        mcp_elicitations: false,
+        request_permissions: false,
+        rules: false,
+        sandbox_approval: false,
+        skill_approval: false,
+      }),
+    }),
+    developerInstructions: [
+      'You are Cue\\'s host-side reasoning and model-communication controller.',
+      'No host workspace execution environment is available.',
+      'Use cue_workspace for every command and every file read, write, build, or test operation.',
+      'The tool is pinned to the user-approved worktree and runs inside a capability-zero Windows AppContainer.',
+      'The worker OS is Windows. Prefer powershell.exe with -NoProfile and -NonInteractive; each call starts a fresh process in the approved worktree.',
+      'Worker child processes are prohibited by the OS job. Request each executable directly in a separate cue_workspace call so Cue resolves and verifies it outside every writable worktree. Commands requiring nested subprocesses are unsupported.',
+      'For exact file creation or replacement, Prefer cue_workspace operation=write_text with a relative path and literal content; Cue encodes the values and the AppContainer worker writes exact UTF-8 bytes. Verify exact file content with a separate PowerShell built-in read.',
+      'Use PowerShell or cmd.exe built-ins only for other file checks. Do not run git, npm, node, python, or repository-discovery commands; they may traverse unapproved ancestor paths or require child processes.',
+      'Never invent command output or claim completion without verifying the requested result through cue_workspace.',
+      `Complete this approved goal: ${goal}`,
+    ].join('\\n'),
+    dynamicTools: Object.freeze([CUE_WORKSPACE_TOOL]) as readonly [typeof CUE_WORKSPACE_TOOL],
+  });
+}
+
+export interface DynamicToolCallParams {
+  namespace?: unknown;
+  tool?: unknown;
+  arguments?: unknown;
+}
+
+export interface CueWorkspaceCommand {
+  executable: string;
+  args: string[];
+  cwd: string;
+  timeoutMs: number;
+  operation?: 'write_text';
+  inspectedPaths?: string[];
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+export function parseCueWorkspaceCall(params: DynamicToolCallParams, approvedCwd: string): CueWorkspaceCommand {
+  if ((params.namespace !== undefined && params.namespace !== null) || params.tool !== CUE_WORKSPACE_TOOL.name) {
+    throw new Error('unapproved dynamic tool');
+  }
+  if (!isRecord(params.arguments)) throw new Error('dynamic tool arguments must be an object');
+  const operation = params.arguments.operation;
+  if (operation === 'write_text') {
+    const allowed = new Set(['operation', 'path', 'content', 'timeoutMs']);
+    for (const key of Object.keys(params.arguments)) {
+      if (!allowed.has(key)) throw new Error(`unexpected dynamic tool argument: ${key}`);
+    }
+    const path = params.arguments.path;
+    const content = params.arguments.content;
+    const timeoutMs = params.arguments.timeoutMs ?? 120_000;
+    if (typeof path !== 'string' || !path.trim() || path.length > 4096 || path.includes('\\0') || isAbsolute(path)) {
+      throw new Error('write_text path must be a non-empty relative path');
+    }
+    if (Buffer.from(path, 'utf8').toString('utf8') !== path) {
+      throw new Error('write_text path must contain valid Unicode scalar values');
+    }
+    const target = resolve(approvedCwd, path);
+    const relativeTarget = relative(approvedCwd, target);
+    if (!relativeTarget || relativeTarget === '..' || relativeTarget.startsWith(`..${sep}`) || isAbsolute(relativeTarget)) {
+      throw new Error('write_text path escapes the approved worktree');
+    }
+    if (typeof content !== 'string' || Buffer.byteLength(content, 'utf8') > 16_384 || content.includes('\\0')) {
+      throw new Error('write_text content must be a UTF-8 string of at most 16384 bytes');
+    }
+    if (Buffer.from(content, 'utf8').toString('utf8') !== content) {
+      throw new Error('write_text content must contain valid Unicode scalar values');
+    }
+    if (!Number.isInteger(timeoutMs) || Number(timeoutMs) < 1 || Number(timeoutMs) > 120_000) {
+      throw new Error('timeoutMs out of range');
+    }
+    const encodedPath = Buffer.from(path, 'utf8').toString('base64');
+    const encodedContent = Buffer.from(content, 'utf8').toString('base64');
+    const script = [
+      \"$ErrorActionPreference='Stop'\",
+      `$relative=[Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('${encodedPath}'))`,
+      '$target=[IO.Path]::GetFullPath([IO.Path]::Combine([Environment]::CurrentDirectory,$relative))',
+      `$bytes=[Convert]::FromBase64String('${encodedContent}')`,
+      '$parent=[IO.Path]::GetDirectoryName($target)',
+      'if ($parent) {[IO.Directory]::CreateDirectory($parent) | Out-Null}',
+      '[IO.File]::WriteAllBytes($target,$bytes)',
+      \"[Console]::Out.Write('CUE_WRITE_OK')\",
+    ].join(';');
+    const workerArgs = ['-NoProfile', '-NonInteractive', '-Command', script];
+    const commandLineChars = 'powershell.exe'.length + workerArgs.reduce((total, arg) => total + arg.length + 3, 0);
+    if (commandLineChars > 30_000) {
+      throw new Error('write_text request exceeds the safe Windows command-line budget');
+    }
+    return {
+      executable: 'powershell.exe',
+      args: workerArgs,
+      cwd: approvedCwd,
+      timeoutMs: Number(timeoutMs),
+      operation: 'write_text',
+      inspectedPaths: [target],
+    };
+  }
+  if (operation !== undefined) throw new Error('unsupported cue_workspace operation');
+  const allowed = new Set(['program', 'args', 'timeoutMs']);
+  for (const key of Object.keys(params.arguments)) {
+    if (!allowed.has(key)) throw new Error(`unexpected dynamic tool argument: ${key}`);
+  }
+  const program = params.arguments.program;
+  const args = params.arguments.args;
+  const timeoutMs = params.arguments.timeoutMs ?? 120_000;
+  if (typeof program !== 'string' || !program.trim() || program.length > 4096 || program.includes('\\0')) {
+    throw new Error('program must be a non-empty string');
+  }
+  if (!Array.isArray(args) || args.length > 256 || args.some(arg => typeof arg !== 'string' || arg.includes('\\0'))) {
+    throw new Error('args must contain only strings');
+  }
+  const argSizes = args.map(arg => Buffer.byteLength(arg, 'utf8'));
+  if (argSizes.some(size => size > 32_768)) throw new Error('per-argument byte limit exceeded');
+  if (argSizes.reduce((total, size) => total + size, 0) > 131_072) throw new Error('aggregate argument byte limit exceeded');
+  if (!Number.isInteger(timeoutMs) || Number(timeoutMs) < 1 || Number(timeoutMs) > 120_000) {
+    throw new Error('timeoutMs out of range');
+  }
+  return { executable: program, args: [...args] as string[], cwd: approvedCwd, timeoutMs: Number(timeoutMs) };
+}
+
+export interface WorkspaceWorkerResult {
+  exitCode: number | null;
+  stdout: string;
+  stderr: string;
+  appContainerPid?: number;
+  enforcement: string;
+  violation?: string;
+}
+
+const TERMINAL_ENFORCEMENT_VIOLATIONS = new Set(['filesystem', 'network_gate', 'executable_sealing']);
+
+export class CueEnforcementViolationError extends Error {
+  readonly code = 'CUE_ENFORCEMENT_VIOLATION';
+  readonly violation: string;
+
+  constructor(violation: string) {
+    super(`CUE_ENFORCEMENT_VIOLATION: ${violation}`);
+    this.name = 'CueEnforcementViolationError';
+    this.violation = violation;
+  }
+}
+
+function boundedDiagnostic(value: string): { text: string; truncated: boolean } {
+  const redacted = value.replace(/((?:token|secret|password|api[_-]?key)\\s*[:=]\\s*)[^\\s;]+/giu, '$1[REDACTED]');
+  const maximum = 7_500;
+  return redacted.length <= maximum
+    ? { text: redacted, truncated: false }
+    : { text: `${redacted.slice(0, maximum)}\\n[CUE_OUTPUT_TRUNCATED]`, truncated: true };
+}
+
+export function workspaceToolResponse(result: WorkspaceWorkerResult): {
+  contentItems: Array<{ type: 'inputText'; text: string }>;
+  success: boolean;
+} {
+  const stdout = boundedDiagnostic(result.stdout);
+  const stderr = boundedDiagnostic(result.stderr);
+  const payload = {
+    exitCode: result.exitCode,
+    appContainerPid: result.appContainerPid ?? null,
+    enforcement: result.enforcement,
+    violation: result.violation ?? null,
+    stdout: stdout.text,
+    stderr: stderr.text,
+    truncated: stdout.truncated || stderr.truncated,
+  };
+  return {
+    contentItems: [{ type: 'inputText', text: JSON.stringify(payload) }],
+    success: result.exitCode === 0 && result.violation === undefined,
+  };
+}
+
+export interface HostCodexTransport {
+  readable: Readable;
+  writable: Writable;
+}
+
+export interface WorkspaceToolContext {
+  threadId: string;
+  turnId: string;
+  callId: string;
+  signal: AbortSignal;
+}
+
+export type WorkspaceToolRunner = (
+  command: CueWorkspaceCommand,
+  context: WorkspaceToolContext,
+) => Promise<WorkspaceWorkerResult>;
+
+export interface HostCodexRunOptions {
+  cwd: string;
+  workspaceCwd?: string;
+  goal: string;
+  model?: string;
+}
+
+export interface HostCodexRunResult {
+  threadId: string;
+  turnId: string;
+  status: string;
+  finalMessage: string;
+}
+
+interface PendingRequest {
+  method: string;
+  resolve(value: unknown): void;
+  reject(reason: Error): void;
+  timer: NodeJS.Timeout;
+}
+
+function record(value: unknown): Record<string, unknown> {
+  return isRecord(value) ? value : {};
+}
+
+function rpcError(error: unknown): Error {
+  if (error instanceof Error) return error;
+  const data = record(error);
+  return new Error(typeof data.message === 'string' ? data.message : String(error));
+}
+
+function thrownEnforcementViolation(error: unknown): string | undefined {
+  const value = record(error);
+  return value.code === 'CUE_WORKER_ENFORCEMENT_VIOLATION'
+    && typeof value.violation === 'string'
+    && TERMINAL_ENFORCEMENT_VIOLATIONS.has(value.violation)
+    ? value.violation
+    : undefined;
+}
+
+function finalAgentText(item: Record<string, unknown>): string | undefined {
+  if (item.type !== 'agentMessage') return undefined;
+  if (typeof item.text === 'string') return item.text;
+  if (!Array.isArray(item.content)) return undefined;
+  return item.content
+    .map(part => isRecord(part) && typeof part.text === 'string' ? part.text : '')
+    .filter(Boolean)
+    .join('\\n');
+}
+
+export class HostCodexRpcSession {
+  readonly #transport: HostCodexTransport;
+  readonly #runner: WorkspaceToolRunner;
+  readonly #requestTimeoutMs: number;
+  readonly #runTimeoutMs: number;
+  readonly #lines: ReadLineInterface;
+  readonly #pending = new Map<number, PendingRequest>();
+  readonly #seenCallIds = new Set<string>();
+  readonly #abort = new AbortController();
+  #nextId = 0;
+  #activeToolCalls = 0;
+  #toolCallCount = 0;
+  #cwd = '';
+  #threadId = '';
+  #turnId = '';
+  #finalMessage = '';
+  #terminal?: {
+    resolve(value: HostCodexRunResult): void;
+    reject(reason: Error): void;
+    timer: NodeJS.Timeout;
+  };
+  #earlyTerminal?: HostCodexRunResult;
+  #fatalError?: Error;
+  #enforcementViolation?: string;
+  #turnCompleted = false;
+  #closed = false;
+  #ran = false;
+
+  constructor(
+    transport: HostCodexTransport,
+    runner: WorkspaceToolRunner,
+    options: { requestTimeoutMs?: number; runTimeoutMs?: number } = {},
+  ) {
+    this.#transport = transport;
+    this.#runner = runner;
+    this.#requestTimeoutMs = options.requestTimeoutMs ?? 30_000;
+    this.#runTimeoutMs = options.runTimeoutMs ?? 900_000;
+    this.#lines = createInterface({ input: transport.readable });
+    this.#lines.on('line', line => this.#receive(line));
+    this.#lines.once('close', () => {
+      if (!this.#closed) this.#fail(new Error('Codex app-server stream closed before turn completion'));
+    });
+    transport.readable.on('error', error => this.#fail(rpcError(error)));
+    transport.writable.on('error', error => this.#fail(rpcError(error)));
+  }
+
+  #send(message: Record<string, unknown>): void {
+    if (this.#closed || this.#transport.writable.destroyed) throw new Error('Codex app-server transport closed');
+    this.#transport.writable.write(`${JSON.stringify(message)}\\n`);
+  }
+
+  #request(method: string, params: Record<string, unknown>): Promise<unknown> {
+    const id = ++this.#nextId;
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        this.#pending.delete(id);
+        reject(new Error(`${method} timed out after ${this.#requestTimeoutMs}ms`));
+      }, this.#requestTimeoutMs);
+      timer.unref?.();
+      this.#pending.set(id, { method, resolve, reject, timer });
+      this.#send({ id, method, params });
+    });
+  }
+
+  #respond(id: unknown, result: unknown): void {
+    this.#send({ id, result });
+  }
+
+  #reject(id: unknown, code: number, message: string): void {
+    this.#send({ id, error: { code, message } });
+  }
+
+  #sealEnforcement(id: unknown, violation: string, response: unknown): void {
+    // Poison the turn before returning the denial. PassThrough transports can
+    // deliver a follow-up request re-entrantly while #respond is writing.
+    this.#enforcementViolation = violation;
+    this.#abort.abort();
+    this.#respond(id, response);
+    if (this.#threadId && this.#turnId && !this.#closed) {
+      void this.#request('turn/interrupt', { threadId: this.#threadId, turnId: this.#turnId }).catch(() => undefined);
+    }
+    this.#fail(new CueEnforcementViolationError(violation));
+  }
+
+  #receive(line: string): void {
+    let message: Record<string, unknown>;
+    try {
+      message = record(JSON.parse(line));
+    } catch {
+      this.#fail(new Error('Codex app-server emitted invalid JSON'));
+      return;
+    }
+    if (typeof message.method === 'string') {
+      if (message.id !== undefined) {
+        void this.#handleServerRequest(message).catch(error => {
+          if (!this.#closed) this.#fail(rpcError(error));
+        });
+      } else this.#handleNotification(message.method, record(message.params));
+      return;
+    }
+    if (typeof message.id === 'number') {
+      const pending = this.#pending.get(message.id);
+      if (!pending) return;
+      this.#pending.delete(message.id);
+      clearTimeout(pending.timer);
+      if (message.error !== undefined) pending.reject(rpcError(message.error));
+      else {
+        if (pending.method === 'turn/start') {
+          const turnId = record(record(message.result).turn).id;
+          if (typeof turnId !== 'string' || !turnId) {
+            pending.reject(new Error('turn/start returned no turn id'));
+            return;
+          }
+          this.#turnId = turnId;
+        }
+        pending.resolve(message.result);
+      }
+    }
+  }
+
+  async #handleServerRequest(message: Record<string, unknown>): Promise<void> {
+    const method = String(message.method);
+    const id = message.id;
+    if (method === 'item/tool/call') {
+      const params = record(message.params);
+      try {
+        if (this.#turnCompleted) throw new Error('dynamic tool call after turn completion');
+        if (this.#enforcementViolation) throw new Error(`dynamic tool call after enforcement violation: ${this.#enforcementViolation}`);
+        if (typeof params.threadId !== 'string' || params.threadId !== this.#threadId) throw new Error('dynamic tool thread mismatch');
+        if (typeof params.turnId !== 'string' || params.turnId !== this.#turnId) throw new Error('dynamic tool turn mismatch');
+        if (typeof params.callId !== 'string' || !params.callId || params.callId.length > 256) throw new Error('dynamic tool call id required');
+        if (this.#seenCallIds.has(params.callId)) throw new Error('duplicate dynamic tool call id');
+        this.#seenCallIds.add(params.callId);
+        const command = parseCueWorkspaceCall(params, this.#cwd);
+        if (this.#toolCallCount >= 64) throw new Error('dynamic tool call cap exceeded');
+        if (this.#activeToolCalls !== 0) throw new Error('concurrent dynamic tool call denied');
+        this.#toolCallCount += 1;
+        this.#activeToolCalls += 1;
+        let result: WorkspaceWorkerResult;
+        try {
+          try {
+            result = await this.#runner(command, {
+              threadId: params.threadId,
+              turnId: params.turnId,
+              callId: params.callId,
+              signal: this.#abort.signal,
+            });
+          } catch (error) {
+            const violation = thrownEnforcementViolation(error);
+            if (!violation) throw error;
+            const diagnostic = boundedDiagnostic(rpcError(error).message).text;
+            this.#sealEnforcement(id, violation, { contentItems: [{ type: 'inputText', text: diagnostic }], success: false });
+            return;
+          }
+        } finally {
+          this.#activeToolCalls -= 1;
+        }
+        const response = workspaceToolResponse(result);
+        if (result.violation && TERMINAL_ENFORCEMENT_VIOLATIONS.has(result.violation)) {
+          this.#sealEnforcement(id, result.violation, response);
+          return;
+        }
+        this.#respond(id, response);
+      } catch (error) {
+        const diagnostic = boundedDiagnostic(rpcError(error).message).text;
+        this.#respond(id, { contentItems: [{ type: 'inputText', text: diagnostic }], success: false });
+      }
+      return;
+    }
+    if (method === 'item/commandExecution/requestApproval' || method === 'item/fileChange/requestApproval') {
+      this.#respond(id, { decision: 'decline' });
+      return;
+    }
+    if (method === 'execCommandApproval' || method === 'applyPatchApproval') {
+      this.#respond(id, { decision: 'denied' });
+      return;
+    }
+    this.#reject(id, -32601, `Cue declined unsupported server request: ${method}`);
+  }
+
+  #handleNotification(method: string, params: Record<string, unknown>): void {
+    if (method === 'item/completed') {
+      if (params.threadId !== this.#threadId || params.turnId !== this.#turnId) return;
+      const text = finalAgentText(record(params.item));
+      if (text !== undefined) this.#finalMessage = text;
+      return;
+    }
+    if (method !== 'turn/completed') return;
+    const turn = record(params.turn);
+    if (params.threadId !== this.#threadId || turn.id !== this.#turnId) return;
+    this.#turnCompleted = true;
+    const threadId = this.#threadId;
+    const turnId = this.#turnId;
+    const status = String(turn.status ?? 'unknown');
+    const value = { threadId, turnId, status, finalMessage: this.#finalMessage };
+    if (!this.#terminal) {
+      this.#earlyTerminal = value;
+      return;
+    }
+    const terminal = this.#terminal;
+    this.#terminal = undefined;
+    clearTimeout(terminal.timer);
+    terminal.resolve(value);
+  }
+
+  #fail(error: Error): void {
+    this.#fatalError ??= error;
+    this.#earlyTerminal = undefined;
+    for (const [id, pending] of this.#pending) {
+      this.#pending.delete(id);
+      clearTimeout(pending.timer);
+      pending.reject(error);
+    }
+    if (this.#terminal) {
+      const terminal = this.#terminal;
+      this.#terminal = undefined;
+      clearTimeout(terminal.timer);
+      terminal.reject(error);
+    }
+  }
+
+  async run(options: HostCodexRunOptions): Promise<HostCodexRunResult> {
+    if (this.#ran) throw new Error('HostCodexRpcSession can run only once');
+    this.#ran = true;
+    this.#cwd = options.workspaceCwd ?? options.cwd;
+    await this.#request('initialize', {
+      clientInfo: { name: 'cue_desktop', title: 'Cue Desktop', version: '0.1.0' },
+      capabilities: { experimentalApi: true },
+    });
+    this.#send({ method: 'initialized', params: {} });
+    const threadResult = record(await this.#request('thread/start', buildHostThreadStartParams(options.cwd, options.goal, options.model) as unknown as Record<string, unknown>));
+    this.#threadId = String(record(threadResult.thread).id ?? '');
+    if (!this.#threadId) throw new Error('thread/start returned no thread id');
+
+    const turnResult = record(await this.#request('turn/start', {
+      threadId: this.#threadId,
+      input: [{ type: 'text', text: `Execute the approved goal now and verify it before finishing.\\nGoal: ${options.goal}` }],
+    }));
+    const returnedTurnId = String(record(turnResult.turn).id ?? '');
+    if (!returnedTurnId || returnedTurnId !== this.#turnId) throw new Error('turn/start returned inconsistent turn id');
+    if (this.#fatalError) throw this.#fatalError;
+    const terminal = new Promise<HostCodexRunResult>((resolve, reject) => {
+      const timer = setTimeout(() => {
+        this.#terminal = undefined;
+        reject(new Error(`Codex turn timed out after ${this.#runTimeoutMs}ms`));
+      }, this.#runTimeoutMs);
+      timer.unref?.();
+      this.#terminal = { resolve, reject, timer };
+    });
+    if (this.#earlyTerminal && this.#terminal) {
+      const early = this.#earlyTerminal;
+      this.#earlyTerminal = undefined;
+      const pendingTerminal = this.#terminal;
+      this.#terminal = undefined;
+      clearTimeout(pendingTerminal.timer);
+      pendingTerminal.resolve(early);
+    }
+    return terminal;
+  }
+
+  interrupt(): void {
+    this.#abort.abort();
+    if (this.#threadId && this.#turnId && !this.#closed) {
+      void this.#request('turn/interrupt', { threadId: this.#threadId, turnId: this.#turnId }).catch(() => undefined);
+    }
+  }
+
+  close(): void {
+    if (this.#closed) return;
+    this.#closed = true;
+    this.#abort.abort();
+    this.#fail(new Error('HostCodexRpcSession closed'));
+    this.#lines.close();
+    this.#transport.writable.end();
+  }
+}
+
+import { basename, isAbsolute, join } from 'node:path';
+import { mkdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+import type { Ledger } from './ledger.js';
+import type { Envelope } from './envelope.js';
+import { spawnOwned, runProcessSync, resolveOwnedExecutable, type OwnedChildProcess } from './process-launch.js';
+import type { SessionOwner, SessionRecord } from './session-spawn.js';
+import { safeCleanupCodexHome, vendorCodexLaunchSpec } from './tool-home.js';
+import { terminateVerifiedTree } from './process-termination.js';
+import {
+  HostCodexRpcSession,
+  type HostCodexRunResult,
+  type WorkspaceWorkerResult,
+} from './host-codex-controller.js';
+import {
+  launchAppContainerWorker,
+  recordEnforcementViolation,
+  WorkerEnforcementViolationError,
+  type RunningAppContainerWorker,
+} from './worker-enforcement.js';
+
+export interface HostCodexRuntimeOptions {
+  binary: string;
+  codexHome: string;
+  goal: string;
+  model?: string;
+  requestTimeoutMs?: number;
+  runTimeoutMs?: number;
+  controllerArgs?: readonly string[];
+}
+
+export interface HostCodexRuntimeResult extends HostCodexRunResult {
+  controllerPid: number;
+  workerPids: number[];
+  successfulToolCalls: number;
+  controllerStderr: string;
+  error?: string;
+  failureKind?: 'crash' | 'cleanup' | 'termination' | 'enforcement';
+  goalVerification: GoalVerificationResult;
+}
+
+export interface GoalVerificationResult {
+  passed: boolean;
+  reason: 'workspace_changed' | 'workspace_unchanged' | 'expected_path_not_changed' | 'expected_content_mismatch' | 'agent_reported_incomplete' | 'snapshot_failed' | 'model_not_completed';
+  changedPaths: string[];
+}
+
+export interface RunningHostCodexRun {
+  child: OwnedChildProcess;
+  session: SessionRecord;
+  done: Promise<HostCodexRuntimeResult>;
+  stop(): void;
+}
+
+export function terminateTree(child: OwnedChildProcess): void {
+  if (!child.pid || child.exitCode !== null || child.signalCode !== null) return;
+  terminateVerifiedTree(child.pid);
+}
+
+function waitForClose(child: OwnedChildProcess, timeoutMs: number): Promise<void> {
+  if (child.exitCode !== null || child.signalCode !== null) return Promise.resolve();
+  return new Promise((resolvePromise, rejectPromise) => {
+    let settled = false;
+    const finish = (): void => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolvePromise();
+    };
+    child.once('close', finish);
+    const timer = setTimeout(() => {
+      try { terminateTree(child); finish(); }
+      catch (error) { child.off('close', finish); rejectPromise(error); }
+    }, timeoutMs);
+    timer.unref?.();
+  });
+}
+
+export interface HostRuntimeTeardownError {
+  stage: 'rpc' | 'worker_stop' | 'worker_completion' | 'controller' | 'cleanup';
+  error: unknown;
+}
+
+export async function settleHostRuntimeTeardown(input: {
+  closeRpc(): void;
+  workers: Array<{ stop(reason?: 'interrupted' | 'timeout'): void; completion: Promise<unknown> }>;
+  closeController(): void | Promise<void>;
+  cleanup(): void;
+}): Promise<HostRuntimeTeardownError[]> {
+  const errors: HostRuntimeTeardownError[] = [];
+  try { input.closeRpc(); } catch (error) { errors.push({ stage: 'rpc', error }); }
+  for (const worker of input.workers) {
+    try { worker.stop('interrupted'); } catch (error) { errors.push({ stage: 'worker_stop', error }); }
+  }
+  const settled = await Promise.allSettled(input.workers.map(worker => worker.completion));
+  for (const result of settled) {
+    if (result.status === 'rejected') errors.push({ stage: 'worker_completion', error: result.reason });
+    else if (result.value && typeof result.value === 'object' && (result.value as { failureKind?: unknown }).failureKind === 'termination') {
+      errors.push({ stage: 'worker_completion', error: new Error('worker tree termination could not be verified') });
+    }
+  }
+  try { await input.closeController(); } catch (error) { errors.push({ stage: 'controller', error }); }
+  try { input.cleanup(); } catch (error) { errors.push({ stage: 'cleanup', error }); }
+  return errors;
+}
+
+function diagnostic(error: unknown): string {
+  const raw = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  return raw.replace(/((?:token|secret|password|api[_-]?key)\\s*[:=]\\s*)[^\\s;]+/giu, '$1[REDACTED]').slice(-2_000);
+}
+
+function quoteWindowsArg(value: string): string {
+  if (value.length && !/[\\s\"]/u.test(value)) return value;
+  return `\"${value.replace(/(\\\\*)\"/gu, '$1$1\\\\\"').replace(/(\\\\+)$/u, '$1$1')}\"`;
+}
+
+const MAX_CONTROLLER_STDERR_BYTES = 1_000_000;
+function appendBoundedControllerStderr(current: string, chunk: unknown): string {
+  const combined = Buffer.concat([Buffer.from(current, 'utf8'), Buffer.from(String(chunk), 'utf8')]);
+  if (combined.length <= MAX_CONTROLLER_STDERR_BYTES) return combined.toString('utf8');
+  const marker = Buffer.from('\\n[CUE_CAPTURE_TRUNCATED]\\n', 'utf8');
+  const half = Math.floor((MAX_CONTROLLER_STDERR_BYTES - marker.length) / 2);
+  return Buffer.concat([combined.subarray(0, half), marker, combined.subarray(combined.length - half)]).toString('utf8');
+}
+
+interface WorkspaceSnapshot {
+  truncated: boolean;
+  files: Array<{ path: string; sha256: string }>;
+}
+
+const SNAPSHOT_SCRIPT = [
+  \"$ErrorActionPreference='Stop'\",
+  '$root=[IO.Path]::GetFullPath([Environment]::CurrentDirectory)',
+  \"$all=@(Get-ChildItem -LiteralPath $root -File -Recurse -Force | Where-Object { $_.FullName -notmatch '\\\\\\\\(?:\\\\.git|node_modules)(?:\\\\\\\\|$)' } | Sort-Object FullName | Select-Object -First 2001)\",
+  '$entries=@($all | Select-Object -First 2000 | ForEach-Object { $rel=$_.FullName.Substring($root.Length).TrimStart([char]92,[char]47); [pscustomobject]@{path=$rel;sha256=(Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()} })',
+  '[pscustomobject]@{truncated=($all.Count -gt 2000);files=$entries}|ConvertTo-Json -Compress -Depth 4',
+].join(';');
+
+function parseWorkspaceSnapshot(stdout: string): WorkspaceSnapshot {
+  const payload = stdout.split(/\\r?\\n/u).map(line => line.trim()).reverse().find(line => line.startsWith('{') && line.endsWith('}'));
+  if (!payload) throw new Error('workspace snapshot payload missing');
+  const parsed = JSON.parse(payload) as Partial<WorkspaceSnapshot>;
+  if (typeof parsed.truncated !== 'boolean' || !Array.isArray(parsed.files)) throw new Error('invalid workspace snapshot');
+  const files = parsed.files.map(item => {
+    if (!item || typeof item.path !== 'string' || typeof item.sha256 !== 'string' || !/^[a-f0-9]{64}$/u.test(item.sha256)) {
+      throw new Error('invalid workspace snapshot entry');
+    }
+    return { path: item.path, sha256: item.sha256 };
+  });
+  return { truncated: parsed.truncated, files };
+}
+
+function compareWorkspaceSnapshots(before: WorkspaceSnapshot, after: WorkspaceSnapshot, goal: string, finalMessage: string): GoalVerificationResult {
+  if (before.truncated || after.truncated) return { passed: false, reason: 'snapshot_failed', changedPaths: [] };
+  const left = new Map(before.files.map(item => [item.path.toLowerCase(), item.sha256]));
+  const right = new Map(after.files.map(item => [item.path.toLowerCase(), item.sha256]));
+  const changedPaths = [...new Set([...left.keys(), ...right.keys()])]
+    .filter(path => left.get(path) !== right.get(path))
+    .sort();
+  if (changedPaths.length) {
+    const expectedPaths = [...goal.matchAll(/([\\w./\\\\-]+\\.[a-z0-9]{1,12})/giu)]
+      .map(match => match[1].replace(/\\\\/gu, '/').toLowerCase());
+    const expectedPathChanged = expectedPaths.every(expected => {
+      const expectedName = expected.split('/').at(-1);
+      return changedPaths.some(changed => changed === expected || changed.endsWith(`/${expected}`) || changed.split('/').at(-1) === expectedName);
+    });
+    if (!expectedPathChanged) return { passed: false, reason: 'expected_path_not_changed', changedPaths };
+    const exactContent = goal.match(/(?:with|containing)\\s+(?:exactly(?:\\s+this)?|exact)\\s+(?:UTF-8\\s+)?text(?:\\s+and\\s+no\\s+extra\\s+characters)?\\s*:\\s*([\\s\\S]+)$/iu);
+    if (exactContent && expectedPaths.length === 1) {
+      let content = exactContent[1] ?? '';
+      const first = content[0]; const last = content.at(-1);
+      if (content.length >= 2 && ((first === '\"' && last === '\"') || (first === \"'\" && last === \"'\") || (first === '`' && last === '`'))) {
+        content = content.slice(1, -1);
+      }
+      const expected = expectedPaths[0]!;
+      const expectedName = expected.split('/').at(-1);
+      const actualPath = [...right.keys()].find(path => path === expected || path.endsWith(`/${expected}`) || path.split('/').at(-1) === expectedName);
+      const expectedSha256 = createHash('sha256').update(content, 'utf8').digest('hex');
+      if (!actualPath || right.get(actualPath) !== expectedSha256) {
+        return { passed: false, reason: 'expected_content_mismatch', changedPaths };
+      }
+    }
+    if (/\\b(?:could not|cannot|unable to|failed to|did not complete|incomplete|blocked)\\b/iu.test(finalMessage)) {
+      return { passed: false, reason: 'agent_reported_incomplete', changedPaths };
+    }
+  }
+  return changedPaths.length
+    ? { passed: true, reason: 'workspace_changed', changedPaths }
+    : { passed: false, reason: 'workspace_unchanged', changedPaths: [] };
+}
+
+export function launchHostCodexRun(
+  db: Ledger,
+  owner: SessionOwner,
+  envelope: Envelope,
+  options: HostCodexRuntimeOptions,
+): RunningHostCodexRun {
+  if (owner.run_id !== envelope.run_id) throw new Error('owner/envelope run mismatch');
+  if (options.controllerArgs && process.env.NODE_ENV !== 'test') throw new Error('controllerArgs are test-only');
+  const args = options.controllerArgs ? [...options.controllerArgs] : ['-a', 'on-request', 'app-server'];
+  const controllerCwd = join(options.codexHome, 'controller-workspace');
+  mkdirSync(controllerCwd, { recursive: true });
+  const spec = vendorCodexLaunchSpec(options.binary, args, options.codexHome);
+  spec.command = resolveOwnedExecutable(db, owner, spec.command, [envelope.worktree_realpath], spec.env);
+  const controllerOwner = { ...owner, cwd: controllerCwd };
+  if (process.platform !== 'win32' || !isAbsolute(spec.command)) throw new Error('host controller job containment requires an absolute Windows executable');
+  const jobLauncher = resolveOwnedExecutable(db, owner, fileURLToPath(new URL('./job-object-launch.ps1', import.meta.url)));
+  const payload = Buffer.from(JSON.stringify({
+    executable: spec.command,
+    commandLine: [spec.command, ...spec.args].map(quoteWindowsArg).join(' '),
+    cwd: controllerCwd,
+    parentPid: process.pid,
+  })).toString('base64');
+  const launched = spawnOwned(db, controllerOwner, 'powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', jobLauncher, '-PayloadBase64', payload], { env: spec.env, stdio: 'pipe' });
+  try {
+    db.prepare('INSERT INTO session_runtime(handle,role,boundary,parent_handle,created_at) VALUES(?,?,?,?,?)')
+      .run(launched.session.handle, 'controller', 'host-model-only', null, new Date().toISOString());
+  } catch (error) {
+    terminateTree(launched.child);
+    throw error;
+  }
+
+  const activeWorkers = new Set<RunningAppContainerWorker>();
+  const workerPids: number[] = [];
+  let successfulToolCalls = 0;
+  let modelToolOrdinal = 0;
+  let controllerStderr = '';
+  let controllerPidCaptured = false;
+  let stopped = false;
+  const stopAttemptErrors: HostRuntimeTeardownError[] = [];
+  launched.child.stderr?.on('data', chunk => {
+    controllerStderr = appendBoundedControllerStderr(controllerStderr, chunk);
+    if (controllerPidCaptured) return;
+    const match = controllerStderr.match(/(?:^|\\r?\\n)CUE_HOST_CONTROLLER_PID=(\\d+);START_TIME=([^\\r\\n]+)/u);
+    if (!match) return;
+    controllerPidCaptured = true;
+    launched.session.pid = Number(match[1]);
+    launched.session.start_time = match[2];
+    if (db.open) db.prepare('UPDATE session_handle SET pid=?,start_time=? WHERE handle=?')
+      .run(launched.session.pid, launched.session.start_time, launched.session.handle);
+  });
+
+  const executeWorker = async (
+    command: Parameters<typeof launchAppContainerWorker>[3],
+    metadata: { purpose: string; modelContext?: { threadId: string; turnId: string; callId: string; signal: AbortSignal } },
+  ): Promise<WorkspaceWorkerResult> => {
+    const startedAt = new Date().toISOString();
+    const ordinal = metadata.modelContext ? ++modelToolOrdinal : null;
+    let worker: RunningAppContainerWorker;
+    try {
+      worker = launchAppContainerWorker(db, envelope, owner, command, { signal: metadata.modelContext?.signal });
+    } catch (error) {
+      if (error instanceof WorkerEnforcementViolationError && db.open) {
+        const finishedAt = new Date().toISOString();
+        db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)').run(
+          owner.task_id,
+          owner.run_id,
+          metadata.modelContext ? 'tool_execution' : 'goal_verification_worker',
+          JSON.stringify({
+            purpose: metadata.purpose,
+            ordinal,
+            callId: metadata.modelContext?.callId ?? null,
+            threadId: metadata.modelContext?.threadId ?? null,
+            turnId: metadata.modelContext?.turnId ?? null,
+            pid: null,
+            exitCode: null,
+            boundary: 'preflight',
+            violation: error.violation,
+            operation: command.operation ?? 'command',
+            program: basename(command.executable).slice(0, 128),
+            argumentCount: command.args.length,
+            startedAt,
+            finishedAt,
+          }),
+          finishedAt,
+        );
+      }
+      throw error;
+    }
+    activeWorkers.add(worker);
+    try {
+      db.prepare('UPDATE session_runtime SET parent_handle=? WHERE handle=?')
+        .run(launched.session.handle, worker.session.handle);
+    } catch (error) {
+      worker.stop('interrupted');
+      await worker.completion;
+      activeWorkers.delete(worker);
+      throw error;
+    }
+    const result = await worker.completion;
+    activeWorkers.delete(worker);
+    if (result.appContainerPid) workerPids.push(result.appContainerPid);
+    if (metadata.modelContext && result.exitCode === 0 && result.violation === undefined) successfulToolCalls += 1;
+    if (!db.open) return result;
+    if (result.violation === 'filesystem' || result.violation === 'network_gate' || result.violation === 'executable_sealing') {
+      recordEnforcementViolation(db, owner.run_id, result.violation);
+    }
+    const now = new Date().toISOString();
+    db.prepare('INSERT INTO artifact(task_id,run_id,kind,content,created_at) VALUES(?,?,?,?,?)').run(
+      owner.task_id,
+      owner.run_id,
+      metadata.modelContext ? 'tool_execution' : 'goal_verification_worker',
+      JSON.stringify({
+        purpose: metadata.purpose,
+        ordinal,
+        callId: metadata.modelContext?.callId ?? null,
+        threadId: metadata.modelContext?.threadId ?? null,
+        turnId: metadata.modelContext?.turnId ?? null,
+        pid: result.appContainerPid ?? null,
+        exitCode: result.exitCode,
+        boundary: result.enforcement,
+        violation: result.violation ?? null,
+        operation: command.operation ?? 'command',
+        program: basename(command.executable).slice(0, 128),
+        argumentCount: command.args.length,
+        startedAt,
+        finishedAt: now,
+      }),
+      now,
+    );
+    return result;
+  };
+
+  const runner = async (
+    command: Parameters<typeof launchAppContainerWorker>[3],
+    context: { threadId: string; turnId: string; callId: string; signal: AbortSignal },
+  ): Promise<WorkspaceWorkerResult> => executeWorker(command, { purpose: 'model_tool_call', modelContext: context });
+
+  const captureSnapshot = async (purpose: 'before' | 'after'): Promise<WorkspaceSnapshot> => {
+    const result = await executeWorker({
+      executable: 'powershell.exe',
+      args: ['-NoProfile', '-NonInteractive', '-Command', SNAPSHOT_SCRIPT],
+      cwd: owner.cwd,
+      timeoutMs: 30_000,
+    }, { purpose: `goal_snapshot_${purpose}` });
+    if (result.exitCode !== 0 || result.violation || result.stdout.includes('[CUE_CAPTURE_TRUNCATED]')) throw new Error(`workspace ${purpose} snapshot failed`);
+    return parseWorkspaceSnapshot(result.stdout);
+  };
+
+  if (!launched.child.stdout || !launched.child.stdin) {
+    terminateTree(launched.child);
+    throw new Error('host Codex app-server requires piped stdio');
+  }
+  const rpc = new HostCodexRpcSession(
+    { readable: launched.child.stdout, writable: launched.child.stdin },
+    runner,
+    { requestTimeoutMs: options.requestTimeoutMs, runTimeoutMs: options.runTimeoutMs },
+  );
+
+  const done = (async (): Promise<HostCodexRuntimeResult> => {
+    let result: HostCodexRunResult;
+    let error: string | undefined;
+    let failureKind: HostCodexRuntimeResult['failureKind'];
+    let goalVerification: GoalVerificationResult = { passed: false, reason: 'model_not_completed', changedPaths: [] };
+    try {
+      const before = await captureSnapshot('before');
+      result = await rpc.run({ cwd: controllerCwd, workspaceCwd: owner.cwd, goal: options.goal, model: options.model });
+      if (result.status === 'completed') {
+        const after = await captureSnapshot('after');
+        goalVerification = compareWorkspaceSnapshots(before, after, options.goal, result.finalMessage);
+      }
+    } catch (caught) {
+      error = diagnostic(caught);
+      failureKind = (caught as { code?: unknown })?.code === 'CUE_ENFORCEMENT_VIOLATION' ? 'enforcement' : 'crash';
+      result = {
+        threadId: '',
+        turnId: '',
+        status: stopped ? 'interrupted' : 'failed',
+        finalMessage: '',
+      };
+    } finally {
+      const teardownErrors = [...stopAttemptErrors, ...await settleHostRuntimeTeardown({
+        closeRpc: () => rpc.close(),
+        workers: [...activeWorkers],
+        closeController: async () => {
+          await waitForClose(launched.child, 2_000);
+          if (launched.child.exitCode === null && launched.child.signalCode === null) {
+            terminateTree(launched.child);
+            await waitForClose(launched.child, 2_000);
+          }
+        },
+        cleanup: () => safeCleanupCodexHome(options.codexHome),
+      })];
+      if (teardownErrors.length > 0) {
+        const teardown = teardownErrors.map(entry => `${entry.stage}: ${diagnostic(entry.error)}`).join('; ');
+        controllerStderr += `${controllerStderr ? '\\n' : ''}${teardown}`;
+        const terminationFailure = teardownErrors.some(entry => entry.stage !== 'cleanup');
+        error = terminationFailure ? `runtime teardown failed: ${teardown}` : `credential cleanup failed: ${teardown}`;
+        failureKind = terminationFailure ? 'termination' : 'cleanup';
+        result = { threadId: '', turnId: '', status: 'failed', finalMessage: terminationFailure ? 'runtime teardown failed' : 'credential cleanup failed' };
+      }
+    }
+    return {
+      ...result,
+      controllerPid: launched.session.pid,
+      workerPids: [...workerPids],
+      successfulToolCalls,
+      controllerStderr,
+      goalVerification,
+      ...(error ? { error, failureKind } : {}),
+    };
+  })();
+
+  return {
+    ...launched,
+    done,
+    stop(): void {
+      stopped = true;
+      try { rpc.interrupt(); } catch (error) { stopAttemptErrors.push({ stage: 'rpc', error }); }
+      for (const worker of activeWorkers) {
+        try { worker.stop('interrupted'); } catch (error) { stopAttemptErrors.push({ stage: 'worker_stop', error }); }
+      }
+      try { rpc.close(); } catch (error) { stopAttemptErrors.push({ stage: 'rpc', error }); }
+      try { terminateTree(launched.child); } catch (error) { stopAttemptErrors.push({ stage: 'controller', error }); }
+      // Credential-home cleanup stays in the single ordered teardown inside
+      // done.finally. Deleting it here would race that teardown, which still
+      // holds live SQLite handles under the same root.
+    },
+  };
+}
+
+import { createServer, type Server } from 'node:http';
+import { chmodSync, mkdirSync, writeFileSync } from 'node:fs';
+import { dirname } from 'node:path';
+import { randomBytes, timingSafeEqual } from 'node:crypto';
+import { runProcessSync } from './process-launch.js';
+import { healthVector, type ComponentName } from './health.js';
+
+export const IPC_HOST = '127.0.0.1';
+export function createBearerFile(path: string): string {
+  const token = randomBytes(32).toString('hex');
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, token, { mode: 0o600 });
+  if (process.platform === 'win32') {
+    const principal = process.env.USERNAME;
+    if (!principal) throw new Error('missing process principal');
+    const acl = runProcessSync('icacls', [path, '/inheritance:r', '/grant:r', `${principal}:(R,W)`], { encoding: 'utf8', stdio: 'ignore' });
+    if (acl.status !== 0) throw new Error('failed to protect bearer file');
+  } else chmodSync(path, 0o600);
+  return token;
+}
+function validToken(header: string | undefined, token: string): boolean {
+  const candidate = header?.startsWith('Bearer ') ? header.slice(7) : '';
+  const a = Buffer.from(candidate); const b = Buffer.from(token);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+export function createIpcServer(token: string, readHealth: () => Record<ComponentName, boolean>): Server {
+  return createServer((request, response) => {
+    response.setHeader('content-type', 'application/json');
+    if (!validToken(request.headers.authorization, token)) { response.statusCode = 401; response.end('{\"error\":\"unauthorized\"}'); return; }
+    if (request.method === 'GET' && request.url === '/health') { response.end(JSON.stringify(healthVector(readHealth()))); return; }
+    if (request.method === 'POST' && request.url === '/echo') {
+      let body = '';
+      request.on('data', chunk => { body += String(chunk); });
+      request.on('end', () => {
+        try {
+          const parsed = JSON.parse(body) as unknown;
+          if (!parsed || typeof parsed !== 'object' || typeof (parsed as { message?: unknown }).message !== 'string') throw new Error();
+          response.end(JSON.stringify(parsed));
+        } catch { response.statusCode = 400; response.end('{\"error\":\"invalid_schema\"}'); }
+      });
+      return;
+    }
+    response.statusCode = 404; response.end('{\"error\":\"not_found\"}');
+  });
+}
+export async function listenLoopback(server: Server, port = 0): Promise<number> {
+  await new Promise<void>((resolve, reject) => { server.once('error', reject); server.listen(port, IPC_HOST, resolve); });
+  const address = server.address(); if (!address || typeof address === 'string') throw new Error('missing address'); return address.port;
+}
+
+param(
+  [Parameter(Mandatory=$true)][string]$PayloadBase64
+)
+
+$ErrorActionPreference = 'Stop'
+
+Add-Type -TypeDefinition @'
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+
+public static class CueJobLauncher {
+  const uint WAIT_OBJECT_0 = 0x00000000;
+  const uint WAIT_TIMEOUT = 0x00000102;
+  const uint WAIT_FAILED = 0xffffffff;
+  [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
+  public struct STARTUPINFO {
+    public Int32 cb; public string lpReserved; public string lpDesktop; public string lpTitle;
+    public Int32 dwX; public Int32 dwY; public Int32 dwXSize; public Int32 dwYSize;
+    public Int32 dwXCountChars; public Int32 dwYCountChars; public Int32 dwFillAttribute;
+    public Int32 dwFlags; public Int16 wShowWindow; public Int16 cbReserved2;
+    public IntPtr lpReserved2; public IntPtr hStdInput; public IntPtr hStdOutput; public IntPtr hStdError;
+  }
+  [StructLayout(LayoutKind.Sequential)] public struct PROCESS_INFORMATION { public IntPtr hProcess; public IntPtr hThread; public Int32 dwProcessId; public Int32 dwThreadId; }
+  [StructLayout(LayoutKind.Sequential)] public struct JOBOBJECT_BASIC_LIMIT_INFORMATION {
+    public Int64 PerProcessUserTimeLimit; public Int64 PerJobUserTimeLimit; public UInt32 LimitFlags;
+    public UIntPtr MinimumWorkingSetSize; public UIntPtr MaximumWorkingSetSize; public UInt32 ActiveProcessLimit;
+    public IntPtr Affinity; public UInt32 PriorityClass; public UInt32 SchedulingClass;
+  }
+  [StructLayout(LayoutKind.Sequential)] public struct IO_COUNTERS {
+    public UInt64 ReadOperationCount; public UInt64 WriteOperationCount; public UInt64 OtherOperationCount;
+    public UInt64 ReadTransferCount; public UInt64 WriteTransferCount; public UInt64 OtherTransferCount;
+  }
+  [StructLayout(LayoutKind.Sequential)] public struct JOBOBJECT_EXTENDED_LIMIT_INFORMATION {
+    public JOBOBJECT_BASIC_LIMIT_INFORMATION BasicLimitInformation; public IO_COUNTERS IoInfo;
+    public UIntPtr ProcessMemoryLimit; public UIntPtr JobMemoryLimit; public UIntPtr PeakProcessMemoryUsed; public UIntPtr PeakJobMemoryUsed;
+  }
+
+  [DllImport(\"kernel32.dll\", CharSet=CharSet.Unicode, SetLastError=true)] static extern bool CreateProcess(string app, string commandLine, IntPtr processAttributes, IntPtr threadAttributes, bool inheritHandles, uint flags, IntPtr environment, string cwd, ref STARTUPINFO startup, out PROCESS_INFORMATION process);
+  [DllImport(\"kernel32.dll\", CharSet=CharSet.Unicode, SetLastError=true)] static extern IntPtr CreateJobObject(IntPtr attributes, string name);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool SetInformationJobObject(IntPtr job, int informationClass, ref JOBOBJECT_EXTENDED_LIMIT_INFORMATION information, uint length);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool AssignProcessToJobObject(IntPtr job, IntPtr process);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool TerminateJobObject(IntPtr job, uint exitCode);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool TerminateProcess(IntPtr process, uint exitCode);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern uint ResumeThread(IntPtr thread);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern uint WaitForSingleObject(IntPtr handle, uint milliseconds);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern uint WaitForMultipleObjects(uint count, IntPtr[] handles, bool waitAll, uint milliseconds);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern bool GetExitCodeProcess(IntPtr process, out uint exitCode);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern IntPtr OpenProcess(uint access, bool inheritHandle, int processId);
+  [DllImport(\"kernel32.dll\", SetLastError=true)] static extern IntPtr GetStdHandle(int standardHandle);
+  [DllImport(\"kernel32.dll\")] static extern bool CloseHandle(IntPtr handle);
+
+  static void WaitForExitOrThrow(IntPtr process) {
+    uint wait = WaitForSingleObject(process, 5000);
+    if (wait == WAIT_TIMEOUT) throw new TimeoutException(\"process remained alive after termination\");
+    if (wait == WAIT_FAILED) throw new Win32Exception(Marshal.GetLastWin32Error());
+    if (wait != WAIT_OBJECT_0) throw new InvalidOperationException(\"unexpected process wait result: \" + wait);
+  }
+
+  static void TerminateAndWait(IntPtr job, IntPtr process, uint exitCode) {
+    if (!TerminateJobObject(job, exitCode)) throw new Win32Exception(Marshal.GetLastWin32Error());
+    WaitForExitOrThrow(process);
+  }
+
+  static void TerminateProcessAndWait(IntPtr process, uint exitCode) {
+    if (!TerminateProcess(process, exitCode)) throw new Win32Exception(Marshal.GetLastWin32Error());
+    WaitForExitOrThrow(process);
+  }
+
+  public static int Launch(string app, string commandLine, string cwd, int parentPid) {
+    IntPtr job = IntPtr.Zero;
+    IntPtr parent = IntPtr.Zero;
+    PROCESS_INFORMATION process = new PROCESS_INFORMATION();
+    bool processCreated = false;
+    try {
+      job = CreateJobObject(IntPtr.Zero, null);
+      if (job == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
+      JOBOBJECT_EXTENDED_LIMIT_INFORMATION limits = new JOBOBJECT_EXTENDED_LIMIT_INFORMATION();
+      limits.BasicLimitInformation.LimitFlags = 0x00002000;
+      if (!SetInformationJobObject(job, 9, ref limits, (uint)Marshal.SizeOf(limits))) throw new Win32Exception(Marshal.GetLastWin32Error());
+
+      STARTUPINFO startup = new STARTUPINFO();
+      startup.cb = Marshal.SizeOf(startup);
+      startup.dwFlags = 0x00000100;
+      startup.hStdInput = GetStdHandle(-10);
+      startup.hStdOutput = GetStdHandle(-11);
+      startup.hStdError = GetStdHandle(-12);
+      if (!CreateProcess(app, commandLine, IntPtr.Zero, IntPtr.Zero, true, 0x00000004, IntPtr.Zero, cwd, ref startup, out process)) throw new Win32Exception(Marshal.GetLastWin32Error());
+      processCreated = true;
+      if (!AssignProcessToJobObject(job, process.hProcess)) { int error = Marshal.GetLastWin32Error(); TerminateProcessAndWait(process.hProcess, 111); throw new Win32Exception(error); }
+      parent = OpenProcess(0x00100000, false, parentPid);
+      if (parent == IntPtr.Zero) { int error = Marshal.GetLastWin32Error(); TerminateAndWait(job, process.hProcess, 112); throw new Win32Exception(error); }
+      Console.Error.WriteLine(\"CUE_HOST_CONTROLLER_PID=\" + process.dwProcessId + \";START_TIME=\" + DateTime.UtcNow.ToString(\"o\"));
+      Console.Error.Flush();
+      if (ResumeThread(process.hThread) == 0xffffffff) { int error = Marshal.GetLastWin32Error(); TerminateAndWait(job, process.hProcess, 113); throw new Win32Exception(error); }
+
+      uint signaled = WaitForMultipleObjects(2, new IntPtr[] { process.hProcess, parent }, false, 0xffffffff);
+      if (signaled == 1) {
+        TerminateAndWait(job, process.hProcess, 114);
+      } else if (signaled != 0) {
+        int error = Marshal.GetLastWin32Error(); TerminateAndWait(job, process.hProcess, 115); throw new Win32Exception(error);
+      }
+      uint exitCode;
+      if (!GetExitCodeProcess(process.hProcess, out exitCode)) throw new Win32Exception(Marshal.GetLastWin32Error());
+      return unchecked((int)exitCode);
+    } finally {
+      if (processCreated) { CloseHandle(process.hThread); CloseHandle(process.hProcess); }
+      if (parent != IntPtr.Zero) CloseHandle(parent);
+      if (job != IntPtr.Zero) CloseHandle(job);
+    }
+  }
+}
+'@
+
+$payload = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($PayloadBase64)) | ConvertFrom-Json
+$exitCode = [CueJobLauncher]::Launch([string]$payload.executable, [string]$payload.commandLine, [string]$payload.cwd, [int]$payload.parentPid)
+exit $exitCode
+
+import Database from 'better-sqlite3';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+export type Ledger = Database.Database;
+
+export function openLedger(filename = ':memory:'): Ledger {
+  const db = new Database(filename);
+  const here = dirname(fileURLToPath(import.meta.url));
+  const migration = join(here, '..', 'migrations', '001_init.sql');
+  const initialized = db.prepare(\"SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name='task'\").get() as { n: number };
+  if (!initialized.n) db.exec(readFileSync(migration, 'utf8'));
+  db.exec(readFileSync(join(here, '..', 'migrations', '002_p5.sql'), 'utf8'));
+  db.exec(readFileSync(join(here, '..', 'migrations', '003_p6.sql'), 'utf8'));
+  db.exec(readFileSync(join(here, '..', 'migrations', '004_p7.sql'), 'utf8'));
+  db.exec(readFileSync(join(here, '..', 'migrations', '005_p8.sql'), 'utf8'));
+  db.exec(readFileSync(join(here, '..', 'migrations', '006_p10c.sql'), 'utf8'));
+  db.exec(readFileSync(join(here, '..', 'migrations', '007_workspace_write_lease.sql'), 'utf8'));
+  return db;
+}
+
+import { createHash } from 'node:crypto';
+import { readFileSync, realpathSync } from 'node:fs';
+
+// P13 R-1. A capability result only means something together with a fingerprint of
+// what was measured. Bind every probe result to `subjectDigest`; when any component
+// moves, the result reverts to unmeasured (absolute rule 1) rather than surviving as
+// a stale PASS. Nothing here may invent a value for an artifact it could not read
+// (absolute rule 4).
+
+export const SUBJECT_FIELDS = Object.freeze([
+  'toolBinarySha256',
+  'adapterSha256',
+  'enforcementSha256',
+  'bo...
+
+ ❯ test/release.test.ts:122:22
+    120|   it('R-7 has no monetary-budget emission path while retaining token-b…
+    121|     const text=sourceFiles().map(path=>readFileSync(path,'utf8')).join…
+    122|     expect(text).not.toMatch(/(?:budget.{0,80}(?:USD|KRW|dollars?|won|…
+       |                      ^
+    123|     expect(text).toContain("reason: 'budget'");
+    124|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 25 passed (26)
+   Start at  22:14:56
+   Duration  245.70s (transform 172ms, setup 0ms, import 449ms, tests 244.87s, environment 0ms)
+
+exit=1

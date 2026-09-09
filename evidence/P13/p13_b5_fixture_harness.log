@@ -1,0 +1,95 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-lifecycle-harness
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H1 RED: P1 fails when the tool leaves a child running after a stop request 18811ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H2 GREEN: P1 passes when the tool takes its children down with it 13967ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H3 RED: P3 fails when a child outlives a hard-killed supervisor 18209ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H4 GREEN: P3 passes when nothing outlives a hard-killed supervisor 14381ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H5 the verdict ignores identical processes outside this run 28815ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H6 a stop budget that expires is a FAIL, not an inconclusive result 14349ms
+ × test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H7 GREEN: an obedient tool leaves no residue on the NORMAL exit path 3470ms
+   → CUE_SCOPE: root 69972 not observable at scope open; refusing to measure an unidentified root
+ × test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H8 RED: the normal path catches residue the stop path would hide 3319ms
+   → CUE_SCOPE: root 72060 not observable at scope open; refusing to measure an unidentified root
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H9 RED: a subject that never exits is a FAIL, not a clean normal path 18834ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H10 B5 needs all three paths; two green paths do not carry the third 1ms
+ × test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H11 B5 GREEN only when all three paths are independently clean 3585ms
+   → CUE_SCOPE: root 7976 not observable at scope open; refusing to measure an unidentified root
+ × test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H12 B5 RED: one dirty path sinks the verdict even if the others are clean 3175ms
+   → CUE_SCOPE: root 81392 not observable at scope open; refusing to measure an unidentified root
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H7 GREEN: an obedient tool leaves no residue on the NORMAL exit path
+Error: CUE_SCOPE: root 69972 not observable at scope open; refusing to measure an unidentified root
+ ❯ openRunScope src/probes/run-scope.ts:90:20
+     88|   const members = query(rootPid);
+     89|   const root = members.find((entry) => entry.pid === rootPid);
+     90|   if (!root) throw new ScopeError(`root ${rootPid} not observable at s…
+       |                    ^
+     91|   return { rootPid, rootCreatedAt: root.createdAt, members };
+     92| }
+ ❯ openSubject src/probes/lifecycle-probe.ts:38:32
+ ❯ launch test/p13-lifecycle-harness.test.ts:33:19
+ ❯ test/p13-lifecycle-harness.test.ts:108:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H8 RED: the normal path catches residue the stop path would hide
+Error: CUE_SCOPE: root 72060 not observable at scope open; refusing to measure an unidentified root
+ ❯ openRunScope src/probes/run-scope.ts:90:20
+     88|   const members = query(rootPid);
+     89|   const root = members.find((entry) => entry.pid === rootPid);
+     90|   if (!root) throw new ScopeError(`root ${rootPid} not observable at s…
+       |                    ^
+     91|   return { rootPid, rootCreatedAt: root.createdAt, members };
+     92| }
+ ❯ openSubject src/probes/lifecycle-probe.ts:38:32
+ ❯ launch test/p13-lifecycle-harness.test.ts:33:19
+ ❯ test/p13-lifecycle-harness.test.ts:118:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H11 B5 GREEN only when all three paths are independently clean
+Error: CUE_SCOPE: root 7976 not observable at scope open; refusing to measure an unidentified root
+ ❯ openRunScope src/probes/run-scope.ts:90:20
+     88|   const members = query(rootPid);
+     89|   const root = members.find((entry) => entry.pid === rootPid);
+     90|   if (!root) throw new ScopeError(`root ${rootPid} not observable at s…
+       |                    ^
+     91|   return { rootPid, rootCreatedAt: root.createdAt, members };
+     92| }
+ ❯ openSubject src/probes/lifecycle-probe.ts:38:32
+ ❯ launch test/p13-lifecycle-harness.test.ts:33:19
+ ❯ test/p13-lifecycle-harness.test.ts:142:54
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H12 B5 RED: one dirty path sinks the verdict even if the others are clean
+Error: CUE_SCOPE: root 81392 not observable at scope open; refusing to measure an unidentified root
+ ❯ openRunScope src/probes/run-scope.ts:90:20
+     88|   const members = query(rootPid);
+     89|   const root = members.find((entry) => entry.pid === rootPid);
+     90|   if (!root) throw new ScopeError(`root ${rootPid} not observable at s…
+       |                    ^
+     91|   return { rootPid, rootCreatedAt: root.createdAt, members };
+     92| }
+ ❯ openSubject src/probes/lifecycle-probe.ts:38:32
+ ❯ launch test/p13-lifecycle-harness.test.ts:33:19
+ ❯ test/p13-lifecycle-harness.test.ts:152:54
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 8 passed (12)
+   Start at  21:48:39
+   Duration  141.30s (transform 49ms, setup 0ms, import 162ms, tests 140.92s, environment 0ms)
+
+exit=1

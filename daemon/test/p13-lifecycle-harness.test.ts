@@ -2,8 +2,12 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
-import { openSubject, probeTermination, probeParentDeath, type ObservedSubject } from '../src/probes/lifecycle-probe.js';
-import { survivorsOf } from '../src/probes/run-scope.js';
+import {
+  openSubject, probeTermination, probeParentDeath,
+  probeResidueAfterNormalExit, probeResidueOnStop, probeResidueOnCrash, summarizeResidue,
+  type ObservedSubject, type ResidueOutcome,
+} from '../src/probes/lifecycle-probe.js';
+import { survivorsOf, observeIdentities } from '../src/probes/run-scope.js';
 
 // P13 R-7a. HARNESS SENSITIVITY, not subject measurement.
 //
@@ -23,8 +27,8 @@ const win32 = process.platform === 'win32';
 // The probe never spawns (P4/P4.5 single-boundary seal); the test owns its fixtures
 // and hands running handles in.
 const opened: ObservedSubject[] = [];
-async function launch(script: string, children = 2): Promise<ObservedSubject> {
-  const child = spawn(process.execPath, [script, String(children)], { stdio: 'ignore' });
+async function launch(script: string, children = 2, lifetimeMs = 0): Promise<ObservedSubject> {
+  const child = spawn(process.execPath, [script, String(children), String(lifetimeMs)], { stdio: 'ignore' });
   await new Promise<void>((resolve, reject) => { child.once('spawn', resolve); child.once('error', reject); });
   const subject = await openSubject({
     pid: child.pid!,
@@ -35,12 +39,15 @@ async function launch(script: string, children = 2): Promise<ObservedSubject> {
 }
 
 afterEach(() => {
-  for (const subject of opened.splice(0)) {
-    // Fixtures are ours to clean up; never leave stray processes behind, and never
-    // let cleanup decide a verdict.
-    for (const entry of survivorsOf(subject.scope)) { try { process.kill(entry.pid, 'SIGKILL'); } catch { /* gone */ } }
-  }
-});
+  // One enumeration for every subject, not one per subject: the Win32 snapshot costs
+  // seconds, and three subjects blew the default 10s hook budget (H11/H12 went red on
+  // cleanup, not on their assertions).
+  const subjects = opened.splice(0);
+  const pids = subjects.flatMap((subject) => subject.scope.members.map((entry) => entry.pid));
+  // Fixtures are ours to clean up; never leave stray processes behind, and never
+  // let cleanup decide a verdict.
+  for (const entry of observeIdentities(pids)) { try { process.kill(entry.pid, 'SIGKILL'); } catch { /* gone */ } }
+}, 60_000);
 
 describe.runIf(win32)('P13 R-7a lifecycle harness sensitivity (fixtures only)', () => {
   it('H1 RED: P1 fails when the tool leaves a child running after a stop request', async () => {
@@ -97,4 +104,59 @@ describe.runIf(win32)('P13 R-7a lifecycle harness sensitivity (fixtures only)', 
     expect(outcome.passed).toBe(false);
     expect(outcome).not.toHaveProperty('inconclusive');
   }, 60_000);
+
+  // --- B5: residue after normal exit / stop / crash, each measured separately ---
+
+  it('H7 GREEN: an obedient tool leaves no residue on the NORMAL exit path', async () => {
+    const subject = await launch(obedient, 2, 9000);
+    const outcome = await probeResidueAfterNormalExit(subject, 30_000);
+    expect(outcome.path).toBe('normal');
+    expect(outcome.survivors).toEqual([]);
+    expect(outcome.passed).toBe(true);
+  }, 60_000);
+
+  it('H8 RED: the normal path catches residue the stop path would hide', async () => {
+    // The defective tool's detached child survives its parent's own clean exit.
+    // v0.1's profile leak was exactly this shape: invisible unless you look here.
+    const subject = await launch(defective, 2, 9000);
+    const outcome = await probeResidueAfterNormalExit(subject, 30_000);
+    expect(outcome.passed, 'a detached survivor of a normal exit is residue').toBe(false);
+    expect(outcome.detail).toMatch(/outlived a NORMAL exit/);
+  }, 60_000);
+
+  it('H9 RED: a subject that never exits is a FAIL, not a clean normal path', async () => {
+    const subject = await launch(obedient, 1, 0); // runs forever
+    const outcome = await probeResidueAfterNormalExit(subject, 3000);
+    expect(outcome.passed).toBe(false);
+    expect(outcome.detail).toMatch(/never observed/);
+  }, 60_000);
+
+  it('H10 B5 needs all three paths; two green paths do not carry the third', async () => {
+    const twoPaths: ResidueOutcome[] = [
+      { path: 'normal', passed: true, survivors: [], detail: 'ok' },
+      { path: 'stop', passed: true, survivors: [], detail: 'ok' },
+    ];
+    const partial = summarizeResidue(twoPaths);
+    expect(partial.passed, 'an unmeasured path must never pass by omission').toBe(false);
+    expect(partial.detail).toMatch(/unmeasured on: crash/);
+  });
+
+  it('H11 B5 GREEN only when all three paths are independently clean', async () => {
+    const normal = await probeResidueAfterNormalExit(await launch(obedient, 2, 9000), 30_000);
+    const stop = await probeResidueOnStop(await launch(obedient), 8000);
+    const crash = await probeResidueOnCrash(await launch(obedient), 8000);
+    const report = summarizeResidue([normal, stop, crash]);
+    expect(report.paths.map((entry) => entry.path)).toEqual(['normal', 'stop', 'crash']);
+    expect(report.passed).toBe(true);
+    expect(report.detail).toMatch(/residue 0 on all three paths/);
+  }, 120_000);
+
+  it('H12 B5 RED: one dirty path sinks the verdict even if the others are clean', async () => {
+    const normal = await probeResidueAfterNormalExit(await launch(obedient, 2, 9000), 30_000);
+    const stop = await probeResidueOnStop(await launch(obedient), 8000);
+    const crash = await probeResidueOnCrash(await launch(defective), 6000);
+    const report = summarizeResidue([normal, stop, crash]);
+    expect(report.passed).toBe(false);
+    expect(report.detail).toMatch(/residue found on: crash/);
+  }, 120_000);
 });
