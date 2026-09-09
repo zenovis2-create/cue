@@ -1,0 +1,34 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-lifecycle-harness
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H1 RED: P1 fails when the tool leaves a child running after a stop request 17764ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H2 GREEN: P1 passes when the tool takes its children down with it 12676ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H3 RED: P3 fails when a child outlives a hard-killed supervisor 17026ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H4 GREEN: P3 passes when nothing outlives a hard-killed supervisor 12822ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H5 the verdict ignores identical processes outside this run 22857ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H6 a stop budget that expires is a FAIL, not an inconclusive result 12318ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H7 GREEN: an obedient tool leaves no residue on the NORMAL exit path 17582ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H8 RED: the normal path catches residue the stop path would hide 40232ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H9 RED: a subject that never exits is a FAIL, not a clean normal path 17924ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H10 B5 needs all three paths; two green paths do not carry the third 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H11 B5 GREEN only when all three paths are independently clean 39220ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H12 B5 RED: one dirty path sinks the verdict even if the others are clean 45146ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H13 RED: a process-clean tool that leaks a tool home still fails B5 12819ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H14 RED: the same leak is caught on the NORMAL exit path too 17052ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H15 RED: a pending cleanup-journal row is residue 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H16 an unobserved residue class is never counted as clean 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H17 the AppContainer probe refuses to answer for a non-Cue profile name 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H18 a genuinely clean run reads 0 in every class, not "unknown" 550ms
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  23:21:33
+   Duration  286.54s (transform 139ms, setup 0ms, import 263ms, tests 286.00s, environment 0ms)
+
+exit=0

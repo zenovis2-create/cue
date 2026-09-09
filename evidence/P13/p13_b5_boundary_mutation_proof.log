@@ -1,0 +1,97 @@
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm notice run cue-daemon@0.1.0 build
+npm notice run tsc -p tsconfig.json && node scripts/copy-assets.mjs
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1 p13-lifecycle-harness
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H1 RED: P1 fails when the tool leaves a child running after a stop request 17418ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H2 GREEN: P1 passes when the tool takes its children down with it 12532ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H3 RED: P3 fails when a child outlives a hard-killed supervisor 17196ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H4 GREEN: P3 passes when nothing outlives a hard-killed supervisor 12488ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H5 the verdict ignores identical processes outside this run 22756ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H6 a stop budget that expires is a FAIL, not an inconclusive result 12643ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H7 GREEN: an obedient tool leaves no residue on the NORMAL exit path 17358ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H8 RED: the normal path catches residue the stop path would hide 40695ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H9 RED: a subject that never exits is a FAIL, not a clean normal path 18020ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H10 B5 needs all three paths; two green paths do not carry the third 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H11 B5 GREEN only when all three paths are independently clean 40155ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H12 B5 RED: one dirty path sinks the verdict even if the others are clean 44147ms
+ × test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H13 RED: a process-clean tool that leaks a tool home still fails B5 11388ms
+   → process residue 0 must not certify a dirty boundary: expected true to be false // Object.is equality
+ × test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H14 RED: the same leak is caught on the NORMAL exit path too 17055ms
+   → expected true to be false // Object.is equality
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H15 RED: a pending cleanup-journal row is residue 0ms
+ × test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H16 an unobserved residue class is never counted as clean 1ms
+   → three green paths cannot outvote a class nobody looked at: expected true to be false // Object.is equality
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H17 the AppContainer probe refuses to answer for a non-Cue profile name 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H18 a genuinely clean run reads 0 in every class, not "unknown" 728ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H13 RED: a process-clean tool that leaks a tool home still fails B5
+AssertionError: process residue 0 must not certify a dirty boundary: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/p13-lifecycle-harness.test.ts:200:83
+    198|     expect(outcome.survivors, 'the process side really is clean').toEq…
+    199|     expect(outcome.findings.map((entry) => entry.kind)).toContain('too…
+    200|     expect(outcome.passed, 'process residue 0 must not certify a dirty…
+       |                                                                                   ^
+    201|     expect(outcome.detail).toMatch(/tool home\(s\) not removed/);
+    202|   }, 60_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H14 RED: the same leak is caught on the NORMAL exit path too
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/p13-lifecycle-harness.test.ts:209:28
+    207|     const outcome = await probeResidueAfterNormalExit(subject, fullSpe…
+    208|     expect(outcome.survivors).toEqual([]);
+    209|     expect(outcome.passed).toBe(false);
+       |                            ^
+    210|     expect(outcome.findings.map((entry) => entry.kind)).toContain('too…
+    211|   }, 60_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H16 an unobserved residue class is never counted as clean
+AssertionError: three green paths cannot outvote a class nobody looked at: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/p13-lifecycle-harness.test.ts:228:88
+    226|       { path: 'crash', passed: true, survivors: [], detail: 'ok', find…
+    227|     ]);
+    228|     expect(report.passed, 'three green paths cannot outvote a class no…
+       |                                                                                        ^
+    229|     expect(report.detail).toMatch(/B5 blind on: normal -> appcontainer…
+    230|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 15 passed (18)
+   Start at  23:26:37
+   Duration  285.05s (transform 112ms, setup 0ms, import 236ms, tests 284.59s, environment 0ms)
+
+exit=1

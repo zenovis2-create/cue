@@ -1,4 +1,5 @@
 import { openRunScope, extendRunScope, survivorsOf, type ProcessIdentity, type RunScope } from './run-scope.js';
+import { observeBoundaryResidue, observedClasses, unobservedClasses, type BoundarySpec, type ResidueClass, type ResidueFinding } from './boundary-residue.js';
 
 // P13 R-2 / P1 + P3.
 //   P1 termination proof : after a stop request, does the tool's own run-scoped set die?
@@ -89,6 +90,32 @@ export type ResiduePath = 'normal' | 'stop' | 'crash';
 
 export interface ResidueOutcome extends ProbeOutcome {
   path: ResiduePath;
+  /** Non-process residue found on this path. Process survivors live in `survivors`. */
+  findings: ResidueFinding[];
+  /** Residue classes this path was actually able to look at. */
+  observed: ResidueClass[];
+  /** Classes nobody looked at. Non-empty means the path cannot be called clean. */
+  unobserved: ResidueClass[];
+}
+
+/** Fold the boundary classes into a process-only outcome. A path is clean only when
+ *  BOTH the process table and every boundary artifact are empty - v0.1 leaked a
+ *  profile while the process table was already spotless. */
+function withBoundary(outcome: ProbeOutcome, path: ResiduePath, spec: BoundarySpec): ResidueOutcome {
+  const findings = observeBoundaryResidue(spec);
+  const unobserved = unobservedClasses(spec);
+  const detail = findings.length === 0
+    ? outcome.detail
+    : `${outcome.detail}; boundary residue: ${findings.map((f) => `${f.kind}: ${f.detail}`).join(' | ')}`;
+  return {
+    ...outcome,
+    path,
+    findings,
+    observed: observedClasses(spec),
+    unobserved,
+    passed: outcome.passed && findings.length === 0,
+    detail,
+  };
 }
 
 export interface BoundaryResidueReport {
@@ -99,7 +126,7 @@ export interface BoundaryResidueReport {
 
 /** Normal path: the subject ends on its own. We never stop it - stopping it would
  *  measure the stop path again and quietly skip the one B5 exists for. */
-export async function probeResidueAfterNormalExit(subject: ObservedSubject, limitMs = 20000): Promise<ResidueOutcome> {
+export async function probeResidueAfterNormalExit(subject: ObservedSubject, spec: BoundarySpec = {}, limitMs = 20000): Promise<ResidueOutcome> {
   const deadline = Date.now() + limitMs;
   let rootAlive = true;
   while (rootAlive && Date.now() < deadline) {
@@ -107,25 +134,23 @@ export async function probeResidueAfterNormalExit(subject: ObservedSubject, limi
     if (rootAlive) await sleep(200);
   }
   if (rootAlive) {
-    return {
-      path: 'normal',
+    return withBoundary({
       passed: false,
       survivors: survivorsOf(subject.scope),
       // NOTE: the R-7 release gate scans all of src/ for a currency symbol near the
       // word "budget" - and an interpolated limit variable trips it. The gate is
       // right to be blunt; the probe renames its variable, the gate does not move.
       detail: `subject did not exit on its own within ${limitMs}ms; the normal path was never observed`,
-    };
+    }, 'normal', spec);
   }
   const survivors = await waitForQuiet(subject.scope, Math.max(0, deadline - Date.now()));
-  return {
-    path: 'normal',
+  return withBoundary({
     passed: survivors.length === 0,
     survivors,
     detail: survivors.length === 0
-      ? 'no run-scoped residue after normal exit'
+      ? 'no run-scoped process residue after normal exit'
       : `${survivors.length} process(es) outlived a NORMAL exit: ${survivors.map((entry) => `${entry.pid}@${entry.createdAt}`).join(', ')}`,
-  };
+  }, 'normal', spec);
 }
 
 /** Compose one B5 verdict from three independently measured paths. Callers supply a
@@ -138,20 +163,31 @@ export function summarizeResidue(paths: readonly ResidueOutcome[]): BoundaryResi
     // Absolute rule 1: no measurement, no claim.
     return { passed: false, paths: [...paths], detail: `B5 unmeasured on: ${missing.join(', ')}` };
   }
+  // A class nobody looked at is not a clean class. Reporting "residue 0" while
+  // AppContainer profiles were never queried is exactly how v0.1's leak stayed
+  // invisible, so an unobserved class sinks the verdict just like a found one.
+  const blind = paths.filter((outcome) => outcome.unobserved.length > 0);
+  if (blind.length > 0) {
+    return {
+      passed: false,
+      paths: [...paths],
+      detail: `B5 blind on: ${blind.map((outcome) => `${outcome.path} -> ${outcome.unobserved.join(',')}`).join(' | ')}`,
+    };
+  }
   const failed = paths.filter((outcome) => !outcome.passed);
   return {
     passed: failed.length === 0,
     paths: [...paths],
     detail: failed.length === 0
-      ? 'residue 0 on all three paths (normal, stop, crash)'
+      ? 'residue 0 in every class on all three paths (normal, stop, crash)'
       : `residue found on: ${failed.map((outcome) => `${outcome.path} (${outcome.detail})`).join(' | ')}`,
   };
 }
 
-export async function probeResidueOnStop(subject: ObservedSubject, budgetMs = 8000): Promise<ResidueOutcome> {
-  return { ...(await probeTermination(subject, budgetMs)), path: 'stop' };
+export async function probeResidueOnStop(subject: ObservedSubject, spec: BoundarySpec = {}, waitMs = 8000): Promise<ResidueOutcome> {
+  return withBoundary(await probeTermination(subject, waitMs), 'stop', spec);
 }
 
-export async function probeResidueOnCrash(subject: ObservedSubject, budgetMs = 8000): Promise<ResidueOutcome> {
-  return { ...(await probeParentDeath(subject, budgetMs)), path: 'crash' };
+export async function probeResidueOnCrash(subject: ObservedSubject, spec: BoundarySpec = {}, waitMs = 8000): Promise<ResidueOutcome> {
+  return withBoundary(await probeParentDeath(subject, waitMs), 'crash', spec);
 }
