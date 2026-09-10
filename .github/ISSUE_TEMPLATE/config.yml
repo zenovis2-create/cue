@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: External reproduction guide
+    url: https://github.com/zenovis2-create/cue/blob/main/docs/EXTERNAL_REPRODUCTION.md
+    about: Clone Cue on Windows 11 and report Tier A verification results with evidence.

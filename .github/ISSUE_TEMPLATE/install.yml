@@ -1,0 +1,58 @@
+name: Install / build failure
+description: Clone, npm ci, native build, or first launch fails on Windows 11.
+title: "[install] "
+labels: ["install"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when Cue does not install or start. If the app starts but sandbox checks fail, use **External reproduction** or **Bug report**.
+  - type: input
+    id: os
+    attributes:
+      label: OS build
+      placeholder: "Windows 11 …"
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node / npm versions
+      description: `node -v` / `npm -v`
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit SHA
+      description: `git rev-parse HEAD`
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Failure stage
+      options:
+        - git clone
+        - npm ci (root)
+        - npm --prefix daemon ci
+        - native module / build tools
+        - npm start / Electron launch
+        - Codex CLI / auth setup
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Commands run
+      description: Exact PowerShell commands and exit codes
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output
+      description: Paste the failing log excerpt (redact secrets)
+    validations:
+      required: true

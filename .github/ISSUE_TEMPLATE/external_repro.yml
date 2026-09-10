@@ -1,0 +1,57 @@
+name: External reproduction
+description: Independent Windows 11 verification (Tier A+). Counts toward external-repro KPI.
+title: "[repro] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Follow [docs/EXTERNAL_REPRODUCTION.md](https://github.com/zenovis2-create/cue/blob/main/docs/EXTERNAL_REPRODUCTION.md). Tier A preferred (`npm test` and/or `evidence:p12:stop` on Windows 11). Do not paste secrets.
+  - type: input
+    id: os
+    attributes:
+      label: OS build
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node / npm versions
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit SHA
+      description: Link the commit if possible
+    validations:
+      required: true
+  - type: checkboxes
+    id: tiers
+    attributes:
+      label: Tiers ran
+      options:
+        - label: Tier A — npm test / evidence:p12:stop / mutation / source
+          required: true
+        - label: Tier B — evidence:p12:electron / cancel
+        - label: Tier C — live Codex (optional; costs money)
+  - type: textarea
+    id: results
+    attributes:
+      label: Pass / fail per command
+      description: List exact commands and outcomes (note skips)
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: `evidence/P12/` paths, truncated JSON hashes, or key log excerpts
+    validations:
+      required: true
+  - type: textarea
+    id: surprises
+    attributes:
+      label: Surprises vs README Current limits
+    validations:
+      required: false

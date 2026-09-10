@@ -1,0 +1,41 @@
+name: Critical — cannot install or start
+description: Cue is completely unblockable for you (install/start broken). Same-day SLA.
+title: "[critical] "
+labels: ["critical", "install"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Critical** means you cannot install or start Cue at all on Windows 11. We treat these same-day. If Cue runs but a check fails, use Bug / External reproduction instead.
+  - type: input
+    id: os
+    attributes:
+      label: OS build
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node / npm versions
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: blocker
+    attributes:
+      label: What is blocked
+      description: Install, build, or first launch — and the exact error
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error output
+      description: Redacted logs / screenshots description
+    validations:
+      required: true

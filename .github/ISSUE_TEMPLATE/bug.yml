@@ -1,0 +1,64 @@
+name: Bug report
+description: Something behaved incorrectly after an approved Cue run or in the app UI.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Fill the fields below so we can reproduce. For sandbox verification runs, prefer the **External reproduction** template.
+  - type: input
+    id: os
+    attributes:
+      label: OS build
+      description: Windows 11 build (`winver` or `[System.Environment]::OSVersion`)
+      placeholder: "Windows 11 22631.x"
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node / npm versions
+      description: Output of `node -v` and `npm -v` if relevant
+    validations:
+      required: false
+  - type: input
+    id: commit
+    attributes:
+      label: Commit SHA
+      description: `git rev-parse HEAD` (link the commit if possible)
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: What you did after `npm start` or evidence commands
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Paths under `evidence/P12/`, truncated JSON hashes, or redacted logs. Do not paste secrets (`auth.json`, tokens).
+    validations:
+      required: false
+  - type: textarea
+    id: surprises
+    attributes:
+      label: Surprises vs README Current limits
+      description: Anything that differs from documented v0.1 limits
+    validations:
+      required: false
