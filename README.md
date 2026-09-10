@@ -122,6 +122,10 @@ The release finalizer recomputes the strict staged-source index manifest and che
 
 **Evidence scope:** the retained P12 release artifacts belong to the [sealed v0.1 source snapshot](https://github.com/zenovis2-create/cue/tree/51d1e36cacc30bc8ae6040284ea74c7814fb20fc). This documentation/demo update does not regenerate that verdict or claim it certifies the new tree. For a new release, bind source and evidence together again. The historical Phase 11 NO-GO checkpoint remains in `evidence/P11/`. P12's verdict is tracked with source and evidence in the same release commit; a separate, out-of-checkout post-commit attestation binds the commit by recomputing the source manifest from the HEAD tree, avoiding a circular commit hash.
 
+### External reproduction
+
+Outsiders can independently verify Cue's published claims without a paid CTA: see **[docs/EXTERNAL_REPRODUCTION.md](docs/EXTERNAL_REPRODUCTION.md)** (Tier A = `npm test` / `evidence:p12:stop` on Windows 11; report an issue with OS, Node, commit SHA, and results).
+
 ## Current limits
 
 v0.1 has explicit boundaries. Treat these as workflow constraints when deciding whether Cue fits your task.
