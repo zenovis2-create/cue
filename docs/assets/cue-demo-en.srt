@@ -1,0 +1,103 @@
+1
+00:00:00,067 --> 00:00:01,433
+This checklist started as
+
+2
+00:00:01,433 --> 00:00:02,600
+one request in Cue.
+
+3
+00:00:02,967 --> 00:00:03,800
+Describe what you want to
+
+4
+00:00:03,800 --> 00:00:04,167
+build.
+
+5
+00:00:04,567 --> 00:00:05,867
+Here, it's an interactive
+
+6
+00:00:05,867 --> 00:00:08,033
+checklist in one HTML file.
+
+7
+00:00:08,400 --> 00:00:10,100
+Before anything runs, Cue
+
+8
+00:00:10,100 --> 00:00:11,233
+shows the goal, the
+
+9
+00:00:11,233 --> 00:00:12,667
+permitted workspace, and
+
+10
+00:00:12,667 --> 00:00:13,733
+what stays untouched.
+
+11
+00:00:14,100 --> 00:00:15,200
+With the autonomy level
+
+12
+00:00:15,200 --> 00:00:16,967
+selected, review the scope
+
+13
+00:00:17,100 --> 00:00:17,767
+and approve.
+
+14
+00:00:18,133 --> 00:00:19,400
+Cue runs the task through
+
+15
+00:00:19,467 --> 00:00:21,200
+isolated workers, and shows
+
+16
+00:00:21,200 --> 00:00:22,500
+progress as it works.
+
+17
+00:00:22,867 --> 00:00:24,433
+When it finishes, the result
+
+18
+00:00:24,533 --> 00:00:25,433
+is recorded here.
+
+19
+00:00:25,800 --> 00:00:26,500
+Open the file.
+
+20
+00:00:26,867 --> 00:00:27,767
+Now check off the three
+
+21
+00:00:27,767 --> 00:00:28,333
+steps.
+
+22
+00:00:28,700 --> 00:00:29,967
+The checklist responds to
+
+23
+00:00:29,967 --> 00:00:30,633
+every click.
+
+24
+00:00:31,033 --> 00:00:32,167
+From a clear goal to a
+
+25
+00:00:32,167 --> 00:00:33,000
+working result.
+
+26
+00:00:33,367 --> 00:00:33,967
+This is Cue.

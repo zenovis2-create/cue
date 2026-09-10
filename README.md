@@ -1,46 +1,99 @@
-# Cue v0.1
+# Cue
 
-Cue는 자연어 코딩 목표를 승인된 작업 폴더에서 실행하는 독립 Electron 데스크톱 앱입니다. Buzz는 필요하지 않으며 기본 어댑터는 `none`입니다.
+### Give AI a goal. Keep control of the work.
 
-## 요구 사항
+Cue is a Windows desktop app that turns a coding goal into an explicit scope you approve, runs workspace actions through isolated workers, and shows a recorded result.
 
-- Windows 11
-- Node.js 및 npm
-- Codex CLI `0.153.0`과 인증이 완료된 사용자 프로필 (`%USERPROFILE%\.codex\auth.json`)
+**Describe → Review → Approve → See what changed.**
 
-Cue는 기본 Codex 실행 파일의 SHA-256을 고정 검증합니다. 다른 `CUE_VENDOR_CODEX`를 쓰려면 해당 파일의 64자리 SHA-256을 `CUE_VENDOR_CODEX_SHA256`에 함께 지정해야 하며, 불일치 시 모델 프로세스를 시작하지 않습니다.
+[Watch the 34-second demo](docs/assets/cue-demo-en.mp4) · [Get started](#get-started) · [How it works](#how-it-works) · [한국어 요약](#한국어-요약)
 
-자격증명 값은 앱 UI·작업자 환경·원장에 기록하지 않습니다.
+*v0.1 · Windows 11 · Electron · Codex-powered · Standalone; no Buzz required*
 
-## 실행
+<!-- Enable only after the actual assets have been captured and committed.
+[![Watch Cue turn a goal into a working checklist](docs/assets/cue-demo-poster.png)](docs/assets/cue-demo-en.mp4)
+![Cue: goal, scope, approval, and result](docs/assets/cue-demo-loop.gif)
+-->
 
-```bash
-npm install
+## Why Cue?
+
+Delegating a coding task should make the next step easier to understand. Cue puts the decision before execution and the evidence after it.
+
+| What you need | What Cue puts in front of you |
+| --- | --- |
+| A clear starting point | A natural-language goal and a three-line scope summary. |
+| A say in what can change | An execution envelope showing the workspace and allowed actions, approved before work starts. |
+| Boundaries during execution | Workspace commands run through capability-zero Windows AppContainer workers; the approved envelope does not expand after approval. |
+| A result you can inspect | Ledger-backed progress, worker PIDs, and a completed, blocked, or human-required outcome. |
+| A way to interrupt | **Stop** terminates the active controller and AppContainer workers. |
+
+Start with a small, file-changing task: create a single-page checklist, update a local file, or make a focused change you can inspect. See [current limits](#current-limits) before choosing a workflow.
+
+## The flow in 30 seconds
+
+1. **Describe the outcome.** Choose a workspace, enter a goal, and select the autonomy level before preparing the scope.
+2. **Review the boundaries.** Read what Cue will do, where it can work, and what it will leave untouched.
+3. **Approve and follow along.** Start the approved run and watch ledger-backed progress. Stop it if needed.
+4. **Inspect the result.** Open the generated file and try it. A blocked run remains visibly blocked.
+
+**In the demo:** one successful run creates an interactive HTML checklist. You see the actual app, approval, completion, and three working checkboxes.
+
+[Watch / download the English MP4](docs/assets/cue-demo-en.mp4) · [English subtitles](docs/assets/cue-demo-en.srt) · [Storyboard and capture notes](docs/DEMO.md)
+
+The demo is edited to 34 seconds; this is not a completion-time promise. UI strings were translated for the recording; the current app UI is Korean. The demo does not certify every model-generated check or replace the verification evidence below.
+
+## Get started
+
+### Requirements
+
+- Windows 11.
+- Node.js and npm; native dependencies may require a compatible Windows build toolchain.
+- Codex CLI `0.153.0` and an authenticated user profile at `%USERPROFILE%\.codex\auth.json`.
+
+```powershell
+git clone https://github.com/zenovis2-create/cue.git
+cd cue
+npm ci
+npm --prefix daemon ci
 npm start
 ```
 
-첫 실행 시 작업 폴더 선택 창이 한 번 열립니다. 이후 흐름은 다음과 같습니다.
+The first launch opens a workspace picker. Cue runs independently; the default adapter is `none`, and Buzz is not a required runtime.
 
-1. 자연어 목표 입력
-2. 세 줄 요약과 실행 봉투 확인
-3. 자율성 수준 선택
-4. **승인하고 시작** 클릭
-5. 원장에서 읽은 진행 상태·격리 도구 PID·완료 또는 막힘 결과 확인
-6. 실행 중에는 **중단**으로 실제 컨트롤러와 AppContainer 작업자를 종료
+Cue pins and verifies the default Codex executable's SHA-256. To use another `CUE_VENDOR_CODEX`, also provide that file's exact 64-character SHA-256 in `CUE_VENDOR_CODEX_SHA256`. A mismatch prevents model startup. Credential values are not written to the app UI, worker environment, or ledger.
 
-실행 봉투는 승인 후 확대되지 않습니다. 실패·크래시·정책 위반은 `completed`가 아닌 `blocked`/`human_required`로 표시됩니다.
+## How it works
 
-## 실행 경계
+```mermaid
+flowchart TD
+    User["Your goal + autonomy level"] --> UI["Cue desktop UI"]
+    UI --> Scope["Three-line scope + execution envelope"]
+    Scope --> Approval{"You approve?"}
+    Approval -->|No| Idle["No task execution"]
+    Approval -->|Yes| Controller["Host controller + Codex app-server"]
+    Controller <-->|Model communication| Model["Codex model service"]
+    Controller -->|cue_workspace call| Worker["Capability-zero AppContainer worker"]
+    Worker --> Workspace["Approved worktree"]
+    Worker -->|Result + status| Controller
+    Controller --> Ledger["Execution ledger"]
+    Ledger --> Result["Progress + completed / blocked / human_required"]
+    Result --> UI
+    UI -->|Stop| Stop["Terminate controller + workers"]
+```
 
-- **호스트:** Codex app-server와 모델 통신만 담당합니다. 별도의 격리된 controller cwd를 사용하며 Codex 내장 shell과 권한 요청 도구를 비활성화합니다.
-- **작업자:** `cue_workspace` 동적 도구 호출마다 capability-zero Windows AppContainer를 생성합니다. 실제 명령과 파일 작업은 승인된 worktree에서만 수행합니다.
-- 호출자가 `cwd`를 지정할 수 없으며 서버가 승인된 worktree로 고정합니다.
-- worktree 외부 경로와 junction 우회 쓰기는 OS 경계에서 거부됩니다.
-- capability-zero 작업자의 일반 소켓 접근은 OS에서 거부됩니다. 기존 P3-16 정책은 별도의 **탐지 후 중단** 계층이며 syscall 차단으로 과장하지 않습니다.
+### Execution boundaries
 
-## 검증
+- **Host:** the Codex app-server handles model communication from a separate, isolated controller working directory. Codex's built-in shell and permission-request tools are disabled. The model connection is on the host; this is not an offline-only app.
+- **Workers:** each `cue_workspace` dynamic tool call creates a capability-zero Windows AppContainer. Commands and file operations run in the approved worktree.
+- Callers cannot supply `cwd`; the server fixes it to the approved worktree. Writes outside the worktree and junction-based write escapes are rejected at the OS boundary.
+- Ordinary socket access from capability-zero workers is denied by the OS. The older P3-16 network policy is a separate **detect-and-stop** layer, not syscall enforcement.
+- The execution envelope cannot expand after approval. Failures, crashes, and policy violations are reported as `blocked` / `human_required`, not `completed`.
 
-```bash
+## Verification
+
+The commands below are the project's verification entry points. Live model runs can incur costs; a demo recording is not a substitute for these checks.
+
+```powershell
 npm test
 npm run evidence:p12:manifest
 npm run evidence:p12
@@ -51,27 +104,31 @@ npm run evidence:p12:mutation
 npm run evidence:p12:source
 ```
 
-`evidence:p12`는 실제 Codex 모델로 서로 다른 목표 A/B를 실행하고, `evidence:p12:electron`은 실제 Electron 창을 검증합니다. 모델 실행에는 비용이 발생할 수 있습니다. `evidence:p12:stop`은 deterministic host-controller fixture와 실제 capability-zero AppContainer 작업자로 중단·회수를 검증하며 실제 vendor-model A/B 증거를 대체하지 않습니다. `evidence:p12:mutation`은 checkout 밖 disposable 복사본에서 fail-fast·writer lifecycle·parent-death 안전장치를 각각 제거해 해당 회귀가 테스트에 잡히는지 확인합니다.
+`evidence:p12` executes two distinct goals, A/B, with a real Codex model. `evidence:p12:electron` checks a real Electron window. `evidence:p12:stop` uses a deterministic host-controller fixture and real capability-zero AppContainer workers to verify stop and reclamation; it does not replace the vendor-model A/B evidence. `evidence:p12:mutation` removes fail-fast, writer-lifecycle, and parent-death safeguards in disposable copies outside the checkout to verify regression sensitivity.
 
-릴리스 finalizer는 먼저 stage된 source의 strict index manifest를 다시 계산하고, 같은 source digest의 gate summary와 독립 security/release review, 각 receipt SHA-256을 대조합니다. 불일치·누락·unlisted P12 evidence·unstaged source drift가 있으면 `v01_verdict.json`을 만들지 않습니다.
+The release finalizer recomputes the strict staged-source index manifest and checks the matching source digest, gate summary, independent security/release reviews, and receipt SHA-256 values. Missing or mismatched inputs, unlisted P12 evidence, or unstaged source drift prevent creation of `v01_verdict.json`.
 
-주요 증거:
+| Evidence | What it records |
+| --- | --- |
+| [Tool manifest](evidence/P12/p12_manifest.json) | Full tool manifest and hashes from the pinned Codex outbound request. |
+| [Live A/B runs](evidence/P12/p12_live_result.json) | Goals, envelopes, output hashes, controller/worker PIDs, and ordered provenance. |
+| [Electron window](evidence/P12/p12_electron_window_result.json) | Actual window and runtime security values, with companion PNG evidence. |
+| [Picker cancellation](evidence/P12/p12_electron_cancel_result.json) | Fail-closed behavior when the first workspace selection is canceled. |
+| [Stop](evidence/P12/p12_stop_result.json) | Controller and worker termination/reclamation. |
+| [Mutation checks](evidence/P12/p12_mutation_result.json) | Sensitivity to regressions in three safety lanes. |
+| [Source manifest](evidence/P12/p12_source_manifest.json) | Staged source tree binding, excluding evidence. |
+| [Tracked verdict](evidence/P12/v01_verdict.json) | Bound source, gate, review, and receipt hashes. |
 
-- `evidence/P12/p12_manifest.json` — pinned Codex 실제 outbound request의 전체 tool manifest와 해시
-- `evidence/P12/p12_live_result.json` — 서로 다른 실제 목표 A/B, 봉투, 산출물 해시, controller/worker PID, ordered provenance
-- `evidence/P12/p12_electron_window_result.json` / PNG — 실제 Electron 창과 runtime 보안 값
-- `evidence/P12/p12_electron_cancel_result.json` — 첫 workspace 선택 취소의 fail-closed 확인
-- `evidence/P12/p12_stop_result.json` — live controller와 AppContainer worker의 중단·회수 확인
-- `evidence/P12/p12_mutation_result.json` — 세 안전 lane의 mutation sensitivity
-- `evidence/P12/p12_source_manifest.json` — evidence를 제외한 staged source tree 결속
-- `evidence/P12/v01_verdict.json` — source·gate·review·receipt 해시를 묶는 tracked verdict
+**Evidence scope:** the retained P12 release artifacts belong to the [sealed v0.1 source snapshot](https://github.com/zenovis2-create/cue/tree/51d1e36cacc30bc8ae6040284ea74c7814fb20fc). This documentation/demo update does not regenerate that verdict or claim it certifies the new tree. For a new release, bind source and evidence together again. The historical Phase 11 NO-GO checkpoint remains in `evidence/P11/`. P12's verdict is tracked with source and evidence in the same release commit; a separate, out-of-checkout post-commit attestation binds the commit by recomputing the source manifest from the HEAD tree, avoiding a circular commit hash.
 
-## v0.1 한계
+## Current limits
 
-- **P3-16 PARTIAL:** 기존 네트워크 정책은 탐지 후 중단 계층이며 syscall 강제로 재표기하지 않습니다. capability-zero 작업자의 별도 socket 검사는 OS 거부를 증명합니다.
-- **P4-2 PARTIAL:** OS 프로세스 트리는 확인했지만 Windows `Win32_Process`가 worker cwd를 제공하지 않아 독립 OS cwd 조회는 미검증입니다.
-- **P6-3 PARTIAL:** 프론트도어 종료 후 daemon adapter 전달은 검증했지만 실제 Buzz 전달은 외부 상태 변경을 피하기 위해 실행하지 않았습니다. Buzz는 Cue 앱의 필수 런타임이 아닙니다.
-- **목표 관련 검증 PARTIAL:** 현재 `goal_relevant_verification`은 파일 변경형 목표의 before/after SHA-256, 기대 경로 변경, 최종 보고 상관관계를 검증합니다. 파일을 변경하지 않는 조사·요약 목표를 일반적으로 판정한다고 주장하지 않습니다.
+v0.1 has explicit boundaries. Treat these as workflow constraints when deciding whether Cue fits your task.
+
+- **P3-16 PARTIAL:** the older network policy detects and stops; it must not be relabeled as syscall enforcement. Separate capability-zero worker socket checks demonstrate OS denial.
+- **P4-2 PARTIAL:** the OS process tree was checked, but `Win32_Process` does not expose worker cwd. Independent OS-level cwd inspection remains unverified.
+- **P6-3 PARTIAL:** daemon adapter handoff after front-door termination was checked; real Buzz delivery was not performed to avoid external state changes. Buzz is optional.
+- **Goal verification PARTIAL:** `goal_relevant_verification` correlates before/after SHA-256, expected-path changes, and the final report for file-changing goals. It does not generally judge research or summary tasks that change no files.
 
 Phase 12 retains these release limitations verbatim:
 
@@ -81,4 +138,13 @@ Phase 12 retains these release limitations verbatim:
 - Worker child processes are prohibited; commands requiring nested subprocesses are unsupported. Request each executable through a separate `cue_workspace` call so Cue can resolve and verify it outside writable worktrees.
 - goal verification is oriented toward file-changing goals
 
-Phase 11의 NO-GO 체크포인트는 `evidence/P11/`에 역사 기록으로 보존됩니다. Phase 12의 `v01_verdict.json`은 ignore하지 않고 source와 evidence를 묶는 동일 release commit에 포함합니다. commit SHA 자체는 순환을 피하기 위해 checkout 밖 post-commit attestation이 HEAD tree에서 source manifest를 재계산해 별도로 결속합니다.
+## 한국어 요약
+
+**Cue는 코딩 목표를 입력하고, 실행 범위를 승인한 뒤, 실제 결과를 확인하는 Windows 데스크톱 앱입니다.** 작업 폴더와 허용 동작을 먼저 확인하고, 승인된 범위에서 격리 작업자가 실행합니다. 진행 상태와 완료·막힘 결과는 원장을 바탕으로 표시하며, 실행 중에는 중단할 수 있습니다.
+
+- Windows 11, Node.js/npm, 인증된 Codex CLI가 필요합니다. Buzz 없이 독립 실행됩니다.
+- [34초 영문 데모](docs/assets/cue-demo-en.mp4)는 실제 체크리스트 생성·조작 과정입니다. 대기 시간은 편집했으며, UI만 촬영용으로 영어화했습니다. 현재 앱 UI는 한국어입니다.
+- v0.1은 파일을 변경하는 목표 중심입니다. 자식 프로세스를 만드는 명령, 일반적인 조사·요약 목표 판정, 실제 Buzz 전달 등에는 위의 한계가 있습니다.
+- 기존 검증 명령과 증거를 유지했습니다. 이번 문서·영상 추가는 새로운 릴리스 보안 인증을 의미하지 않습니다.
+
+Try a small task with a result you can inspect. [Share a reproducible issue](https://github.com/zenovis2-create/cue/issues) if it gets blocked—and star the repository if this is the workflow you want to see grow.
