@@ -10,10 +10,7 @@ Cue is a Windows desktop app that turns a coding goal into an explicit scope you
 
 *v0.1 · Windows 11 · Electron · Codex-powered · Standalone; no Buzz required*
 
-<!-- Enable only after the actual assets have been captured and committed.
 [![Watch Cue turn a goal into a working checklist](docs/assets/cue-demo-poster.png)](docs/assets/cue-demo-en.mp4)
-![Cue: goal, scope, approval, and result](docs/assets/cue-demo-loop.gif)
--->
 
 ## Why Cue?
 
@@ -37,6 +34,10 @@ Start with a small, file-changing task: create a single-page checklist, update a
 4. **Inspect the result.** Open the generated file and try it. A blocked run remains visibly blocked.
 
 **In the demo:** one successful run creates an interactive HTML checklist. You see the actual app, approval, completion, and three working checkboxes.
+
+[![Actual generated checklist responding to three checkbox clicks](docs/assets/cue-demo-loop.gif)](docs/assets/cue-demo-en.mp4)
+
+*A short, silent loop of the actual result. Click to open the full English demo.*
 
 [Watch / download the English MP4](docs/assets/cue-demo-en.mp4) · [English subtitles](docs/assets/cue-demo-en.srt) · [Storyboard and capture notes](docs/DEMO.md)
 

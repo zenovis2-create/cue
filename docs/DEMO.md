@@ -49,9 +49,9 @@ Use the 34-second cut as the default. Extend to 45–60 seconds only when the ad
 | --- | --- |
 | `cue-demo-en.mp4` | Present: full English demo, linked from README. |
 | `cue-demo-en.srt` | Present: English subtitle sidecar. |
-| `cue-demo-poster.png` | Planned: actual result still, ideally 1280×720. No placeholder image is shipped. |
-| `cue-demo-loop.gif` | Planned: short silent action/result loop; keep the full MP4 as the primary demo. |
+| `cue-demo-poster.png` | Present: 1280×720 actual result still from the MP4 at 1.8 seconds, linked to the full demo. |
+| `cue-demo-loop.gif` | Present: 800×450 silent loop, 4.83 seconds / 58 frames, approximately 274 KiB. Shows real checkbox interactions from the 26.05–30.90 second excerpt of the MP4. |
 
-README image blocks remain inside an HTML comment until the real PNG/GIF exists. The MP4 uses a regular file link; an inline GitHub video player is not guaranteed by a Markdown link. Do not use a nonexistent image as the only route to the demo.
+README displays the real poster in the hero and the GIF beside the demo explanation. Both link to the full MP4. These assets are extracted from the published movie; no UI state is synthesized. The MP4 also has a regular text link; an inline GitHub video player is not guaranteed by a Markdown link.
 
 When replacing the movie, update the duration, subtitles, hash and this provenance note together. Keep unsupported claims out of the title, narration, captions and launch copy.
