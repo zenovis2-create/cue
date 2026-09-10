@@ -1,0 +1,18 @@
+name: Question
+description: How Cue works, limits, or fit for a workflow — not a bug.
+title: "[question] "
+labels: ["question"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Goal, Windows version, and what you already tried / read (README, demo)
+    validations:
+      required: false

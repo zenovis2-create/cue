@@ -126,6 +126,10 @@ The release finalizer recomputes the strict staged-source index manifest and che
 
 Outsiders can independently verify Cue's published claims without a paid CTA: see **[docs/EXTERNAL_REPRODUCTION.md](docs/EXTERNAL_REPRODUCTION.md)** (Tier A = `npm test` / `evidence:p12:stop` on Windows 11; report an issue with OS, Node, commit SHA, and results).
 
+### Issues and response targets
+
+See [docs/ISSUE_SLA.md](docs/ISSUE_SLA.md): first response within 24h, labels within 48h, `critical` (cannot install/start) same day. Use the issue forms; for independent verification see [docs/EXTERNAL_REPRODUCTION.md](docs/EXTERNAL_REPRODUCTION.md).
+
 ## Current limits
 
 v0.1 has explicit boundaries. Treat these as workflow constraints when deciding whether Cue fits your task.
