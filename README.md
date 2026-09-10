@@ -124,8 +124,7 @@ The release finalizer recomputes the strict staged-source index manifest and che
 
 ### External reproduction
 
-Outsiders can independently verify Cue's published claims without a paid CTA: see **[docs/EXTERNAL_REPRODUCTION.md](docs/EXTERNAL_REPRODUCTION.md)** (Tier A = 
-pm test / evidence:p12:stop on Windows 11; report an issue with OS, Node, commit SHA, and results).
+Outsiders can independently verify Cue's published claims without a paid CTA: see **[docs/EXTERNAL_REPRODUCTION.md](docs/EXTERNAL_REPRODUCTION.md)** (Tier A = `npm test` / `evidence:p12:stop` on Windows 11; report an issue with OS, Node, commit SHA, and results).
 
 ## Current limits
 
