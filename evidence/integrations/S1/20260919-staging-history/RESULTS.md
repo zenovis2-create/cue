@@ -1,0 +1,9 @@
+# Historical stage binding results
+
+Production hypothesis 1 implemented. Explicit `readHistorical` validates the persisted request/envelope hashes, parent and child run ownership, approved plan/policy/candidate/scope, validated account identity, staging setup and activated authority payloads, verified cleanup payload, publication root authority, and root contract. It resolves only the live publication root; it treats the cleaned execution path as archived provenance. Live `read` and `bind` were not changed. Acceptance history and native existing-file observation use the historical API.
+
+Focused command (daemon cwd): `npx vitest run test/integration-native-existing-file-acceptance-host.test.ts test/integration-acceptance-history.test.ts test/integration-stage-envelope.test.ts`. Final source pass: 3 files passed, 31 tests passed, 1 skipped, exit 0 at 2026-09-19 20:14:34 KST. Earlier source passes of the same focused suite also passed.
+
+The full native success fixture owner reported 2/2 scoped history gates passing after the first historical implementation, including a positive historical read for implementation and verifier and strict live read refusal for cleaned staged attempts. Root reports final source build exit 0. The fixture now contains nonvacuous cleaned-attempt count and three rollback-contained corruption probes against the real successful ledger: publication setup path, authority execution file identity, and cleanup `rootAbsent: false`. Each requires `readHistorical` refusal, then verifies the original binding remains readable after rollback. The final independent combined gate remains root-owned.
+
+Source owned: `daemon/src/orchestration/stage-envelope.ts`, `daemon/src/verification/acceptance.ts`, `daemon/src/verification/native-existing-file-acceptance-host.ts`. Independent proof review is pending final verdict.

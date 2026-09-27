@@ -1,0 +1,78 @@
+npm notice run cue-daemon@0.1.0 npx
+npm notice run vitest run test/p9.test.ts test/p11-writer-corrective.test.ts test/integration-goal-proposal-handoff.test.ts test/integration-workspace-management.test.ts test/integration-driver-core.test.ts test/integration-approval-plan.test.ts test/integration-approved-goal-planning-core.test.ts test/integration-planning-ui-ipc.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: parent then child 357ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: child then parent 337ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: junction child alias 322ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses overlapping worktrees across ledgers: dotdot-named child 310ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed stop quarantines the daemon and retains the writer lease 195ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through late completion after stop failure 325ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination rejection 329ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination result 325ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > failed initial process query cannot be mistaken for a dead session 185ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected state 5ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected sourceHome 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot 5ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected missing homeRoot under junction 5ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > refuses a worktree overlapping protected homeRoot named ..homes 4ms
+ ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > a protected-path refusal permits a corrected core for the same workspace immediately 184ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-1 has npm start and a main entrypoint 3ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-2 seals BrowserWindow and exposes an explicit preload API only 3ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-3 freezes channels, rejects unknown channels, and cannot execute before approval 222ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 first-run setup chooses a workspace once and reuses the persisted choice 4ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 treats a cancelled workspace picker as cancellation and persists nothing 1ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 rejects a tampered persisted config instead of trusting stale paths 3ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-4 creates first-run config once, reuses it, and stores no credentials 5ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-5 closes the owned daemon and never restarts after crash 176ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-6/P9-7 records approval and default autonomy without widening the envelope 186ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-8 emits no notification during normal progress 174ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-9 polls ledger-backed status and exposes an actual stop control 2ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-10 builds completion totals only from ledger rows 388ms
+ ✓ test/p9.test.ts > Phase 9 Electron shell > P9-11 app core has no static Buzz dependency 2ms
+ ✓ test/integration-goal-proposal-handoff.test.ts > goal proposals are goal-bound and reject duplicate, missing, and accessor instructions 4ms
+ ✓ test/integration-goal-proposal-handoff.test.ts > Core consumes a pinned proposal in the driver and rejects mutated artifact before approval 5667ms
+ ✓ test/integration-approved-goal-planning-core.test.ts > planning is unavailable without a qualified host and cannot consume an unaccepted run 201ms
+ ✓ test/integration-approved-goal-planning-core.test.ts > Core planning handoff: valid 5149ms
+ ✓ test/integration-approved-goal-planning-core.test.ts > Core planning handoff: foreign-source 5587ms
+ ✓ test/integration-approved-goal-planning-core.test.ts > Core planning handoff: unknown-cleanup 687ms
+ ✓ test/integration-workspace-management.test.ts > project registration is canonical, bounded, guarded against overlaps and protects durable history 146ms
+ ✓ test/integration-workspace-management.test.ts > Cue sessions link distinct runs, enforce scope in code and SQLite, and survive reopen without resume 205ms
+ ✓ test/integration-workspace-management.test.ts > session rename is workspace-scoped metadata with stale-name and archive refusal 170ms
+ ✓ test/integration-workspace-management.test.ts > strict IPC refuses forged project/session commands and links prepared run without execution authority 137ms
+ ✓ test/integration-workspace-management.test.ts > atomic config activation requires expected version and keeps previous bytes on denial 113ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator denies active work, checks again after confirmation, and never writes config after failed close 102ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator denies another in-flight IPC operation without touching Core 1ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator orders close, config persistence and relaunch and blocks concurrent requests 0ms
+ ✓ test/integration-workspace-management.test.ts > post-close project reentry scopes Core and session reads to the newly active root 435ms
+ ✓ test/integration-workspace-management.test.ts > Core refuses project switching while approval is prepared or ownership is held 290ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator denies a target with a persisted approval before confirmation 311ms
+ ✓ test/integration-workspace-management.test.ts > switch confirmation race rejects newly prepared work without close or persistence 290ms
+ ✓ test/integration-workspace-management.test.ts > reopened Core reconciles prior approvals in every project without circular switch lock 402ms
+ ✓ test/integration-workspace-management.test.ts > approval and execution atomically reject duplicate, stale epoch and foreign project without events 322ms
+ ✓ test/integration-approval-plan.test.ts > real prepare form shows policy and each dependency, requirement, scope and candidate before approval 253ms
+ ✓ test/integration-approval-plan.test.ts > approval shows every declared file path literally and clears it for a readonly plan 200ms
+ ✓ test/integration-approval-plan.test.ts > malformed target disclosure cannot leave approval enabled or stale paths visible ({"changeTargets":[]}) 184ms
+ ✓ test/integration-approval-plan.test.ts > malformed target disclosure cannot leave approval enabled or stale paths visible ({"changeTargets":[{"relativePath":"partial"}]}) 171ms
+ ✓ test/integration-approval-plan.test.ts > approval shows explicit localhost egress and renders destination text literally 109ms
+ ✓ test/integration-approval-plan.test.ts > legacy preparation and preparation failure clear prior plan rather than leave stale approval detail 296ms
+ ✓ test/integration-approval-plan.test.ts > requirements render hostile text literally and preserve all source-contract maximums 107ms
+ ✓ test/integration-approval-plan.test.ts > missing criteria remain explicitly unregistered rather than implying acceptance 96ms
+ ✓ test/integration-approval-plan.test.ts > model producer approval label retains explicit candidate, requirements and empty scopes 94ms
+ ✓ test/integration-approval-plan.test.ts > generated output approval shows bounded metadata only and clears absent or failed preparation 284ms
+ ✓ test/integration-approval-plan.test.ts > retry contract limits and digest are visible before approval and absent retry is cleared 169ms
+ ✓ test/integration-approval-plan.test.ts > hostile IDs are literal text and stage count is bounded 99ms
+ ✓ test/integration-driver-core.test.ts > explicit unavailable host keeps app usable and refuses preparation without legacy fallback 211ms
+ ✓ test/integration-driver-core.test.ts > failed host construction releases its new daemon but preserves caller-owned daemon 268ms
+ ✓ test/integration-driver-core.test.ts > core host composition (generated=false) shares its ledger and never falls back to Codex 521ms
+ ✓ test/integration-driver-core.test.ts > core host composition (generated=true) shares its ledger and never falls back to Codex 374ms
+ ✓ test/integration-planning-ui-ipc.test.ts > planning IPC accepts exact commands through trusted sender and never accepts renderer proposal text 6ms
+ ✓ test/integration-planning-ui-ipc.test.ts > renderer requires planning approval, released ready result, then a new execution approval 506ms
+ ✓ test/integration-planning-ui-ipc.test.ts > unconfigured planning is disabled in the real renderer 125ms
+
+ Test Files  8 passed (8)
+      Tests  67 passed (67)
+   Start at  23:43:05
+   Duration  34.60s (transform 1.31s, setup 0ms, import 4.82s, tests 28.37s, environment 1ms)
+

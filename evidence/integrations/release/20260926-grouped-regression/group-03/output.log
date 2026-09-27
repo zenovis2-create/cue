@@ -1,0 +1,213 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/integration-model-qualification.test.ts > outer transaction and pre-abort refuse before owned launch or evidence 165ms
+ ✓ test/integration-model-qualification.test.ts > protected installation guard refuses false and thenable before owned launch 148ms
+ ✓ test/integration-model-qualification.test.ts > protected source drift immediately before issuance retains raw evidence but issues no capability 23119ms
+ ✓ test/integration-model-qualification.test.ts > model fresh fixed production plus pinned diagnostics persist owned raw bytes, cleanup and fixture-only references 14541ms
+ ✓ test/integration-model-qualification.test.ts > json-checker fresh fixed production plus pinned diagnostics persist owned raw bytes, cleanup and fixture-only references 22578ms
+ ✓ test/integration-model-qualification.test.ts > goal-proposal-checker fresh fixed production plus pinned diagnostics persist owned raw bytes, cleanup and fixture-only references 24381ms
+ ✓ test/integration-model-qualification.test.ts > fixture model refuses missing transport and changed pin before creating a task 227ms
+ ✓ test/integration-model-qualification.test.ts > subject drift after owned measurements cannot issue any pass 13863ms
+ ✓ test/integration-model-qualification.test.ts > raw journal tampering rolls back all capability issuance 13907ms
+ ✓ test/integration-model-qualification.test.ts > goal control pins cannot be mislabeled as JSON production qualification 235ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > migrates an empty database and inserts and reads every table 93ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > rejects every envelope update 77ms
+ ✓ test/p2.test.ts > P2-1 SQLite ledger > prevents replay even when approval id is null 76ms
+ ✓ test/p2.test.ts > P2-2 IPC > uses a protected 256-bit token, rejects missing auth and bad schemas, and binds loopback 88ms
+ ✓ test/p2.test.ts > P2-3 state and token accounting > has six states and blocks budget only at a token threshold from the two allowed event shapes 1ms
+ ✓ test/p2.test.ts > P2-4 process identity and heartbeat > stops refreshing after the identified process is killed so age grows 172ms
+ ✓ test/p2.test.ts > P2-5 named health vector > names the failed component 0ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only heartbeat is expired 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > is silent when only connection fails 1ms
+ ✓ test/p2.test.ts > P2-6 sentinel > emits the exact fixture from a separate process and creates a marker when relay is blocked 74ms
+ ✓ test/p2.test.ts > P2-8 crash reconciliation > blocks an interrupted task, captures actual git status, and records no automatic resume 208ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > creates only copied auth and Cue config with all extension surfaces disabled 8ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > disables parent-side browser, app, plugin, update, and web-search capabilities explicitly 0ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > accepts only an absolute vendor binary path, never an npm shim 0ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > redirects every writable profile and temp variable into the isolated home 4ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > launches the absolute vendor binary with the isolated tool home 2253ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > closes the launcher stdin for non-interactive vendor execution 2199ms
+ ✓ test/p2.test.ts > P2-9 clean tool home > removes the isolated tool home after the vendor worker exits 2274ms
+ ✓ test/p2.test.ts > P2-7 scope > documents design without creating a scheduled task 0ms
+ ✓ test/integration-generated-acceptance-host.test.ts > S4 actual owned native-checker acceptance host composition > connects owned producer, fixed checker, raw evidence ledger and atomic acceptance without collection launches 404ms
+ ✓ test/integration-generated-acceptance-host.test.ts > S4 actual owned native-checker acceptance host composition > accepts generated output through the exact explicit revision-one producer and checker attempts 431ms
+ ✓ test/integration-generated-acceptance-host.test.ts > S4 actual owned native-checker acceptance host composition > records actual checker fail and does not confuse process success with passing criteria 307ms
+ ✓ test/integration-generated-acceptance-host.test.ts > S4 actual owned native-checker acceptance host composition > rejects failed native process, missing producer pins and principal collision 787ms
+ ✓ test/integration-generated-acceptance-host.test.ts > S4 actual owned native-checker acceptance host composition > does not accept injected pass, missing owned execution, cancellation or a fresh host after restart 263ms
+ ✓ test/integration-generated-acceptance-host.test.ts > S4 actual owned native-checker acceptance host composition > revalidates stored current response/session at collect and finalize 573ms
+ ✓ test/integration-generated-acceptance-host.test.ts > S4 actual owned native-checker acceptance host composition > retains late cancelled checker control without granting cleanup or collecting before stage settlement 244ms
+ ✓ test/integration-generated-acceptance-host.test.ts > S4 actual owned native-checker acceptance host composition > exposes conservative preapproval carrier sizing and rejects bad pins 2ms
+ ✓ test/integration-protected-installation.test.ts > missing/disabled settings do no HTTP, discovery or bootstrap 21ms
+ ✓ test/integration-protected-installation.test.ts > missing/disabled settings do no HTTP, discovery or bootstrap 1ms
+ ✓ test/integration-protected-installation.test.ts > fixed GET and sealed knownfolders, same DB, captured native and expiring health; no qualification or inference 4ms
+ ✓ test/integration-protected-installation.test.ts > health wrong-model fails closed without bootstrap 1ms
+ ✓ test/integration-protected-installation.test.ts > health oversize fails closed without bootstrap 1ms
+ ✓ test/integration-protected-installation.test.ts > health redirect fails closed without bootstrap 1ms
+ ✓ test/integration-protected-installation.test.ts > health timeout fails closed without bootstrap 2016ms
+ ✓ test/integration-protected-installation.test.ts > forged guard or native outside captured inventory denies discovery 2ms
+ ✓ test/integration-evaluation-observations.test.ts > persists a legitimate final classified cost breakdown from the outcome reader 198ms
+ ✓ test/integration-evaluation-observations.test.ts > rejects an observation that omits a newer persisted receipt at its cutoff 165ms
+ ✓ test/integration-evaluation-observations.test.ts > keeps a historical observation valid when a newer receipt is after its cutoff 161ms
+ ✓ test/integration-evaluation-observations.test.ts > rejects wrong arithmetic in a recomputed stored outcome 163ms
+ ✓ test/integration-evaluation-observations.test.ts > rejects redistributed phase totals in a recomputed stored outcome 162ms
+ ✓ test/integration-evaluation-observations.test.ts > rejects noncanonical decimal in a recomputed stored outcome 172ms
+ ✓ test/integration-evaluation-observations.test.ts > rejects overflow decimal in a recomputed stored outcome 164ms
+ ✓ test/integration-evaluation-observations.test.ts > rejects fabricated handoff in a recomputed stored outcome 166ms
+ ✓ test/integration-evaluation-observations.test.ts > rejects nonfinal classified totals in a recomputed stored outcome 160ms
+ ✓ test/integration-evaluation-observations.test.ts > rejects forged final total without classes in a recomputed stored outcome 162ms
+ ✓ test/integration-evaluation-observations.test.ts > rejects forged receipt and matching arithmetic in a recomputed stored outcome 160ms
+ ✓ test/integration-evaluation-observations.test.ts > replay is immutable, CAS revisions preserve late state, and cutoff selects historical revision 146ms
+ ✓ test/integration-evaluation-observations.test.ts > coverage reports expected cases separately and keeps observed failure plus unobserved enrolled slots 151ms
+ ✓ test/integration-evaluation-observations.test.ts > outer transactions fail and reopen validates immutable hash and chain 178ms
+ ✓ test/integration-evaluation-observations.test.ts > oversized payload and SQL mutation operations fail closed 144ms
+ ✓ test/integration-evaluation-observations.test.ts > recomputed outer hash cannot bless an arbitrary stored outcome object 134ms
+ ✓ test/integration-initial-default-engine.test.ts > S2 initial default engine wiring > uses the configured baseline for explicit no-statistics and exact replay invokes no callbacks 124ms
+ ✓ test/integration-initial-default-engine.test.ts > S2 initial default engine wiring > keeps the no-config path exact and a configured null hook records only a legacy marker 176ms
+ ✓ test/integration-initial-default-engine.test.ts > S2 initial default engine wiring > snapshots candidates before the initial hook can mutate them 99ms
+ ✓ test/integration-initial-default-engine.test.ts > S2 initial default engine wiring > never overwrites non-null stale, low-quality, wrong-currency, or required unknown-bound facts 450ms
+ ✓ test/integration-initial-default-engine.test.ts > S2 initial default engine wiring > rejects a no-statistics declaration when valid empirical facts exist 84ms
+ ✓ test/integration-initial-default-engine.test.ts > S2 initial default engine wiring > retains every eligibility check and rejects pin, task, plan, and forced mismatches 668ms
+ ✓ test/integration-initial-default-engine.test.ts > S2 initial default engine wiring > rejects stale, malformed, proxy, and accessor observations without traps or launch 237ms
+ ✓ test/integration-initial-default-engine.test.ts > S2 initial default engine wiring > requires the configured marker on replay and rolls it back with later preparation failure 175ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > writes the root evidence command to the repository evidence directory 3ms
+ × test/p10c-manifest.test.ts > pinned Codex effective tool manifest > observes only cue_workspace in the actual model request 396ms
+   → 
+file:///C:/Users/User/cue/daemon/scripts/p10c-manifest-proof.mjs:24
+if (binarySha256 !== expectedSha256) throw new Error('pinned Codex binary hash mismatch');
+                                           ^
+
+Error: pinned Codex binary hash mismatch
+    at file:///C:/Users/User/cue/daemon/scripts/p10c-manifest-proof.mjs:24:44
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+ ✓ test/integration-evaluation-comparisons.test.ts > all-null projections persist an insufficient descriptive snapshot with stable reasons and complete denominators 413ms
+ ✓ test/integration-evaluation-comparisons.test.ts > exact replay ignores later host time while rebinding and caller authority injection fail 413ms
+ ✓ test/integration-evaluation-comparisons.test.ts > mixed dataset, arm, policy, duplicate projection and duplicate case-arm slots fail closed 416ms
+ ✓ test/integration-evaluation-comparisons.test.ts > hostile inputs touch no getters; reads are bounded, immutable, reopenable and reject outer transactions 410ms
+ ✓ test/integration-evaluation-comparisons.test.ts > request digest alone is verified against canonical stored membership and constraints 355ms
+ ✓ test/integration-startup-exact-identity.test.ts > startup exact process identity > refuses the former nearby-timestamp exploit without terminating 129ms
+ ✓ test/integration-startup-exact-identity.test.ts > startup exact process identity > refuses a one-tick sub-millisecond mismatch without terminating 111ms
+ ✓ test/integration-startup-exact-identity.test.ts > startup exact process identity > accepts only the same exact instant, preserving sub-millisecond precision and offset equivalence 108ms
+ ✓ test/integration-startup-exact-identity.test.ts > startup exact process identity > fails closed for malformed creation identity before querying 107ms
+ ✓ test/integration-startup-exact-identity.test.ts > startup exact process identity > fails closed for invalid calendar identity before querying 112ms
+ ✓ test/integration-startup-exact-identity.test.ts > startup exact process identity > fails closed for invalid pid before querying 104ms
+ ✓ test/integration-startup-exact-identity.test.ts > startup exact process identity > does not mistake a failed identity query for process death 106ms
+ ✓ test/integration-json-template-core.test.ts > explicit JSON preparation through actual core, driver and generated target ledger > captures exact UTF8 input with frozen run.template and metadata-only public approval 266ms
+ ✓ test/integration-json-template-core.test.ts > explicit JSON preparation through actual core, driver and generated target ledger > keeps two different preparations and their policies stable after DTO mutation 229ms
+ ✓ test/integration-json-template-core.test.ts > explicit JSON preparation through actual core, driver and generated target ledger > rejects malformed exact DTO, UTF8, byte limits and invalid JSON before any writes 184ms
+ ✓ test/integration-json-template-core.test.ts > explicit JSON preparation through actual core, driver and generated target ledger > rolls back task, run, resource pin, plan, requirements and generated target when the host captures different input 211ms
+ ✓ test/integration-json-template-core.test.ts > explicit JSON preparation through actual core, driver and generated target ledger > requires explicit template on flagged hosts while an explicitly constructed legacy host retains freeform preparation 360ms
+ ✓ test/integration-driver-real-restart.test.ts > S3 real Node-process wait delivery restart > does not redeliver a durably claimed response after death before acknowledgement 731ms
+ ✓ test/integration-resource-core.test.ts > empty pin is fixed before approval and import exposes metadata only 235ms
+ ✓ test/integration-resource-core.test.ts > update, removal and reopen preserve exact pinned bytes without reading package paths 320ms
+ ✓ test/integration-resource-core.test.ts > failed preparation rolls back task, run and resource pin together 185ms
+ ✓ test/integration-resource-core.test.ts > unknown and unpinned runs never search active packages; strict inputs execute no getters 185ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > all eight prepared cases verify exact goal, complete seed tree and pinned digest without execution authority 131ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > refuses changed and never rewrites or cleans the workspace 13ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > refuses missing and never rewrites or cleans the workspace 8ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > refuses extra-file and never rewrites or cleans the workspace 9ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > refuses extra-directory and never rewrites or cleans the workspace 16ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > refuses hardlink and never rewrites or cleans the workspace 10ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > refuses oversized and never rewrites or cleans the workspace 8ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > refuses junction roots and descendant directories without reading through them 11ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > strict request and goal/case/split mismatches refuse without getter execution 6ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > replacement after a bounded read invalidates the observation 10ms
+ ✓ test/integration-evaluation-workload-verification.test.ts > compiled CLI verify succeeds on seeds and fails nonzero on drift or missing explicit goal 352ms
+ ✓ test/integration-selection-explanation-ui.test.ts > historical monetary policy/reason and exclusions display without quality score or current eligibility claim 221ms
+ ✓ test/integration-selection-explanation-ui.test.ts > local fixed pair explicitly has no ranking and missing legacy/invalid/not-started stay distinct 112ms
+ ✓ test/integration-selection-explanation-ui.test.ts > candidate details cap 50, count omitted records and redact unsupported IDs with no markup execution 72ms
+ ✓ test/integration-selection-explanation-ui.test.ts > expanded explanation survives same-run refresh, resets across runs and never changes Stop state 73ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > pre-aborted request spawns nothing 31ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > hung ACL reaches its fixed five-second trigger and settles without close 8ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > in-flight abort terminates and settles without close 70ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > abort immediately after successful ACL close cannot launch verifier 4ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > combined UTF8 ACL output over 64 KiB terminates before verifier launch 5ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > spawn-throw ACL failure never launches verifier or writes authority 4ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > error ACL failure never launches verifier or writes authority 4ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > nonzero ACL failure never launches verifier or writes authority 5ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > stderr ACL failure never launches verifier or writes authority 4ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > empty ACL failure never launches verifier or writes authority 5ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > termination locks failure before a synchronous late successful close 62ms
+ ✓ test/integration-readonly-verifier-acl.test.ts > termination verification failure remains explicitly unverified 62ms
+ ✓ test/integration-observation-core.test.ts > desktop completion projects persisted orchestration and preserves legacy cards 204ms
+ ✓ test/integration-goal-planning-packaging.test.ts > built planning checker assets match their reviewed source bytes 43ms
+ ✓ test/integration-goal-planning-packaging.test.ts > planning host, output reader and compiled checker load in a fresh Node process 141ms
+ ✓ test/integration-local-json-electron-gate-v2.test.ts > gate cannot execute without exact frozen authority; no resume/retry or budget expansion 4ms
+ ✓ test/integration-local-json-electron-gate-v2.test.ts > qualification environment removes inherited preload/live flags; workflow adds only owned observer 1ms
+ ✓ test/integration-local-json-electron-gate-v2.test.ts > both Electron phases must prove exact owned user and session paths 1ms
+ ✓ test/integration-local-json-electron-gate-v2.test.ts > observer compiles without execution and uses existing form/approve, no alternate host seam 2ms
+ ✓ test/integration-local-json-electron-gate-v2.test.ts > offline synthetic audit requires actual-style production journal and all six matching live evidence hashes 2ms
+ ✓ test/integration-local-json-electron-gate-v2.test.ts > real SQLite backup includes uncheckpointed WAL and passes independent integrity check 34ms
+ ✓ test/integration-local-json-electron-gate-v2.test.ts > offline workflow row audit requires both attempts, target/output linkage, acceptance and clean durable receipts 2ms
+ ✓ test/integration-local-json-electron-gate-v2.test.ts > v2 auditor rejects mutated policy input target and checker lineage 2ms
+ ✓ test/integration-model-alias-source-claims.test.ts > model alias source claim generator and verifier > fresh temp regeneration is byte-identical to committed evidence 22ms
+ ✓ test/integration-model-alias-source-claims.test.ts > model alias source claim generator and verifier > registry evidence reference, date and digest exactly match generated claims 2ms
+ ✓ test/integration-model-alias-source-claims.test.ts > model alias source claim generator and verifier > rejects a changed web claim even when re-signed 2ms
+ ✓ test/integration-model-alias-source-claims.test.ts > model alias source claim generator and verifier > rejects a changed web reference even when re-signed 1ms
+ ✓ test/integration-model-alias-source-claims.test.ts > model alias source claim generator and verifier > rejects a changed web observedDate even when re-signed 1ms
+ ✓ test/integration-model-alias-source-claims.test.ts > model alias source claim generator and verifier > rejects CRLF conversion and field reordering 3ms
+ ✓ test/integration-model-alias-source-claims.test.ts > model alias source claim generator and verifier > rejects unknown fields, duplicate claims and digest tampering 4ms
+ ✓ test/integration-model-alias-source-claims.test.ts > model alias source claim generator and verifier > keeps Qwen on the separate exact-file-bytes kind and rejects kind/rule/file tamper 6ms
+ ✓ test/integration-codex-adapter-preservation.test.ts > S1 Codex common adapter preservation > golden-compares default composition, immutable launch inputs and typed activity without starting Codex 6ms
+ ✓ test/integration-codex-adapter-preservation.test.ts > S1 Codex common adapter preservation > rejects accessor and proxy inputs before launch and snapshots returned option bytes 2ms
+ ✓ test/integration-codex-adapter-preservation.test.ts > S1 Codex common adapter preservation > rejects hostile arrays without invoking getters, traps, iterators or launch 2ms
+ ✓ test/integration-codex-adapter-preservation.test.ts > S1 Codex common adapter preservation > keeps pre/during/repeated cancel and stop failure non-success without inventing provider terminal or cleanup 2ms
+ ✓ test/integration-codex-adapter-preservation.test.ts > S1 Codex common adapter preservation > fails completion on goal-verification or activity sink failure while preserving the raw backend receipt 25ms
+ ✓ test/integration-codex-adapter-preservation.test.ts > S1 Codex common adapter preservation > drains controller events through the default candidate before allowing completion 5ms
+ ✓ test/integration-codex-adapter-preservation.test.ts > S1 Codex common adapter preservation > preserves ordered runtime teardown and reports each stage failure 0ms
+ ✓ test/readonly-wfp-diagnostic-boundaries.test.ts > accepts the exact positive event, App ID, and UInt64 boundaries 6ms
+ ✓ test/readonly-wfp-diagnostic-boundaries.test.ts > enforces the JSON and stdout byte caps at their exact boundaries 4ms
+ ✓ test/integration-recovery-run-picker-ipc.test.ts > exact trusted runs operation never invokes other recovery or execution methods 7ms
+ ✓ test/integration-recovery-run-picker-ipc.test.ts > unavailable, sparse/getter or unsafe response remains unavailable without leaking errors or metadata 1ms
+ ✓ test/integration-native-host-acceptance-wiring.test.ts > declarative native checker rejects caller acceptance and checker overrides 4ms
+ ✓ test/integration-native-host-acceptance-wiring.test.ts > workflow getter is rejected without invoking it 0ms
+ ✓ test/integration-native-host-acceptance-wiring.test.ts > declarative contract rejects changed expected bytes or target scope before provider composition 1ms
+ ✓ test/p12-parent-death.test.ts > P12 parent-death fail-closed contract > checks host-controller job termination and bounds its parent-loss wait 2ms
+ ✓ test/p12-parent-death.test.ts > P12 parent-death fail-closed contract > checks job termination and bounds the worker-death wait after parent loss 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p10c-manifest.test.ts > pinned Codex effective tool manifest > observes only cue_workspace in the actual model request
+AssertionError: 
+file:///C:/Users/User/cue/daemon/scripts/p10c-manifest-proof.mjs:24
+if (binarySha256 !== expectedSha256) throw new Error('pinned Codex binary hash mismatch');
+                                           ^
+
+Error: pinned Codex binary hash mismatch
+    at file:///C:/Users/User/cue/daemon/scripts/p10c-manifest-proof.mjs:24:44
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.18.0
+: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ scripts/p10c-manifest-proof.mjs:24:44
+ ❯ test/p10c-manifest.test.ts:25:56
+     23|     });
+     24|     const elapsedMs = Date.now() - startedAt;
+     25|     expect(run.status, `${run.stdout}\n${run.stderr}`).toBe(0);
+       |                                                        ^
+     26|     expect(elapsedMs).toBeLessThan(15_000);
+     27|     const proof = JSON.parse(readFileSync(output, 'utf8'));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 23 passed (24)
+      Tests  1 failed | 154 passed (155)
+   Start at  23:15:01
+   Duration  147.63s (transform 2.18s, setup 0ms, import 4.98s, tests 138.35s, environment 2ms)
+
+JSON report written to C:/Users/User/cue/evidence/integrations/release/20260926-grouped-regression/group-03/report.json

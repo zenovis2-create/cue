@@ -1,0 +1,5 @@
+# Workspace/session shell — bounded first slice
+
+Replace the three-column form-first shell with project-oriented navigation while preserving existing element IDs and security gates. Read-only current-workspace run history (each run is shown as a recorded work session, not a resumable provider conversation) via bounded Core→IPC→preload. Historical selection never calls execute/stop/approve, never changes active run or project, and does not claim current OS/cleanup truth. New session returns to the existing goal composer only when no active/pending execution; pending approval is explicitly retained rather than silently discarded. Surface evaluation and tools behind navigation; no pretend project switching. The current single-workspace Core remains authoritative; multi-project switching requires a separate safe teardown/reopen design.
+
+Preserve dirty work, preimages and failures. No provider calls, user-home changes, credential copying, commit/push/publication. Test DB workspace isolation, IPC hostile input/projection, JSDOM navigation and existing UI/P11 gates. Native Electron visual acceptance remains separate.

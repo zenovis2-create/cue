@@ -1,0 +1,1 @@
+Done: register migration045 four tables, twelve guards and baseline marker atomically; built fresh/reopen/partial schema gates pass. Root registration cap2. Each pass build plus checker compiled startup tests. Preserve full preimages. Fail: diagnose new hypothesis; no same-command loop. Independent accounting checker verifies final registration.

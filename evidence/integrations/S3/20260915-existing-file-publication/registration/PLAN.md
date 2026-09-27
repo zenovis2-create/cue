@@ -1,0 +1,1 @@
+Root shared registration046: done exact3tables14guards+marker startup, partialschema refusal, compiledcopyparity fresh/reopen gate. Cap2. Fullledger/copy preimages under batch67/preimages beforeedit. Everypass coordinatedbuild + independentcompiledstartup. No unrelated migration or helper edits.

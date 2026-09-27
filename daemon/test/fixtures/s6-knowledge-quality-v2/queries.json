@@ -1,0 +1,21 @@
+{
+  "version": "s6-authored-bilingual-queries-v2",
+  "k": 3,
+  "queries": [
+    {"id":"en-parser-spaced","language":"en","query":"parse json value","relevant":["parser-api","parser-reference"]},
+    {"id":"en-parser-camel","language":"en","query":"parseJSONValue","relevant":["parser-api","parser-reference"]},
+    {"id":"en-http2-camel","language":"en","query":"release HTTP2 cache","relevant":["http2-cache"]},
+    {"id":"en-http2-identifier","language":"en","query":"releaseHTTP2Cache","relevant":["http2-cache"]},
+    {"id":"en-json-reference","language":"en","query":"json value reference","relevant":["parser-reference"]},
+    {"id":"ko-approval-spaced","language":"ko","query":"승인 정책 변경 절차","relevant":["approval-policy","approval-handbook"]},
+    {"id":"ko-approval-compound","language":"ko","query":"승인정책 변경절차","relevant":["approval-policy","approval-handbook"]},
+    {"id":"ko-session-spaced","language":"ko","query":"세션 복원 절차","relevant":["session-recovery"]},
+    {"id":"ko-session-compound","language":"ko","query":"세션복원 절차","relevant":["session-recovery"]},
+    {"id":"ko-citation-spaced","language":"ko","query":"출처 검증 바이트 해시","relevant":["citation-bom"]},
+    {"id":"ko-citation-compound","language":"ko","query":"출처검증 바이트 해시","relevant":["citation-bom"]},
+    {"id":"negative-easy-en","language":"en","query":"payment invoice","relevant":[]},
+    {"id":"negative-easy-ko","language":"ko","query":"원격 계정 탈취","relevant":[]},
+    {"id":"negative-hard-parser-cache","language":"en","query":"parser cache","relevant":[]},
+    {"id":"negative-hard-approval-policy","language":"ko","query":"승인 정책","relevant":[]}
+  ]
+}

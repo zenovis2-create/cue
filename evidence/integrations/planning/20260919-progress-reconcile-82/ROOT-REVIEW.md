@@ -1,0 +1,13 @@
+# Batch82 root checkpoint
+
+The original 44 parent items remain 33 closed and 11 open. This checkpoint adds implementation evidence within those parents; it does not establish live qualification or overall completion.
+
+The fixed native subject now requires 38 additional completion-authority artifacts, including source/compiled modules, staging/publication schemas and publication host files. Missing artifacts deny measurement. Tests simulate an altered artifact digest and exercise real capability admission to reject old evidence as `subject-drift`; they do not claim to mutate live source bytes. Independent review passed 50/50 and a compiled Node import. The maker preserved prior hashes but did not save exact pre-edit byte copies; this evidence limitation remains recorded.
+
+A new offline Claude JSONL decoder uses an explicitly pinned published SDK type reference and projects init metadata, provisional/completed text, tool and subagent identities, and provider terminal/estimated usage. It is not a process executor, a ready candidate, an installed-CLI compatibility attestation, or a final billing source. The package was inspected without installation/execution; no external implementation code was copied. Existing synthetic fixture history is not reused as a real wire contract.
+
+Root coordinated `npm run build` exited 0 (`build-final.log`). The combined gate passed 3 files / 57 tests / 0 failures (`combined.log`): native subject 50, Claude decoder 6, existing compiled native import 1. Prior review findings improved the fixed authority list, evidence-drift oracle, text-block replay handling, tool attribution and token-count validation. Intermediate provider errors are projected separately; absent a source-backed protocol rule, they are not redefined as irreversible terminal failure.
+
+The remaining work is not only measurement. Current `app/native-implementation-host.mjs` prepares a configured two-step implement/verify plan. `app/native-existing-file-authorities.mjs` uses configured `workflow.requirementText` for its implementation prompt; this does not implement arbitrary user-goal decomposition or automatic multi-tool/model planning. S4-01/A01 remain open for that breadth. Claude still needs its version-compatible process/config/credential boundary, ownership/cancel/cleanup integration, candidate composition, and authorized live qualification. The static decoder must not be described as a completed second-agent adapter.
+
+Subscription model-call allowance remains 4/4 used and Qwen remains off. Only public source research and local checks were performed. GOAL stays active; no new parent closure is justified.

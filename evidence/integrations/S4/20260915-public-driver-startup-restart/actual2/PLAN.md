@@ -1,0 +1,11 @@
+# Corrected native-intent observation on the combined source
+
+Actual1 is preserved as a failed harness observation with independently verified cleanup. The native callback receives filesystem compare/write arguments, not a publication ID; querying the missing field produced a false zero count. No restart result follows from that first run.
+
+New hypothesis: correction4 binds the captured attempt and every native root/target/preimage/replacement field to exactly one already-persisted publication intent, validates its payload hash and lineage, and does so before invoking native write. Zero/multiple/corrupt rows refuse. The received effect includes the resolved publication ID and immutable payload evidence. This is a changed query contract, not a weakened expected count or an unchanged rerun.
+
+Done and cap: one actual invocation after correction4 independent CLEAR, final combined staging/engine review and coordinated build. Require exit 0; genuine public prepare/approval/activate/start; native committed intent1/result0; exact first fixture identity death; different process real ownership startup; held journal/lease/Git/postimage preserved; public restart refusal and launch/resend/receipt/acceptance/replacement/result0. Save received effect/restart frames with observed identities plus partial/final cleanup JSON outside the scenario root. A separate checker audits both actual artifacts and the original A04/S4-05 conditions. Failure preserves every artifact and requires a new diagnosis before further action.
+
+From daemon/: `npx --no-install vitest run test/integration-public-driver-startup-restart.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1`. Set `CUE_ACTUAL_PUBLIC_DRIVER_RESTART=1` and absolute `CUE_PUBLIC_DRIVER_RESTART_CLEANUP_RECORD` / `CUE_PUBLIC_DRIVER_RESTART_OBSERVATIONS_RECORD` to this directory's cleanup.json / observations.json; capture actual.log and actual.exit.txt. Pin the current fixture, driver, ledger, engine, stage and termination source/compiled assets first.
+
+No provider, unknown Codex binary, local model endpoint, model download or OS-wide setting is involved. Synthetic admission/host authority and real temporary filesystem/process observations remain distinguished. The raw taskkill observation-to-signal limitation remains explicit; this gate does not claim an atomic native process handle.

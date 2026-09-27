@@ -1,0 +1,11 @@
+# Independent planning measurement review
+
+Verdict: **PASS for the fixed authority closure**. I reviewed `native-provider-measurement-subject.ts`, `model-measurement-subject.ts`, and their dedicated tests against the saved preimages. I did not change production or call a provider.
+
+The native provider subject now requires and hashes the direct planning authority files used by the goal path: goal proposal capture, planning contract, handoff authority, host, accepted output, plan and selection modules, model control bundle, goal checker adapter/acceptance host, and source plus packaged checker client/core. The existing completion and native enforcement lists remain present. Required paths use exact regular-file and realpath checks; absence fails measurement. A changed included hash changes the subject digest, and prior capability evidence is rejected for subject drift. The fixed list is an explicit closure of named authorities, not a claim of recursive imports or provider qualification.
+
+The model subject accepts `goal-proposal-checker` as a distinct measured kind. Its boundary provider ID, contract version, kind-specific probe, and subject digest differ from `model`; missing client/core or planning authority files fail measurement. Its recursive source/compiled/app inventories still bind all present files and require packaged counterparts. It states `no-eligibility-issued`, so this measurement does not imply the goal M1–M3 qualification collector is available.
+
+Independent Windows gate from `daemon`: `npx vitest run test/native-provider-measurement-subject.test.ts test/integration-model-measurement-subject.test.ts --reporter=dot --maxWorkers=1`, exit 0, 2 files and 86 tests passed. The native tests covered each required planning path's absence and stale capability evidence; model tests covered per-kind identity, absent goal core, and planning byte changes. Root's reported build and packaging checks are separate gates.
+
+Scope limit: native provider measurement remains a fixed named-file inventory and does not attest every transitive import, live provider behavior, or goal production qualification. The model subject's separate recursive inventory provides broader model-side file coverage, but it also issues no eligibility.

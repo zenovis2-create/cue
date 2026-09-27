@@ -1,0 +1,8 @@
+{
+  "partialOnly": true,
+  "reportedPasses": 375,
+  "reportedFailures": 2,
+  "reportedSkips": 1,
+  "filesWithReportedTests": 39,
+  "totalDiscoveredTestFiles": 308
+}

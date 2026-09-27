@@ -1,0 +1,11 @@
+# Historical stage binding: bounded repair
+
+Done gate: the full native success chain records two successful receipts and verified cleanups, publication committed, acceptance passed, and callback-free history agrees. `npx vitest run test/integration-stage-envelope.test.ts test/integration-acceptance-history.test.ts test/integration-native-existing-file-acceptance-host.test.ts` passes. Strict live `read` and `bind` continue to reject cleaned execution staging. Historical reads reject altered provenance and cleanup.
+
+Attempt cap: two production hypotheses. On failure, inspect the exact error and change hypothesis; stop and hand back if both fail. Run focused tests each pass and the root-owned full chain after a production edit. Keep only an improved measured gate.
+
+Pre-edit source observations from initial read (the files were untracked, so Git has no baseline blob): `read` used `parentSnapshot(JSON.parse(saved.stage_json))`, rejected any `attempt_staging_cleanup`, compared `realpathSync.native(child.worktree_realpath)`, then called `reader.bind(...)`. `bind` rejected any cleanup and normalized the stage through `normalizeEnvelope`, which also calls `realpathSync.native`. Acceptance history called `binder.read` at its two execution-history branches. Native existing-file acceptance called `stages.read` in `collect` and `principalForAttempt`.
+
+Hypothesis 1: the existing live reader is correct for execution, while historical acceptance needs a separate durable provenance read. The archived stage path must be absolute and exactly match its persisted canonical envelope and execution authority; it need not exist after verified cleanup. Parent publication root remains live and checked. Historical binding requires a completed attempt, verified cleanup payload, matching setup/authority payloads, account subject, plan/policy/owner/scope lineage. Consumers are changed only at acceptance history and native verifier observation points. A stage binding remains provenance, not launch authorization.
+
+Maker: this agent owns `daemon/src/orchestration/stage-envelope.ts`, `daemon/src/verification/acceptance.ts`, `daemon/src/verification/native-existing-file-acceptance-host.ts`, and targeted stage tests. Root owns build/docs. Native authority composer owns full-chain fixture. Independent reviewer checks proof boundaries.

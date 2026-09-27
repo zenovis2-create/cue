@@ -1,0 +1,13 @@
+# Batch81 root checkpoint
+
+Original completion contract remains 44 parent items: 33 closed, 11 open. The new checked entries are bounded implementation/verification subtasks, not additional parent closures.
+
+Three defects were repaired: duplicate PID padding made native cleanup unknown; publication incorrectly reused expired startup capacity evidence after a completed execution; acceptance tried to read deleted staging paths through the live execution reader. Separate reviewers checked the repairs. Historical reads authenticate persisted lineage and verified cleanup; live reads/binds remain strict.
+
+Final coordinated `npm run build` exited 0 (`build-final.log`). Root regression passed 6 files / 42 tests with 1 existing skip (`final-regression.log`). That command included a nonexistent composer filename, which Vitest did not select; the correct `integration-native-existing-file-authorities.test.ts` was run separately and passed 3/3 (`composer-regression.log`). Together these are 7 actual files / 45 passes / 1 skip. Earlier cleanup/startup/recovery/import regression passed 35/35 (`regression.log`); overlapping cases are not added to the final total.
+
+Independent full-chain verification passed 2/2: [review](../../S1/20260919-native-success-chain/REVIEW.md). It uses real Core, SQLite, Git staging, native runtime receipt issuance, process cleanup, exact-byte publication and acceptance, with a local fake RPC provider and synthetic installation/service/subject/probe observations. The clock case commits the completed write but denies the stale next launch. Three rollback-contained database corruption probes rehash altered evidence and are rejected. This does not qualify a real provider/account or settle billing; unknown nonfinal receipts retain their meaning.
+
+Independent [cleanup](../../S1/20260919-native-cleanup-padding/REVIEW.md) and [historical-stage](../../S1/20260919-staging-history/REVIEW.md) reviews passed. Cleanup and composer preimages were reconstructed after edits and verified against previously recorded hashes. The stage-history maker did not retain complete pre-edit byte copies; its evidence records observations instead. This provenance limitation remains explicit. Root preserved exact bytes of all four status documents before changing them.
+
+No provider/model calls occurred. Subscription allowance remains 4/4 used; Qwen remains off. GOAL stays active. Remaining parent IDs: S1-01, S1-02, S1-03, S1-04, S1-05, S4-01, S5-04, S5-05, S5-08, A01, A08. Real provider qualification, second-agent/local validation, paired mode evaluation and release acceptance are not complete.

@@ -1,0 +1,1 @@
+Root verification pass1 (tool95fcf9) exited1 at line17: expected a bare zero in independent-gate.exit. Read-only inspection (6ca994) confirmed the actual successful receipt is EXIT_CODE=0 and raw output80/80. Pass2 changes only that verifier expectation. Product, tests, docs, raw logs and receipts are unchanged.

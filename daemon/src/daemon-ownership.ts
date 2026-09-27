@@ -4,7 +4,7 @@ import { homedir } from 'node:os';
 import { join, relative, isAbsolute } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { openLedger, type Ledger } from './ledger.js';
-import { fenceInterruptedSessions, reconcileInterruptedWrites } from './recovery.js';
+import { fenceInterruptedSessions, holdInterruptedJournalRecoveries, reconcileInterruptedApprovals, reconcileInterruptedWrites } from './recovery.js';
 import { cleanupInterruptedAppContainerProfiles } from './worker-enforcement.js';
 
 const localOwners = new Map<string, Ledger>();
@@ -42,6 +42,7 @@ export function ownDaemonWorktree(worktree: string, ledgerPath: string, ledger: 
       for (const previous of overlapping) {
         const interrupted = previous.ledger_path === ledgerPath ? ledger : openLedger(previous.ledger_path);
         try {
+          holdInterruptedJournalRecoveries(interrupted, previous.worktree);
           fenceInterruptedSessions(interrupted);
           cleanupInterruptedAppContainerProfiles(interrupted, previous.worktree);
           reconcileInterruptedWrites(interrupted, previous.worktree);
@@ -51,9 +52,12 @@ export function ownDaemonWorktree(worktree: string, ledgerPath: string, ledger: 
       }
       // Startup recovery is part of ownership acquisition: a failed fence cannot
       // publish a live owner or permit a replacement daemon to start writing.
+      holdInterruptedJournalRecoveries(ledger, root);
       fenceInterruptedSessions(ledger);
       cleanupInterruptedAppContainerProfiles(ledger, root);
       reconcileInterruptedWrites(ledger, root);
+      // A different registered project may still contain an approval from the old host.
+      reconcileInterruptedApprovals(ledger);
       db.prepare('INSERT OR REPLACE INTO owner VALUES(?,?,?,?)').run(key, identity, process.pid, ledgerPath);
     }).immediate();
     for (const staleIdentity of staleLocalIdentities) localOwners.delete(staleIdentity);

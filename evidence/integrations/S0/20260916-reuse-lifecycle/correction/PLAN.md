@@ -1,0 +1,9 @@
+# Root correction: independent selected-source binding
+
+Independent review found two defects despite passing maker tests: the consumer used a constant manifest label and receipt hash as its source revision, and fallback observations carried their own supposed authority. Preserve the four current source/test byte streams before editing. Original maker results and receipts remain immutable failed evidence.
+
+New hypothesis: derive selected revision and descriptor digest from the host-owned source catalog's exact R-04/R-05/R-06 entries, their pinned source bytes, and R-04/R-06 manifests or R-05 decision. Include that basis in generated receipts. Verification regenerates against that trusted repository basis; changes or missing input refuse old receipts. This bounded CLI permits only an exact duplicate of the current expected receipt as a fallback, never a caller-authored alternate revision. The pure evaluator compares observations to the trusted current binding; it grants no execution/adoption authority.
+
+Done/cap: three edit/gate passes, changed diagnosis for further correction. Node receipt tests plus Vitest manifest tests exit0; regressions cover independent revision/descriptor drift and forged alternate fallback. Preserve raw outputs and request independent review. No provider, runtime dispatch, adoption, or original R03-R06 closure is implied. Root owns these four script/test files during this correction.
+
+Pass1 generation refused because the existing strict manifest snapshot intentionally disallows numbers, but unrelated R-08 catalog records contain numeric archive byte counts. Pass2 snapshots only the explicitly selected R-04/R-05/R-06 JSON rows, whose contract uses string/boolean/reference fields; unrelated catalog candidates do not enter the selected receipt basis. The strict snapshot itself is unchanged.

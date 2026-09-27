@@ -1,0 +1,30 @@
+{
+  "id": 1,
+  "complete": true,
+  "exactFiles": true,
+  "files": [
+    "daemon/test/integration-release-acceptance.test.ts",
+    "daemon/test/integration-resources.test.ts",
+    "daemon/test/integration-selection-preference-ui.test.ts",
+    "daemon/test/integration-verification.test.ts",
+    "daemon/test/p11-electron-surface.test.ts",
+    "daemon/test/p12-restart-queue.test.ts",
+    "daemon/test/p13-lifecycle-harness.test.ts",
+    "daemon/test/p4.test.ts"
+  ],
+  "counts": {
+    "passed": 53,
+    "skipped": 2
+  },
+  "failedFiles": [],
+  "unhandledErrors": null,
+  "outcome": {
+    "startedAt": "2026-09-26T14:08:36.857Z",
+    "finishedAt": "2026-09-26T14:12:04.542Z",
+    "code": 0,
+    "signal": null,
+    "timedOut": false,
+    "spawnError": null,
+    "sourceUnchanged": true
+  }
+}

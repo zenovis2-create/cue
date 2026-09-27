@@ -1,0 +1,5 @@
+# Measured-fact terminal result binding contract
+
+Done: every measured-fact capture/read/evidence-view validation accepts terminal-integrity confirmation only as a synchronous exact own-data status/attemptId response whose verified status and attemptId match the currently validated stored attempt. Wrong/missing/extra/proxy/getter/prototype/async responses reject without executing accessors or granting measurement/trial/promotion authority. Existing valid facts remain byte-identical and replay/reopen.
+
+Scope only daemon/src/evaluation/measured-facts.ts and regression additions to the already working populated Core evidence fixture. Cap2 maker focused passes, second only concrete correction; every pass focused tests, final daemon build and Core syntax. Required real SQLite negative capture write0 plus read/replay/evidence rejection and valid restore/reopen before final gate. Independent Sol checker separate; root docs reconciliation48. Preserve failures and all prior dirty work. No new capture producer, schema/trial semantics, default host activation, UI/IPC/model/server/native/network/live Electron/commit/push.

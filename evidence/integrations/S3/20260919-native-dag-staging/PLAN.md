@@ -1,0 +1,11 @@
+# Native DAG staging correction
+
+Done: two serialized approved implementation tasks with distinct target paths can each stage from the same HEAD plus exact prior committed owned publications, then an independent verifier can observe both published results. Root identity, unchanged HEAD, exact dirty set, source lineage, original bytes, cleanup, and out-of-scope drift remain enforced. No Git commit is made to the user workspace.
+
+Attempt cap: two diagnosed production hypotheses. Each pass runs a focused real Git/SQLite staging test and the existing staging/publication regression files; root owns `npm run build`. On a failed gate, record the specific counterexample and change hypothesis, or preserve the sound infrastructure stage without claiming the full DAG goal. No model/provider/network calls.
+
+Preimages: `preimages/staging-authority.ts` SHA-256 DECCF9710F2EF36CB50374D92419F977C49D279E46AD55DEB71C9FFF990B0873; `preimages/git-staging-factory.ts` D89229AE245787A14613243063489927041D50ADE46FA362113B436FA1C88037. New dedicated test and migration 051 were absent at planning. Other workers own host/driver/ledger wiring; coordinate interface before shared edits.
+
+Current limit: `prepare()` pins clean HEAD, but `persistSetup()` and `prepareExecution()` reject the publication root after writer 1's own committed dirty file. Merely accepting dirty status is unsafe because the next detached worktree is based on HEAD and would omit prior approved output, while an unowned file change could pass unnoticed. New attempt stage must bind cumulative prior-publication manifest and seed exact bytes into detached root, with cleanup separating inherited seed from the current task's edits.
+
+Diagnosed correction hypotheses: (1) migration 047's run-level first-task digest rejects second task setup; migration 051 adds immutable task-specific root digest and replaces that one comparison while keeping historical first-task support. (2) `change_observation.observed_bytes` has no producer; derive inherited bytes with bounded native snapshot/read/native snapshot from the current root only when they exactly match immutable committed result SHA/length, unchanged HEAD/root, and the complete expected dirty set. Neither hypothesis permits unowned workspace drift.

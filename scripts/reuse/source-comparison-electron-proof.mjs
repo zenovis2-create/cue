@@ -1,0 +1,44 @@
+// Independent proof of a fixed historical HTML artifact; no live source scan.
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {mkdirSync,mkdtempSync,readFileSync,writeFileSync,rmSync} from 'node:fs';
+import {createRequire} from 'node:module';
+import {tmpdir} from 'node:os';
+import {dirname,basename,join,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const require=createRequire(import.meta.url),root=resolve(dirname(fileURLToPath(import.meta.url)),'../..'),out=join(root,'evidence/integrations/S7/20260911-source-comparison'),path=join(out,'cue-source-comparison.html');
+const sha=b=>createHash('sha256').update(b).digest('hex'),hash=p=>sha(readFileSync(p)),save=(n,v)=>writeFileSync(join(out,n),JSON.stringify(v,null,2));
+const receipt=JSON.parse(readFileSync(join(out,'result.json'),'utf8'));
+assert.equal(receipt.artifactSha256,'790f86cbdf038a61f4eca3cf4b742d6e9ed34b2fac985ee8e9f093292b157aef');assert.equal(receipt.artifactBytes,95898);assert.equal(hash(path),receipt.artifactSha256);assert.equal(readFileSync(path).length,receipt.artifactBytes);
+assert.equal(sha(JSON.stringify(receipt.comparison)),receipt.specificationSha256);assert.equal(Buffer.byteLength(JSON.stringify(receipt.comparison)),receipt.specificationBytes);
+if(process.argv.includes('--electron-probe')){void(async()=>{
+ const {app,BrowserWindow,session}=require('electron');app.setPath('userData',process.argv.at(-1));app.disableHardwareAcceleration();let win;const timer=setTimeout(()=>app.exit(124),55000);
+ try{
+  await app.whenReady();const {openReportWindow}=await import('../../app/report-window.mjs');const requests=[],exactURL='data:text/html;base64,'+readFileSync(path).toString('base64');class HiddenWindow extends BrowserWindow{show(){}}
+  const observedSession={fromPartition(...args){const s=session.fromPartition(...args),original=s.webRequest.onBeforeRequest.bind(s.webRequest);s.webRequest.onBeforeRequest=callback=>original((details,done)=>callback(details,decision=>{requests.push({exact:details.url===exactURL,type:details.resourceType,cancel:decision.cancel});done(decision);}));return s;}};
+  win=await openReportWindow({BrowserWindow:HiddenWindow,session:observedSession},{path,receipt});assert.equal(win.isVisible(),false);
+  const prefs=win.webContents.getLastWebPreferences();assert.equal(prefs.javascript,false);assert.equal(prefs.nodeIntegration,false);assert.equal(prefs.contextIsolation,true);assert.equal(prefs.sandbox,true);assert(!prefs.preload);
+  win.webContents.debugger.attach('1.3');const evaluate=async expression=>{const r=await win.webContents.debugger.sendCommand('Runtime.evaluate',{expression,returnByValue:true});if(r.exceptionDetails)throw Error('QA DOM error');return r.result.value;};
+  const dom=await evaluate(`({cards:[...document.querySelectorAll('.counts article')].map(x=>x.textContent),summaries:[...document.querySelectorAll('summary')].map(x=>x.textContent),rows:[...document.querySelectorAll('details')].map(x=>x.querySelectorAll('tbody tr').length),inventories:[...document.querySelectorAll('details')].slice(-2).map(x=>[...x.querySelectorAll('ul')].map(u=>u.children.length)),closed:[...document.querySelectorAll('details')].every(x=>!x.open),limits:document.body.textContent.includes('バイト')?false:document.body.textContent.includes('바이트 무결성과 의미의 진실성은 별개'),node:typeof process,cue:typeof window.cue,scripts:document.scripts.length,external:document.querySelectorAll('[src],[href]').length,width:innerWidth,height:document.documentElement.scrollHeight,overflow:document.documentElement.scrollWidth>innerWidth})`);
+  assert.deepEqual(dom.cards,['파일 바이트104 → 109추가 5 · 삭제 0 · 변경 12','노드104 → 109추가 5 · 삭제 0 · 변경 0','관계212 → 224추가 12 · 삭제 0 · 변경 0']);assert.deepEqual(dom.rows,[0,17,5,12,0,0]);assert.deepEqual(dom.inventories,[[104,212],[109,224]]);assert.equal(dom.closed,true);assert.equal(dom.limits,true);assert.equal(dom.node,'undefined');assert.equal(dom.cue,'undefined');assert.equal(dom.scripts,0);assert.equal(dom.external,0);assert.equal(dom.overflow,false);
+  const capture=async name=>{await win.webContents.capturePage();await new Promise(r=>setTimeout(r,170));const p=join(out,name);writeFileSync(p,(await win.webContents.capturePage()).toPNG());return hash(p);};
+  const overview=await capture('comparison-default.png');win.setSize(480,950);await new Promise(r=>setTimeout(r,100));const narrow=await evaluate('({width:innerWidth,height:document.documentElement.scrollHeight,overflow:document.documentElement.scrollWidth>innerWidth})');assert.equal(narrow.overflow,false);const narrowPng=await capture('comparison-narrow.png');
+  const expanded=await evaluate("(()=>{document.querySelectorAll('details').forEach(x=>x.open=true);return{overflow:document.documentElement.scrollWidth>innerWidth,rows:[...document.querySelectorAll('tbody tr')].filter(x=>x.getClientRects().length).length,visibleInventory:[...document.querySelectorAll('details')].slice(-2).every(x=>[...x.querySelectorAll('li')].every(li=>li.getClientRects().length))}})()");assert.equal(expanded.overflow,false);assert.equal(expanded.rows,34);assert.equal(expanded.visibleInventory,true);
+  await evaluate("document.querySelectorAll('details')[1].scrollIntoView();true");const detailsPng=await capture('comparison-file-details.png');
+  assert(requests.length>=1);assert(requests.every(r=>r.exact&&r.type==='mainFrame'&&!r.cancel));assert.equal(hash(path),receipt.artifactSha256);
+  save('electron-review-result.json',{passed:true,artifactSha256:receipt.artifactSha256,artifactBytes:receipt.artifactBytes,dom,narrow,expanded,requests,settings:{javascript:prefs.javascript,nodeIntegration:prefs.nodeIntegration,contextIsolation:prefs.contextIsolation,sandbox:prefs.sandbox,preload:!!prefs.preload},screenshots:{overview,narrowPng,detailsPng},sourceHashes:Object.fromEntries(['daemon/src/reports/comparison.ts','daemon/test/integration-report-comparison.test.ts','scripts/reuse/cue-source-comparison-report.mjs','app/report-window.mjs','scripts/reuse/source-comparison-electron-proof.mjs'].map(p=>[p,hash(join(root,p))])),scope:'Exact historical HTML in real hidden production report-window; CDP QA-only, no current source/model/runtime/clean Git claims.'});
+  win.webContents.debugger.detach();win.destroy();clearTimeout(timer);app.exit(0);
+ }catch(error){save('electron-review-failure.json',{error:String(error),stack:error.stack});win?.destroy();clearTimeout(timer);app.exit(1);}
+})();}else{
+ // Revalidate each original archive receipt without interpreting comparison as run IR.
+ const {restoreArchivedSource,buildSourceComparison}=await import('../../daemon/dist/src/reports/comparison.js');
+ const archives=receipt.pins.map(pin=>{const folder=join(root,'evidence/integrations/S7',pin.folder);return restoreArchivedSource(readFileSync(join(folder,'source.json'),'utf8'),readFileSync(join(folder,'result.json'),'utf8'),readFileSync(join(folder,'cue-source-structure.html'),'utf8'),pin.sourceSha256,pin.resultSha256);});
+ assert.deepEqual(buildSourceComparison(...archives),receipt.comparison);
+ // Independent raw file and ID accounting, distinct from the renderer's totals.
+ const raw=receipt.pins.map(pin=>JSON.parse(readFileSync(join(root,'evidence/integrations/S7',pin.folder,'source.json'),'utf8')));
+ const oldFiles=new Map(raw[0].files.map(f=>[f.path,f.sha256]));assert.equal(raw[1].files.filter(f=>!oldFiles.has(f.path)).length,5);assert.equal(raw[1].files.filter(f=>oldFiles.has(f.path)&&oldFiles.get(f.path)!==f.sha256).length,12);
+ for(const [key,n]of[['nodes',5],['edges',12]]){const ids=new Set(raw[0][key].map(v=>v.id));assert.equal(raw[1][key].filter(v=>!ids.has(v.id)).length,n);assert(raw[0][key].every(v=>raw[1][key].some(w=>w.id===v.id)));}
+ const owned=mkdtempSync(join(tmpdir(),'cue-comparison-proof-')),env={...process.env};delete env.ELECTRON_RUN_AS_NODE;const child=spawn(require('electron'),[fileURLToPath(import.meta.url),'--electron-probe',owned],{cwd:root,env,windowsHide:true,stdio:['ignore','pipe','pipe']});let log='';const append=b=>{log=(log+b).slice(-1048576);};child.stdout.on('data',append);child.stderr.on('data',append);const {stopProcessTree}=await import('../../daemon/scripts/process-lifecycle.mjs');const timer=setTimeout(()=>void stopProcessTree(child),60000);
+ try{const code=await new Promise((done,reject)=>{child.once('close',done);child.once('error',reject);});save('electron-review-process.json',{pid:child.pid,exitCode:code});assert.equal(code,0);console.log('PASS pinned comparison + actual default/narrow/details report window');}finally{clearTimeout(timer);await stopProcessTree(child);writeFileSync(join(out,'electron-review-process.log'),log);assert.equal(dirname(resolve(owned)),resolve(tmpdir()));assert(basename(owned).startsWith('cue-comparison-proof-'));rmSync(owned,{recursive:true,force:true});}
+}

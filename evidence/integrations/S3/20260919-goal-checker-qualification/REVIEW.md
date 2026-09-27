@@ -1,0 +1,11 @@
+# Independent goal-checker qualification review
+
+Verdict: PASS for the bounded packaged qualification collector. No actionable scoped blocker found.
+
+The collector now uses fixed, goal-specific planning input and proposal vectors. Its production legs require pass (`structural_match`), fail (`checker_registry`), and unknown (`input_contract`) verdicts from the pinned goal checker; they do not reuse JSON formatter outputs. The existing native recipe then observes a separate pinned diagnostic child for process-limit cause, filesystem denial with before/after host controls, and bounded loopback denial. Raw journals, native identity, and verified cleanup feed the M1–M3 fixture statuses. Fixture seams force `kind:'fixture'`; the goal kind remains `eligible:false` even if M1–M3 pass, so no live provider/model eligibility is issued. The goal collector's envelope has no egress. The new native identity allowlist admits the exact goal kind and still rejects unknown kinds; the goal adapter's verdict-key check now compares sorted keys in sorted order.
+
+After root's coordinated build-pass3 exit 0, I independently ran `npx vitest run test/integration-model-qualification.test.ts test/integration-native-execution-identity-store.test.ts test/integration-fixed-model-qualification.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1` from `daemon`: exit 0, 3 files, 23 tests passed. The goal fixture specifically checks three real pinned child verdicts, `providerStopped:'unknown'`, verified cleanup, M1–M3 pass, and `eligible:false`. Existing model/JSON and native identity cases also passed. The maker's separately recorded four-file packaged gate passed 26/26, including the client test; these overlapping counts are not added.
+
+Reviewed final SHA-256: `model-qualification.ts` `36F3AAB7992929BAB4FBF6105DCC039F704502A78E5AFF4BE4F7F7600FEC6B34`; `native-execution-identity-store.ts` `5FBFBC92C3F22B5177A9244ECF169C6F3B1285C7E13D18DEAB3F89F26FDC289B`; `isolated-goal-proposal-checker.ts` `41DFB3634293C8B26463F32323CE97CC066689DDD7FD0751F9AE404555DC5B7F`. Exact source preimages are preserved under `preimages/`.
+
+The suite uses local native children and loopback diagnostics; it makes no live provider, account, or model call. Its fixture pass is not current product readiness, semantic quality, or full external qualification.

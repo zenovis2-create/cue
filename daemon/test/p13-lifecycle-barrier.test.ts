@@ -71,7 +71,9 @@ describe('P13 runtime lifecycle barrier', () => {
     const stopBody = source.slice(source.indexOf('stop(): void {'));
     expect(stopBody).not.toMatch(/safeCleanupCodexHome/u);
     const teardownBody = source.slice(source.indexOf('settleHostRuntimeTeardown({'), source.indexOf('stop(): void {'));
-    expect(teardownBody).toMatch(/cleanup:\s*\(\)\s*=>\s*safeCleanupCodexHome/u);
+    // Cleanup stays on the teardown path and is additionally gated on ownership, so an
+    // authorized retained user profile is never deleted.
+    expect(teardownBody).toMatch(/cleanup:\s*\(\)\s*=>\s*\{\s*if\s*\(\s*options\.codexHomeOwnership\s*!==\s*'retained-authorized'\s*\)\s*safeCleanupCodexHome/u);
   });
 
   it('P13-L4 the Electron quit path blocks the first quit and awaits the close barrier', async () => {

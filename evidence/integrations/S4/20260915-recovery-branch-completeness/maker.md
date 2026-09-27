@@ -1,0 +1,1 @@
+Pass1 83/84 failed because replacement callback was assigned after immutable host capture. Pass2 uses original callback reading fixture observation and passes84/84. Production unchanged. Capability mismatch branches and quota alternate exact failed/candidate/cost/replay lineage tested. Independent review pending.

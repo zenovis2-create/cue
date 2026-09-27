@@ -1,0 +1,3 @@
+# Root single-oracle correction
+
+Done: change only settled() return-value assertion to undefined, as implemented by the public async method; independent checker runs the four-file focused gate exit 0 and verifies source pins. Cap: one correction, no production changes. Preserve full candidate test preimage and both failed maker gates. Every pass: source diff and final focused independent gate; existing pass2 build covers unchanged production, with final build after correction recorded separately. Failure requires a new bounded handoff, never silently repeat. Root makes this correction; parallel_timeout_review checks it independently.

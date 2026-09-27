@@ -1,0 +1,12 @@
+# Maker gates
+
+2026-09-12 01:51 KST: new outcome report 4 + existing reports/delivery 19 = 23 PASS. TypeScript noEmit exit 0. Compiled Core/report app gate awaits root synchronized build with backend owner; no claim of that pass yet.
+
+Changes: reports/ir.ts adds readRunOutcomeReport; original readRunReport remains untouched. New wrapper rejects outer TX before any read, preserves original digest, adds separate-read-transaction scope and reader DTO with distinct sourceDigest, recomputes immutable branded combined IR digest. Unexpected outcome read exception becomes a fixed unavailable result; original report failure still propagates. Core export uses wrapper once on explicit report request; completion and polling unchanged. Existing HTML escaped evidence details displays scope, explanation and uncertainty, no new renderer/IPC.
+
+Actual in-memory SQLite tests verify unknown despite completed task, quality/time null, refreshed failure on explicit reread, database unchanged by reads, original digest stable, composed JSON/HTML digest binding, literal safe evidence text and absent private paths; error injection only at outcome SQL verifies no exception disclosure. Backend strict acceptance truth tests remain backend owner's gate. Core app test adds compiled wrapper assertion and outer TX produces zero report files. No provider/helper/native calls and no build by maker. Independent review required after compiled gate.
+`readRunOutcome` reuses strict acceptance history whose stage binder can inspect filesystem metadata. This report unit does not claim zero filesystem reads. Removed/unavailable historical stage paths remain unavailable; no native helper/model/process invocation is introduced.
+
+## Final compiled gate
+
+Root synchronized build exit 0 (chunk 0f6d08), backend source A7DB1D... included. 2026-09-12 01:56 KST `npx vitest run test/integration-report-app.test.ts test/integration-run-outcome-report.test.ts --reporter=dot` exit 0: compiled Core app 6 + new report 4 = 10 PASS. Unique unit gates total 29 PASS (reports/delivery 19 + new 4 + app 6). Earlier noEmit exit 0 remains valid; no redundant typecheck run. Compiled Core import resolves the new wrapper and actual outcome module: app HTML contains separate snapshot scope/base digest/fixed unavailable; outer transaction creates no report output. Compiled file hashes recorded. Maker invokes no native/helper/model/provider process. Independent final review remains separate.

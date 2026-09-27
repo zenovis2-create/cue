@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { openLedger } from '../src/ledger.js';
 import { normalizeEnvelope, type Envelope } from '../src/envelope.js';
 import { createCleanCodexHome } from '../src/tool-home.js';
-import { launchHostCodexRun } from '../src/host-codex-runtime.js';
+import { launchHostCodexRun, readIssuedHostRuntimeTiming } from '../src/host-codex-runtime.js';
 
 const roots: string[] = [];
 function temp(): string {
@@ -176,7 +176,7 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C split runtime tracer',
     db.close();
     expect(alive).toBe(false);
     expect(orphans).toEqual([]);
-  }, 30_000);
+  }, 120_000);
 
   it('bounds host controller stderr retained in memory', async () => {
     const root = temp(); const worktree = join(root, 'worktree'); const sourceHome = join(root, 'source-home'); const vendorDir = join(root, 'vendor');
@@ -195,7 +195,7 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C split runtime tracer',
     db.close();
     expect(Buffer.byteLength(result.controllerStderr, 'utf8')).toBeLessThanOrEqual(1_000_000);
     expect(result.controllerStderr).toContain('[CUE_CAPTURE_TRUNCATED]');
-  }, 30_000);
+  }, 120_000);
 
   it('fails independent goal verification after a successful but read-only no-op tool call', async () => {
     const root = temp(); const worktree = join(root, 'worktree'); const codexHome = join(root, 'codex-home-noop'); const vendorDir = join(root, 'vendor');
@@ -214,7 +214,7 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C split runtime tracer',
     expect(result.status).toBe('completed');
     expect(result.successfulToolCalls).toBe(1);
     expect((result as any).goalVerification).toEqual(expect.objectContaining({ passed: false, reason: 'workspace_unchanged' }));
-  }, 30_000);
+  }, 120_000);
 
   it('rejects a workspace mutation that does not touch the output path named by the goal', async () => {
     const root = temp(); const worktree = join(root, 'worktree'); const codexHome = join(root, 'codex-home-irrelevant'); const vendorDir = join(root, 'vendor');
@@ -232,7 +232,7 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C split runtime tracer',
     db.close();
     expect(result.successfulToolCalls).toBe(1);
     expect(result.goalVerification).toEqual(expect.objectContaining({ passed: false, reason: 'expected_path_not_changed' }));
-  }, 30_000);
+  }, 120_000);
 
   it('rejects an expected-path change when the agent reports that it could not complete the goal', async () => {
     const root = temp(); const worktree = join(root, 'worktree'); const codexHome = join(root, 'codex-home-incomplete'); const vendorDir = join(root, 'vendor');
@@ -250,7 +250,7 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C split runtime tracer',
     db.close();
     expect(result.finalMessage).toMatch(/could not complete/u);
     expect(result.goalVerification).toEqual(expect.objectContaining({ passed: false, reason: 'agent_reported_incomplete' }));
-  }, 30_000);
+  }, 120_000);
 
   it('changes a model-completed result to cleanup failure when the credential home cannot be safely removed', async () => {
     const root = temp(); const worktree = join(root, 'worktree'); const unsafeHome = join(root, 'source-home'); const vendorDir = join(root, 'vendor');
@@ -265,9 +265,14 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C split runtime tracer',
     const result = await launchHostCodexRun(db, { cwd: worktree, task_id: 'task-cleanup', run_id: 'run-cleanup' }, envelope, {
       binary, codexHome: unsafeHome, goal: 'cleanup failure', controllerArgs: [server], requestTimeoutMs: 5_000,
     }).done;
+    const controllerHandle = (db.prepare("SELECT handle FROM session_runtime WHERE role='controller'").get() as {handle: string}).handle;
     db.close();
     expect(result).toMatchObject({ status: 'failed', failureKind: 'cleanup' });
+    const timing = readIssuedHostRuntimeTiming(result, 'run-cleanup', controllerHandle);
+    expect(timing).toMatchObject({ localTeardownStatus: 'errors', queueIncluded: false, remoteCleanupVerified: false, endToEndVerified: false });
+    expect(timing!.elapsedMs).toBe(timing!.executionAndVerificationMs + timing!.localTeardownMs);
+    expect(timing!.localTeardownMs).toBeGreaterThanOrEqual(0);
     expect(result.error).toMatch(/cleanup/u);
     expect(readFileSync(join(unsafeHome, 'auth.json'), 'utf8')).toBe('credential-placeholder');
-  }, 30_000);
+  }, 120_000);
 });

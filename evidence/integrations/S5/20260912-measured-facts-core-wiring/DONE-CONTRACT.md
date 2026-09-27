@@ -1,0 +1,5 @@
+# Done contract
+
+Done means `createCueCore` constructs the measured-fact store only when an explicit trusted runtime host is supplied; capture accepts only the exact three identifier fields, validates the enrollment and local workspace before any host callback, and delegates to the store on the Core ledger. Read validates the identifier and a local fact/run binding before store validation can call the host. Unconfigured, foreign, malformed, and accessor/proxy inputs produce stable unavailable/input errors with zero host callbacks and no measured-fact writes. Valid capture/read and immutable historical replay use the real store, preserve `trialReady:false`, and accept no caller measurement payload or clock. Observation/Core regressions remain green; no trial, promotion, UI, network, model, native, or provider behavior is added.
+
+Attempt cap: 2 diagnosed correction hypotheses. Every pass runs the focused measured-fact Core and observation Core tests, daemon TypeScript build/typecheck through the test prehook, and scoped diff check. A failure gets one new evidence-based correction; a second unresolved failure is handed to root and independent review.

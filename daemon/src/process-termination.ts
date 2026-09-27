@@ -11,6 +11,30 @@ export function terminationScopeFailure(detail: string): Error & { code: string 
 
 export interface ObservedProcess { pid: number; ppid: number; createdAt: string }
 
+// Published budgets of ONE verified termination. Callers that bound a teardown containing
+// verified terminations must derive their bound from these instead of restating a magic
+// number: a bound below the real budget expires while teardown is still inside its own
+// contract and then reports a teardown failure that never happened. Values are unchanged;
+// naming them is what keeps the two sides from drifting apart again.
+export const TREE_OBSERVATION_TIMEOUT_MS = 15_000;
+export const TASKKILL_TIMEOUT_MS = 5_000;
+export const DEATH_VERIFICATION_WINDOW_MS = 2_000;
+export const VERIFIED_TERMINATION_BUDGET_MS = TREE_OBSERVATION_TIMEOUT_MS + TASKKILL_TIMEOUT_MS + DEATH_VERIFICATION_WINDOW_MS;
+
+export function windowsCreationIdentity(value: unknown): bigint | undefined {
+  if (typeof value !== 'string') return undefined;
+  const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,7}))?(Z|[+-]\d{2}:\d{2})$/u.exec(value);
+  if (!match) return undefined;
+  const fields = match.slice(1, 7).map(Number);
+  const local = new Date(0);
+  local.setUTCFullYear(fields[0], fields[1] - 1, fields[2]);
+  local.setUTCHours(fields[3], fields[4], fields[5], 0);
+  if ([local.getUTCFullYear(), local.getUTCMonth() + 1, local.getUTCDate(), local.getUTCHours(), local.getUTCMinutes(), local.getUTCSeconds()].some((part, index) => part !== fields[index])) return undefined;
+  const wholeSecond = Date.parse(`${match[1]}-${match[2]}-${match[3]}T${match[4]}:${match[5]}:${match[6]}${match[8]}`);
+  if (!Number.isFinite(wholeSecond)) return undefined;
+  return BigInt(wholeSecond) * 10_000n + BigInt((match[7] ?? '').padEnd(7, '0'));
+}
+
 // Diagnostic only: records exactly which pids a kill is about to sweep, immediately
 // before taskkill runs. Off unless CUE_TERMINATION_AUDIT names a file, and it must
 // never change the decision - a diagnostic that alters behaviour measures itself.
@@ -23,8 +47,8 @@ function auditClosure(target: number, descendants: readonly ObservedProcess[], s
 }
 
 /** Check the entire attributed tree; taskkill's exit status alone is not proof. */
-export function terminateVerifiedTree(pid: number): void {
-  try { terminateObservedTree(pid); }
+export function terminateVerifiedTree(pid: number, expectedCreatedAt?: string): void {
+  try { terminateObservedTree(pid, expectedCreatedAt); }
   catch (error) {
     // An out-of-scope tree is a FAIL, never a kill. Surface it as-is so the caller
     // cannot mistake "we refused to kill" for "we could not verify death".
@@ -82,7 +106,7 @@ ConvertTo-Json -InputObject $out -Compress -Depth 4
 `.trim();
 
 export function observeProcessTree(pid: number, selfPid: number = process.pid): { descendants: ObservedProcess[]; selfChain: number[] } {
-  const observed = runProcessSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', TREE_SCRIPT(pid, selfPid)], { encoding: 'utf8', timeout: 15_000, windowsHide: true });
+  const observed = runProcessSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', TREE_SCRIPT(pid, selfPid)], { encoding: 'utf8', timeout: TREE_OBSERVATION_TIMEOUT_MS, windowsHide: true });
   if (observed.status !== 0 || observed.error || observed.stderr.trim()) throw terminationFailure();
   const parsed: unknown = JSON.parse(observed.stdout);
   if (!parsed || typeof parsed !== 'object') throw terminationFailure();
@@ -102,13 +126,18 @@ export function observeProcessTree(pid: number, selfPid: number = process.pid): 
   return { descendants, selfChain };
 }
 
-function terminateObservedTree(pid: number): void {
+function terminateObservedTree(pid: number, expectedCreatedAt?: string): void {
   if (!Number.isSafeInteger(pid) || pid <= 0) throw terminationFailure();
   let pids = [pid];
   if (process.platform === 'win32') {
     const { descendants, selfChain } = observeProcessTree(pid);
     if (descendants.length === 0) { verifyProcessesDead([pid]); return; }
-    if (!descendants.some((entry) => entry.pid === pid)) throw terminationFailure();
+    const root = descendants.find((entry) => entry.pid === pid);
+    if (!root) throw terminationFailure();
+    if (expectedCreatedAt !== undefined) {
+      const expected = windowsCreationIdentity(expectedCreatedAt);
+      if (expected === undefined || windowsCreationIdentity(root.createdAt) !== expected) throw terminationScopeFailure(`refusing to terminate pid ${pid}: creation identity changed`);
+    }
     // Refuse rather than kill: sweeping the test host or any ancestor would look
     // exactly like a clean shutdown while destroying the evidence of the run.
     const guarded = new Set(selfChain);
@@ -118,7 +147,7 @@ function terminateObservedTree(pid: number): void {
     }
     pids = descendants.map((entry) => entry.pid);
     auditClosure(pid, descendants, selfChain);
-    runProcessSync('taskkill.exe', ['/PID', String(pid), '/T', '/F'], { encoding: 'utf8', timeout: 5_000, windowsHide: true });
+    runProcessSync('taskkill.exe', ['/PID', String(pid), '/T', '/F'], { encoding: 'utf8', timeout: TASKKILL_TIMEOUT_MS, windowsHide: true });
   } else {
     try { process.kill(pid, 'SIGKILL'); }
     catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ESRCH') throw terminationFailure(); }
@@ -134,7 +163,12 @@ export function verifyProcessesDead(pids: readonly number[]): void {
       throw terminationFailure();
     }
   };
-  const deadline = Date.now() + 2_000;
+  // Verification window, not a grace period: the loop refuses to return until every pid is
+  // actually gone and otherwise throws CUE_TERMINATION_UNVERIFIED so the writer lease stays
+  // held. Observed once under a fully loaded serial test suite: teardown exceeded this window
+  // and produced a false unverified result. Raising it also slows the three negative tests in
+  // p11-termination.test.ts by the same amount, so it is left unchanged pending a decision.
+  const deadline = Date.now() + DEATH_VERIFICATION_WINDOW_MS;
   const wait = new Int32Array(new SharedArrayBuffer(4));
   while (pids.some(alive)) {
     if (Date.now() >= deadline) throw terminationFailure();

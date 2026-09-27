@@ -1,0 +1,4 @@
+# Startup routing results
+Root focused gate:3 files23/23. Independent reviewer reproduced23/23 and separately passed6/6 fixed subject measurement cases after correction. Complete root build exit0 is recorded at ../20260919-native-service-capacity/build-pass1.log.
+The initial source review found missing main/staging-wrapper measurement members. Both now belong to the fixed provider subject and missing-artifact tests. Startup selection, malformed-input refusal, same-ledger/daemon/generation checks and no local fallback are verified with the composer mocked. This does not prove native composer execution or live service availability; those are separately in progress.
+New environment input CUE_NATIVE_WORKFLOW_CONFIG is opt-in JSON; unset input preserves existing behavior. Malformed native input cannot silently run the local-model path. No real provider or local-model calls were made during verification.

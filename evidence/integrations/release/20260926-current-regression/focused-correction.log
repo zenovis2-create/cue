@@ -1,0 +1,55 @@
+npm notice run cue-daemon@0.1.0 npx
+npm notice run vitest run test/p10c-core.test.ts test/host-runtime-native-identity.test.ts -t consumes an approved|captures exact FILETIME|refuses a target --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a controller crash without automatically resuming it
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > reconciles a previously running write as blocked/crash without auto-resume on restart
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fences a verified live session before reconciling an interrupted run on startup
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > refuses to kill a reused PID whose process start time does not match the ledger identity
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks completion immediately when the controller credential-home cleanup fails
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks when cleanup fails after controller launch setup throws
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when independent goal verification finds no relevant workspace change
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when an explicitly requested exact file content is wrong
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fails closed before launch when the host Codex binary hash does not match the pin
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > queues a second write run for the same worktree and starts it after the first releases
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > cancels a queued write without launching it
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks queued writes when the app closes so restart cannot strand them
+ × test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 3535ms
+   → expected { approval_state: 'executing' } to deeply equal { approval_state: 'consumed' }
+ ↓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks an expired approval without spawning a controller or recording execution
+ ✓ test/host-runtime-native-identity.test.ts > captures exact FILETIME only for a process in the owned launch tree 10079ms
+ ✓ test/host-runtime-native-identity.test.ts > refuses a target whose native FILETIME changes across ownership observation 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice
+AssertionError: expected { approval_state: 'executing' } to deeply equal { approval_state: 'consumed' }
+
+- Expected
++ Received
+
+  {
+-   "approval_state": "consumed",
++   "approval_state": "executing",
+  }
+
+ ❯ test/p10c-core.test.ts:494:121
+    492|       const executions = Number((core.daemon.db.prepare('SELECT count(…
+    493|       expect(executions).toBe(1);
+    494|       expect(core.daemon.db.prepare('SELECT approval_state FROM run_se…
+       |                                                                                                                         ^
+    495|       // Let the accepted controller's worker start before stopping it.
+    496|       await waitUntil(() => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 2 passed | 16 skipped (19)
+   Start at  18:58:45
+   Duration  15.99s (transform 1.44s, setup 0ms, import 1.87s, tests 13.62s, environment 0ms)
+

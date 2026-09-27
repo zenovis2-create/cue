@@ -1,0 +1,27 @@
+npm notice run cue-daemon@0.1.0 npx
+npm notice run vitest run test/pinned-codex-resolution.test.ts test/p10c-manifest.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > writes the root evidence command to the repository evidence directory 2ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > observes only cue_workspace in the actual model request 2929ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > rejects an explicit unpinned executable without fallback or proof publication 112ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > rejects a changed staged copy before capture or proof publication 782ms
+ ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > never publishes PASS if cleanup fails after the real loopback capture 2930ms
+ ✓ test/pinned-codex-resolution.test.ts > prefers exact pinned global bytes and records the selected source 2ms
+ ✓ test/pinned-codex-resolution.test.ts > uses independently pinned standalone bytes when global is missing 0ms
+ ✓ test/pinned-codex-resolution.test.ts > uses independently pinned standalone bytes when global is drifted 0ms
+ ✓ test/pinned-codex-resolution.test.ts > uses independently pinned standalone bytes when global is directory 0ms
+ ✓ test/pinned-codex-resolution.test.ts > does not trust version labels or a caller-supplied hash when neither artifact matches 1ms
+ ✓ test/pinned-codex-resolution.test.ts > explicit verified location is honored without reading defaults 1ms
+ ✓ test/pinned-codex-resolution.test.ts > explicit missing override never falls back to valid default bytes 1ms
+ ✓ test/pinned-codex-resolution.test.ts > explicit drifted override never falls back to valid default bytes 0ms
+ ✓ test/pinned-codex-resolution.test.ts > invalid explicit path refuses before filesystem reads: "" 0ms
+ ✓ test/pinned-codex-resolution.test.ts > invalid explicit path refuses before filesystem reads: "relative/codex.exe" 0ms
+ ✓ test/pinned-codex-resolution.test.ts > missing environment roots never search the current directory 0ms
+
+ Test Files  2 passed (2)
+      Tests  16 passed (16)
+   Start at  23:53:54
+   Duration  7.22s (transform 50ms, setup 0ms, import 90ms, tests 6.76s, environment 0ms)
+

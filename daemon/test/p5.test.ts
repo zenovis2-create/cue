@@ -31,9 +31,20 @@ function sourceText():string { return sourceFiles().flatMap(path=>{ try { return
 describe('P5 watcher and recovery',()=>{
   it('P5 ledger upgrades an existing pre-P5 database idempotently',()=>{
     const root=mkdtempSync(resolve('.test-state-p5-upgrade-')); roots.push(root); const path=join(root,'ledger.db');
-    const legacy=new Database(path); legacy.exec("CREATE TABLE task(id TEXT PRIMARY KEY); CREATE TABLE run(id TEXT PRIMARY KEY);"); legacy.close();
+    const legacy=new Database(path);
+    legacy.exec(readFileSync(resolve('migrations','001_init.sql'),'utf8'));
+    legacy.exec('DROP TABLE recovery_attempt_v2; DROP TABLE autonomy_change; DROP TABLE run_autonomy;');
+    expect(legacy.prepare("SELECT count(*) n FROM sqlite_master WHERE type='table' AND name IN ('run_autonomy','autonomy_change','recovery_attempt_v2')").get()).toEqual({n:0});
+    legacy.prepare("INSERT INTO task VALUES('legacy-task','queued',NULL,'before-upgrade')").run(); legacy.close();
     const db=openLedger(path); expect(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='run_autonomy'").get()).toEqual({name:'run_autonomy'}); db.close();
-    const reopened=openLedger(path); expect(reopened.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='recovery_attempt_v2'").get()).toEqual({name:'recovery_attempt_v2'}); reopened.close();
+    const reopened=openLedger(path); expect(reopened.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='recovery_attempt_v2'").get()).toEqual({name:'recovery_attempt_v2'});
+    expect(reopened.prepare("SELECT state,created_at FROM task WHERE id='legacy-task'").get()).toEqual({state:'queued',created_at:'before-upgrade'}); reopened.close();
+  });
+  it('failed migration closes the database handle instead of leaking a Windows file lock',()=>{
+    const root=mkdtempSync(resolve('.test-state-p5-invalid-')); roots.push(root); const path=join(root,'ledger.db');
+    const invalid=new Database(path); invalid.exec('CREATE TABLE task(id TEXT PRIMARY KEY); CREATE TABLE run(id TEXT PRIMARY KEY);'); invalid.close();
+    expect(()=>openLedger(path)).toThrow(/no such table/u);
+    expect(()=>rmSync(path)).not.toThrow();
   });
   it('P5-1 grades deterministic signal sources without treating worker-read as truth',()=>{
     expect(collectSignals({'gate-list':[], 'exit-code':0, 'terminal-wait':'quiet', 'worker-read':'done', 'task-list':['alive']})).toEqual([
@@ -90,7 +101,12 @@ describe('P5 watcher and recovery',()=>{
     expect(observed).toEqual(['recovery_base_sha','recovery_diff_hash','restart_fence']);
     expect(db.prepare("SELECT content FROM artifact WHERE kind='recovery_diff_hash'").get()).toEqual({content:createHash('sha256').update('diff bytes').digest('hex')});
     expect(readFileSync(work,'utf8')).toBe('unfinished work'); expect(readFileSync(observedFile,'utf8')).toBe('unfinished work'); db.close();
-    expect(sourceText()).not.toMatch(/git\s+(?:reset|checkout|clean)|checkout\s+--|discard/iu);
+    expect(sourceText()).not.toMatch(/git\s+(?:reset|checkout|clean)|checkout\s+--/iu);
+    // `discard` is the reviewed vocabulary for disposing an attempt-owned staging root
+    // (migration 048). Recovery/restart code must never gain it: any other module matching
+    // `discard` fails this guard.
+    const stagingDiscardModules=/[\\/](?:ledger|orchestration[\\/](?:staging-authority|store))\.ts$/u;
+    expect(sourceFiles().filter(path=>!stagingDiscardModules.test(path)).filter(path=>/discard/iu.test(readFileSync(path,'utf8')))).toEqual([]);
   });
 
   it('P5-7 validates handoff schema and has no automatic handoff executor',()=>{
@@ -121,7 +137,9 @@ describe('P5 watcher and recovery',()=>{
     const before=JSON.stringify(contract), request={runId:'r',failure:'same',contract,actionAllowed:true}; recovery.recover(request,'new'); expect(JSON.stringify(contract)).toBe(before);
     expect(recovery.recover({...request,contract:{...contract,goal:'expanded'}},'changed contract').action).toBe('human');
     expect(recovery.recover(request,'another').action).toBe('human'); expect((db.prepare('SELECT retry_cap FROM run_autonomy WHERE run_id=?').get('r') as {retry_cap:number}).retry_cap).toBe(1);
-    expect(sourceText()).not.toMatch(/(?:goal|constraints|done_when|deliverable)\s*=/u); db.close();
+    // Widening a task contract means writing one of its fields. Local declarations that
+    // only read a contract-shaped record (e.g. `const goal=record(...)`) are not mutations.
+    expect(sourceText()).not.toMatch(/(?:\.|\[\s*['"])(?:goal|constraints|done_when|deliverable)(?:['"]\s*\])?\s*=(?!=)/u); db.close();
   });
 
   it('P5-11 rejects in-run increases and applies plus records decreases immediately',()=>{

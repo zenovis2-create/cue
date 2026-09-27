@@ -1,17 +1,20 @@
 import { basename, isAbsolute, join } from 'node:path';
-import { mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { types } from 'node:util';
 import type { Ledger } from './ledger.js';
 import type { Envelope } from './envelope.js';
 import { spawnOwned, runProcessSync, resolveOwnedExecutable, type OwnedChildProcess } from './process-launch.js';
 import type { SessionOwner, SessionRecord } from './session-spawn.js';
 import { safeCleanupCodexHome, vendorCodexLaunchSpec } from './tool-home.js';
-import { terminateVerifiedTree } from './process-termination.js';
+import { terminateVerifiedTree, VERIFIED_TERMINATION_BUDGET_MS } from './process-termination.js';
 import {
   HostCodexRpcSession,
   type HostCodexRunResult,
+  type HostCodexEvent,
   type WorkspaceWorkerResult,
+  type CueWorkspaceCommand,
 } from './host-codex-controller.js';
 import {
   launchAppContainerWorker,
@@ -19,15 +22,22 @@ import {
   WorkerEnforcementViolationError,
   type RunningAppContainerWorker,
 } from './worker-enforcement.js';
+import { compareWriteExistingNative, snapshotRelativeNative, type ChangeSnapshotIdentity, type CompareWriteReceipt } from './change-snapshot-host.js';
+import { observeOwnedNativeProcess, type HostNativeProcessIdentity } from './host-runtime-native-identity.js';
 
 export interface HostCodexRuntimeOptions {
   binary: string;
   codexHome: string;
+  codexHomeOwnership?: 'ephemeral-owned' | 'retained-authorized';
   goal: string;
   model?: string;
   requestTimeoutMs?: number;
   runTimeoutMs?: number;
+  verificationMode?: 'workspace-change' | 'read-only-result' | 'approved-existing-file-change';
+  runtimeRole?: 'implementation' | 'model';
+  approvedExistingTargets?: readonly Readonly<{ relativePath: string; maxBytes: number }>[];
   controllerArgs?: readonly string[];
+  onEvent?: (event: HostCodexEvent) => void;
 }
 
 export interface HostCodexRuntimeResult extends HostCodexRunResult {
@@ -40,9 +50,42 @@ export interface HostCodexRuntimeResult extends HostCodexRunResult {
   goalVerification: GoalVerificationResult;
 }
 
+export type HostRuntimeTimingObservation = Readonly<{
+  version: 'cue-host-runtime-timing-v1';
+  clock: 'process.hrtime.bigint';
+  scope: 'runtime-entry-through-local-teardown-settled';
+  runId: string;
+  sessionHandle: string;
+  executionAndVerificationMs: number;
+  localTeardownMs: number;
+  elapsedMs: number;
+  localTeardownStatus: 'settled-without-errors' | 'errors';
+  queueIncluded: false;
+  remoteCleanupVerified: false;
+  endToEndVerified: false;
+}>;
+const issuedRuntimeTimings = new WeakMap<object, HostRuntimeTimingObservation>();
+/** Result identity and session binding only; copies and caller-supplied timing are not observations. */
+export function readIssuedHostRuntimeTiming(result: unknown, runId: string, sessionHandle: string): HostRuntimeTimingObservation | null {
+  if (!result || typeof result !== 'object' || types.isProxy(result)) return null;
+  const timing = issuedRuntimeTimings.get(result);
+  return timing?.runId === runId && timing.sessionHandle === sessionHandle ? timing : null;
+}
+
+export type IssuedNativeRuntimeEvidence=Readonly<{version:'cue-issued-native-runtime-evidence-v1';runId:string;taskId:string;attemptId:string;candidateId:string;subjectDigest:string;sessionHandle:string;role:'implementation'|'model';verificationMode:'workspace-change'|'read-only-result'|'approved-existing-file-change';outcomeInputs:Readonly<{status:string;failureKind:HostCodexRuntimeResult['failureKind']|null;goalVerification:GoalVerificationResult}>;controller:HostNativeProcessIdentity;workers:readonly HostNativeProcessIdentity[];resources:readonly Readonly<{path:string;ownership:'ephemeral-owned'|'retained-authorized';cleanup:'absent'|'retained'|'unknown'}>[]}>;
+export type NativeRuntimeEvidenceBinding=Readonly<{runId:string;taskId:string;attemptId:string;candidateId:string;subjectDigest:string;sessionHandle:string;role:'implementation'|'model';verificationMode:'workspace-change'|'read-only-result'|'approved-existing-file-change'}>;
+const issuedNativeRuntimeEvidence=new WeakMap<HostCodexRuntimeResult,IssuedNativeRuntimeEvidence>();
+export function readIssuedNativeRuntimeEvidence(result:HostCodexRuntimeResult,binding:NativeRuntimeEvidenceBinding):IssuedNativeRuntimeEvidence{
+  if(!result||typeof result!=='object'||types.isProxy(result)||!binding||typeof binding!=='object'||types.isProxy(binding))throw Error('native_runtime_evidence_unissued');
+  const evidence=issuedNativeRuntimeEvidence.get(result);if(!evidence)throw Error('native_runtime_evidence_unissued');
+  const d=Object.getOwnPropertyDescriptors(binding),keys=['runId','taskId','attemptId','candidateId','subjectDigest','sessionHandle','role','verificationMode'];
+  if(Reflect.ownKeys(d).length!==keys.length||keys.some(key=>!d[key]?.enumerable||!Object.hasOwn(d[key],'value')||d[key]!.value!==evidence[key as keyof IssuedNativeRuntimeEvidence]))throw Error('native_runtime_evidence_binding');
+  return evidence;
+}
+
 export interface GoalVerificationResult {
   passed: boolean;
-  reason: 'workspace_changed' | 'workspace_unchanged' | 'expected_path_not_changed' | 'expected_content_mismatch' | 'agent_reported_incomplete' | 'snapshot_failed' | 'model_not_completed';
+  reason: 'workspace_changed' | 'workspace_unchanged' | 'expected_path_not_changed' | 'expected_content_mismatch' | 'agent_reported_incomplete' | 'snapshot_failed' | 'model_not_completed' | 'read_only_result_received';
   changedPaths: string[];
 }
 
@@ -57,6 +100,19 @@ export function terminateTree(child: OwnedChildProcess): void {
   if (!child.pid || child.exitCode !== null || child.signalCode !== null) return;
   terminateVerifiedTree(child.pid);
 }
+
+/** How long the controller leg waits for a voluntary close before and after killing it. */
+export const CONTROLLER_CLOSE_WAIT_MS = 2_000;
+
+/**
+ * Worst case for one settleHostRuntimeTeardown: a verified worker termination, then the
+ * controller leg's waitForClose -> verified termination -> waitForClose. Anything that
+ * bounds a close() containing this teardown must use at least this budget. A shorter
+ * bound expires while teardown is still within its own contract, which turns a healthy
+ * teardown into a reported termination failure and leaves the ledger open.
+ */
+export const HOST_RUNTIME_TEARDOWN_BUDGET_MS =
+  VERIFIED_TERMINATION_BUDGET_MS + CONTROLLER_CLOSE_WAIT_MS + VERIFIED_TERMINATION_BUDGET_MS + CONTROLLER_CLOSE_WAIT_MS;
 
 function waitForClose(child: OwnedChildProcess, timeoutMs: number): Promise<void> {
   if (child.exitCode !== null || child.signalCode !== null) return Promise.resolve();
@@ -196,7 +252,36 @@ export function launchHostCodexRun(
   envelope: Envelope,
   options: HostCodexRuntimeOptions,
 ): RunningHostCodexRun {
+  const runtimeEnteredNs = process.hrtime.bigint();
   if (owner.run_id !== envelope.run_id) throw new Error('owner/envelope run mismatch');
+  const readOnlyResult = options.verificationMode === 'read-only-result';
+  const approvedExistingFileChange = options.verificationMode === 'approved-existing-file-change';
+  if (readOnlyResult && (envelope.allowed_actions.length !== 0 || envelope.egress.length !== 0)) throw new Error('read-only result mode requires an empty authority envelope');
+  if (approvedExistingFileChange && (envelope.allowed_actions.length !== 1 || envelope.allowed_actions[0] !== 'file_change' || envelope.egress.length !== 0)) throw new Error('approved existing-file mode requires exact file_change authority');
+  const targetSpecs = approvedExistingFileChange ? options.approvedExistingTargets : undefined;
+  let nativeRoot: { root: string; identity: ChangeSnapshotIdentity } | undefined;
+  const nativeTargets = new Map<string, { relativePath: string; maxBytes: number; receipt?: CompareWriteReceipt }>();
+  if (approvedExistingFileChange) {
+    if (!Array.isArray(targetSpecs) || types.isProxy(targetSpecs) || Object.getPrototypeOf(targetSpecs) !== Array.prototype) throw new Error('approved existing-file targets required');
+    const arrayDescriptors=Object.getOwnPropertyDescriptors(targetSpecs),lengthDescriptor=Object.getOwnPropertyDescriptor(targetSpecs,'length');
+    if(!lengthDescriptor||!Object.hasOwn(lengthDescriptor,'value')||!Number.isSafeInteger(lengthDescriptor.value)||lengthDescriptor.value<1||lengthDescriptor.value>64||Reflect.ownKeys(arrayDescriptors).length!==lengthDescriptor.value+1)throw new Error('invalid approved existing-file targets');
+    for(let index=0;index<lengthDescriptor.value;index+=1){
+      const slot=arrayDescriptors[String(index)];if(!slot?.enumerable||!Object.hasOwn(slot,'value'))throw new Error('invalid approved existing-file target');
+      const item=slot.value;
+      if (!item || typeof item !== 'object' || types.isProxy(item) || Object.getPrototypeOf(item)!==Object.prototype) throw new Error('invalid approved existing-file target');
+      const descriptors=Object.getOwnPropertyDescriptors(item);
+      if(Reflect.ownKeys(descriptors).length!==2||!descriptors.relativePath?.enumerable||!Object.hasOwn(descriptors.relativePath,'value')||!descriptors.maxBytes?.enumerable||!Object.hasOwn(descriptors.maxBytes,'value'))throw new Error('invalid approved existing-file target');
+      const relativePath=descriptors.relativePath.value,maxBytes=descriptors.maxBytes.value;
+      if (typeof relativePath !== 'string' || !relativePath || relativePath.includes('\0') || isAbsolute(relativePath) || relativePath.split(/[\\/]/u).some(part=>!part||part==='.'||part==='..') || !Number.isSafeInteger(maxBytes) || maxBytes < 1 || maxBytes > 16 * 1024 * 1024) throw new Error('invalid approved existing-file target');
+      const normalized=relativePath.replace(/\\/gu, '/'),key=normalized.toLocaleLowerCase('en-US');
+      if (nativeTargets.has(key)) throw new Error('duplicate approved existing-file target');
+      nativeTargets.set(key, { relativePath: normalized, maxBytes });
+    }
+    const row = db.prepare('SELECT execution_worktree_realpath,execution_volume_serial,execution_file_id FROM attempt_staging_authority WHERE attempt_id=?').get(owner.run_id) as { execution_worktree_realpath: string; execution_volume_serial: string; execution_file_id: string } | undefined;
+    if (!row || row.execution_worktree_realpath !== envelope.worktree_realpath || row.execution_worktree_realpath !== owner.cwd) throw new Error('approved existing-file staging authority mismatch');
+    nativeRoot = { root: row.execution_worktree_realpath, identity: { volumeSerial: row.execution_volume_serial, fileId: row.execution_file_id } };
+  }
+  const lineage=db.prepare('SELECT a.run_id,a.task_id,a.candidate_id,l.expected_subject_digest FROM orchestration_attempt a JOIN orchestration_launch_intent l ON l.attempt_id=a.attempt_id WHERE a.attempt_id=?').get(owner.run_id) as {run_id:string;task_id:string;candidate_id:string;expected_subject_digest:string}|undefined;
   if (options.controllerArgs && process.env.NODE_ENV !== 'test') throw new Error('controllerArgs are test-only');
   const args = options.controllerArgs ? [...options.controllerArgs] : ['-a', 'on-request', 'app-server'];
   const controllerCwd = join(options.codexHome, 'controller-workspace');
@@ -222,11 +307,15 @@ export function launchHostCodexRun(
   }
 
   const activeWorkers = new Set<RunningAppContainerWorker>();
+  const workerIdentityPromises:Promise<HostNativeProcessIdentity|null>[]=[];
+  const ownedRuntimeHomes:string[]=[];
   const workerPids: number[] = [];
   let successfulToolCalls = 0;
   let modelToolOrdinal = 0;
   let controllerStderr = '';
   let controllerPidCaptured = false;
+  let resolveControllerIdentity:(value:HostNativeProcessIdentity|null)=>void=()=>{};
+  const controllerIdentity=new Promise<HostNativeProcessIdentity|null>(resolve=>{resolveControllerIdentity=resolve;});
   let stopped = false;
   const stopAttemptErrors: HostRuntimeTeardownError[] = [];
   launched.child.stderr?.on('data', chunk => {
@@ -239,6 +328,7 @@ export function launchHostCodexRun(
     launched.session.start_time = match[2];
     if (db.open) db.prepare('UPDATE session_handle SET pid=?,start_time=? WHERE handle=?')
       .run(launched.session.pid, launched.session.start_time, launched.session.handle);
+    try{resolveControllerIdentity(observeOwnedNativeProcess(launched.child.pid!,launched.session.pid));}catch{resolveControllerIdentity(null);}
   });
 
   const executeWorker = async (
@@ -279,6 +369,9 @@ export function launchHostCodexRun(
       throw error;
     }
     activeWorkers.add(worker);
+    ownedRuntimeHomes.push(worker.runtimeHome);
+    const launcherPid=worker.child.pid!,initialPid=worker.session.pid;
+    workerIdentityPromises.push(new Promise(resolve=>{let settled=false;const finish=(value:HostNativeProcessIdentity|null)=>{if(settled)return;settled=true;clearInterval(timer);resolve(value);};const capture=()=>{if(worker.session.pid===initialPid)return false;try{finish(observeOwnedNativeProcess(launcherPid,worker.session.pid));}catch{finish(null);}return true;};const timer=setInterval(()=>{if(!capture()&&(worker.child.exitCode!==null||worker.child.signalCode!==null))finish(null);},2);timer.unref?.();worker.completion.finally(()=>{if(!capture())finish(null);}).catch(()=>{});}));
     try {
       db.prepare('UPDATE session_runtime SET parent_handle=? WHERE handle=?')
         .run(launched.session.handle, worker.session.handle);
@@ -323,9 +416,26 @@ export function launchHostCodexRun(
   };
 
   const runner = async (
-    command: Parameters<typeof launchAppContainerWorker>[3],
+    command: CueWorkspaceCommand,
     context: { threadId: string; turnId: string; callId: string; signal: AbortSignal },
-  ): Promise<WorkspaceWorkerResult> => executeWorker(command, { purpose: 'model_tool_call', modelContext: context });
+  ): Promise<WorkspaceWorkerResult> => {
+    if (approvedExistingFileChange && command.operation !== 'write_text') {
+      modelToolOrdinal += 1;
+      throw new Error('only structured write_text is allowed in approved existing-file mode');
+    }
+    if (approvedExistingFileChange) {
+      modelToolOrdinal += 1;
+      const key = command.relativePath?.toLocaleLowerCase('en-US') ?? '';
+      const target = nativeTargets.get(key);
+      if (!target || !command.contentUtf8 || !target.receipt || !nativeRoot || command.contentUtf8.length > target.maxBytes) throw new Error('structured file change outside approved existing target');
+      const result = compareWriteExistingNative({ root: nativeRoot.root, expectedRoot: nativeRoot.identity, target: target.relativePath, expected: target.receipt, replacement: command.contentUtf8, maxBytes: target.maxBytes });
+      if (result.state !== 'committed') throw new Error(`structured file change ${result.state}`);
+      target.receipt = result.after;
+      successfulToolCalls += 1;
+      return { exitCode: 0, stdout: 'CUE_WRITE_OK', stderr: '', enforcement: 'host-native-existing-file-cas' };
+    }
+    return executeWorker(command, { purpose: 'model_tool_call', modelContext: context });
+  };
 
   const captureSnapshot = async (purpose: 'before' | 'after'): Promise<WorkspaceSnapshot> => {
     const result = await executeWorker({
@@ -345,20 +455,54 @@ export function launchHostCodexRun(
   const rpc = new HostCodexRpcSession(
     { readable: launched.child.stdout, writable: launched.child.stdin },
     runner,
-    { requestTimeoutMs: options.requestTimeoutMs, runTimeoutMs: options.runTimeoutMs },
+    { requestTimeoutMs: options.requestTimeoutMs, runTimeoutMs: options.runTimeoutMs, onEvent: options.onEvent },
   );
 
   const done = (async (): Promise<HostCodexRuntimeResult> => {
     let result: HostCodexRunResult;
     let error: string | undefined;
     let failureKind: HostCodexRuntimeResult['failureKind'];
+    let timing: HostRuntimeTimingObservation;
     let goalVerification: GoalVerificationResult = { passed: false, reason: 'model_not_completed', changedPaths: [] };
     try {
-      const before = await captureSnapshot('before');
-      result = await rpc.run({ cwd: controllerCwd, workspaceCwd: owner.cwd, goal: options.goal, model: options.model });
-      if (result.status === 'completed') {
-        const after = await captureSnapshot('after');
-        goalVerification = compareWorkspaceSnapshots(before, after, options.goal, result.finalMessage);
+      const controllerAtStart=await Promise.race([controllerIdentity,new Promise<null>(resolve=>{const timer=setTimeout(()=>resolve(null),20_000);timer.unref?.();})]);
+      if(!controllerAtStart)throw Error('host controller native identity unavailable');
+      if (approvedExistingFileChange) {
+        const before = new Map<string, string>();
+        for (const target of nativeTargets.values()) {
+          const snapshot = snapshotRelativeNative({ root: nativeRoot!.root, expectedRoot: nativeRoot!.identity, targets: [target.relativePath], maxBytes: target.maxBytes });
+          const observed = snapshot.state === 'ok' ? snapshot.results[0] : undefined;
+          if (!observed || observed.state !== 'ok') throw new Error('approved existing-file preimage unavailable');
+          target.receipt = { identity: observed.identity!, byteLength: observed.byteLength!, sha256: observed.sha256! };
+          before.set(target.relativePath.toLocaleLowerCase('en-US'), observed.sha256!);
+        }
+        result = await rpc.run({ cwd: controllerCwd, workspaceCwd: owner.cwd, goal: options.goal, model: options.model });
+        if (result.status === 'completed') {
+          const changedPaths: string[] = [];
+          for (const target of nativeTargets.values()) {
+            const snapshot = snapshotRelativeNative({ root: nativeRoot!.root, expectedRoot: nativeRoot!.identity, targets: [target.relativePath], maxBytes: target.maxBytes });
+            const observed = snapshot.state === 'ok' ? snapshot.results[0] : undefined;
+            if (!observed || observed.state !== 'ok') throw new Error('approved existing-file postimage unavailable');
+            if (before.get(target.relativePath.toLocaleLowerCase('en-US')) !== observed.sha256) changedPaths.push(target.relativePath.toLocaleLowerCase('en-US'));
+          }
+          goalVerification = changedPaths.length > 0 && successfulToolCalls > 0 && !/\b(?:could not|cannot|unable to|failed to|did not complete|incomplete|blocked)\b/iu.test(result.finalMessage)
+            ? { passed: true, reason: 'workspace_changed', changedPaths: changedPaths.sort() }
+            : { passed: false, reason: 'workspace_unchanged', changedPaths: changedPaths.sort() };
+        }
+      } else if (readOnlyResult) {
+        result = await rpc.run({ cwd: controllerCwd, workspaceCwd: owner.cwd, goal: options.goal, model: options.model });
+        if (result.status === 'completed' && result.finalMessage.trim() && modelToolOrdinal === 0) {
+          goalVerification = { passed: false, reason: 'read_only_result_received', changedPaths: [] };
+        }
+      } else {
+        const before = await captureSnapshot('before');
+        result = await rpc.run({ cwd: controllerCwd, workspaceCwd: owner.cwd, goal: options.goal, model: options.model });
+        if (result.status === 'completed') {
+          const after = await captureSnapshot('after');
+          goalVerification = compareWorkspaceSnapshots(before, after, options.goal, result.finalMessage);
+          const changed=new Set(goalVerification.changedPaths),manifest=Buffer.from(JSON.stringify(after.files.filter(file=>changed.has(file.path.toLowerCase())).map(file=>({path:file.path,sha256:file.sha256}))),'utf8');
+          try{options.onEvent?.(Object.freeze({kind:'artifact',artifactKind:'workspace-change-set',sourceRef:'workspace-snapshot',sha256:createHash('sha256').update(manifest).digest('hex'),byteLength:manifest.byteLength}));}catch{}
+        }
       }
     } catch (caught) {
       error = diagnostic(caught);
@@ -370,18 +514,30 @@ export function launchHostCodexRun(
         finalMessage: '',
       };
     } finally {
+      const teardownStartedNs = process.hrtime.bigint();
       const teardownErrors = [...stopAttemptErrors, ...await settleHostRuntimeTeardown({
         closeRpc: () => rpc.close(),
         workers: [...activeWorkers],
         closeController: async () => {
-          await waitForClose(launched.child, 2_000);
+          await waitForClose(launched.child, CONTROLLER_CLOSE_WAIT_MS);
           if (launched.child.exitCode === null && launched.child.signalCode === null) {
             terminateTree(launched.child);
-            await waitForClose(launched.child, 2_000);
+            await waitForClose(launched.child, CONTROLLER_CLOSE_WAIT_MS);
           }
         },
-        cleanup: () => safeCleanupCodexHome(options.codexHome),
+        cleanup: () => { if(options.codexHomeOwnership!=='retained-authorized')safeCleanupCodexHome(options.codexHome); },
       })];
+      const teardownSettledNs = process.hrtime.bigint();
+      const executionAndVerificationMs = Number((teardownStartedNs - runtimeEnteredNs) / 1_000_000n);
+      const elapsedMs = Number((teardownSettledNs - runtimeEnteredNs) / 1_000_000n);
+      timing = Object.freeze({
+        version: 'cue-host-runtime-timing-v1', clock: 'process.hrtime.bigint',
+        scope: 'runtime-entry-through-local-teardown-settled',
+        runId: owner.run_id, sessionHandle: launched.session.handle,
+        executionAndVerificationMs, localTeardownMs: elapsedMs - executionAndVerificationMs, elapsedMs,
+        localTeardownStatus: teardownErrors.length ? 'errors' : 'settled-without-errors',
+        queueIncluded: false, remoteCleanupVerified: false, endToEndVerified: false,
+      });
       if (teardownErrors.length > 0) {
         const teardown = teardownErrors.map(entry => `${entry.stage}: ${diagnostic(entry.error)}`).join('; ');
         controllerStderr += `${controllerStderr ? '\n' : ''}${teardown}`;
@@ -391,7 +547,7 @@ export function launchHostCodexRun(
         result = { threadId: '', turnId: '', status: 'failed', finalMessage: terminationFailure ? 'runtime teardown failed' : 'credential cleanup failed' };
       }
     }
-    return {
+    const runtimeResult:HostCodexRuntimeResult=Object.freeze({
       ...result,
       controllerPid: launched.session.pid,
       workerPids: [...workerPids],
@@ -399,7 +555,16 @@ export function launchHostCodexRun(
       controllerStderr,
       goalVerification,
       ...(error ? { error, failureKind } : {}),
-    };
+    });
+    issuedRuntimeTimings.set(runtimeResult, timing);
+    if(!controllerPidCaptured)resolveControllerIdentity(null);
+    const controller=await controllerIdentity,workers=await Promise.all(workerIdentityPromises);
+    if(lineage&&options.runtimeRole&&controller&&workers.every((value):value is HostNativeProcessIdentity=>value!==null)){
+      const homeOwnership=options.codexHomeOwnership??'ephemeral-owned';
+      const resources=Object.freeze([{path:options.codexHome,ownership:homeOwnership,cleanup:homeOwnership==='retained-authorized'?'retained' as const:existsSync(options.codexHome)?'unknown' as const:'absent' as const},...ownedRuntimeHomes.map(path=>Object.freeze({path,ownership:'ephemeral-owned' as const,cleanup:existsSync(path)?'unknown' as const:'absent' as const}))]);
+      issuedNativeRuntimeEvidence.set(runtimeResult,Object.freeze({version:'cue-issued-native-runtime-evidence-v1',runId:lineage.run_id,taskId:lineage.task_id,attemptId:owner.run_id,candidateId:lineage.candidate_id,subjectDigest:lineage.expected_subject_digest,sessionHandle:launched.session.handle,role:options.runtimeRole,verificationMode:options.verificationMode??'workspace-change',outcomeInputs:Object.freeze({status:runtimeResult.status,failureKind:runtimeResult.failureKind??null,goalVerification:runtimeResult.goalVerification}),controller,workers:Object.freeze(workers),resources}));
+    }
+    return runtimeResult;
   })();
 
   return {

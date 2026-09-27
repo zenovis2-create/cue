@@ -1,0 +1,9 @@
+# Batch71: finish remaining implementation paths
+
+Starting state: original44, closed23, remaining21. User authorizes continued implementation. Preserve Qwen OFF, unknown Codex SHA deferral, existing GOAL usageLimited, shared dirty edits and immutable batch70 evidence. No provider/network/paid-model execution is inferred.
+
+Done is a measured consumed path: trusted deployment host configuration actually supplies Git staging; committed existing-file publication permits safe exact reconciliation and clean-only removal without discarding divergent/extra files; independent remaining-contract audit identifies any further concrete unit or original-condition closure. Native Sol workers own distinct modules; root coordinates builds, actual OS tests and six authoritative documents. Maker and checker remain separate.
+
+Before each mutation preserve exact filesystem bytes. Each unit records its own two-attempt cap, focused test/noEmit command and revised hypothesis on failure. Root document cap2: verify proposed transformation before writes; final gates require daemon build, affected focused suites, common runtime/orchestration/verification/evaluation regression, current source hashes, original44/closure arithmetic, local links and prior artifact hashes. Scores or synthetic provider receipts do not prove whole-product completion.
+
+Ownership: deployment worker owns new deployment-staging-host modules/tests and app/main.mjs; reconciliation worker owns Git factory, staging-authority, app/orchestration-driver and matching tests/types. Root owns six status documents and evidence reconciliation. Audit worker is read-only and may independently check corrected units. Do not silently enable staged capabilities on unsupported adapters or expand approved file targets. Any reconciliation must bind immutable committed publication and verified execution quiescence; unknown creation/cleanup and divergent bytes retain locks/lease.

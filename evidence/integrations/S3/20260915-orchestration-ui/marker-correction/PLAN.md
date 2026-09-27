@@ -1,0 +1,1 @@
+Done: same writable descriptor write+fsync+close readiness marker, actual local Windows temp-file readback test, syntax and startup gate. Cap1 offline correction; exclusive actual-attempt3 only after independent preflight/root signal. Preserve previous attempts. No product/build/Electron/model execution during fix.

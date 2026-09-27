@@ -1,0 +1,39 @@
+{
+  "id": 2,
+  "complete": true,
+  "exactFiles": true,
+  "files": [
+    "daemon/test/integration-goal-planning-host.test.ts",
+    "daemon/test/integration-held-retry-admission.test.ts",
+    "daemon/test/integration-json-format-checker.test.ts",
+    "daemon/test/integration-local-json-electron-gate-v2-review.test.ts",
+    "daemon/test/integration-model-alias-registry.test.ts",
+    "daemon/test/integration-native-existing-file-checker.test.ts",
+    "daemon/test/integration-native-startup.test.ts",
+    "daemon/test/integration-policy-store.test.ts",
+    "daemon/test/integration-readonly-terminal-wait.test.ts",
+    "daemon/test/integration-recovery-policy.test.ts",
+    "daemon/test/integration-requirements.test.ts",
+    "daemon/test/integration-runtime-contract.test.ts",
+    "daemon/test/integration-start-entry.test.ts",
+    "daemon/test/p10c-core.test.ts",
+    "daemon/test/p10c-manifest-lifecycle.test.ts",
+    "daemon/test/p12-live-harness.test.ts",
+    "daemon/test/p13-termination-scope.test.ts",
+    "daemon/test/readonly-verifier-worker.test.ts"
+  ],
+  "counts": {
+    "passed": 129
+  },
+  "failedFiles": [],
+  "unhandledErrors": null,
+  "outcome": {
+    "startedAt": "2026-09-26T14:12:08.642Z",
+    "finishedAt": "2026-09-26T14:14:57.342Z",
+    "code": 0,
+    "signal": null,
+    "timedOut": false,
+    "spawnError": null,
+    "sourceUnchanged": true
+  }
+}

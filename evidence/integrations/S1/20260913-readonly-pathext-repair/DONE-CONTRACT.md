@@ -1,0 +1,5 @@
+# Fixed-PATHEXT environment repair done contract
+
+Done means the executed shared helper, its test, and corrected-gate manifest are archived byte-for-byte before edits. The shared host environment constructor and both production read-only worker environment descriptors add only fixed `PATHEXT=.EXE`; caller extras and overrides cannot enter. The isolated verifier payload retains exactly its existing eight keys plus this reviewed fixed executable-extension contract where production already derives it.
+
+Focused behavioral tests prove exact key membership, caller override rejection, raw diagnostic preservation, and unchanged fail-closed authorization. No historical manifest/result/intent, corrected gate, launcher, unrelated worker logic, AppContainer, ACL, native helper, network, model, provider, or credential is touched. At most two implementation corrections are allowed; every pass runs focused tests, TypeScript, archive parity, and scoped diff check. Independent review is required, and this repair authorizes no native rerun.

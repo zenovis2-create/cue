@@ -1,0 +1,9 @@
+# Offline maker gate
+
+Authorized oracle correction offline attempt passed with actual compiled Core/driver/store, shipped preload through VM structured-clone boundary, strict real IPC handler and current renderer in JSDOM. It exercised form preparation, real approval and in-process producer, actual UI Stop, blocked/cancelled ledger state, unknown cleanup, unresolved ownership and enabled Stop. No checker relaunch. Monetary cost remains unmeasured. Fixture authority remains denied; no artificial successful receipt was added.
+
+Production Core.close correctly rejected orchestration_cleanup_unverified. This expected result is preserved as closeRejected:true. Only after inProcessSettled=true for the sole synthetic producer, the owned SQLite resource is explicitly closed as test teardown. This does not release product ownership or claim clean native Stop. Backup integrity succeeded before closure; success owned root removed. Exact previous cSIxBQ root separately backed up/verified and removed under parent authorization; other failure roots untouched.
+
+Current scripts: fixture.mjs, scenarios.mjs, offline-test.mjs and electron-proof.mjs. Actual script syntax check exit0; no actual Electron launched. Actual1 requires root freeze and independent preflight approval. It uses genuine current installation guard before/after dynamic Core imports, secure shipped preload/trusted main-frame IPC, same scenarios, painted visible CDP captures, fetch/network denials, owned profile/data/workspace, backup/nativeidentity0/integrity and process-exit checks. Scope is synthetic host UI, not provider/native qualification.
+
+Independent reviewer must audit code, offline receipt and distinction between expected product-close rejection and fixture DB closure before any actual attempt. No product files edited and no build executed.

@@ -1,0 +1,84 @@
+{
+  "version": "cue-reuse-manifest-v1",
+  "id": "R-04",
+  "decision": "bounded-adoption",
+  "scope": "internal-only",
+  "origin": {
+    "kind": "cue-native",
+    "identity": "cue-native-role-contract",
+    "revision": "sha256:e87000f81d394bbe1c766af199778df2b85062e6a9b26a27b6bc6fc13653948b"
+  },
+  "source": [
+    {
+      "path": "docs/reuse-decisions/R-04.md",
+      "sha256": "d19a7ff50edf2a1813e969d2552958111baefff442e2403328a67e0c48ac6fc5"
+    }
+  ],
+  "package": {
+    "name": "cue-native-role-contract",
+    "version": "sha256:e87000f81d394bbe1c766af199778df2b85062e6a9b26a27b6bc6fc13653948b",
+    "artifact": {
+      "path": "scripts/reuse/role-contract.mjs",
+      "sha256": "e87000f81d394bbe1c766af199778df2b85062e6a9b26a27b6bc6fc13653948b"
+    },
+    "status": "complete"
+  },
+  "compliance": {
+    "license": {
+      "status": "unknown",
+      "reason": "Complete license/NOTICE/asset/dependency inventory has not been bound; the cited decision documents only the limited internal implementation.",
+      "evidence": [
+        {
+          "path": "docs/reuse-decisions/R-04.md",
+          "sha256": "d19a7ff50edf2a1813e969d2552958111baefff442e2403328a67e0c48ac6fc5"
+        }
+      ]
+    },
+    "notice": {
+      "status": "unknown",
+      "reason": "Complete license/NOTICE/asset/dependency inventory has not been bound; the cited decision documents only the limited internal implementation.",
+      "evidence": [
+        {
+          "path": "docs/reuse-decisions/R-04.md",
+          "sha256": "d19a7ff50edf2a1813e969d2552958111baefff442e2403328a67e0c48ac6fc5"
+        }
+      ]
+    },
+    "assets": {
+      "status": "unknown",
+      "reason": "Complete license/NOTICE/asset/dependency inventory has not been bound; the cited decision documents only the limited internal implementation.",
+      "evidence": [
+        {
+          "path": "docs/reuse-decisions/R-04.md",
+          "sha256": "d19a7ff50edf2a1813e969d2552958111baefff442e2403328a67e0c48ac6fc5"
+        }
+      ]
+    },
+    "bom": {
+      "status": "unknown",
+      "reason": "Complete license/NOTICE/asset/dependency inventory has not been bound; the cited decision documents only the limited internal implementation.",
+      "evidence": [
+        {
+          "path": "docs/reuse-decisions/R-04.md",
+          "sha256": "d19a7ff50edf2a1813e969d2552958111baefff442e2403328a67e0c48ac6fc5"
+        }
+      ]
+    }
+  },
+  "cue": [
+    {
+      "path": "scripts/reuse/role-contract.mjs",
+      "sha256": "e87000f81d394bbe1c766af199778df2b85062e6a9b26a27b6bc6fc13653948b"
+    },
+    {
+      "path": "scripts/reuse/role-contract.test.mjs",
+      "sha256": "d31a41b36c4cbccf53e0269c4e4b92df66347ccd98df5f55239d01c1d16496c4"
+    }
+  ],
+  "lifecycle": [
+    {
+      "path": "evidence/integrations/S2/20260911-role/reuse/R-04/result.json",
+      "sha256": "fdc56489ca33ef1c1606fb7cb3803f9d3863e2fa46033fe6f3487beef5b3d591"
+    }
+  ]
+}

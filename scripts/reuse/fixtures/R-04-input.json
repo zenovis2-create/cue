@@ -1,0 +1,8 @@
+{
+  "id": "implement-login",
+  "role": "implementer",
+  "instructions": "로그인 구현\n검증 결과를 보고한다.",
+  "model": {
+    "canonicalId": "provider/model-1"
+  }
+}

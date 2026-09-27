@@ -1,0 +1,7 @@
+22: ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H6 a stop budget that expires is a FAIL, not an inconclusive result 7948ms
+25: ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H9 RED: a subject that never exits is a FAIL, not a clean normal path 11911ms
+50: × test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 352ms
+52:   → EPERM, Permission denied: \\?\D:\Temp\User\cue-p10c-core-T4Oqmu '\\?\D:\Temp\User\cue-p10c-core-T4Oqmu'
+82: ✓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > reaps live sessions and emits FAIL after a forced core close failure 33175ms
+402: × test/host-runtime-native-identity.test.ts > captures exact FILETIME only for a process in the owned launch tree 35054ms
+403:   → Test timed out in 30000ms.

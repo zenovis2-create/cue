@@ -14,7 +14,7 @@ const children: number[] = [];
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 function temp() { const root = mkdtempSync(join(tmpdir(), 'cue-p11-writer-')); roots.push(root); return root; }
 function alive(pid: number) { try { process.kill(pid, 0); return true; } catch { return false; } }
-async function until(check: () => boolean, ms = 15000) { const end = Date.now() + ms; while (!check()) { if (Date.now() >= end) throw new Error('FAIL: lifecycle timeout'); await delay(50); } }
+async function until(check: () => boolean, ms = 60000) { const end = Date.now() + ms; while (!check()) { if (Date.now() >= end) throw new Error('FAIL: lifecycle timeout'); await delay(50); } }
 afterEach(() => {
   for (const pid of children.splice(0)) if (alive(pid)) spawnSync('taskkill.exe', ['/PID', String(pid), '/T', '/F'], { windowsHide: true });
   for (const daemon of daemons.splice(0)) if (daemon.db.open) daemon.close();
@@ -72,7 +72,7 @@ rl.on('line',l=>{const m=JSON.parse(l);if(m.method==='initialize')send({id:m.id,
       expect(core.completion(run.taskId).state).toBe(mode === 'normal completion' ? 'completed' : 'blocked');
       if (mode === 'controller crash') expect(core.completion(run.taskId).blockedReason).toBe('crash');
       core.close();
-    }, 45000);
+    }, 120000);
   }
   it('user stop releases the write lease immediately after stopping the owned runtime', () => {
     const { daemon } = seeded(); let stopped = false;

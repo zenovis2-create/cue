@@ -1,0 +1,11 @@
+# Full remaining44 execution — batch63 result
+
+Implemented explicit exploration consent from an unchecked UI control through strict IPC/Core validation to one atomic consent+ordinary approval transaction. Driver binds exact run/envelope/policy/plan/grant/candidate/task membership, rejects local or conflicting default configuration and unsafe exploration switch/replan, and flags only approved tasks. Positive parallel and same-candidate retry tests verify dual budgets and replay without repeated charging.
+
+Root reproduced missing consent after activation, then added mandatory consent presence on activated entry validation. The pre-fix regression failed; final driver/acceptance gate95 passed. Independent final gate:10 files151/151, build0, compiled042 fresh/reopen table1/guards4 and partial-guard refusal0. Earlier150 gate is history, not final. A05 tests use a valid positive control, then partial-target and model-origin reports; both block acceptance, leave parent noncompleted and preserve reservation. Existing connected driver self-report case also passes.
+
+Independent review supports exactly two original parent closures: S2-05 cold-start plus separately authorized exploration, and A05 adversarial partial-completion fixture. Current42 parents remain; A07 remains open. The44-row execution map retains stable original IDs with closed/current status. Price/statistics/quotas/billing truth, provider qualification, deployment settings editing and broad release are separate unfinished requirements.
+
+One static capture verifies172 current JS/TS hashes,392 declared edges,5 artifacts,86 retained historical records and9 top-level preimages. Root five documents updated in one pass; exact hashes and local-link counts are in RESULTS.json. Driver maker missed true pre-edit copies; this workflow limitation is disclosed, not repaired by claiming post-edit copies are preimages. UI and separate root corrections/tests have full byte preimages; failing gates/logs remain preserved.
+
+No live provider/model/native/Electron calls, local server probe/restart/download, commit or push. GOAL remains usageLimited, not complete. Functional subitems are qualified; whole-product completion is not claimed.

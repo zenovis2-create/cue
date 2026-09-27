@@ -1,0 +1,11 @@
+# Root deterministic partial-restoration/restart gate
+
+The independent checker left this required case unexecuted. Root owns a production-free shared fixture extraction and a new hostile integration test. Done: two committed native publications, injected first restoration then second-target contention, durable unknown cleanup and lease retention; reopen gives zero publish/read/reconcile/cleanup activity and leaves the first restored/second divergent bytes intact. This proves coordinator/driver containment, not an actual native intra-call race or provider quiescence.
+
+Cap2. Preserve exact current driver-test bytes before extraction. Every pass: existing two Git driver cases plus the new hostile case in serial Vitest; final root build/noEmit after shared product freeze. Failure requires a new concrete diagnosis. Independent review belongs to deployment_host71, who does not implement these tests. Shared helper avoids duplicating the full approved driver fixture for the new production publication adapter tests.
+
+Pass1 reached actual partial restoration and quarantined correctly, but the assertion assumed insertion order while sealed targets use canonical lexical order (second.txt before target.txt). Pass2 names the second fixture zz-second.txt to make the intended first/second order explicit; production ordering and assertions unchanged. Existing two extracted tests passed in pass1; rerun only the corrected new case.
+
+Pass2 passed publication/restoration/quarantine assertions and reached reopened start's expected driver_preparation_missing refusal. The fixture incorrectly used rejects on an API that throws synchronously. New diagnosed correction uses toThrow callback; no product change or expected guard relaxation. Focused one-case gate once.
+
+Pass3 showed the synchronous refusal spelling is driver_prepare_missing (driver source entryFor), not the fixture's guessed driver_preparation_missing. Correct exact spelling after reading source/raw error. Three failed runs are preserved; no product failure/rollback is claimed. Next verification is the root-coordinated final native integration set after other product changes freeze, including this required case; do not rerun the same standalone command.

@@ -1,0 +1,9 @@
+# Reconciliation55 closeout
+
+PASS for bounded S3 parallel-wave taskTimeoutMs handling. Sol implemented the wave result distinction; a separate Sol checker verified exact final source hashes, full-preimage diff, root single-line correction and the independent four-file 70/70 gate (original tool chunk 3a5c3a). Final root build exited 0 (47f162). Checker terminal summary, selected output and command receipt (not the complete raw transcript) are preserved under S3/20260914-parallel-wave-timeout/logs/independent-tests.* without rerunning the gate.
+
+Document verification 634e1c confirms two final source pins, two full source preimages, one full root handoff preimage, four doc preimages/current hashes and 494 resolving local links. Scoped git whitespace check 934ed7 exits 0; this does not check untracked file content. Explicit preimage diffs and independent review cover the bounded source edits.
+
+Both failed maker passes remain preserved (69/70 each): the synthetic host records completed clean receipts after cancellation; settled() returns undefined. Root cap1 fixed only the return-value assertion; checker passed its first test run. Do not label the historical maker final-pins.json as the current candidate: root-final-pins.json is authoritative for final source.
+
+Timeout cancels both held readers and suppresses downstream verification. Unknown cleanup retains exact two unresolved attempts and 20 reserved units and refuses settled/close. Trusted clean receipts permit close but never turn the timed-out orchestration into accepted success. The wave timer begins after starts settle; no absolute retry deadline or pending-launch timeout qualification is added. First-cause retention follows existing blocked-task update rules. No real-provider, OS/native, restart, throughput or live Electron qualification is asserted. Broad S3 and the goal remain incomplete. Local model/server remains deferred. No live call, commit or push occurred.

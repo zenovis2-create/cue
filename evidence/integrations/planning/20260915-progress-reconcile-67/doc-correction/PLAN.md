@@ -1,0 +1,1 @@
+Independent final audit found two current subitems still assigning actual account qualification to now-closed A06. Copy correction only: retain actual principal/entitlement/provider work under S0/S1, preserve narrow A06 scope. Done: six-doc audit0missing/29open, regeneratedreadiness/resultpins and independent finalPASS; cap1 correction; no product/test changes.

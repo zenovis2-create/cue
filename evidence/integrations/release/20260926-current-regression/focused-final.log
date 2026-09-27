@@ -1,0 +1,48 @@
+npm notice run cue-daemon@0.1.0 npx
+npm notice run vitest run test/p10c-core.test.ts test/host-runtime-native-identity.test.ts test/integration-workspace-management.test.ts test/integration-driver-core.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker 22163ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates 62125ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker 29952ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a controller crash without automatically resuming it 12290ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > reconciles a previously running write as blocked/crash without auto-resume on restart 405ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fences a verified live session before reconciling an interrupted run on startup 6779ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > refuses to kill a reused PID whose process start time does not match the ledger identity 3458ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks completion immediately when the controller credential-home cleanup fails 579ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks when cleanup fails after controller launch setup throws 513ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when independent goal verification finds no relevant workspace change 510ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when an explicitly requested exact file content is wrong 21187ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fails closed before launch when the host Codex binary hash does not match the pin 372ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > queues a second write run for the same worktree and starts it after the first releases 633ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > cancels a queued write without launching it 690ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks queued writes when the app closes so restart cannot strand them 699ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 28964ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks an expired approval without spawning a controller or recording execution 350ms
+ ✓ test/host-runtime-native-identity.test.ts > captures exact FILETIME only for a process in the owned launch tree 10648ms
+ ✓ test/host-runtime-native-identity.test.ts > refuses a target whose native FILETIME changes across ownership observation 0ms
+ ✓ test/integration-workspace-management.test.ts > project registration is canonical, bounded, guarded against overlaps and protects durable history 398ms
+ ✓ test/integration-workspace-management.test.ts > Cue sessions link distinct runs, enforce scope in code and SQLite, and survive reopen without resume 352ms
+ ✓ test/integration-workspace-management.test.ts > session rename is workspace-scoped metadata with stale-name and archive refusal 262ms
+ ✓ test/integration-workspace-management.test.ts > strict IPC refuses forged project/session commands and links prepared run without execution authority 178ms
+ ✓ test/integration-workspace-management.test.ts > atomic config activation requires expected version and keeps previous bytes on denial 244ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator denies active work, checks again after confirmation, and never writes config after failed close 203ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator denies another in-flight IPC operation without touching Core 1ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator orders close, config persistence and relaunch and blocks concurrent requests 0ms
+ ✓ test/integration-workspace-management.test.ts > post-close project reentry scopes Core and session reads to the newly active root 892ms
+ ✓ test/integration-workspace-management.test.ts > Core refuses project switching while approval is prepared or ownership is held 583ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator denies a target with a persisted approval before confirmation 799ms
+ ✓ test/integration-workspace-management.test.ts > switch confirmation race rejects newly prepared work without close or persistence 566ms
+ ✓ test/integration-workspace-management.test.ts > reopened Core reconciles prior approvals in every project without circular switch lock 721ms
+ ✓ test/integration-workspace-management.test.ts > approval and execution atomically reject duplicate, stale epoch and foreign project without events 435ms
+ ✓ test/integration-driver-core.test.ts > explicit unavailable host keeps app usable and refuses preparation without legacy fallback 425ms
+ ✓ test/integration-driver-core.test.ts > failed host construction releases its new daemon but preserves caller-owned daemon 736ms
+ ✓ test/integration-driver-core.test.ts > core host composition (generated=false) shares its ledger and never falls back to Codex 1087ms
+ ✓ test/integration-driver-core.test.ts > core host composition (generated=true) shares its ledger and never falls back to Codex 639ms
+
+ Test Files  4 passed (4)
+      Tests  37 passed (37)
+   Start at  18:59:28
+   Duration  215.07s (transform 2.02s, setup 0ms, import 3.24s, tests 210.84s, environment 0ms)
+

@@ -1,5 +1,7 @@
 # Loop: Cue P1-2 permissions enforcement probe
 
+Current integration implementation loop (2026-09-11): [S0–S7 contract](docs/integration/LOOP.md). The completed probe record below is historical and remains preserved.
+
 Status: complete
 Owner: Codex `/root`
 Last reviewed: 2026-09-02

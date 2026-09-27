@@ -90,10 +90,9 @@ describe('P2-3 state and token accounting', () => {
     expect(applyTokenLimit({state:'running'},cli,10)).toEqual({state:'running'});
     expect(() => tokenUsageFromExec({type:'orca',usage:{total_tokens:99}})).toThrow(/unsupported/);
   });
-  it('contains no monetary conversion or display path in source', () => {
-    const result = spawnSync('grep',['-riE',String.raw`usd|dollar|price|\$[0-9]`,'src'],{cwd:resolve('.'),encoding:'utf8'});
-    expect(result.status).toBe(1); expect(result.stdout).toBe('');
-  });
+  // Integration spec r3 adds monetary reservations alongside token accounting.
+  // Its invariants are covered by integration-budget.test.ts and release R-7;
+  // the former source-word ban is no longer a product requirement.
 });
 
 describe('P2-4 process identity and heartbeat', () => {

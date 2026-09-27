@@ -1,0 +1,5 @@
+# Measured capture snapshot contract
+
+Done: canonical measured-fact validation owns a bounded descriptor-safe snapshot of host data before evidence/terminal callbacks; callback mutation cannot change validated/stored facts, returned facts do not alias host data, nested getters/proxies/custom iterators/toJSON are not invoked. Existing normal canonical payload/replay remain compatible. Real SQLite/Core regression captures timing initially1..4/3ms while evidence resolver mutates original to999; captured/read fact stays3 and host object remains independently mutable. Focused hostile-array, post-capture mutation, read/replay/reopen and existing measurement tests pass; final build0 and independent Sol PASS.
+
+Maker cap2 focused passes, second only concrete fix; each build necessary compiled source then focused tests, no optional scope afterpassing. Root docs reconciliation49. Scope measured-facts.ts plus existing populated evidence-Core regression fixture. No schema/trial/producer/default host change, no model/server/native/network/live Electron/commit/push. Preserve prior dirty work and failed gates.

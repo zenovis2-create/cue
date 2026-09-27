@@ -1,0 +1,4 @@
+# Results — native service capacity
+Root focused gate:20/20; independent checker reproduced20/20. Full `npm run build` exit0 (build-pass1.log). No live calls were made: owned process transport, service response, installed subject and process cleanup are fixtures.
+The existing service-authentication request sequence remains unchanged. The capacity entry point adds account/rateLimits/read before the confirming account read, uses explicit ordinaryUsageAllowed permission, rejects spend-control denial, and refuses to infer recovery from percentages or reset times. Account binding must be present; opaque account ID is hashed in sanitized evidence. This describes ordinary included usage only; model entitlement and final billing remain unknown.
+The reader reuses exact branded authentication identity/profile/subject/time/issuer validation, and refuses an authentication-only receipt or a shaped copy. Independent REVIEW.md records the reviewed source and test hashes.

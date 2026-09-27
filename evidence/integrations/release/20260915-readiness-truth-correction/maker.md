@@ -1,0 +1,1 @@
+Root review found unchecked qualification promotion from checkbox/file presence and empty sections. Corrected to documentary state, never runtime/S5 proof, full evidence hashes plus generator in generation identity. Pass1 7/7. Candidate generation exit0 with automatically computed pins; original maker2 invalid pin invocations remain preserved. Independent review pending.

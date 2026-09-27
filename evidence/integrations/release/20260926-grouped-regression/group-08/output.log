@@ -1,0 +1,219 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-parent-sentinel.test.ts > P12 AppContainer parent sentinel > terminates the worker when the monitored sentinel dies while the launcher parent remains alive 6577ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > complete paired cohort saves measured receipts and numeric comparison, unchanged exact replay and callback-free reopen 1899ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > missing cohort data remains counted and no selected-subset numerical performance is reported: {"missingFacts":true} 1161ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > missing cohort data remains counted and no selected-subset numerical performance is reported: {"missingObservations":true} 1034ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > missing cohort data remains counted and no selected-subset numerical performance is reported: {"missingQuality":true} 1427ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > complete facts using different metric contracts cannot be numerically compared 1683ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > source scalar tamper and wrong snapshot versions refuse without callbacks 1435ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > oversized, sparse and getter enrollment lists reject before capture 1276ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > omitted enrollment is explicitly unavailable in the full dataset denominator, even when all selected facts convert 1434ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > newer observation without a fact never falls back to an older convertible fact 1837ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > new billing leaves historical numbers immutable and is disclosed by separate inspection 1915ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > unreadable current evidence creates explicit unavailable slots rather than removing their failures 1299ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > changed identity membership or constraints cannot reuse an immutable snapshot id; reordered sets replay 1702ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > invalid membership/constraints/shape are rejected before evidence callbacks and no snapshot is inserted 1292ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > Core missing host and foreign workspace deny new creation, historical read respects workspace too 2477ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > forged numeric trial is rejected even after recomputing conversion, snapshot and envelope hashes 1497ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > changed original fact bytes invalidate historical linkage without observing the host 1571ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > same-connection changes during conversion cause snapshot refusal with no partial insert 1570ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > a separate connection committing during capture invalidates the entire snapshot 1559ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > dedicated list pages only verified measured snapshots without observing evidence 1686ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > list scans at most64 envelopes and advances across an empty corrupt/legacy page 1693ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > actual IPC create/read/list/inspect preserves fixture provenance and redacts raw measurement lineage 1667ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC incomplete cohort withholds numeric subset and retains full denominator and missing reasons 1184ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC redacts producer-defined uncertainty text and blocks default-host new creation 2727ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC forbids injected authority, malformed scalar/array commands and does not execute getters or proxies 1ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC fails closed on hostile output, scalar authority upgrades and mismatched snapshot without leaking failures 1471ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC historical read without measurement host remains available while current inspection is unavailable 1639ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > desktop serializes explicit create through IPC/Core/SQLite, then separately reads and inspects 2780ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > desktop advances an empty measured-list page and does not submit missing performance cost limit 1404ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > desktop preserves withheld denominators, clears failure details and discards stale response after new run 1494ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > outer transactions refuse and a denied nested create cannot insert a second snapshot 1517ms
+ ✓ test/integration-native-recovery-host.test.ts > reopened Core scopes historical identity, works without settings/health, omits PID/paths and changes no DB bytes 4838ms
+ ✓ test/integration-native-recovery-host.test.ts > historical run picker reopens same ledger through Core and IPC without observing or returning private metadata 2392ms
+ ✓ test/integration-native-recovery-host.test.ts > run picker separates empty records and missing stage links and reports bounded workspace scans 9537ms
+ ✓ test/integration-native-recovery-host.test.ts > run picker rejects extra input, outer transactions and closed ledgers without OS calls 211ms
+ ✓ test/integration-native-recovery-host.test.ts > foreign run/attempt/reference, wrong workspace and tampered stage reject without OS query 1333ms
+ ✓ test/integration-native-recovery-host.test.ts > canonical dotted parent run remains queryable without widening native session identity 4937ms
+ ✓ test/integration-native-recovery-host.test.ts > fake generation, root/dependency mismatch and hostile inputs are denied 1324ms
+ ✓ test/integration-native-recovery-host.test.ts > authentic guard detects changed runtime metadata before publication (offline restored mutation) 2460ms
+ ✓ test/integration-native-recovery-host.test.ts > abort and changed lineage while observing discard result and do not issue receipts 1541ms
+ ✓ test/integration-native-recovery-host.test.ts > Core without protected recovery service is unavailable, and main wires the captured guard 229ms
+ ✓ test/integration-native-recovery-host.test.ts > owned daemon closes when the protected recovery factory fails during Core construction 333ms
+ ✓ test/integration-isolated-json-checker.test.ts > fixed isolated JSON checker > compiled real child computes pass/fail/unknown, independently observes cleanup 13489ms
+ ✓ test/integration-isolated-json-checker.test.ts > fixed isolated JSON checker > rejects proxy/shared/detached bytes before launch without invoking proxy traps 168ms
+ ✓ test/integration-isolated-json-checker.test.ts > fixed isolated JSON checker > combined carrier limit and wrong role refuse before spawn; immediate cancel owns pending start 449ms
+ ✓ test/integration-isolated-json-checker.test.ts > fixed isolated JSON checker > fixed client rejects malformed/extra-code/identity/EOF and never treats prefix text as protocol 524ms
+ ✓ test/integration-model-control-bundle.test.ts > immutable host control bundle > snapshot is strict, frozen and does not invoke hostile field getters 63ms
+ ✓ test/integration-model-control-bundle.test.ts > immutable host control bundle > success metadata must match every approved control pin and static flag 63ms
+ ✓ test/integration-model-control-bundle.test.ts > immutable host control bundle > refuses changed client before isolated child creation/resume 2901ms
+ ✓ test/integration-model-control-bundle.test.ts > immutable host control bundle > refuses changed core before isolated child creation/resume 3009ms
+ ✓ test/integration-model-control-bundle.test.ts > immutable host control bundle > refuses changed guardian before isolated child creation/resume 1136ms
+ ✓ test/integration-model-control-bundle.test.ts > immutable host control bundle > native production refuses missing pins before guardian/child startup 849ms
+ ✓ test/integration-model-control-bundle.test.ts > goal proposal control bundle > pins the distinct client and structural core while preserving old bundle kinds 265ms
+ ✓ test/integration-model-control-bundle.test.ts > goal proposal control bundle > rejects unknown native client kinds before starting guardian or child 773ms
+ ✓ test/integration-isolated-model-cleanup.test.ts > independent isolated model cleanup > real SQLite/native broker cancellation=false, exact binding and persisted OS observations 4507ms
+ ✓ test/integration-isolated-model-cleanup.test.ts > independent isolated model cleanup > real SQLite/native broker cancellation=true, exact binding and persisted OS observations 4659ms
+ ✓ test/integration-isolated-model-cleanup.test.ts > independent isolated model cleanup > missing execution identity cannot clean and evidence persistence failure yields no receipt 95ms
+ ✓ test/integration-public-driver-startup-restart.test.ts > bounded frame reader rejects timeout, oversize chunk, queue overflow, malformed EOF, and close timeout 40ms
+ ✓ test/integration-public-driver-startup-restart.test.ts > bounded frame reader drains valid frames after stream and lifecycle completion 2ms
+ ✓ test/integration-public-driver-startup-restart.test.ts > child error observer is immediate, permanent, and records retention 1ms
+ ✓ test/integration-public-driver-startup-restart.test.ts > exact cleanup awaits close when the observed process is already absent 1233ms
+ ✓ test/integration-public-driver-startup-restart.test.ts > exact cleanup refuses a present process with changed creation identity 1229ms
+ ✓ test/integration-public-driver-startup-restart.test.ts > shared restart host constructs and refuses public replay without effects 298ms
+ ✓ test/integration-public-driver-startup-restart.test.ts > native callback binds exactly one durable intent before write 2ms
+ ↓ test/integration-public-driver-startup-restart.test.ts > A04 public-driver startup crash/restart > holds the public driver native write across real daemon ownership restart without relaunch or resend
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > unenrolled run returns no measurement authority and never starts a native seed snapshot 114ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > real native helper checks all packaged seeds against the active stage root before launch without writing a trial 195ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > wrong goal or checker contract denies an enrolled frozen workload before snapshot, rather than using a claimed digest 134ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > changed or absent seed in the stage refuses, including a different same-length byte 226ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > wrong stage root, envelope or plan refuses before native file read 135ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > a similarly named but changed dataset revision is not treated as the frozen release 90ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > actual native helper issued check saves only an immutable prelaunch observation and historical read does not resnapshot files 187ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > forged checked object and changed stage seed cannot write an observation 186ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > historical read detects source goal changes rather than presenting a current verified claim 197ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > second genuine check replays the original observation, not a new timestamp 258ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > historical source tamper and direct inserted authority claims fail closed 201ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > a source change after native snapshot refuses persistence rather than converting a stale check into authority 184ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > migration installs and reopens intact, but missing immutable guard fails reopening 223ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > outer transaction blocks record and consumes issuance without a partial row 194ms
+ ✓ test/integration-evaluation-staged-input-guard.test.ts > outside transaction boundary refuses and unexpected additional goal is not accepted 148ms
+ ✓ test/p11-termination.test.ts > P11 fail-closed process termination > brands a thrown launch-resolution error as unverified termination 3ms
+ ✓ test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination when the process-tree observation fails 1ms
+ ✓ test/p11-termination.test.ts > P11 fail-closed process termination > refuses to declare termination after a failed kill while the attributed process is alive 2008ms
+ ✓ test/integration-evaluation-manifest-bridge.test.ts > actual IPC to Core to SQLite retains every case in all four mode enrollments across reopen, with no execution 1207ms
+ ✓ test/integration-evaluation-manifest-bridge.test.ts > foreign scope, policy mismatch and accepted approval still reject the complete manifest with zero enrollment writes 210ms
+ ✓ test/integration-evaluation-manifest-bridge.test.ts > hostile manifests, mixed legacy fields, extra authority, unknown membership and excessive cases never call Core or getters 41ms
+ ✓ test/integration-evaluation-manifest-bridge.test.ts > renderer explicitly imports eight cases, requires a selected split member, sends full manifest and locks after enrollment 356ms
+ ✓ test/integration-evaluation-manifest-bridge.test.ts > renderer submit crosses the actual IPC and Core into durable SQLite with the full packaged manifest 481ms
+ ✓ test/integration-evaluation-manifest-bridge.test.ts > preparation JSON imports without path authority; malformed import clears the previous choice, reset preserves manual inputs 127ms
+ ✓ test/integration-evaluation-manifest-bridge.test.ts > new run clears explicit case selection and ignores a late enrollment response 246ms
+stdout | test/integration-guarded-entry.test.ts > fresh Node canonical entry success rejects concurrent/repeated attempts
+{"kind":"fixture-installation-ordering","runtime":{"executable":"C:\\Program Files\\nodejs\\node.exe","node":"24.18.0","electron":null,"abi":"137","platform":"win32","arch":"x64","dev":"1180634690","ino":"1125899908806311","size":92534088,"mtimeMs":1782192088000,"ctimeMs":1784456272364.7734,"sha256":"9a4eb5f1c29c6a2e93852ead46b999e284a6a5ca8bab4d4e241d587d025a52de"},"digest":"13d0c8b5d23d7b39e27ee4621124204f90562c7e6b6870f091f0f22e8d1d64e7","files":[{"label":"dependency/better-sqlite3"},{"label":"dependency/better-sqlite3/build"},{"label":"dependency/better-sqlite3/build/Release"},{"label":"dependency/better-sqlite3/build/Release/better_sqlite3.node","sha256":"3ec3339d72da0854a3bace075a39a27bd49e19b5278cdd20ca5e46a8b01b1597"},{"label":"dependency/better-sqlite3/lib"},{"label":"dependency/better-sqlite3/lib/index.js","sha256":"d6114fff983b2a0b1e1102f663627bb3a8723d67bf3378c5da71cba221526201"},{"label":"dependency/better-sqlite3/package.json","sha256":"dd1f3857390106a8f5cdb86b16f4e6ec5cef93bfc1f84b859a2db38fb0ca20bd"},{"label":"root/app"},{"label":"root/app/fixture.mjs","sha256":"5129efe12e1f277baee5ca0f0dceae608724e798cb94cc8d9780c549dd90a527"},{"label":"root/app/guarded-entry.mjs","sha256":"9a7e954b633259211b870d6bc6fa526f0ce65f48bad7954c28b763ac78ee17c1"},{"label":"root/app/installation-identity.mjs","sha256":"2c8ca7a183594ff25251591c9fdccbe0fec13122e16ae8fc9209fda422711608"},{"label":"root/daemon/dist/migrations"},{"label":"root/daemon/dist/native/change-snapshot/change-snapshot.exe","sha256":"82ff0f80ecb63293de0eed39296bf66ad51b4cfdeee2d8d7aaea062fae80d07e"},{"label":"root/daemon/dist/native/change-snapshot/manifest.json","sha256":"ea238284edd4069f181fb31ec5b42817e1fd81d54973715649c3021488c0dacf"},{"label":"root/daemon/dist/src"},{"label":"root/daemon/migrations"},{"label":"root/daemon/native/change-snapshot/change-snapshot.exe","sha256":"82ff0f80ecb63293de0eed39296bf66ad51b4cfdeee2d8d7aaea062fae80d07e"},{"label":"root/daemon/native/change-snapshot/manifest.json","sha256":"ea238284edd4069f181fb31ec5b42817e1fd81d54973715649c3021488c0dacf"},{"label":"root/daemon/package-lock.json","sha256":"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"},{"label":"root/daemon/package.json","sha256":"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"},{"label":"root/daemon/src"},{"label":"root/package-lock.json","sha256":"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"},{"label":"root/package.json","sha256":"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"}],"helper":"2c8ca7a183594ff25251591c9fdccbe0fec13122e16ae8fc9209fda422711608"}
+
+ ✓ test/integration-guarded-entry.test.ts > fresh Node canonical entry success rejects concurrent/repeated attempts 514ms
+ ✓ test/integration-guarded-entry.test.ts > fresh Node canonical entry failure rejects concurrent/repeated attempts 322ms
+stdout | test/integration-guarded-entry.test.ts > actual Electron runtime loads only synthetic fixture after capture (not actual project installation proof)
+{"kind":"fixture-installation-ordering","runtime":{"executable":"C:\\Users\\User\\cue\\node_modules\\electron\\dist\\electron.exe","node":"24.20.0","electron":"44.2.0","abi":"149","platform":"win32","arch":"x64","dev":"1180634690","ino":"49821070877819450","size":246201856,"mtimeMs":315532800000,"ctimeMs":1788829672822.0989,"sha256":"07b043bf9b0a0ac14a82fac0b612b7b7ed13cde727d706d74e41a45278ab51f1"},"digest":"468e08af18a0d9f85b50adab0bb3fe512222b725e16464aba371a13d60087fee","files":[{"label":"dependency/better-sqlite3"},{"label":"dependency/better-sqlite3/build"},{"label":"dependency/better-sqlite3/build/Release"},{"label":"dependency/better-sqlite3/build/Release/better_sqlite3.node","sha256":"3ec3339d72da0854a3bace075a39a27bd49e19b5278cdd20ca5e46a8b01b1597"},{"label":"dependency/better-sqlite3/lib"},{"label":"dependency/better-sqlite3/lib/index.js","sha256":"d6114fff983b2a0b1e1102f663627bb3a8723d67bf3378c5da71cba221526201"},{"label":"dependency/better-sqlite3/package.json","sha256":"dd1f3857390106a8f5cdb86b16f4e6ec5cef93bfc1f84b859a2db38fb0ca20bd"},{"label":"root/app"},{"label":"root/app/fixture.mjs","sha256":"5129efe12e1f277baee5ca0f0dceae608724e798cb94cc8d9780c549dd90a527"},{"label":"root/app/guarded-entry.mjs","sha256":"9a7e954b633259211b870d6bc6fa526f0ce65f48bad7954c28b763ac78ee17c1"},{"label":"root/app/installation-identity.mjs","sha256":"2c8ca7a183594ff25251591c9fdccbe0fec13122e16ae8fc9209fda422711608"},{"label":"root/daemon/dist/migrations"},{"label":"root/daemon/dist/native/change-snapshot/change-snapshot.exe","sha256":"82ff0f80ecb63293de0eed39296bf66ad51b4cfdeee2d8d7aaea062fae80d07e"},{"label":"root/daemon/dist/native/change-snapshot/manifest.json","sha256":"ea238284edd4069f181fb31ec5b42817e1fd81d54973715649c3021488c0dacf"},{"label":"root/daemon/dist/src"},{"label":"root/daemon/migrations"},{"label":"root/daemon/native/change-snapshot/change-snapshot.exe","sha256":"82ff0f80ecb63293de0eed39296bf66ad51b4cfdeee2d8d7aaea062fae80d07e"},{"label":"root/daemon/native/change-snapshot/manifest.json","sha256":"ea238284edd4069f181fb31ec5b42817e1fd81d54973715649c3021488c0dacf"},{"label":"root/daemon/package-lock.json","sha256":"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"},{"label":"root/daemon/package.json","sha256":"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"},{"label":"root/daemon/src"},{"label":"root/package-lock.json","sha256":"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"},{"label":"root/package.json","sha256":"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"}],"helper":"2c8ca7a183594ff25251591c9fdccbe0fec13122e16ae8fc9209fda422711608"}
+
+ ✓ test/integration-guarded-entry.test.ts > fresh Node canonical entry drift rejects concurrent/repeated attempts 411ms
+ ✓ test/integration-guarded-entry.test.ts > actual Electron runtime loads only synthetic fixture after capture (not actual project installation proof) 1375ms
+ ✓ test/integration-approval-plan.test.ts > real prepare form shows policy and each dependency, requirement, scope and candidate before approval 268ms
+ ✓ test/integration-approval-plan.test.ts > approval shows every declared file path literally and clears it for a readonly plan 216ms
+ ✓ test/integration-approval-plan.test.ts > malformed target disclosure cannot leave approval enabled or stale paths visible ({"changeTargets":[]}) 184ms
+ ✓ test/integration-approval-plan.test.ts > malformed target disclosure cannot leave approval enabled or stale paths visible ({"changeTargets":[{"relativePath":"partial"}]}) 171ms
+ ✓ test/integration-approval-plan.test.ts > approval shows explicit localhost egress and renders destination text literally 109ms
+ ✓ test/integration-approval-plan.test.ts > legacy preparation and preparation failure clear prior plan rather than leave stale approval detail 297ms
+ ✓ test/integration-approval-plan.test.ts > requirements render hostile text literally and preserve all source-contract maximums 112ms
+ ✓ test/integration-approval-plan.test.ts > missing criteria remain explicitly unregistered rather than implying acceptance 91ms
+ ✓ test/integration-approval-plan.test.ts > model producer approval label retains explicit candidate, requirements and empty scopes 92ms
+ ✓ test/integration-approval-plan.test.ts > generated output approval shows bounded metadata only and clears absent or failed preparation 300ms
+ ✓ test/integration-approval-plan.test.ts > retry contract limits and digest are visible before approval and absent retry is cleared 171ms
+ ✓ test/integration-approval-plan.test.ts > hostile IDs are literal text and stage count is bounded 116ms
+ ✓ test/p12-source-manifest.test.ts > P12 source manifest binding > hashes staged blobs rather than dirty working files and excludes evidence 1337ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > model producer selects only model runtime admission and never obtains a writer lease 233ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > stage preparation is atomic and runtime resolver receives the execution attempt identity 215ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > real SQLite policy binding -> selection -> atomic reserve/claim -> adapter -> host receipts 117ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > atomically persists a source-bound phase partition with final billing and clean handoff 112ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > ingests an explicit subscription observation without treating its units as money or billing authority 103ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > persists an explicit unknown API observation without inventing units or a receipt 97ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > rolls back terminal settlement when cost source bytes do not match 85ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > exact replay does not reobserve, reserve or relaunch; conflicting replay rejects 95ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > denied claim leaves no reservation; insufficient funds roll back claimed task and writer lease 195ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > policy mismatch never mutates budget or invokes the adapter 87ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > current runtime admission overrides optimistic host observations and retains uncertain funds 86ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > partial start and cancel ACK cannot unlock a writer or invent final billing 175ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > concurrent replay cannot release ownership while a deferred launch may still create effects 91ms
+ ✓ test/integration-engine.test.ts > S2/S3 host engine bridge > old request timestamps cannot make stale estimates fresh against the host clock 82ms
+ ✓ test/integration-workspace-session-shell.test.ts > read-only workspace list and detail stay scoped, bounded and do not grant execution 104ms
+ ✓ test/integration-workspace-session-shell.test.ts > actual Core and IPC retain current-project history after SQLite reopen without execution 295ms
+ ✓ test/integration-workspace-session-shell.test.ts > workspace IPC rejects hostile commands and foreign runs and projects bounded history only 76ms
+ ✓ test/integration-workspace-session-shell.test.ts > Cue session UI opens durable multi-run history and starts a new scoped goal without resuming a provider 556ms
+ ✓ test/integration-workspace-session-shell.test.ts > desktop navigation opens a historical session without executing, and advanced panels are separate 382ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-1 fails closed before an outbound attempt when @cue identity is absent 2ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 exposes exactly conversation and daemon API, denying worker and edit tools 93ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 reaches running only through the injected daemon API and frontdoor has no launch path 86ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-2 daemon API fails closed when the approved envelope does not match the run ledger 82ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-3 daemon sends after the frontdoor session is closed and needs no session handle 80ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-4 pins channel and thread at approval and rejects later mutation 77ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-5 serializes concurrent channels without mixing their state 66ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-6 renders exactly Korean three lines plus one envelope line without configuration markup 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-7 asks at most three envelope-changing questions and narrows other uncertainty 0ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-8 stays silent while healthy; time alone cannot emit an outbound message 67ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-9 reports dead Orca before refusing task acceptance 65ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-10 has no canvas writer or annotation path on the conversation surface 1ms
+ ✓ test/p6.test.ts > Phase 6 conversation surface > P6-11 defaults to level 3 and records the selected level in the P5 ledger table 127ms
+ ↓ test/p6.test.ts > Phase 6 conversation surface > P6 external Buzz live delivery and @cue registration — SKIPPED: would mutate an external system
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > returns unavailable for missing settings before discovery 99ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > returns unavailable for disabled settings before discovery 85ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > returns unavailable for v1 settings before discovery 75ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > requires protected loaded-installation authority and rejects Node/Electron mismatch 76ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > never manufactures missing capability evidence 84ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > never manufactures fixture capability evidence 78ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > never manufactures unknown capability evidence 83ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > never manufactures expired capability evidence 78ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > requires exact settings limits across all four policies 72ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > requires exact settings limits across all four policies 70ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > rejects unavailable authentication, false guards, async guards and discovery accessors 71ms
+ ✓ test/integration-default-generated-json-bootstrap.test.ts > default local JSON bootstrap, synthetic discovery only, no startup activation > unwraps the real host using the same ledger without writing or launching, and keeps guards active 147ms
+ ✓ test/integration-local-json-setup.test.ts > atomic explicit local JSON settings setup > creates exactly four fixed pair policies and V2 settings without execution or evidence 102ms
+ ✓ test/integration-local-json-setup.test.ts > atomic explicit local JSON settings setup > retains historical revisions after disable/change and actual SQLite reopen 144ms
+ ✓ test/integration-local-json-setup.test.ts > atomic explicit local JSON settings setup > checks settings CAS before any policy writes, including separate connections 145ms
+ ✓ test/integration-local-json-setup.test.ts > atomic explicit local JSON settings setup > rolls every inserted policy back on injected third-policy SQL failure 99ms
+ ✓ test/integration-local-json-setup.test.ts > atomic explicit local JSON settings setup > rolls every inserted policy back on injected settings SQL failure 102ms
+ ✓ test/integration-local-json-setup.test.ts > atomic explicit local JSON settings setup > rejects unsafe bounds, arbitrary candidate/policy data, accessors and outer transactions before writes 97ms
+ ✓ test/integration-execution-ownership-core.test.ts > blocked state and stop acknowledgement do not erase a retained asynchronous runtime 188ms
+ ✓ test/integration-execution-ownership-core.test.ts > full unresolved count includes older attempts omitted from the bounded UI history 311ms
+ ✓ test/integration-retrospective-ui.test.ts > retrospective IPC exact data and trusted sender only; no executable fields 5ms
+ ✓ test/integration-retrospective-ui.test.ts > explicit create retries retain ID; new snapshot rotates once; text content is inert 366ms
+ ✓ test/integration-retrospective-ui.test.ts > restart ID lookup works without current run; old responses and mismatched identity are discarded 244ms
+ ✓ test/integration-retrospective-ui.test.ts > template switch clears retrospective context and discards pending create 119ms
+ ✓ test/integration-native-journal-wiring-review.test.ts > independent native journal wiring regressions > uses one common approved byte cap across SQL and JS sort differences 238ms
+ ✓ test/integration-native-journal-wiring-review.test.ts > independent native journal wiring regressions > rejects mixed target caps during preapproval before any journal contract is stored 110ms
+ ✓ test/integration-native-journal-wiring-review.test.ts > independent native journal wiring regressions > rejects replay after an entry scalar diverges from its immutable payload 215ms
+ ✓ test/integration-native-journal-wiring-review.test.ts > independent native journal wiring regressions > rejects replay after native-binding scalars diverge from the hashed payload 242ms
+ ✓ test/integration-replan-budget.test.ts > S4 replan cumulative budget and requirements > rolls back revised engine admission when remaining original budget is consumed 220ms
+ ✓ test/integration-replan-budget.test.ts > S4 replan cumulative budget and requirements > adds revised reservation cumulatively and replays without reset or relaunch 172ms
+ ✓ test/integration-replan-budget.test.ts > S4 replan cumulative budget and requirements > rejects altered authority and removed original requirements without changing stored revisions 179ms
+ ✓ test/integration-readonly-wfp-bootstrap.test.ts > generated self-contained launcher is hash-pinned and transported byte-exact before readiness fails closed 253ms
+ ✓ test/integration-readonly-wfp-bootstrap.test.ts > tamper before launch causes zero spawns 117ms
+ ✓ test/integration-readonly-wfp-bootstrap.test.ts > tamper during ACL prevents native worker launch and persists no authority 123ms
+ ✓ test/current-source-report.test.ts > builds current structure and comparison from bounded AST bytes without executing source 189ms
+ ✓ test/current-source-report.test.ts > removes only the exact internally named completed stage after reuse 12ms
+ ✓ test/current-source-report.test.ts > reuses only a byte-identical complete generation and rejects corruption or stale provenance 39ms
+ ✓ test/current-source-report.test.ts > generation pointer restores last-good and does not overwrite a competing commit 26ms
+ ✓ test/current-source-report.test.ts > source basis equality is scoped and fail-closed 8ms
+ ✓ test/claude-jsonl-fixture.test.ts > all byte splits retain UTF8 and provisional events; streamed=false 28ms
+ ✓ test/claude-jsonl-fixture.test.ts > all byte splits retain UTF8 and provisional events; streamed=true 93ms
+ ✓ test/claude-jsonl-fixture.test.ts > CRLF and empty text supported; terminal alone cannot succeed 1ms
+ ✓ test/claude-jsonl-fixture.test.ts > malformed UTF8 BOM duplicate keys partial EOF and oversized buffers fail sticky 2ms
+ ✓ test/claude-jsonl-fixture.test.ts > all unsupported tool, identity, usage, stop, ordering and terminal schemas reject 1ms
+ ✓ test/claude-jsonl-fixture.test.ts > native byte snapshot does not invoke override getters; proxy/shared/detached rejected 1ms
+ ✓ test/claude-jsonl-fixture.test.ts > bounded frame count and bytes forbid unending delta stream 31ms
+ ✓ test/integration-generated-json-policy-deployment.test.ts > an explicit deployment channel affects only future runs while exact policy references stay pinned 127ms
+ ✓ test/integration-persisted-cost-observation.test.ts > installs an immutable bounded persisted cost-observation schema 84ms
+ ✓ test/integration-change-snapshot-host-protocol.test.ts > compare/write host protocol boundary > partial or corrupted committed response is unknown 14ms
+ ✓ test/integration-change-snapshot-host-protocol.test.ts > compare/write host protocol boundary > rejects descriptors, proxies, and bounds before helper invocation 1ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > four modes use different objectives with the same quality floor 2ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > fixed normalization survives candidate-set changes 1ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > quality floor is mandatory in every mode 1ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > unknown, stale, future and currency-mismatched estimates fail closed 0ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > total retry/verifier/handoff cost can reverse a cheap first-call choice 0ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > authorized remaining time is a hard filter even for performance or pins 1ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > eligibility, auth, compatibility, data, quota and local resources filter before scoring 1ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > manual pin never silently falls back; stable IDs break equal-score ties 0ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > rejects malformed versions, numeric fields, duplicate IDs and untrusted extra fields 1ms
+ ✓ test/integration-selection.test.ts > S2 deterministic selection foundation > immutable decision does not mutate host inputs or imply admission/reservation 1ms
+ ✓ test/integration-laya-shadow-cohort.test.ts > offline Laya shadow cohort accounting > keeps both splits and all missing, invalid and unavailable slots in the denominator 3ms
+ ✓ test/integration-laya-shadow-cohort.test.ts > offline Laya shadow cohort accounting > rejects duplicate membership, non-eligible labels and malicious shapes rather than shrinking the cohort 1ms
+ ✓ test/integration-laya-shadow-cohort.test.ts > offline Laya shadow cohort accounting > fails closed if history changes between preparation and comparison 0ms
+
+ Test Files  30 passed (30)
+      Tests  201 passed | 2 skipped (203)
+   Start at  23:27:49
+   Duration  156.91s (transform 2.23s, setup 0ms, import 8.99s, tests 142.75s, environment 3ms)
+
+JSON report written to C:/Users/User/cue/evidence/integrations/release/20260926-grouped-regression/group-08/report.json

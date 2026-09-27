@@ -1,0 +1,3 @@
+# Reconciliation52 contract
+
+Done: after independent PASS, record bounded saved measured-fact list/picker implementation and actual component coverage in four integration documents. Verify full source preimages, final pins, exact review hash, documentation preimages/final hashes, local links and scoped diff-check0. Documentation cap2: each pass hashes/links/whitespace; failure requires new hypothesis. Maker owns product/tests, checker owns independent verdict, root owns docs. Preserve failure and correction history; never infer productionmeasurement/runtime/visual qualification from synthetic fixture. Local model remains user-deferred.

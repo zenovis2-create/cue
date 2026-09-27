@@ -1,16 +1,48 @@
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, session } from 'electron';
 import { join, resolve } from 'node:path';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, lstat, open, realpath } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { createCueCore } from './core.mjs';
+import { AppDaemon, createCueCore } from './core.mjs';
+import { isInstallationGeneration } from './installation-identity.mjs';
+import { createStartupOrchestrationFactory, createStartupGoalPlanningFactory } from './protected-installation.mjs';
+import { createDeploymentStagingOrchestrationFactory } from './deployment-staging-host.mjs';
+import { createNativeRecoveryHost } from './native-recovery-host.mjs';
+import { createGeneratedJsonHandoffAuthority } from './generated-json-handoff-authority.mjs';
 import { initializeFirstRunConfig } from './first-run.mjs';
 import { registerIpcHandlers } from './ipc.mjs';
+import { createWorkspaceManagement, activateProjectConfig } from './workspace-management.mjs';
+import { createProjectSwitchCoordinator } from './project-switch.mjs';
 import { applyNavigationGuards } from './electron-security.mjs';
 import { registerQuitGuard } from './quit-guard.mjs';
+import { openReportWindow } from './report-window.mjs';
 
 const appDir = fileURLToPath(new URL('.', import.meta.url));
 let mainWindow;
 let core;
+
+// RESOURCE DIALOG: only the host chooses paths; the renderer submits no filename.
+async function chooseResourcePackage() {
+  const choice = await dialog.showOpenDialog(mainWindow, { title: '읽기 전용 리소스 패키지 폴더', properties: ['openDirectory'] });
+  if (choice.canceled || choice.filePaths.length !== 1) return null;
+  const root = choice.filePaths[0], rootInfo = await lstat(root);
+  if (!rootInfo.isDirectory() || rootInfo.isSymbolicLink()) throw Error('resource_directory_denied');
+  const canonicalRoot = await realpath(root), path = join(root, 'manifest.json'), before = await lstat(path);
+  if (!before.isFile() || before.isSymbolicLink() || before.size < 1 || before.size > 32768 || await realpath(path) !== join(canonicalRoot, 'manifest.json')) throw Error('resource_manifest_denied');
+  const file = await open(path, 'r');
+  try {
+    const opened = await file.stat();
+    if (opened.dev !== before.dev || opened.ino !== before.ino || !opened.isFile()) throw Error('resource_manifest_drift');
+    const bytes = Buffer.alloc(32769); let length = 0;
+    while (length < bytes.length) { const result = await file.read(bytes, length, bytes.length-length, null); if (!result.bytesRead) break; length += result.bytesRead; }
+    const after = await file.stat(), current = await lstat(path), currentRoot = await lstat(root);
+    if (length !== before.size || after.size !== before.size || after.mtimeMs !== before.mtimeMs || after.ctimeMs !== before.ctimeMs
+      || current.isSymbolicLink() || current.dev !== before.dev || current.ino !== before.ino || currentRoot.isSymbolicLink()
+      || currentRoot.dev !== rootInfo.dev || currentRoot.ino !== rootInfo.ino || await realpath(root) !== canonicalRoot) throw Error('resource_manifest_drift');
+    return { root, manifestSha256: createHash('sha256').update(bytes.subarray(0,length)).digest('hex') };
+  } finally { await file.close(); }
+}
+// END RESOURCE DIALOG
 
 export function createWindow() {
   mainWindow = new BrowserWindow({
@@ -84,12 +116,25 @@ async function runLiveCanary() {
   app.quit();
 }
 
-app.whenReady().then(async () => {
+let startupAttempted = false;
+// Importing this module defines the application; guarded entry must finish its
+// post-import assertion before calling this initializer.
+export async function startCueApplication({ guard }) {
+  if (startupAttempted) throw Error('cue_startup_already_attempted');
+  startupAttempted = true;
+  if (!isInstallationGeneration(guard)) throw Error('cue_startup_generation_invalid');
+  guard.assertCurrent();
+  registerQuitGuard(app, () => core);
+  app.on('window-all-closed', () => app.quit());
+  await app.whenReady();
+  guard.assertCurrent();
+  let daemon;
+  try {
   const userData = process.env.CUE_USER_DATA || app.getPath('userData');
   const config = await initializeFirstRunConfig(userData, {
     worktreeOverride: process.env.CUE_WORKTREE_ROOT,
     defaultRoot: process.cwd(),
-    chooseDirectory: process.env.CUE_LIVE_RUN === '1' ? undefined : async () => {
+    chooseDirectory: async () => {
       const selection = await dialog.showOpenDialog({
         title: 'Cue에서 작업할 프로젝트 폴더를 선택하세요',
         buttonLabel: '이 폴더 사용',
@@ -98,15 +143,70 @@ app.whenReady().then(async () => {
       return selection.canceled ? undefined : selection.filePaths[0];
     },
   });
-  core = createCueCore(config);
-  registerIpcHandlers(ipcMain, core);
+  guard.assertCurrent();
+  daemon = new AppDaemon(config);
+  const nativeConfiguration=process.env.CUE_NATIVE_WORKFLOW_CONFIG;
+  let rawOrchestrationFactory;
+  const orchestrationFactory = await createDeploymentStagingOrchestrationFactory({
+    configuration: process.env.CUE_GIT_STAGING_CONFIG,
+    createOrchestrationFactory: async()=>{
+      rawOrchestrationFactory=await createStartupOrchestrationFactory({guard,daemon,nativeConfiguration});
+      return rawOrchestrationFactory;
+    },
+  });
+  const planningOrchestrationFactory=await createStartupGoalPlanningFactory({guard,daemon,config,nativeConfiguration,executionFactory:rawOrchestrationFactory});
+  guard.assertCurrent();
+  core = createCueCore(config, daemon, { orchestrationFactory,planningOrchestrationFactory, nativeRecoveryFactory({ db, worktree }) {
+    if (db !== daemon.db) throw Error('native_recovery_ledger_mismatch');
+    return createNativeRecoveryHost({ guard, daemon, worktree, handoffAuthority:createGeneratedJsonHandoffAuthority({db}) });
+  } });
+  const sourceHome=process.env.CODEX_HOME??(process.env.USERPROFILE?join(process.env.USERPROFILE,'.codex'):null);
+  const protectedRoots=[appDir,join(appDir,'..','daemon'),userData,...(sourceHome?[sourceHome]:[])];
+  const workspaceManagement=createWorkspaceManagement(daemon.db,config.worktreeRoot,protectedRoots);
+  let ipcRuntime;
+  const projectSwitch=createProjectSwitchCoordinator({core,catalog:workspaceManagement,assertCurrent:()=>guard.assertCurrent(),
+    pendingRequests:()=>ipcRuntime?.pendingRequests()??0,persist:root=>activateProjectConfig(userData,config,root),
+    restart:()=>{app.relaunch();app.quit();},
+    onFatal:()=>dialog.showErrorBox('프로젝트 전환 중단','Core 종료 이후 전환을 완료하지 못했습니다. Cue를 수동으로 다시 시작하고 프로젝트 설정을 확인하세요.'),
+    async confirm(target){
+      const owner=mainWindow;if(!owner||owner.isDestroyed())return false;
+      const choice=await dialog.showMessageBox(owner,{type:'question',title:'프로젝트 전환',message:`${target.name} 프로젝트로 전환하시겠습니까?`,
+        detail:'진행 중인 작업이나 승인 대기는 자동으로 중단하지 않습니다. 현재 Core를 안전하게 닫은 뒤 앱을 재시작합니다. 기록을 열어도 실행은 재개되지 않습니다.',
+        buttons:['취소','전환'],defaultId:0,cancelId:0,noLink:true});
+      return owner===mainWindow&&!owner.isDestroyed()&&choice.response===1;
+    },
+  });
+  ipcRuntime=registerIpcHandlers(ipcMain, core, {
+    projectManagement:workspaceManagement,sessionManagement:workspaceManagement,
+    async chooseProjectDirectory(){
+      guard.assertCurrent();
+      const result=await dialog.showOpenDialog(mainWindow,{title:'기존 프로젝트 폴더 추가',buttonLabel:'프로젝트 추가',properties:['openDirectory']});
+      guard.assertCurrent();return result.canceled?null:result.filePaths[0];
+    },
+    switchProject:projectId=>projectSwitch.switchProject(projectId),
+    isTrustedSender: event => Boolean(projectSwitch.state==='idle' && mainWindow && !mainWindow.isDestroyed() && event.sender === mainWindow.webContents && event.senderFrame === mainWindow.webContents.mainFrame),
+    openReport: artifact => openReportWindow({ BrowserWindow, session }, artifact),
+    chooseResourcePackage,
+    async confirmManualBaseline(view){
+      guard.assertCurrent();
+      const owner=mainWindow;if(!owner||owner.isDestroyed())return false;
+      const r=view.request;
+      const detail=[`작업공간: ${config.worktreeRoot}`,`실행: ${r.runId}`,`기준선: ${r.baselineId} / 등록: ${r.enrollmentId}`,
+        `데이터셋: ${r.dataset.id} / ${r.dataset.revision} / ${r.dataset.digest}`,`케이스: ${r.caseId} (${r.dataset.cases.find(c=>c.id===r.caseId)?.split})`,
+        `정책: ${r.policy.policyId}:${r.policy.revision} / ${r.policy.digest}`,`고정 작업 계획: ${r.planDigest}`,
+        ...view.tasks.map(t=>`${t.taskId} [${t.role}] → ${t.candidateId} (담당: ${t.ownerId})`),
+        ...['metric','environment','accountLimits'].map(key=>`${key}: ${r[key].id} / ${r[key].revision} / ${r[key].digest}`),
+        '이 조합을 수동 비교 기준선으로 등록합니다. 실행 승인은 별도이며 입력 일치·실측·성능 개선·공급자 자격을 인증하지 않습니다.'].join('\n');
+      const choice=await dialog.showMessageBox(owner,{type:'question',title:'수동 기준선 조합 확인',message:'이 고정 구현·독립 검증 조합을 기준선으로 선택하시겠습니까?',detail,
+        buttons:['취소','이 조합을 기준선으로 등록'],defaultId:0,cancelId:0,noLink:true,checkboxLabel:'위 작업별 후보 조합과 데이터셋을 확인했습니다',checkboxChecked:false});
+      guard.assertCurrent();
+      return owner===mainWindow&&!owner.isDestroyed()&&choice.response===1&&choice.checkboxChecked===true;
+    },
+  });
   createWindow();
-  if (process.env.CUE_LIVE_RUN === '1') await runLiveCanary();
-}).catch(error => {
-  console.error('Cue startup failed:', error);
-  dialog.showErrorBox('Cue 시작 실패', error instanceof Error ? error.message : '알 수 없는 오류');
-  app.exit(1);
-});
-
-registerQuitGuard(app, () => core);
-app.on('window-all-closed', () => app.quit());
+  return core;
+  } catch (error) {
+    if (core) await core.close(); else await daemon?.close();
+    throw error;
+  }
+}

@@ -1,0 +1,3 @@
+# Migration packaging correction
+
+Observed: source migration040 registered, but asset copier stops at039; compiled040/041 files absent. Done: copy explicit040/041 assets, next controlled daemon build exit0, compiled openLedger fresh/reopen smoke succeeds and final reviewer confirms this packaging change. Root edit cap1; full byte preimage before edit. One minimal two-line change; do not claim current TS-only store gates prove compiled-app startup. Maker controls next shared build, root does not run a parallel build. No helper/provider/model/native/Electron call; copying source assets and importing compiled ledger is an offline build/startup check.

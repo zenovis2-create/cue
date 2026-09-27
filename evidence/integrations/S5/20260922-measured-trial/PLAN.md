@@ -1,0 +1,9 @@
+# Batch94 — read-only measured-fact to trial conversion
+
+Direct implementation/self-review. No live provider/model/account calls; Qwen OFF and4/4 spent allowance retained. Preserve preimages and historical evidence.
+
+Add an identifier-only converter for stored validated facts, separate from immutable outcome-only projections. Reuse canonical enrollment/observation/baseline validation. Convert only complete matching executed-input, explicit0..1 quality metric, full queue/execution/cleanup timing, complete environment/account contracts, known tool/model revisions, final monetary receipts and exact handoff partitions. Unknown/local-count/partial/unsafe/mismatched data returns trial:null with reasons or rejects corrupt lineage. Fail/cancel/unknown are not silently changed to success or omitted; fixture source stays fixture. Use versioned execution-combination identity, not pretend a multi-tool workflow is one model.
+
+No writes/migration or new approval. Detect same-connection and other-connection changes across synchronous validated reads using total_changes/data_version/schema_version; reject callback reentry. Bind returned digest to source fact/enrollment/observation/contract/partition/identity. Recheck current receipt inventory so superseded billing cannot produce a current derived trial. Keep promotionEligible:false. Expose workspace-scoped Core method, not unrestricted renderer measurements or auto-collection. Existing UI/descriptive projections/comparison snapshots remain unchanged; their follow-up wiring and production producers remain work.
+
+Verify complete fixture conversion into existing study.record, failures/unknowns, refusal matrix, corruption/evidence drift/reopen, no writes/captures, host absent/foreign workspace/hostile shapes, and independent SQLite mutation detection. Synthetic verification is not actual measured improvement. Bounded blocker correction hypotheses max2 before replan.

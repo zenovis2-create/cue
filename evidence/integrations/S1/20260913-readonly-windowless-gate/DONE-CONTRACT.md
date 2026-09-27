@@ -1,0 +1,7 @@
+# Windowless read-only validation gate done contract
+
+Done for preflight means a fresh one-attempt gate pins its runner, test, client, reviewed shared host helper, windowless production launcher, executable, and complete compiled identity/process closure. Offline syntax, behavioral tests, pin comparison, owned-state absence, and independent review must pass before any native execution.
+
+If root separately authorizes execution, exactly one native launcher call must prove project read and runtime write success; project create/overwrite/remove/rename and `fs.chmod` mutation plus sibling read/write fail only with `EACCES` or `EPERM`; controlled loopback is host-reachable and worker-denied with `EACCES` or `EPERM`; exact root identity and ACL restore; process death and profile absence; one nonce-bound exit and cleanup frame; and durable bounded pre-ACL, launcher, post-ACL, and profile diagnostics. Missing worker output remains a failed terminal result after post-observation. Arbitrary DACL or security-descriptor mutation denial is outside this gate.
+
+The gate owns `D:\Temp\User\Cue.ReadonlyVerifier.WindowlessGate1` and `evidence/integrations/S1/20260913-readonly-windowless-gate/actual-attempt1`. The cap is one gate attempt and one native launch, with no retry, model, provider, external network, credential, production edit, historical reset, or cleanup-recovery operation. The windowless flag is a new tested hypothesis; it is not a known DLL or exit-status fix.

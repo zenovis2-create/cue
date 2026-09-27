@@ -1,0 +1,3 @@
+# Reconciliation50 contract
+
+Done: record independently verified measured-fact evidence IPC/UI lookup in the four integration planning documents; verify full source preimages/final pins, exact reviewer hash, document preimages/final hashes, local links and scoped git diff --check exit 0. No broad S5 completion or real measurement/visual qualification claim. Maker owns product/tests, independent checker owns review; root owns these planning documents. Documentation attempt cap 2. Each pass checks hashes, links and whitespace. A failure requires a new hypothesis and correction; retain failures. Local-model work remains user-deferred.

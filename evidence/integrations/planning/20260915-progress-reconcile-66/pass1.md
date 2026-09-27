@@ -1,0 +1,1 @@
+First reconciliation wrote5documents then stopped before executionmap write: separator string appeared in more than one Markdown table. No test/product regression. Correction uses explicit overlay boundary and replaces first tableheader only; all partialcandidate bytes preserved.

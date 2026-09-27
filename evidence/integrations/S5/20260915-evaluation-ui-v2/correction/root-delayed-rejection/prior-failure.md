@@ -1,0 +1,1 @@
+root scope-only offline-attempt-39htId result.json claimed passedtrue but process exit1 due unhandled evaluation_unavailable rejectedPromise. It is FAILED overall; result alone must never be accepted. Backup verified and owned root removed. Root tool transcript preserves stack.

@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "cue-upstream-source-catalog-v1",
+  "retrievedAt": "2026-09-15T09:27:33.9222163Z",
+  "method": "Read-only GitHub REST and raw-content retrieval at immutable commit IDs; no fetched code was installed or executed.",
+  "adoptionAuthorized": false,
+  "evidence": {
+    "retrievedBytesManifest": "evidence/integrations/S0/20260915-upstream-source-catalog/retrieved-hashes.json",
+    "retrievedBytesManifestSha256": "18c0ad52cd1b469aeb3b9297860969247e8b1ebd67f7728c857e17d2636555b3",
+    "applicableScopeRetrievalManifest": "evidence/integrations/S0/20260915-upstream-bom-completion/retrieval-manifest.json",
+    "applicableScopeRetrievalManifestSha256": "c299dbeca5bdc73cb10e81c042ce50358f299088388a6e3da8d65ee3ebdf0b5e"
+  },
+  "scopeConclusion": {
+    "selectedExternalPackageCodeOrAssets": false,
+    "statement": "Current dispositions select three Cue-native contracts and Archify design principles only. No upstream package, CLI, renderer, font, brand asset, transitive dependency, or fetched source byte is incorporated into Cue.",
+    "legalConclusion": "none; SPDX labels, license text, and notice files are recorded source facts rather than compatibility or permission verdicts",
+    "adoptionAuthorized": false
+  },
+  "originalConditionAssessment": {
+    "R01": "complete-for-current-bounded-adoption-and-limited-principles-scope-only: selected identities, revisions, local APIs and Cue seams are explicit; deferred transport candidates remain incomplete",
+    "R02": "complete-for-current-selected-bytes-scope-only: Cue-native selections have no external package/assets, and Archify package/assets are excluded; this is not a license compatibility verdict and deferred candidates remain incomplete",
+    "S0-03": "complete-for-current-selected-scope-only: the sole externally sourced limited selection is Archify principles with immutable source, license and notice evidence and zero selected external bytes; deferred research candidates remain individually incomplete and unauthorized",
+    "transportStatus": "R-01/R-02 external SDK, parser, Codex and Claude transport choices remain deferred and are not narrowed or authorized by this catalog"
+  },
+  "applicableSelections": [
+    {
+      "decisionId": "R-04",
+      "disposition": "bounded-adoption",
+      "selectedIdentity": "cue-native-role-contract",
+      "selectedRevision": "sha256:e87000f81d394bbe1c766af199778df2b85062e6a9b26a27b6bc6fc13653948b",
+      "selectedBytes": [
+        {"path": "scripts/reuse/role-contract.mjs", "sha256": "e87000f81d394bbe1c766af199778df2b85062e6a9b26a27b6bc6fc13653948b"},
+        {"path": "scripts/reuse/role-contract.test.mjs", "sha256": "d31a41b36c4cbccf53e0269c4e4b92df66347ccd98df5f55239d01c1d16496c4"}
+      ],
+      "manifest": {"path": "docs/reuse-decisions/manifests/R-04.json", "sha256": "769f2c0d4741114885ecace8249854787df83db0635218760dd141c9cc30263d"},
+      "externalBomApplicability": "not-applicable",
+      "reason": "The final disposition explicitly rejects TeamAI transformer dependency adoption and selects a Cue-authored inert RoleSpec formatter with no external runtime package or asset.",
+      "runtimeInstallEffects": "No install hook, child process, network, provider, or external runtime dependency in the selected contract.",
+      "publicApiAndSeam": "parseRole/serializeRole are exercised only through scripts/reuse/reuse-fixture-receipts.mjs and scripts/reuse/role-contract.test.mjs; this is a fixture/tool-only internal data-format seam, not a product or provider adapter.",
+      "updateOwner": "Cue maintainers update the local source hash, test hash, manifest, and lifecycle evidence together.",
+      "patches": [],
+      "sourceNotice": "Cue-authored selected bytes contain no TeamAI source bytes; the rejected TeamAI transformer remains a decision reference and no external notice is asserted inapplicable beyond these selected bytes.",
+      "adoptionAuthorized": false
+    },
+    {
+      "decisionId": "R-05",
+      "disposition": "isolated-component-accepted-product-connection-deferred",
+      "selectedIdentity": "cue-native-usage-normalizer",
+      "selectedRevision": "sha256:2d5eb58c2d1d85a9bdeaf5b00840a780faaaaefd1585d9c5bce4668517f375fc",
+      "decision": {"path": "docs/reuse-decisions/R-05.md", "sha256": "bf996aed5b67ad7dd833db1662a51a44bd22ed01a9283c3638ecdb24cf647233"},
+      "selectedBytes": [
+        {"path": "scripts/reuse/usage-normalization.mjs", "sha256": "2d5eb58c2d1d85a9bdeaf5b00840a780faaaaefd1585d9c5bce4668517f375fc"},
+        {"path": "scripts/reuse/usage-normalization.test.mjs", "sha256": "0baaf73f2b173ef517cb64bc6064813b2266b955a61971505ee4f8ebf4a872a2"}
+      ],
+      "selectedExternalBytes": [],
+      "externalBomApplicability": "not-applicable-to-selected-cue-authored-bytes",
+      "reason": "The final disposition accepts the Cue-authored pure normalizer only for OpenAI Chat and Ollama fixture counter shapes; Anthropic and OpenAI SDK code and Ollama client code are field-reference candidates, not selected packages or copied source.",
+      "runtimeInstallEffects": "The selected module has no import, package dependency, install hook, child process, network, provider call, font, brand mark, or other asset.",
+      "publicApiAndSeam": "normalizeUsage is imported only by scripts/reuse/reuse-fixture-receipts.mjs and scripts/reuse/usage-normalization.test.mjs; this is a fixture/tool-only seam with no pricing, billing, provider, execution, or product authority.",
+      "sourceNotice": "The pinned SDK source links in R-05 document observed counter-field shapes only. No external SDK or documentation byte is incorporated into the selected module, and this is not a license compatibility conclusion.",
+      "patches": [],
+      "updateOwner": "Cue maintainers update the source, test, fixture receipt and byte bindings together and must re-review the pinned field references before changing a supported provider shape.",
+      "adoptionAuthorized": false
+    },
+    {
+      "decisionId": "R-06",
+      "disposition": "bounded-adoption",
+      "selectedIdentity": "cue-native-strict-guards",
+      "selectedRevision": "sha256:e87000f81d394bbe1c766af199778df2b85062e6a9b26a27b6bc6fc13653948b",
+      "selectedBytes": [{"path": "scripts/reuse/role-contract.mjs", "sha256": "e87000f81d394bbe1c766af199778df2b85062e6a9b26a27b6bc6fc13653948b"}],
+      "manifest": {"path": "docs/reuse-decisions/manifests/R-06.json", "sha256": "5baba3ce3989256743fd7512ef9598443f22e65646d5d84b155bbdd4dfabd822"},
+      "externalBomApplicability": "not-applicable",
+      "reason": "The final disposition selects Cue-native exact-key/plain-object guards for the verified narrow contracts and defers Ajv and Zod package adoption.",
+      "runtimeInstallEffects": "No external package, install lifecycle, schema fetch, child process, network, or asset in the selected scope.",
+      "publicApiAndSeam": "The selected guard behavior is reached only through the fixture/tool-only Cue-native role contract and its reuse receipt; it is not imported by app or daemon product source and grants no policy, qualification, execution, or settlement authority.",
+      "updateOwner": "Cue maintainers must rerun the negative boundary fixtures and update local byte bindings when the guarded contract changes.",
+      "patches": [],
+      "sourceNotice": "Cue-authored selected bytes contain no Ajv or Zod source bytes; those packages remain deferred and their external BOM fields are not relabeled complete.",
+      "adoptionAuthorized": false
+    },
+    {
+      "decisionId": "R-08",
+      "disposition": "limited-principles-only",
+      "selectedIdentity": "archify-declarative-schema-stable-id-delivery-principles",
+      "decisionPinnedCommit": "18911058008f17dc065af23a2cdc9bfeff6d3f7a",
+      "canonicalRepository": "https://github.com/tt-a1i/archify",
+      "sourceEvidence": [
+        {"path": "LICENSE", "bytes": 1102, "sha256": "b799ab081703e7821ae5096d2c1abdf14bbdc75e8ea1c4045998c36ed6db9706", "fact": "MIT text at the decision-pinned commit"},
+        {"path": "THIRD_PARTY_NOTICES.md", "bytes": 5248, "sha256": "0b7fb59365dc21c93b0f62526d74ee913aeec9ae532c112bc76afa7edcd56e14", "fact": "notice describes optional third-party brand marks; those marks are excluded from Cue"},
+        {"path": "archify/schemas/architecture.schema.json", "bytes": 6753, "sha256": "94568c7ca72c07ac0ee02ee76bd39392874b3a13bb796a127962be68d0f5bc90", "fact": "declarative architecture schema reference"},
+        {"path": "archify/references/delivery-contract.md", "bytes": 8604, "sha256": "a614c31f41d270995a5aee99036532470a43722f8208fdc8ef922805914d1d01", "fact": "delivery evidence separation reference"},
+        {"path": "archify/package.json", "bytes": 1478, "sha256": "7fe2a96f0d6730b2d35811d7d4f5e7e969c166a47a0c87543cdf667a221815be", "fact": "private Node >=18 CLI package with bin/scripts/devDependencies; package is excluded"}
+      ],
+      "selectedExternalBytes": [],
+      "cueProductBytes": [
+        {"path": "daemon/src/reports/ir.ts", "sha256": "ba8c83a672a772c8c495fb917b639baf2f8f6d71c87a06f21d1c3d1e183f50ca"},
+        {"path": "daemon/src/reports/html.ts", "sha256": "b886ff8c658748ef50a3800271fb306c8e77434b0247617817cedd95deac98e1"},
+        {"path": "daemon/src/reports/delivery.ts", "sha256": "1a466c9f9b994429d6f565ee776399e8f04143b71fbdfb36cf8edc0997e1f711"},
+        {"path": "app/core.mjs", "sha256": "2379aa122c64e8d891d7e8b844d400d2a14aa7256d4f984333b6ab73dd4df096"}
+      ],
+      "excluded": ["Archify CLI", "renderer code", "skills", "package and dependencies", "JetBrainsMono and other fonts", "brand marks and other assets"],
+      "runtimeInstallEffects": "N/A for the selected principles. The excluded package declares a Node >=18 CLI and build/test generators; none is installed or executed by Cue.",
+      "publicApiAndSeam": "No Archify exported runtime API is used. Cue owns its report IR, HTML and delivery implementation; app/core.mjs imports the compiled Cue report IR/HTML and calls the Cue delivery seam. The decision document cites the delta source as design context, while this completion archive byte-binds only the bounded schema and delivery references needed for the selected principles.",
+      "updateOwner": "Cue maintainers own the native report implementation; revisiting Archify code adoption requires a new pinned-source, license/notice/assets/BOM and lifecycle review.",
+      "patches": [],
+      "sourceNotice": "The preserved LICENSE and THIRD_PARTY_NOTICES bytes are upstream facts for the principles source. They do not certify compatibility; excluded Archify package, font, brand and asset bytes remain outside this selected BOM.",
+      "applicableBomStatus": "complete-no-external-bytes-selected",
+      "unknowns": ["The retrieved notices are not a legal compatibility opinion.", "No claim is made about completeness for excluded Archify package or asset bytes."],
+      "adoptionAuthorized": false
+    }
+  ],
+  "repositories": [
+    {
+      "candidateId": "pi-desktop",
+      "catalogRole": "research-snapshot-not-selected",
+      "requestedIdentity": "vastsa/PI-Desktop",
+      "canonicalRepository": "https://github.com/vastsa/PI-Desktop",
+      "commit": "4e2e005551bcb278eee475c79cdee41de0348f29",
+      "commitApi": "https://api.github.com/repos/vastsa/PI-Desktop/commits/4e2e005551bcb278eee475c79cdee41de0348f29",
+      "treeSha": "66fe88f74711c844888f467a65b2cb91d79cd7b0",
+      "treeApi": "https://api.github.com/repos/vastsa/PI-Desktop/git/trees/66fe88f74711c844888f467a65b2cb91d79cd7b0?recursive=1",
+      "defaultBranch": "main",
+      "githubReportedLicenseSpdx": "LGPL-3.0",
+      "licensePathsFound": ["LICENSE", "apps/desktop/resources/plugins/pi.file-manager/LICENSE", "apps/desktop/src/assets/fonts/licenses/OFL-Geist.txt", "apps/desktop/src/assets/fonts/licenses/OFL-Inter.txt", "apps/desktop/src/assets/fonts/licenses/OFL-LXGWWenKai.txt", "apps/desktop/src/assets/fonts/licenses/OFL-NotoSansSC.txt"],
+      "noticePathsFound": [],
+      "retrievedSourcePaths": ["LICENSE", "package.json", "pnpm-lock.yaml", "Cargo.toml", "Cargo.lock", "apps/desktop/package.json"],
+      "rawUrlTemplate": "https://raw.githubusercontent.com/vastsa/PI-Desktop/4e2e005551bcb278eee475c79cdee41de0348f29/{path}",
+      "treeInventory": {"entries": 1860, "blobs": 1700, "assetLikeBlobs": 158, "packageOrLockPaths": 14, "truncated": false},
+      "bomStatus": "incomplete",
+      "unknowns": ["Selected manifests and lockfiles were retrieved, but transitive license obligations were not reconciled.", "Asset-like count is an extension/directory classifier, not a semantic or copyright inventory.", "Absence of a NOTICE-like path in this commit tree is not proof that no notice obligation exists."],
+      "reuseDecisionLinks": ["R-01", "R-02"],
+      "adoptionAuthorized": false
+    },
+    {
+      "candidateId": "teamai-cli",
+      "catalogRole": "research-snapshot-not-selected",
+      "requestedIdentity": "Tencent/teamai-cli",
+      "canonicalRepository": "https://github.com/Tencent/teamai-cli",
+      "commit": "556293ee42730bf56aecb4d0e8efda2dd5a5348a",
+      "commitApi": "https://api.github.com/repos/Tencent/teamai-cli/commits/556293ee42730bf56aecb4d0e8efda2dd5a5348a",
+      "treeSha": "a6480f6992cf8eacc9cf3786137ed88a081eea44",
+      "treeApi": "https://api.github.com/repos/Tencent/teamai-cli/git/trees/a6480f6992cf8eacc9cf3786137ed88a081eea44?recursive=1",
+      "defaultBranch": "main",
+      "githubReportedLicenseSpdx": "NOASSERTION",
+      "licensePathsFound": ["LICENSE"],
+      "noticePathsFound": [],
+      "retrievedSourcePaths": ["LICENSE", "package.json", "package-lock.json"],
+      "rawUrlTemplate": "https://raw.githubusercontent.com/Tencent/teamai-cli/556293ee42730bf56aecb4d0e8efda2dd5a5348a/{path}",
+      "treeInventory": {"entries": 600, "blobs": 555, "assetLikeBlobs": 3, "packageOrLockPaths": 2, "truncated": false},
+      "bomStatus": "incomplete",
+      "unknowns": ["GitHub reports NOASSERTION; the retrieved LICENSE must be reviewed rather than replaced by a label inference.", "Package-lock dependencies were not mapped to license and notice evidence.", "No NOTICE or third-party-notice path was found in the complete commit tree."],
+      "reuseDecisionLinks": ["R-01", "R-02"],
+      "adoptionAuthorized": false
+    },
+    {
+      "candidateId": "archify",
+      "catalogRole": "later-research-snapshot-not-the-R-08-decision-pin",
+      "selectionBinding": "The R-08 limited-principles source is separately bound above to commit 18911058008f17dc065af23a2cdc9bfeff6d3f7a. This d673e8 snapshot remains an observed research fact and is not relabeled as selected.",
+      "requestedIdentity": "tt-a1i/archify",
+      "canonicalRepository": "https://github.com/tt-a1i/archify",
+      "commit": "d673e8300df60a5c8166abe78787fdc78f6b8000",
+      "commitApi": "https://api.github.com/repos/tt-a1i/archify/commits/d673e8300df60a5c8166abe78787fdc78f6b8000",
+      "treeSha": "fbc0ebdc79d2b07f72da136e61e57dfc6b2a357d",
+      "treeApi": "https://api.github.com/repos/tt-a1i/archify/git/trees/fbc0ebdc79d2b07f72da136e61e57dfc6b2a357d?recursive=1",
+      "defaultBranch": "main",
+      "githubReportedLicenseSpdx": "MIT",
+      "licensePathsFound": ["LICENSE", "THIRD_PARTY_NOTICES.md", "archify/LICENSE", "archify/THIRD_PARTY_NOTICES.md", "archify/assets/JetBrainsMono-OFL.txt"],
+      "noticePathsFound": ["THIRD_PARTY_NOTICES.md", "archify/THIRD_PARTY_NOTICES.md"],
+      "retrievedSourcePaths": ["LICENSE", "THIRD_PARTY_NOTICES.md", "archify/package.json", "archify/package-lock.json", "archify/assets/JetBrainsMono-OFL.txt"],
+      "rawUrlTemplate": "https://raw.githubusercontent.com/tt-a1i/archify/d673e8300df60a5c8166abe78787fdc78f6b8000/{path}",
+      "treeInventory": {"entries": 575, "blobs": 514, "assetLikeBlobs": 63, "packageOrLockPaths": 3, "truncated": false},
+      "bomStatus": "incomplete",
+      "unknowns": ["Third-party notice files exist and were retrieved, but completeness against all shipped bytes was not established.", "The deepseek harness manifest was inventoried but not retrieved in this bounded sample.", "Asset-like count is a path classifier; asset provenance was not exhaustively reviewed."],
+      "reuseDecisionLinks": ["S0-03"],
+      "adoptionAuthorized": false
+    }
+  ],
+  "legalConclusion": "none; source and repository labels are evidence inputs only"
+}

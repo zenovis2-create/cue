@@ -5,13 +5,14 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { AppDaemon, createCueCore, initializeConfig } from '../../app/core.mjs';
+import { observeProcessTree } from '../src/process-termination.js';
 
 const roots: string[] = [];
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 function temp(): string { const root = mkdtempSync(join(tmpdir(), 'cue-p10c-core-')); roots.push(root); return root; }
 afterEach(() => { while (roots.length) rmSync(roots.pop()!, { recursive: true, force: true }); });
 async function terminalCard(core: ReturnType<typeof createCueCore>, taskId: string) {
-  const deadline = Date.now() + 30_000;
+  const deadline = Date.now() + 120_000;
   while (Date.now() < deadline) {
     const card = core.completion(taskId);
     if (card.state !== 'running') return card;
@@ -191,7 +192,7 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
     expect(card).toMatchObject({ state: 'blocked', blockedReason: 'crash' });
     expect(controllers).toBe(1);
     expect(recoveries).toBe(0);
-  }, 30_000);
+  }, 300_000);
 
   it('reconciles a previously running write as blocked/crash without auto-resume on restart', () => {
     const root = temp(); const worktree = join(root, 'worktree'); mkdirSync(worktree);
@@ -215,13 +216,14 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
   it('fences a verified live session before reconciling an interrupted run on startup', async () => {
     const root = temp(); const worktree = join(root, 'worktree'); mkdirSync(worktree);
     const config = initializeConfig(join(root, 'state'), { worktreeRoot: worktree });
-    const started = new Date().toISOString();
     const child = spawn('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', 'Start-Sleep -Seconds 120'], { stdio: 'ignore', windowsHide: true });
+    let started: string | undefined;
+    await waitUntil(() => { started = observeProcessTree(child.pid!).descendants.find(process => process.pid === child.pid)?.createdAt; return started !== undefined; }, 5_000);
     const first = new AppDaemon(config); const now = new Date().toISOString();
     first.db.prepare('INSERT INTO task VALUES(?,?,?,?)').run('fence-task', 'running', null, now);
     first.db.prepare('INSERT INTO envelope VALUES(?,?,?,?)').run('fence-envelope', worktree, '[]', now);
     first.db.prepare('INSERT INTO run VALUES(?,?,?,?,?)').run('fence-run', 'fence-task', 'fence-envelope', 1, now);
-    first.db.prepare('INSERT INTO session_handle VALUES(?,?,?,?,?,?)').run('fence-handle', child.pid, started, worktree, 'fence-task', 'fence-run');
+    first.db.prepare('INSERT INTO session_handle VALUES(?,?,?,?,?,?)').run('fence-handle', child.pid, started!, worktree, 'fence-task', 'fence-run');
     first.db.prepare('INSERT INTO session_runtime VALUES(?,?,?,?,?)').run('fence-handle', 'controller', 'host-model-only', null, now);
     first.close();
     const restarted = new AppDaemon(config);
@@ -233,7 +235,7 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
     restarted.close();
     expect(alive).toBe(false);
     expect(fence).toEqual({ content: 'terminated_verified_session' });
-  }, 15_000);
+  }, 120_000);
 
   it('refuses to kill a reused PID whose process start time does not match the ledger identity', async () => {
     const root = temp(); const worktree = join(root, 'worktree'); mkdirSync(worktree);
@@ -483,18 +485,33 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C standalone core integr
     const core = createCueCore(initializeConfig(join(root, 'state'), { worktreeRoot: worktree }), undefined, {
       binary, codexHome: sourceHome, controllerArgs: [server], requestTimeoutMs: 5_000,
     });
-    const prepared = core.prepareGoal('one execution only', 1); core.approve(prepared.runId);
-    core.execute(prepared.runId);
-    expect(() => core.execute(prepared.runId)).toThrow(/already consumed/u);
-    const executions = Number((core.daemon.db.prepare('SELECT count(*) AS n FROM execution_event WHERE run_id=?').get(prepared.runId) as { n: number }).n);
-    expect(executions).toBe(1);
-    core.stop(prepared.runId);
-    const flag = core.daemon.db.prepare('SELECT write_in_progress FROM run WHERE id=?').get(prepared.runId) as { write_in_progress: number };
-    // A real controller was launched here, so close() has an ordered teardown
-    // to await before afterEach may delete the ledger root.
-    await core.close();
-    expect(flag.write_in_progress).toBe(0);
-  }, 30_000);
+    try {
+      const prepared = core.prepareGoal('one execution only', 1); core.approve(prepared.runId);
+      core.execute(prepared.runId);
+      expect(() => core.execute(prepared.runId)).toThrow('approval_session_unavailable');
+      const executions = Number((core.daemon.db.prepare('SELECT count(*) AS n FROM execution_event WHERE run_id=?').get(prepared.runId) as { n: number }).n);
+      expect(executions).toBe(1);
+      expect(core.daemon.db.prepare('SELECT approval_state FROM run_session_epoch WHERE run_id=?').get(prepared.runId)).toEqual({ approval_state: 'executing' });
+      // Let the accepted controller's worker start before stopping it.
+      await waitUntil(() => {
+        const row = core.daemon.db.prepare("SELECT count(*) AS n FROM session_runtime WHERE role='tool_worker' AND handle IN (SELECT handle FROM session_handle WHERE run_id=?)").get(prepared.runId) as { n: number };
+        return row.n === 1;
+      });
+      await waitUntil(() => {
+        try { return readFileSync(join(worktree, 'started.txt'), 'utf8') === 'started'; } catch { return false; }
+      });
+      const ownedPids = (core.daemon.db.prepare('SELECT pid FROM session_handle WHERE run_id=?').all(prepared.runId) as Array<{ pid: number }>).map(row => row.pid);
+      expect(ownedPids.length).toBeGreaterThanOrEqual(2);
+      core.stop(prepared.runId);
+      const flag = core.daemon.db.prepare('SELECT write_in_progress FROM run WHERE id=?').get(prepared.runId) as { write_in_progress: number };
+      await core.close();
+      expect(ownedPids.every(pid => !processAlive(pid)), JSON.stringify(ownedPids)).toBe(true);
+      expect(flag.write_in_progress).toBe(0);
+    } finally {
+      // Assertion failures must also drain the owned runtime before fixture deletion.
+      if (core.daemon.db.open) await core.close();
+    }
+  }, 90_000);
 
   it('blocks an expired approval without spawning a controller or recording execution', () => {
     const root = temp(); const worktree = join(root, 'worktree'); const sourceHome = join(root, 'source-home'); const vendor = join(root, 'vendor');

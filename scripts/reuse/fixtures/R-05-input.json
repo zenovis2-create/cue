@@ -1,0 +1,29 @@
+{
+  "cases": [
+    {
+      "caseId": "openai-cached-input",
+      "provider": "openai-chat",
+      "raw": {
+        "prompt_tokens": 100,
+        "completion_tokens": 20,
+        "total_tokens": 120,
+        "prompt_tokens_details": {
+          "cached_tokens": 80
+        }
+      }
+    },
+    {
+      "caseId": "ollama-derived-total",
+      "provider": "ollama",
+      "raw": {
+        "prompt_eval_count": 10,
+        "eval_count": 2
+      }
+    },
+    {
+      "caseId": "openai-unknown",
+      "provider": "openai-chat",
+      "raw": null
+    }
+  ]
+}

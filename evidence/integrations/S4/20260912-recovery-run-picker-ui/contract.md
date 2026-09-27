@@ -1,0 +1,1 @@
+Done: explicit historical runs query and target-only selection; follow current restoration; stale responses fenced; no execution state mutation. Cap 2 correction hypotheses. Each pass new picker + recovery + selection tests and typecheck. No build/live calls; independent review and actual QA separate.

@@ -1,0 +1,2 @@
+Dependency inspection found actual Core composition monetary fixture with authReference:null; default production bootstrap and template fixtures use local-invocation and stay unchanged. Extend test-only scope by this file, full preimage copied before write. Done: Core fixture reaches intended admission boundary with synthetic opaque reference; focused driver-core suite exit0. Cap2. New no-live/no-secret test fixture only.
+Original sha256 055833a0747de6bdbf093cfc6e1085d06712385aa4da1cf3d98e1d109af3950e

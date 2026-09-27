@@ -46,9 +46,11 @@ describe('P4-2 and P4-4 owned Codex sessions', () => {
     const {child}=spawnVendorCodexInAppContainer(db,{cwd,task_id:'t',run_id:'r'},process.env.CUE_VENDOR_CODEX!,home,['--version']); let output=''; child.stdout?.on('data',x=>output+=String(x)); child.stderr?.on('data',x=>output+=String(x)); const [code]=await once(child,'exit');
     expect(code,output).toBe(0); expect(output).toMatch(/CUE_APPCONTAINER_PID=\d+;START_TIME=/u); expect(ledgerSessions(db)[0]).toMatchObject({pid:expect.any(Number),cwd,task_id:'t',run_id:'r'}); db.close();
   },30000);
-  it('has one production spawn boundary and no direct spawn call elsewhere', () => {
+  it('has one host spawn boundary and only the fixed qualification probe elsewhere', () => {
     const files=execFileSync('rg',['-l',String.raw`\bspawn(?:Sync)?\s*\(`,'src'],{encoding:'utf8'}).trim().split(/\r?\n/u).map(x=>x.replaceAll('\\','/'));
-    expect(files).toEqual(['src/process-launch.ts']);
+    // The pinned, AppContainer-only diagnostic deliberately attempts a child
+    // launch to measure Job denial; this is not another host launch API.
+    expect(files.sort()).toEqual(['src/model-boundary-probe.cjs', 'src/process-launch.ts']);
   });
 });
 

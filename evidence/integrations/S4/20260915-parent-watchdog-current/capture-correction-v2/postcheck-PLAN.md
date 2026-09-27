@@ -1,0 +1,3 @@
+# Postcheck disposition and owned empty directory cleanup
+Done: preserve failed runner receipt and raw6932ms total latency, independently validate actual test identity schema `created`, original-instance absence, before/after frozen hashes and profile6 baseline; remove only the exact empty non-reparse owned temporary directory; independent original S4-06 contract review.
+Cap1 cleanup. No OS test rerun or product/test mutation. The source test grants5s polling AFTER synchronous taskkill; the runner erroneously applied it to total kill+poll latency. No total5s SLA claimed. Cleanup cannot change the pre-fallback test observations.

@@ -1,0 +1,3 @@
+# Reconciliation53 contract
+
+Done: after independent PASS, record run-report measured-evidence augmentation with exact validated behavior, safe bounded disclosure, original report digest and separate-read relation, test/build evidence and limitations. Verify full source preimages/final pins, reviewer hash, four documentation preimages/final hashes, local links and scoped diff0. Documentation cap2; each pass hashes/links/whitespace, failures need new hypothesis. Maker product/tests, checker independent verdict, root docs. Local model/server deferred. No synthetic fixture implies real measurement/runtime/visual qualification.

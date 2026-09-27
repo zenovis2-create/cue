@@ -1,0 +1,77 @@
+{
+  "version": "cue-reuse-manifest-v1",
+  "id": "R-02",
+  "decision": "defer",
+  "scope": "internal-only",
+  "origin": {
+    "kind": "unselected",
+    "identity": "unselected",
+    "revision": null
+  },
+  "source": [
+    {
+      "path": "docs/reuse-decisions/R-02.md",
+      "sha256": "bf41c2e53c19d504d9a8a719a0b2d8a3f923f090d59b7aa5482515da4d3ee13e"
+    }
+  ],
+  "package": {
+    "name": "unselected",
+    "version": null,
+    "artifact": null,
+    "status": "not-adopted"
+  },
+  "compliance": {
+    "license": {
+      "status": "unknown",
+      "reason": "External component selection and installed artifact inventory are unresolved.",
+      "evidence": [
+        {
+          "path": "docs/reuse-decisions/R-02.md",
+          "sha256": "bf41c2e53c19d504d9a8a719a0b2d8a3f923f090d59b7aa5482515da4d3ee13e"
+        }
+      ]
+    },
+    "notice": {
+      "status": "unknown",
+      "reason": "External component selection and installed artifact inventory are unresolved.",
+      "evidence": [
+        {
+          "path": "docs/reuse-decisions/R-02.md",
+          "sha256": "bf41c2e53c19d504d9a8a719a0b2d8a3f923f090d59b7aa5482515da4d3ee13e"
+        }
+      ]
+    },
+    "assets": {
+      "status": "unknown",
+      "reason": "External component selection and installed artifact inventory are unresolved.",
+      "evidence": [
+        {
+          "path": "docs/reuse-decisions/R-02.md",
+          "sha256": "bf41c2e53c19d504d9a8a719a0b2d8a3f923f090d59b7aa5482515da4d3ee13e"
+        }
+      ]
+    },
+    "bom": {
+      "status": "unknown",
+      "reason": "External component selection and installed artifact inventory are unresolved.",
+      "evidence": [
+        {
+          "path": "docs/reuse-decisions/R-02.md",
+          "sha256": "bf41c2e53c19d504d9a8a719a0b2d8a3f923f090d59b7aa5482515da4d3ee13e"
+        }
+      ]
+    }
+  },
+  "cue": [
+    {
+      "path": "docs/reuse-decisions/CANDIDATE_INVENTORY.md",
+      "sha256": "0d132fd1f15894d67c8ce4dd6208a3e03d642787c55ae247e2f8e36d2f225ee5"
+    }
+  ],
+  "lifecycle": [
+    {
+      "path": "evidence/integrations/S2/20260912-reuse-disposition/implementation.md",
+      "sha256": "4449c332748442db635dc39cc75f0c7a24cb58d6346c1d2e583979d6d744e825"
+    }
+  ]
+}

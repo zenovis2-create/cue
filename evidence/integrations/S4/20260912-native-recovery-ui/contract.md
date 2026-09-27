@@ -1,0 +1,5 @@
+# Read-only native recovery UI contract
+
+Done: exact trusted-mainframe IPC commands, safe response allowlist without PID/path/error leaks, explicit current-run list and single-observation buttons, no automatic native requests, per-run/per-request generation rejects stale responses, independent query busy state never changes execution/Stop/ownership. Frozen Core projection remains observation-only; missing service/identity and unknown states are explicit. Focused IPC/DOM privacy/race/error tests, proportional existing UI regressions/typecheck, coordinated build and independent review. Actual Electron synthetic QA is separate, not maker work.
+
+Two correction hypotheses maximum; focused tests and typecheck each correction. Preserve source preimages and failures. No native/helper/provider call, policy/DB change, ownership release, cleanup receipt, restart, or acceptance action. Own ipc.mjs/.d.mts, preload.cjs, renderer files, relevant tests and exact P11 API lists. Main registration already handles the fixed IPC list; no new host callback or unrestricted channel is needed. Core/selection worker files remain untouched.

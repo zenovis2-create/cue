@@ -1,0 +1,9 @@
+# Goal proposal handoff
+
+Done gate: a public Core preparation call consumes a content-addressed, bounded declarative proposal from a protected resolver. Driver persists the exact proposal and validated plan/requirements/instructions before approval. The plan revision pins the proposal digest; approve/activate reject changed or swapped proposal bytes before launch. Two differing goals produce differing digests and the selected proposal tasks appear in the Core approval. Existing prepareGoal and fixed native host behavior remain intact. Host checker implementations are never supplied by proposal data.
+
+Attempt cap: two diagnosed production hypotheses. Per pass run focused `integration-goal-proposal-handoff.test.ts`, `integration-native-implementation-host.test.ts`, and `integration-acceptance.test.ts`; root owns coordinated `npm run build`. On failure, change hypothesis, roll back regressions, or hand off with exact blocker. No paid/model/Qwen/provider/network calls.
+
+Owned source: new app goal-proposal module/declaration, app/core.mjs/.d.mts and app/orchestration-driver.mjs/.d.mts, new dedicated test, and one optional `RuntimeContext.goalTaskInstruction` declaration in `daemon/src/integration-runtime.ts`. Existing exact pre-edit bytes are copied in `preimages/` before edits; hashes recorded separately. New files are absent before implementation. Root owns final build and independent review.
+
+Scope: proposal is a completed external planning artifact, not autonomous planning. It can only reference host-registered checker IDs/policies and existing policy-approved candidates/scopes. Native per-task execution instructions and a bounded approved planner run remain subsequent work; this unit makes the proposal useful through Core and the driver but does not claim native generalized execution or semantic acceptance.

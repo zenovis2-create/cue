@@ -1,0 +1,9 @@
+[
+  "app/core.mjs",
+  "daemon/dist/test/integration-goal-proposal-handoff.test.js",
+  "daemon/dist/test/p11-writer-corrective.test.js",
+  "daemon/dist/test/p9.test.js",
+  "daemon/test/integration-goal-proposal-handoff.test.ts",
+  "daemon/test/p11-writer-corrective.test.ts",
+  "daemon/test/p9.test.ts"
+]

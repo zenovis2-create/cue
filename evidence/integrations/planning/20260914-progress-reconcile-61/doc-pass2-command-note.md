@@ -1,0 +1,1 @@
+The first pass2 command (tool4c9436) failed at Python parse time: unmatched f-string brace. No statements executed and no files changed. Corrected command verified all five pass1 hashes before applying the one pass2 edit. This is a command correction, not an extra document revision.

@@ -1,0 +1,3 @@
+# Identity and cleanup correction
+
+No actual OS attempt was consumed by the import/list preflight. Correction cap: 1 for this reviewed hypothesis. Done means the test treats only `observeProcessTree` PID plus OS `createdAt` as identity, refuses to kill a reused PID, verifies the sibling's same observed identity and advancing heartbeat, and cleans only both exact canonical non-reparse direct children of the OS temp directory after owned children are observed dead. Failure cleanup targets only captured owned identities and awaits their child handles. Re-run import/list and diff-check, then obtain independent preflight review before any actual Vitest run.

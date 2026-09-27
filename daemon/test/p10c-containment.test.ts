@@ -105,7 +105,11 @@ describe.skipIf(process.platform !== 'win32')('Phase 10-C process containment', 
     const killedAt = Date.now();
     spawnSync('taskkill.exe', ['/PID', String(wrapperPid), '/F']);
     await running.done;
-    expect(Date.now() - killedAt).toBeLessThan(5_000);
+    // Bound must exceed the teardown path's own budget: settleHostRuntimeTeardown's
+    // closeController already allows waitForClose(2s) + terminateTree + waitForClose(2s),
+    // and worker stop/completion, rpc close and cleanup follow. This still asserts that
+    // teardown settles promptly instead of hanging.
+    expect(Date.now() - killedAt).toBeLessThan(15_000);
     const deadline = Date.now() + 5_000;
     while (processAlive(childPid) && Date.now() < deadline) await new Promise(resolve => setTimeout(resolve, 50));
     const orphanAlive = processAlive(childPid);

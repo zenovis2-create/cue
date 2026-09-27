@@ -1,0 +1,165 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > keeps the controller on the host and executes the real tool in AppContainer 15899ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > terminates and reaps a worker when parent linkage fails after spawn 10702ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > bounds host controller stderr retained in memory 11829ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > fails independent goal verification after a successful but read-only no-op tool call 14945ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects a workspace mutation that does not touch the output path named by the goal 16525ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects an expected-path change when the agent reports that it could not complete the goal 15927ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > changes a model-completed result to cleanup failure when the credential home cannot be safely removed 12749ms
+ ✓ test/integration-native-existing-file-authorities.test.ts > native success cannot override failed, cancelled, or unsettled adapter outcomes 1ms
+ ✓ test/integration-native-existing-file-authorities.test.ts > native authority configuration rejects caller callbacks before provider or service observation 2ms
+ ✓ test/integration-native-existing-file-authorities.test.ts > synthetic service, subject and probe fixtures reach real Core and Git staging but retain unknown cleanup 4335ms
+ ✓ test/integration-journal-recovery.test.ts > startup holds every attempt in an interrupted workspace before reconciliation and replay is exact 3829ms
+ ✓ test/integration-journal-recovery.test.ts > close and reopen preserves missing journal holds and retains a cleanup-verified writer lease 208ms
+ ✓ test/integration-journal-recovery.test.ts > tampered held payload aborts startup before process handling and retains ownership 153ms
+ ✓ test/integration-journal-recovery.test.ts > tampered journal becomes a fresh unknown observation and remains held 269ms
+ ✓ test/integration-journal-recovery.test.ts > root replacement is freshly observed as unknown and keeps the exact lease 275ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > fixed plan pins writer and distinct verifier without changing global selector policy; confirmation persists and reopens 374ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > unsupported plan refuses before confirmation: {"fallback":true} 184ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > unsupported plan refuses before confirmation: {"sameCandidate":true} 183ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > unsupported plan refuses before confirmation: {"pin":true} 190ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > legacy declaration cannot silently opt into fixed-plan authority 191ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > only literal host confirmation true registers (false) 186ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > only literal host confirmation true registers (undefined) 200ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > only literal host confirmation true registers (1) 202ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > only literal host confirmation true registers ({"confirmed":true}) 202ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > malformed/foreign/late inputs refuse before host UI and leaked promises cannot double register 211ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > pending consent snapshots renderer values but refuses a replaced task plan at final locked preflight 392ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > missing, oversized and post-declaration changed plans cannot be read as fixed baselines 215ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > clock expiry/current-scope change after host confirmation rejects without a declaration 193ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > IPC invalidates pending host consent after new-run 192ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > IPC invalidates pending host consent after approve 190ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > IPC invalidates pending host consent after stop 214ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > IPC absent host denies, exact replay works, supplied authority fields and untrusted sender reject 235ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > real renderer to serialized IPC to Core stores only after host confirmation, without approving execution 588ms
+ ✓ test/integration-fixed-plan-baseline.test.ts > production native dialog defaults Cancel and requires both affirmative button and explicit checkbox 197ms
+ ✓ test/integration-held-recovery.test.ts > S4 held recovery > persists unknown work and never invokes start, resume, reserve, restore, or resend callbacks 142ms
+ ✓ test/integration-held-recovery.test.ts > S4 held recovery > rejects raw stale transitions and immutable-row tampering 114ms
+ ✓ test/integration-held-recovery.test.ts > S4 authenticated external observations > persists an auditable v2 confirmed-not-applied receipt before the decisive transition 147ms
+ ✓ test/integration-held-recovery.test.ts > S4 authenticated external observations > persists an auditable v2 confirmed-applied receipt before the decisive transition 135ms
+ ✓ test/integration-held-recovery.test.ts > S4 authenticated external observations > keeps held and inserts no decisive row when verifier is absent, malformed, mismatched, throws, or replays another binding 674ms
+ ✓ test/integration-held-recovery.test.ts > S4 authenticated external observations > does not discard historical unknown/conflict or let a legacy assertion acquire authority 405ms
+ ✓ test/integration-held-recovery.test.ts > S4 authenticated external observations > rejects accessor details, stale observations, and proxied verifier bytes without invoking hostile properties 403ms
+ ✓ test/integration-held-recovery.test.ts > S4 authenticated external observations > bounds a pending observer callback and leaves every decisive counter unchanged 133ms
+ ✓ test/integration-held-recovery.test.ts > S4 authenticated external observations > bounds a pending verifier callback and leaves every decisive counter unchanged 133ms
+ ✓ test/integration-held-recovery.test.ts > S4 authenticated external observations > rejects a compact shared-reference DAG before verifier invocation 132ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > ordinary nested environment arrays round-trip in immutable canonical order 92ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > returned metric/environment nested snapshots cannot change without a new digest 78ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > host getter then probing is refused without executing user code 81ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > host proxy then probing is refused without executing user code 79ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > clock callback cannot change the already snapshotted host definition 80ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > identifier-only replay retains its original time and does not recapture host data 84ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > offline registration cannot reuse a host slot or turn a fixture slot into host authority 81ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > same-ledger cross-store host reentry is rejected and the fence releases on failure 93ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > accessor array slots and sparse/extra/proxied arrays are rejected without getters 80ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > circular, deep, nonfinite, huge and async host values refuse with zero registration 86ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > legacy scalar canonical bytes and hashes remain unchanged 73ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > measured metric contract id/revision cannot be relabeled behind its valid digest 178ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > measured environment contract id/revision cannot be relabeled behind its valid digest 160ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > measured accountLimits contract id/revision cannot be relabeled behind its valid digest 169ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > fully matching measurement refs still persist missing measurements without creating a trial 78ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > producer serializer canonicalizes once without issuing authority or invoking prototype setters 74ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > legacy non-callable toJSON data remains readable without executing a serialization hook 83ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > definition aggregate bytes and nodes are bounded before registration 5ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > array snapshots and original timestamp survive reopen without any host callback 147ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > separate SQLite registration during capture is reconciled without overwrite (conflict=false) 137ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > separate SQLite registration during capture is reconciled without overwrite (conflict=true) 141ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > host callback opening an outer transaction cannot make registration write or roll back its state 78ms
+ ✓ test/integration-measurement-contract-integrity.test.ts > invalid external input refuses before host; closed/outer-transaction access fails 76ms
+ ✓ test/integration-local-invocation-budget.test.ts > nonmonetary committed dispatch intents > counts producer and checker exactly once, freezes summaries, and retains failed dispatch counts 254ms
+ ✓ test/integration-local-invocation-budget.test.ts > nonmonetary committed dispatch intents > requires an outer claim transaction and rejects forged attempt, role, candidate and replay fields 126ms
+ ✓ test/integration-local-invocation-budget.test.ts > nonmonetary committed dispatch intents > rolls back both new claims and reservations on count exhaustion or caller rollback 253ms
+ ✓ test/integration-local-invocation-budget.test.ts > nonmonetary committed dispatch intents > preserves committed intents across reopen and accepts exact historical replay after completion 207ms
+ ✓ test/integration-local-invocation-budget.test.ts > nonmonetary committed dispatch intents > rejects monetary overlap in both SQL insertion directions without changing monetary-only behavior 129ms
+ ✓ test/integration-local-invocation-budget.test.ts > nonmonetary committed dispatch intents > rejects unknown/accessor/prototype inputs, unsafe counts, policy mutation and SQL replacement 134ms
+ ✓ test/integration-local-invocation-budget.test.ts > nonmonetary committed dispatch intents > serializes competing claim transactions from separate worker DB connections 431ms
+ ✓ test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > wires the root npm finalizer command to the required argument contract 2ms
+ ✓ test/p12-finalizer.test.ts > P12 one-commit verdict finalizer > binds the staged source and exact receipt hashes, then rejects tampering 1416ms
+ ✓ test/integration-readonly-created-identity.test.ts > production continuation seam emits and flushes before provider refusal without resume 674ms
+ ✓ test/integration-readonly-created-identity.test.ts > GetProcessTimes failure skips continuation and propagates through the harness finally 654ms
+ ✓ test/integration-request-queue.test.ts > S3 durable wait and checkpoint queue > persists one authorized response and claims it against the existing attempt exactly once 182ms
+ ✓ test/integration-request-queue.test.ts > S3 durable wait and checkpoint queue > retains out of order checkpoints and seals only the contiguous final 163ms
+ ✓ test/integration-request-queue.test.ts > S3 durable wait and checkpoint queue > makes cancellation and expiry first-winner resolutions and rejects late response 144ms
+ ✓ test/integration-request-queue.test.ts > S3 durable wait and checkpoint queue > rejects non-enumerable required fields without writes and stops reconciliation after authority is revoked 148ms
+ ✓ test/integration-request-queue.test.ts > S3 durable wait and checkpoint queue > denies mutation or replace of every populated append-only row including migration marker 147ms
+ ✓ test/integration-request-queue.test.ts > S3 durable wait and checkpoint queue > rolls back request, response, resolution and dispatch cut points without claiming an external rollback 145ms
+ ✓ test/integration-request-queue.test.ts > S3 durable wait and checkpoint queue > requires the exact immutable final seal in terminal handoff and re-resolves changed bytes 150ms
+ ✓ test/integration-request-queue.test.ts > S3 durable wait and checkpoint queue > rejects responder, foreign lineage, claim authority and hostile acknowledgement without deltas 144ms
+ ✓ test/integration-request-queue.test.ts > S3 durable wait and checkpoint queue > upgrades a copied pre-035 database once, fences old attempts, and fails raw payload writes without cue_sha256 373ms
+ ✓ test/integration-evaluation-comparisons-core.test.ts > Core explicitly creates and reads a workspace-scoped immutable comparison using its clock 1567ms
+ ✓ test/readonly-verifier-migration.test.ts > 039 refuses a comment legacy impersonation without rewriting it 164ms
+ ✓ test/readonly-verifier-migration.test.ts > 039 refuses a changed-body legacy impersonation without rewriting it 139ms
+ ✓ test/readonly-verifier-migration.test.ts > migration 039 installs on fresh ledger and reopens idempotently 145ms
+ ✓ test/readonly-verifier-migration.test.ts > a rewritten 039 lineage trigger refuses the ledger instead of surviving reopen 122ms
+ ✓ test/readonly-verifier-migration.test.ts > a deleted 039 lineage trigger refuses the ledger 123ms
+ ✓ test/readonly-verifier-migration.test.ts > a legacy 039 lineage trigger is upgraded in place and then reopens 186ms
+ ✓ test/integration-policy-promotion.test.ts > refuses descriptive, malformed, overlapping, future, wrong-mode and wrong-currency qualification without writes 412ms
+ ✓ test/integration-policy-promotion.test.ts > promotes from a canonical synthetic authority, persists it, and exact replay needs no resolver 82ms
+ ✓ test/integration-policy-promotion.test.ts > revalidates the deployment after a resolver side effect and leaves the losing request write-free 84ms
+ ✓ test/integration-policy-promotion.test.ts > reverts only the exact latest promotion predecessor and preserves immutable run binding 80ms
+ ✓ test/integration-policy-promotion.test.ts > reopens with a verified chain and fails closed on schema, head, transition, and qualification tampering 264ms
+ ✓ test/integration-policy-promotion.test.ts > rejects caller transactions so caught errors cannot commit partial deployment writes 76ms
+ ✓ test/integration-staging-task-authority-migration.test.ts > task-specific staging root authority installs, reopens, and has immutable guards 149ms
+ ✓ test/integration-staging-task-authority-migration.test.ts > weakened task authority or setup trigger fails reopening 262ms
+ ✓ test/integration-staging-task-authority-migration.test.ts > packaged migration 051 exactly matches source 2ms
+ ✓ test/integration-cleanup-observation-store.test.ts > host cleanup observation persistence (synthetic observations, no OS qualification) > persists actual canonical candidate IDs without widening run or session IDs 95ms
+ ✓ test/integration-cleanup-observation-store.test.ts > host cleanup observation persistence (synthetic observations, no OS qualification) > commits stable canonical references, reopens and returns isolated byte copies 159ms
+ ✓ test/integration-cleanup-observation-store.test.ts > host cleanup observation persistence (synthetic observations, no OS qualification) > requires actual run and exact supplied session identities 78ms
+ ✓ test/integration-cleanup-observation-store.test.ts > host cleanup observation persistence (synthetic observations, no OS qualification) > denies update/delete/replace and verifies hashes plus indexed identity after offline tamper 78ms
+ ✓ test/integration-cleanup-observation-store.test.ts > host cleanup observation persistence (synthetic observations, no OS qualification) > rejects unsafe serialization without evaluating accessors or proxies, and bounds input 82ms
+ ✓ test/integration-cleanup-observation-store.test.ts > host cleanup observation persistence (synthetic observations, no OS qualification) > never issues a reference inside an outer transaction or after an insert rollback 76ms
+ ✓ test/integration-native-runtime-receipts.test.ts > native runtime receipt persistence > records only issuer evidence, round trips exact lineage and replays 95ms
+ ✓ test/integration-native-runtime-receipts.test.ts > native runtime receipt persistence > preserves authentic proof across a failed insert and exact retry 74ms
+ ✓ test/integration-native-runtime-receipts.test.ts > native runtime receipt persistence > never promotes a read-only verifier signal into implementation success 85ms
+ ✓ test/integration-native-runtime-receipts.test.ts > native runtime receipt persistence > detects direct SQL denormalized and canonical inner-shape tampering 83ms
+ ✓ test/integration-recovery-handoff.test.ts > offline handoff authority fails closed without persisted exact-attempt artifacts 92ms
+ ✓ test/integration-recovery-handoff.test.ts > startup registers the offline resolver and leaves decisive external authority deployment supplied 1ms
+ ✓ test/integration-recovery-handoff.test.ts > offline resolver module contains no qualification, settings, execution, or network dependency 1ms
+ ✓ test/integration-recovery-handoff.test.ts > exact-attempt terminal reader survives reopen and rejects missing, changed, unauthorized, wrong-attempt, and corrupt artifacts 263ms
+ ✓ test/integration-run-report-measured-evidence.test.ts > bounded run scan reports exact within-scan omissions and corruption without leaking private evidence 100ms
+ ✓ test/integration-run-report-measured-evidence.test.ts > host absence is fixed unavailable while accessible empty run is explicitly complete 85ms
+ ✓ test/integration-run-report-measured-evidence.test.ts > branded extension preserves the original report digest and escapes safe metadata in HTML JSON 87ms
+ ✓ test/integration-evaluation-observations-core.test.ts > Core evaluation APIs share one ledger and deny foreign workspace, caller clock, and outer writer transaction without writes 278ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S1 produces a digest that is independent of property insertion order 19ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S2 changes the digest when ANY single component changes 69ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S3 refuses to build a subject when a component is missing or blank 26ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S4 refuses to build a subject from a file that does not exist 7ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S5 invalidates a bound probe result once any fingerprint moves 15ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S6 invalidates a bound result when only the probe suite changes 12ms
+ ✓ test/p13-measurement-subject.test.ts > P13 measurement subject > S7 hashes the resolved target, not the link path 4ms
+ ✓ test/integration-evaluation-workload-preparation.test.ts > prepares unique seed-only folders without overwriting an existing parent sentinel 61ms
+ ✓ test/integration-evaluation-workload-preparation.test.ts > unknown case, omitted/wrong split, unissued workload and relative parent create nothing 6ms
+ ✓ test/integration-evaluation-workload-preparation.test.ts > a reparse-point parent is refused without touching its target 4ms
+ ✓ test/integration-evaluation-workload-preparation.test.ts > write failure reports the partial owned root and never deletes unrelated files 11ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > removes every host execution environment and exposes only the Cue AppContainer tool 4ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > disables Codex built-in shell tools in the isolated host controller home 0ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > steers file-change goals away from child-spawning and ancestor-traversing commands 0ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > advertises write_text as the preferred exact-file operation on the sole dynamic tool 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > pins dynamic tool execution to the approved worktree and rejects client-controlled cwd 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > translates a structured exact-text write into a sandboxed PowerShell worker command 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > fails closed on any other dynamic tool identity or malformed argv 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > returns bounded, explicit AppContainer evidence to the model 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > drives app-server and returns dynamic-tool output from the AppContainer runner 6ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > declines any host-side command or file execution request without invoking the worker runner 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > rejects wrong-thread and duplicate dynamic calls and ignores a mismatched terminal notification 12ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > does not create an orphan terminal rejection when turn/start itself fails 2ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > allows only one in-flight dynamic tool call at a time 1ms
+ ✓ test/p10c-host-controller.test.ts > Phase 10-C host control/model plane contract > rejects a dynamic tool call received after the correlated turn completed 1ms
+ ✓ test/integration-driver-publication-real-restart.test.ts > bounded frame reader rejects missing and prematurely closed streams 19ms
+ ✓ test/integration-driver-publication-real-restart.test.ts > owned registration precedes continuation and failed registration prevents effects 1ms
+ ↓ test/integration-driver-publication-real-restart.test.ts > A04 real publication crash/reopen > holds an actual external write after process death and never resumes it on reopen
+ ✓ test/integration-goal-planning-contract.test.ts > approved goal planning contract > preapproval snapshot has deterministic goal, policy, candidates, scopes, checker and limits 2ms
+ ✓ test/integration-goal-planning-contract.test.ts > approved goal planning contract > valid bounded proposal gets structural pass and exact digest 12ms
+ ✓ test/integration-goal-planning-contract.test.ts > approved goal planning contract > model cannot change goal, policy, candidate, checker, or target scope 3ms
+ ✓ test/integration-goal-planning-contract.test.ts > approved goal planning contract > malformed or oversized bytes do not pass 1ms
+ ✓ test/integration-goal-planning-contract.test.ts > approved goal planning contract > every maker must precede the independent verifier in both checkers 1ms
+ ✓ test/integration-goal-planning-contract.test.ts > approved goal planning contract > one checker code can cover distinct approved contracts without tuple substitution 4ms
+
+ Test Files  24 passed (24)
+      Tests  154 passed | 1 skipped (155)
+   Start at  23:17:36
+   Duration  137.92s (transform 1.91s, setup 0ms, import 4.99s, tests 128.73s, environment 2ms)
+
+JSON report written to C:/Users/User/cue/evidence/integrations/release/20260926-grouped-regression/group-04/report.json

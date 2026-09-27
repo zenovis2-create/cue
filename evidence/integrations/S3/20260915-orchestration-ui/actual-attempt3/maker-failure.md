@@ -1,0 +1,7 @@
+# Actual attempt 3 — FAIL at first visual containment check
+
+Child PID100752 exited1, closed:true. Real Electron44.2.0 readiness marker transitioned false→true in50ms, validating the corrected readiness/flush boundary for this run. Actual Core/driver/IPC/preload/renderer reached producer-running, persisted selection reason and local budget observations (running.json). First running-choice field viewport assertion failed before PNG emission; zero PNGs. No UI Stop request occurred. Cancellation1 was fixture teardown after the capture error and must not be reported as successful UI Stop evidence.
+
+Backup integrity ok, native execution identities0; no fetch/network requests. Expected Core.close cleanup-unverified rejection retained; only settled in-process fixture DB was closed. Parent independently verified backup and child exit then removed owned Ev9zxY root. No product cleanup authority was granted. Source before/after preserved.
+
+Read-only concrete diagnosis: app/renderer/styles.css:35 constrains orchestration ol/ul to max-height260px with overflow-y:auto. Current capture scrolls window only, not nested list. Whole stage rows may exceed internal clip height. A subsequent explicitly authorized correction should scroll actual ancestor containers and check field bounds against every clipping ancestor, recording bounds before assertions. This is a harness oracle hypothesis; no product visual defect claim. No correction or retry followed this attempt.

@@ -1,0 +1,33 @@
+npm notice run cue-daemon@0.1.0 npx
+npm notice run vitest run test/integration-goal-proposal-handoff.test.ts --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/integration-goal-proposal-handoff.test.ts > goal proposals are goal-bound and reject duplicate, missing, and accessor instructions 5ms
+ × test/integration-goal-proposal-handoff.test.ts > Core consumes a pinned proposal in the driver and rejects mutated artifact before approval 1048ms
+   → approval_session_unavailable
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/integration-goal-proposal-handoff.test.ts > Core consumes a pinned proposal in the driver and rejects mutated artifact before approval
+Error: approval_session_unavailable
+ ❯ claimApproval ../app/core.mjs:367:78
+    365|             AND e.worktree_realpath=? AND t.state='awaiting_approval')…
+    366|       .run(to, run.runId, sessionEpoch, from, run.taskId, run.envelope…
+    367|     if (changed.changes !== 1 || closing || daemon.status !== 'ready')…
+       |                                                                              ^
+    368|   };
+    369|   const workspaceSessions=createWorkspaceSessionReader(db,worktree);
+ ❯ sqliteTransaction.<anonymous> ../app/core.mjs:1096:7
+ ❯ sqliteTransaction node_modules/better-sqlite3/lib/methods/transaction.js:65:24
+ ❯ Object.execute ../app/core.mjs:1098:8
+ ❯ test/integration-goal-proposal-handoff.test.ts:84:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  23:42:15
+   Duration  2.44s (transform 884ms, setup 0ms, import 1.20s, tests 1.05s, environment 0ms)
+

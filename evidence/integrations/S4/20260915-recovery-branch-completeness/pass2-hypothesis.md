@@ -1,0 +1,1 @@
+Pass1:83/84. New quota test incorrectly replaced callback after driver constructed; driver deliberately snapshots recovery host callbacks. Pass2 uses mutable fixture observation boolean read by original callback, preserving all existing quota-unavailable defaults. No product change.

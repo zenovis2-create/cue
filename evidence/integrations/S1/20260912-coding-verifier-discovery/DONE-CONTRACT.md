@@ -1,0 +1,7 @@
+# Coding verifier discovery done contract
+
+This unit is design evidence only. It changes no product source, migration, compiled output, checklist, or existing evidence. Done means the plan identifies whether the current protected native execution paths can run an exact pre-approved code check without granting worktree writes or network, and gives a startable file-level implementation sequence with authority origins, immutable input and pin lineage, cleanup/identity requirements, hostile tests, and an optional owned local fixture gate.
+
+The discovery pass reads `docs/integration/LOOP.md`, the S1 checklist/spec boundaries, stage-envelope and acceptance contracts, native worker launch/cleanup code, fixed JSON checker composition, native identity storage, and change snapshot contracts. It must preserve the existing conclusions that fixture observations grant no admission, cleanup is distinct from process completion, and a passing command alone is not requirement acceptance.
+
+Attempt cap: two documentation corrections after independent review. Every pass checks the two new Markdown files with `git diff --check -- evidence/integrations/S1/20260912-coding-verifier-discovery` and rereads the cited source seams. A factual or authority defect requires a new hypothesis and correction; after two unsuccessful corrections, retain the plan as blocked and hand the exact issue to the parent. No provider/model/CLI/native process, credential access, Electron, process kill, cleanup, build, or test command is authorized by this discovery unit.

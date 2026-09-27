@@ -1,0 +1,53 @@
+{
+  "id": 7,
+  "complete": false,
+  "exactFiles": true,
+  "files": [
+    "daemon/test/host-codex-controller.test.ts",
+    "daemon/test/integration-approved-goal-planning-core.test.ts",
+    "daemon/test/integration-candidate-inventory-ui.test.ts",
+    "daemon/test/integration-claude-cli-protocol.test.ts",
+    "daemon/test/integration-driver-core.test.ts",
+    "daemon/test/integration-evaluation-baseline-outcome.test.ts",
+    "daemon/test/integration-evaluation-measured-facts.test.ts",
+    "daemon/test/integration-evaluation-workload-cli.test.ts",
+    "daemon/test/integration-exploration-engine.test.ts",
+    "daemon/test/integration-git-staging-partial-restart.test.ts",
+    "daemon/test/integration-handoff-integrity.test.ts",
+    "daemon/test/integration-isolated-local-model.test.ts",
+    "daemon/test/integration-journal-recovery-review.test.ts",
+    "daemon/test/integration-local-host-settings.test.ts",
+    "daemon/test/integration-local-selection-policy.test.ts",
+    "daemon/test/integration-native-execution-identity-store.test.ts",
+    "daemon/test/integration-native-recovery-ui.test.ts",
+    "daemon/test/integration-planning-setup-ui.test.ts",
+    "daemon/test/integration-qualification-start.test.ts",
+    "daemon/test/integration-readonly-wfp-launcher-generation.test.ts",
+    "daemon/test/integration-report-delivery.test.ts",
+    "daemon/test/integration-reuse-manifest.test.ts",
+    "daemon/test/integration-staged-existing-file-publication-host.test.ts",
+    "daemon/test/p10.test.ts",
+    "daemon/test/p10c-worker.test.ts",
+    "daemon/test/p11-writer-lifecycle.test.ts",
+    "daemon/test/p12-enforcement-core.test.ts",
+    "daemon/test/p12-worker-preflight.test.ts",
+    "daemon/test/p9.test.ts"
+  ],
+  "counts": {
+    "failed": 1,
+    "passed": 213
+  },
+  "failedFiles": [
+    "daemon/test/p9.test.ts"
+  ],
+  "unhandledErrors": null,
+  "outcome": {
+    "startedAt": "2026-09-26T14:25:30.989Z",
+    "finishedAt": "2026-09-26T14:27:43.842Z",
+    "code": 1,
+    "signal": null,
+    "timedOut": false,
+    "spawnError": null,
+    "sourceUnchanged": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": "s6-authored-bilingual-quality-v2",
+  "documents": [
+    {"id":"parser-api","text":"parseJSONValue validates one JSON value and returns the parsed result."},
+    {"id":"parser-reference","text":"The parse JSON value reference defines accepted inputs for the parser API."},
+    {"id":"parser-cache","text":"The parser cache stores prior results. Operators parse archived input after reviewing JSON logs and then compare each value."},
+    {"id":"parser-migration","text":"A parser migration can parse legacy rows. The JSON audit is separate from the final value conversion."},
+    {"id":"parser-audit","text":"Parser diagnostics explain how to parse a trace. A JSON report later records the rejected value."},
+    {"id":"http2-cache","text":"releaseHTTP2Cache clears the bounded HTTP2 response cache after a revision change."},
+    {"id":"http2-history","text":"A release note discusses HTTP transport. Version 2 arrived later, and an unrelated cache appendix follows."},
+    {"id":"http2-operations","text":"The release checklist has many steps before HTTP rollout; phase 2 covers storage and the cache policy appears at the end."},
+    {"id":"approval-policy","text":"승인정책 변경 절차는 실행 전에 기록한다."},
+    {"id":"approval-handbook","text":"운영자는 승인 정책 변경 절차를 검토하고 결과를 원장에 남긴다."},
+    {"id":"recovery-approval","text":"장애 복구 안내에는 별도 승인 정책이 있다. 로그 보존 뒤 여러 확인 단계를 거쳐 설정 변경을 검토하고 마지막에 복구 절차를 시작한다."},
+    {"id":"approval-audit","text":"승인 기록을 먼저 확인한다. 정책 문서는 별도 보관하며 장기 감사 뒤 변경 이력을 대조하고 최종 절차를 승인한다."},
+    {"id":"session-recovery","text":"세션복원 절차는 durable owner 기록으로 실행 주체를 다시 연결한다."},
+    {"id":"session-history","text":"세션 기록을 내보낸다. 장기 보존 점검과 원장 대조가 끝난 뒤 복원 도구의 별도 절차를 설명한다."},
+    {"id":"citation-bom","bom":true,"text":"출처검증은 UTF8 원본 바이트와 SHA256 해시를 비교한다. 🙂 인용 범위는 byte offset을 사용한다."},
+    {"id":"citation-audit","text":"출처 목록을 수집한다. 검증 작업은 별도 감사 단계에서 수행하고 원본 보관 뒤 바이트 범위와 해시를 확인한다."},
+    {"id":"museum","text":"The museum catalog lists watercolor paintings and pottery exhibits."},
+    {"id":"rendering","text":"보고서 렌더링은 차트와 표의 시각 상태를 확인한다."}
+  ]
+}

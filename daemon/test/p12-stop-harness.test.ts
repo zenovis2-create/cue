@@ -47,16 +47,18 @@ describe('P12 stop-canary path ownership', () => {
         CUE_TEST_STOP_CLOSE_FAILURE: '1',
       },
       encoding: 'utf8',
-      timeout: 60_000,
+      // The canary's own waitUntil budget is 90s. Keep the harness budget above it so a
+      // real internal failure surfaces as the script's verdict instead of an opaque kill.
+      timeout: 180_000,
     });
-    expect(result.status).toBe(2);
+    expect(result.status, `${result.stdout}\n${result.stderr}`).toBe(2);
     const receipt = JSON.parse(readFileSync(join(output, 'p12_stop_result.json'), 'utf8'));
     expect(receipt).toMatchObject({ verdict: 'FAIL', checks: { fixturePathsRemoved: true } });
     expect(receipt.failure).toContain('forced core.close failure');
     expect(receipt.sessions.length).toBeGreaterThanOrEqual(3);
     expect(receipt.sessions.some((session: { aliveBeforeStop: boolean }) => session.aliveBeforeStop)).toBe(true);
     expect(receipt.sessions.every((session: { aliveAfterStop: boolean }) => session.aliveAfterStop === false)).toBe(true);
-  }, 60_000);
+  }, 240_000);
 
   it('does not leak an AppContainer profile after a normal stop', () => {
     const output = mkdtempSync(join(tmpdir(), 'cue-p12-stop-profile-output-'));
@@ -66,9 +68,9 @@ describe('P12 stop-canary path ownership', () => {
       cwd: resolve('.'),
       env: { ...process.env, NODE_ENV: 'test', CUE_EVIDENCE_PHASE: 'P12', CUE_STOP_OUTPUT_DIR: output },
       encoding: 'utf8',
-      timeout: 60_000,
+      timeout: 180_000,
     });
     expect(result.status, `${result.stdout}\n${result.stderr}`).toBe(0);
     expect(cueProfileCount()).toBe(before);
-  }, 60_000);
+  }, 240_000);
 });

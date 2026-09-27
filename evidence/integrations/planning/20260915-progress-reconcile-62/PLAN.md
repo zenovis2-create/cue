@@ -1,0 +1,5 @@
+# Remaining-work batch62
+
+Done: trusted host initial-default preparation reaches the existing engine through the real driver/Core path, immutable preapproval binding is visible in approval data, mismatched/restarted/local configurations fail closed, and legacy omitted configuration remains compatible. Exact scope and tests are assigned after read-only discovery. Maker and checker separate. Sol owns implementation; root owns documentation and source capture. No local model or live provider/native/Electron calls. Preserve shared changes; no commit/push.
+
+Maker must declare bounded source ownership, full byte preimages, concrete build/test commands and cap before editing. Each failed pass needs a new hypothesis. Independent reviewer verifies real behavior, not only test scores. Root documents cap2, each pass verifies current pins, links and introduced whitespace; update checked subitems only after evidence. Static source capture once after final accepted source/build, preserving prior records. Existing usageLimited GOAL is unchanged; no whole-product claim while broad work remains.

@@ -1,0 +1,80 @@
+{
+  "version": "cue-evaluation-workload-v1",
+  "id": "cue-existing-files",
+  "revision": "v1",
+  "cases": [
+    {
+      "id": "eval-nullish-defaults",
+      "family": "nullish-defaults",
+      "split": "evaluation",
+      "goal": "Preserve explicit zero timeout and retry values. In src/timeout.mjs and src/retries.mjs, replace each || fallback operator with ??. Change nothing else; preserve UTF-8 text and LF newlines.",
+      "files": [
+        {"relativePath": "src/timeout.mjs", "initial": "export const timeout = options => options.timeout || 30;\n", "expected": "export const timeout = options => options.timeout ?? 30;\n"},
+        {"relativePath": "src/retries.mjs", "initial": "export const retries = options => options.retries || 3;\n", "expected": "export const retries = options => options.retries ?? 3;\n"}
+      ]
+    },
+    {
+      "id": "eval-empty-sum",
+      "family": "reduction-identity",
+      "split": "evaluation",
+      "goal": "Make sum([]) return zero. In src/sum.mjs, add 0 as the initial accumulator argument to reduce, using the exact expression values.reduce((a, b) => a + b, 0). Change nothing else; preserve UTF-8 text and LF newlines.",
+      "files": [
+        {"relativePath": "src/sum.mjs", "initial": "export const sum = values => values.reduce((a, b) => a + b);\n", "expected": "export const sum = values => values.reduce((a, b) => a + b, 0);\n"}
+      ]
+    },
+    {
+      "id": "eval-stable-unique",
+      "family": "stable-deduplication",
+      "split": "evaluation",
+      "goal": "Make unique keep only the first occurrence of each value without changing order. In src/unique.mjs, replace the expression [...values] with [...new Set(values)]. Change nothing else; preserve UTF-8 text and LF newlines.",
+      "files": [
+        {"relativePath": "src/unique.mjs", "initial": "export const unique = values => [...values];\n", "expected": "export const unique = values => [...new Set(values)];\n"}
+      ]
+    },
+    {
+      "id": "eval-extension-case",
+      "family": "extension-normalization",
+      "split": "evaluation",
+      "goal": "Normalize the final filename extension to lowercase. In src/extension.mjs, append .toLowerCase() to the expression name.split('.').at(-1). Change nothing else; preserve UTF-8 text and LF newlines.",
+      "files": [
+        {"relativePath": "src/extension.mjs", "initial": "export const extension = name => name.split('.').at(-1);\n", "expected": "export const extension = name => name.split('.').at(-1).toLowerCase();\n"}
+      ]
+    },
+    {
+      "id": "holdout-empty-average",
+      "family": "empty-average",
+      "split": "holdout",
+      "goal": "Make average([]) return zero rather than NaN. In src/average.mjs, replace the return expression with values.length === 0 ? 0 : total / values.length. Change nothing else; preserve UTF-8 text and LF newlines.",
+      "files": [
+        {"relativePath": "src/average.mjs", "initial": "export function average(values) {\n  const total = values.reduce((a, b) => a + b, 0);\n  return total / values.length;\n}\n", "expected": "export function average(values) {\n  const total = values.reduce((a, b) => a + b, 0);\n  return values.length === 0 ? 0 : total / values.length;\n}\n"}
+      ]
+    },
+    {
+      "id": "holdout-exclusive-range",
+      "family": "exclusive-loop-bound",
+      "split": "holdout",
+      "goal": "Make range(end) include integers from zero up to but excluding end. In src/range.mjs, change i <= end to i < end. Change nothing else; preserve UTF-8 text and LF newlines.",
+      "files": [
+        {"relativePath": "src/range.mjs", "initial": "export function range(end) {\n  const result = [];\n  for (let i = 0; i <= end; i++) result.push(i);\n  return result;\n}\n", "expected": "export function range(end) {\n  const result = [];\n  for (let i = 0; i < end; i++) result.push(i);\n  return result;\n}\n"}
+      ]
+    },
+    {
+      "id": "holdout-numeric-sort",
+      "family": "numeric-comparator",
+      "split": "holdout",
+      "goal": "Sort numbers numerically ascending without mutating the input. In src/sort.mjs, replace .sort() with .sort((a, b) => a - b), retaining .slice(). Change nothing else; preserve UTF-8 text and LF newlines.",
+      "files": [
+        {"relativePath": "src/sort.mjs", "initial": "export const sortNumbers = values => values.slice().sort();\n", "expected": "export const sortNumbers = values => values.slice().sort((a, b) => a - b);\n"}
+      ]
+    },
+    {
+      "id": "holdout-clamp-bounds",
+      "family": "clamp-composition",
+      "split": "holdout",
+      "goal": "Correct clamp for inputs where low <= high. In src/clamp.mjs, replace Math.max(high, Math.min(low, value)) with Math.min(high, Math.max(low, value)). Change nothing else; preserve UTF-8 text and LF newlines.",
+      "files": [
+        {"relativePath": "src/clamp.mjs", "initial": "export const clamp = (value, low, high) => Math.max(high, Math.min(low, value));\n", "expected": "export const clamp = (value, low, high) => Math.min(high, Math.max(low, value));\n"}
+      ]
+    }
+  ]
+}

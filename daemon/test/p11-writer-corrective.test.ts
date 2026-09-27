@@ -77,8 +77,12 @@ describe.skipIf(process.platform !== 'win32')('P11 corrective writer security', 
       await new Promise(resolve => setTimeout(resolve, 100));
       expect(core.daemon.status).toBe('blocked/crash'); retained(core.daemon, run.runId);
       expect(core.completion(run.taskId)).toMatchObject({ state: 'blocked', blockedReason: 'crash' });
-      const next = core.prepareGoal('Create next.txt', 1); core.approve(next.runId);
+      const next = core.prepareGoal('Create next.txt', 1);
+      expect(() => core.approve(next.runId)).toThrow('approval_session_unavailable');
       expect(() => core.execute(next.runId)).toThrow(/daemon blocked\/crash/);
+      expect(core.daemon.db.prepare('SELECT COUNT(*) n FROM approval_event WHERE run_id=?').get(next.runId)).toEqual({n:0});
+      expect(core.daemon.db.prepare('SELECT COUNT(*) n FROM execution_event WHERE run_id=?').get(next.runId)).toEqual({n:0});
+      retained(core.daemon, run.runId);
     });
   }
   it('failed initial process query cannot be mistaken for a dead session', () => {

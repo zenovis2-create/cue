@@ -1,0 +1,1 @@
+Separate evidence oracle correction. Done exact running/stopped invocation1/2 and remaining1 + monetaryunknown assertions; per-image concrete fields fully within viewport after real scroll+2RAF, coverage mapping. Cap2 offline; independent exploration reviewer then root-only actual1 authorization. No product/authority changes.

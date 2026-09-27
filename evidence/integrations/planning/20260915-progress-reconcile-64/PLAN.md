@@ -1,0 +1,7 @@
+# Remaining42 execution batch64
+
+Done is evidence-backed progress on remaining original parents: implement a current source-backed three-phase release readiness artifact (A07), identify and repair a real backend gap or prove exact existing task-kind definitions with current tests, then update only independently supported checklist closures. Sol maker owns release artifact generator/tests; separate read-only discovery identifies backend gaps. Root owns original docs and integration coordination. Maker and checker separate, full preimages before edits, cap declared per unit; failures change hypothesis. Root docs cap2 and verify each pass with pins/links/whitespace/current unchecked identityset. Preserve shared edits.
+
+Readiness generator may run candidate then final after the checklist changes: cap2 justified by changed input, preserve both artifacts and hashes. This is a truthful release-status artifact, never execution authority or a claim that unchecked live requirements passed. Product static source report needs recapture only if app/daemon/src JS/TS actually changes, not merely test/scripts/docs edits. No redundant build absent need.
+
+Local model remains off. No live provider/model/native/Electron calls or credential changes here. Unknown Codex SHA remains separate; existing GOAL usageLimited unchanged. No commit/push or destructive cleanup. Whole42 completion must not be claimed while unmet requirements remain.

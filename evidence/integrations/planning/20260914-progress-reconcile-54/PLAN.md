@@ -1,0 +1,3 @@
+# Reconciliation54 contract
+
+Done: document independently verified opt-in bounded read-wave execution with exact gate, authority/lifecycle limits, unchanged serial defaults and qualification caveats. Verify full originals/final source pins, exact reviewer hash, four document preimages/final hashes, all local links and scoped diff0. Documentation cap2, each pass hashes/links/whitespace; failure needs new hypothesis. Maker driver/types/tests, checker verdict, root docs. No premature broadS3/live performance qualification. Localmodel/server remains deferred. Actual rights derive from stage binder and runtime admission, never role name alone.

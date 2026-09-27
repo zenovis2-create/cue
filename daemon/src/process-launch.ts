@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { spawn, spawnSync, type ChildProcess, type SpawnOptions, type SpawnSyncOptionsWithStringEncoding, type SpawnSyncReturns } from 'node:child_process';
+import { spawn, spawnSync, type ChildProcess, type ChildProcessWithoutNullStreams, type SpawnOptions, type SpawnSyncOptionsWithStringEncoding, type SpawnSyncReturns } from 'node:child_process';
 import type { Ledger } from './ledger.js';
 import type { SessionOwner, SessionRecord } from './session-spawn.js';
 import { accessSync, constants, existsSync, realpathSync, statSync } from 'node:fs';
@@ -94,7 +94,12 @@ export function spawnOwned(db: Ledger, owner: SessionOwner, command: string, arg
   if (!owner.task_id || !owner.run_id || !owner.cwd) throw new Error('session owner required');
   const executable = resolveOwnedExecutable(db, owner, command, [], options.env);
   const child = launchProcess(executable, args, { ...options, cwd: owner.cwd });
-  if (!child.pid) throw new Error('spawn returned no pid');
+  if (!child.pid) {
+    // Node reports startup failures asynchronously even though no PID was created.
+    // Own that pending error before throwing; callers never receive this child.
+    child.once('error', () => {});
+    throw new Error('spawn returned no pid');
+  }
   const session = { ...owner, pid: child.pid, start_time: new Date().toISOString(), handle: randomUUID() };
   try {
     db.prepare('INSERT INTO session_handle(handle,pid,start_time,cwd,task_id,run_id) VALUES(?,?,?,?,?,?)')
@@ -104,4 +109,15 @@ export function spawnOwned(db: Ledger, owner: SessionOwner, command: string, arg
     throw error;
   }
   return { child, session };
+}
+
+/** Owned host protocol helper. Session ownership covers the launcher process;
+ * its isolated worker/guardian still require their separate cleanup observations. */
+export function spawnOwnedPiped(db: Ledger, owner: SessionOwner, command: string, args: readonly string[]): { child: ChildProcessWithoutNullStreams; session: SessionRecord } {
+  const { child, session } = spawnOwned(db, owner, command, args, { windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
+  if (!child.stdin || !child.stdout || !child.stderr) {
+    terminateUnownedProcessTree(session.pid);
+    throw Error('owned protocol pipes missing');
+  }
+  return { child: child as ChildProcessWithoutNullStreams, session };
 }

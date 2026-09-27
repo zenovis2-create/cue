@@ -1,0 +1,2 @@
+# Review path collision
+Root-assigned independent review.md SHA EFF4000D61FA7FA5D83BC6365BB65BE133651BE414B912A77D31037D3F7AD94F was overwritten by maker's mirror of a separate checker report. The mirror (SHA17BDE0CD059F2FEF268F7ECA75C7AB39FDFE5A8D0D7AA67484410BD1731F839C) is preserved separately as native-driver-checker-review.md. Do not claim the earlier review bytes remain available. Root independent reviewer will reissue a final review with preserved raw gate/source facts. This is evidence ownership correction, no product change.

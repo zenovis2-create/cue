@@ -1,0 +1,65 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H1 RED: P1 fails when the tool leaves a child running after a stop request 12783ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H2 GREEN: P1 passes when the tool takes its children down with it 6913ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H3 RED: P3 fails when a child outlives a hard-killed supervisor 11408ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H4 GREEN: P3 passes when nothing outlives a hard-killed supervisor 6786ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H5 the verdict ignores identical processes outside this run 11864ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H6 a stop budget that expires is a FAIL, not an inconclusive result 6698ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H7 GREEN: an obedient tool leaves no residue on the NORMAL exit path 13666ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H8 RED: the normal path catches residue the stop path would hide 37608ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H9 RED: a subject that never exits is a FAIL, not a clean normal path 12592ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H10 B5 needs all three paths; two green paths do not carry the third 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H11 B5 GREEN only when all three paths are independently clean 27964ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H12 B5 RED: one dirty path sinks the verdict even if the others are clean 31667ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H13 RED: a process-clean tool that leaks a tool home still fails B5 7452ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H14 RED: the same leak is caught on the NORMAL exit path too 11719ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H15 RED: a pending cleanup-journal row is residue 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H16 an unobserved residue class is never counted as clean 0ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H17 the AppContainer probe refuses to answer for a non-Cue profile name 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H18 a genuinely clean run reads 0 in every class, not "unknown" 510ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > tolerates literal JSON control characters inside strings 3ms
+ ✓ test/p4.test.ts > P4-1 Orca adapter > round-trips the exact create, ps, task-list, stop, and abandon argv 1ms
+ ↓ test/p4.test.ts > P4-1 Orca adapter > round-trips the installed Orca worktree ps without mutation
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > records the composite session identity and launches with the worktree cwd 209ms
+ ↓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > launches the real vendor Codex through the AppContainer supervisor
+ ✓ test/p4.test.ts > P4-2 and P4-4 owned Codex sessions > has one host spawn boundary and only the fixed qualification probe elsewhere 42ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > queues a second writer, then admits it after release 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > does not lease reads and reaps an expired holder 0ms
+ ✓ test/p4.test.ts > P4-3 workspace lease > reclaims a writer through the P2 heartbeat age primitive 3ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > records still_unsafe and does not succeed when close fails 84ms
+ ✓ test/p4.test.ts > P4-5 close is part of success > succeeds only after a successful close 73ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > lists an unowned live process after ledger reopen and leaves it alive 166ms
+ ✓ test/p4.test.ts > P4-6 orphan detection only > contains no automatic orphan kill path 1ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > dispatches a match and asks for an unmatched task without spawning 4ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > asks when routing.yaml is missing or malformed 3ms
+ ✓ test/p4.test.ts > P4-7 fail-closed routing > wires ask_me into dispatch and proves no tool is spawned 74ms
+ ✓ test/integration-selection-preference-ui.test.ts > four modes load the saved default, explicit choice prepares run, CAS saves only future default 360ms
+ ✓ test/integration-selection-preference-ui.test.ts > unsupported host hides controls and legacy preparation omits mode without pretending availability 185ms
+ ✓ test/integration-selection-preference-ui.test.ts > conflicted save reports failure and refreshes revision without silently changing current choice 220ms
+ ✓ test/integration-resources.test.ts > declarative local resource snapshots (fixture provenance only) > pins immutable full provenance/content for existing runs; updates and removal affect new runs only without writes 18ms
+ ✓ test/integration-resources.test.ts > declarative local resource snapshots (fixture provenance only) > hash drift and same-version replacement never replace an existing run or active package 12ms
+ ✓ test/integration-resources.test.ts > declarative local resource snapshots (fixture provenance only) > rejects path traversal, absolute/ADS/reserved paths and sensitive kinds before reading 40ms
+ ✓ test/integration-resources.test.ts > declarative local resource snapshots (fixture provenance only) > rejects actual directory symlink/junction escape and linked package root 5ms
+ ✓ test/integration-resources.test.ts > declarative local resource snapshots (fixture provenance only) > rejects oversized files, invalid UTF8, unknown manifest hooks and host accessors without invocation 16ms
+ ✓ test/integration-resources.test.ts > declarative local resource snapshots (fixture provenance only) > persists exact run pins across update, removal and two ledger reopens without widening authority 260ms
+ ✓ test/integration-resources.test.ts > declarative local resource snapshots (fixture provenance only) > allows only verified declarative references and quarantines executable requirements without home, registration, permission or request access 289ms
+ ✓ test/integration-release-acceptance.test.ts > outside approved model is refused before orchestration activity 105ms
+ ✓ test/integration-release-acceptance.test.ts > expanded task permission never reaches the adapter 114ms
+ ✓ test/integration-release-acceptance.test.ts > changed opaque account reference is refused for the same candidate and subject 93ms
+ ✓ test/integration-release-acceptance.test.ts > budget increase on reopen is refused without adapter activity 89ms
+ ✓ test/integration-release-acceptance.test.ts > approved opaque reference reaches one adapter but does not claim terminal cleanup 239ms
+ ✓ test/integration-verification.test.ts > S4 integration verification groundwork > cannot mint a pass from caller scalars or an unscoped acceptance row 138ms
+ ✓ test/integration-verification.test.ts > S4 integration verification groundwork > keeps pass authority disabled until complete production lineage is registered 114ms
+ ✓ test/p12-restart-queue.test.ts > P12 restart-safe queued writer lifecycle > terminalizes queued successors with the interrupted active writer 98ms
+ ✓ test/p11-electron-surface.test.ts > P11 explicit renderer boundary > exposes exact execution, report, resource and selection preference functions 5ms
+ ✓ test/p11-electron-surface.test.ts > P11 explicit renderer boundary > forwards only exact approval commands and never invokes Core for malformed inputs 2ms
+ ✓ test/p11-electron-surface.test.ts > P11 explicit renderer boundary > status reads cannot execute and unknown operations are refused 1ms
+
+ Test Files  8 passed (8)
+      Tests  53 passed | 2 skipped (55)
+   Start at  23:08:37
+   Duration  206.72s (transform 1.09s, setup 0ms, import 2.61s, tests 202.71s, environment 1ms)
+
+JSON report written to C:/Users/User/cue/evidence/integrations/release/20260926-grouped-regression/group-01/report.json

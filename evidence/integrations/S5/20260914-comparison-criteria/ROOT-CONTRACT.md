@@ -1,0 +1,5 @@
+# Configurable descriptive comparison criteria contract
+
+Done: user edits comparison criteria in UI, exact validated Core/IPC criteria persist via existing immutable snapshot store and sanitized saved criteria are displayed on create/read. Retain legacy fixed-default requests; policy binding remains derived from saved records. Actual SQLite Core->IPC custom/default replay/reopen/conflict/invalid-no-write and DOM defaults/edit/error/saved-display tests pass; final build0; independent Sol PASS.
+
+Maker cap2 substantive passes, each focused tests/syntax, final build after stable source. Inspect actual schema first; isolate new Core tests and avoid altering old monolithic inventory. Preserve failures, no optional scope after passing complete gate. Root docs reconciliation46, independent maker/checker. No store/schema/metric/measurement/promotion changes. Performance mode requires explicit non-null cost ceiling under existing store rule; do not invent one. No local model/server/native/network/live Electron, commit/push.

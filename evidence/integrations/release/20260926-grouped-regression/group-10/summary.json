@@ -1,0 +1,51 @@
+{
+  "id": 10,
+  "complete": true,
+  "exactFiles": true,
+  "files": [
+    "daemon/test/integration-capability-store.test.ts",
+    "daemon/test/integration-claude-configuration.test.ts",
+    "daemon/test/integration-driver-provider-lifecycle.test.ts",
+    "daemon/test/integration-evaluation-baseline.test.ts",
+    "daemon/test/integration-evaluation-measured-fact-evidence-core.test.ts",
+    "daemon/test/integration-evaluation-measurement-contracts.test.ts",
+    "daemon/test/integration-evaluation-workload-enrollment.test.ts",
+    "daemon/test/integration-final-publication.test.ts",
+    "daemon/test/integration-git-staging-driver.test.ts",
+    "daemon/test/integration-goal-planning-bootstrap.test.ts",
+    "daemon/test/integration-held-recovery-admission.test.ts",
+    "daemon/test/integration-journal-recovery-startup-review.test.ts",
+    "daemon/test/integration-local-http-failures.test.ts",
+    "daemon/test/integration-measurement-artifacts.test.ts",
+    "daemon/test/integration-native-existing-file-acceptance-host.test.ts",
+    "daemon/test/integration-native-existing-file-runtime.test.ts",
+    "daemon/test/integration-native-runtime-migration.test.ts",
+    "daemon/test/integration-planning-ui-ipc.test.ts",
+    "daemon/test/integration-qualify-generated-json.test.ts",
+    "daemon/test/integration-readonly-wfp-observation.test.ts",
+    "daemon/test/integration-recovery-claim-limits.test.ts",
+    "daemon/test/integration-reports.test.ts",
+    "daemon/test/integration-run-outcome-report.test.ts",
+    "daemon/test/integration-staging-authority-migration-definition.test.ts",
+    "daemon/test/p10c-electron-security.test.ts",
+    "daemon/test/p12-enforcement-seal.test.ts",
+    "daemon/test/p12-mutation-harness.test.ts",
+    "daemon/test/p13-lifecycle-barrier.test.ts",
+    "daemon/test/readonly-verifier-control.test.ts"
+  ],
+  "counts": {
+    "passed": 186,
+    "skipped": 1
+  },
+  "failedFiles": [],
+  "unhandledErrors": null,
+  "outcome": {
+    "startedAt": "2026-09-26T14:33:30.888Z",
+    "finishedAt": "2026-09-26T14:35:44.460Z",
+    "code": 0,
+    "signal": null,
+    "timedOut": false,
+    "spawnError": null,
+    "sourceUnchanged": true
+  }
+}

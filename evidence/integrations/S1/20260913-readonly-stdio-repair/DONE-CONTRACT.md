@@ -1,0 +1,5 @@
+# Read-only inherited-standard-handle repair done contract
+
+Done means the exact failed windowless launcher and manifest are archived before editing. The launcher creates inheritable NUL standard handles and supplies only those handles through `PROC_THREAD_ATTRIBUTE_HANDLE_LIST` alongside the existing capability-zero `PROC_THREAD_ATTRIBUTE_SECURITY_CAPABILITIES`. Suspended, Unicode, extended-startup, no-window, job, root/executable holds, bounded environment, cancellation, and cleanup contracts remain unchanged.
+
+Every pass runs PowerShell AST parsing, embedded C# compilation, focused boundary tests, and a same-process production-helper probe that creates NUL handles, checks the inherit flag with `GetHandleInformation`, and closes them without creating a child/profile. The final pass runs build, source/dist parity, archive integrity, and scoped diff check. At most two evidence-based corrections are allowed. Independent review is required. No native child, AppContainer, model, provider, network call, prior gate retry, or claim that this fully fixes the observed crash is authorized.

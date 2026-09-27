@@ -1,0 +1,5 @@
+# Results — exact legacy trigger allowlist
+Production pass1 replaces substring recognition with the complete historical DDL for039/050. Current guards and recognized historical guards retain their prior behavior; altered bodies and comment-only markers are rejected without rewriting them.
+Baseline:4 new cases failed (expected refusal did not occur). Unexpected successful opens also caused cleanup EPERM in that baseline. Corrected test cleanup closes unexpected successful handles. The039 changed-body baseline was additionally a no-op fixture mutation; changed it to its actual WHEN clause, then verified refusal.
+After correction:2 files,13 tests passed,0 failed. `npm run build` exit0. Raw baseline, pass1, fixture-corrected and build logs retained. No claim that a no-op baseline established the039 altered-body exploit;039 comment and050 both cases independently did.
+Independent review: REVIEW.md records a separate13/13 pass and no scoped blocker, with exact source/preimage hashes. The root build also passed (build.log). No broad checklist closure, no live provider calls.

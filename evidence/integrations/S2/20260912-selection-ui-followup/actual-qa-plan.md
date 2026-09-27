@@ -1,0 +1,9 @@
+# Selection explanation follow-up: new diagnosed unit
+
+Historical attempts remain exhausted and FAILED. This is a new prepare-only correction unit; no Electron execution until root freezes current sources and authorizes an exact attempt. Preparation cap: two diagnosed corrections. Proposed actual cap: two, no automatic retry.
+
+Old attempt 1 omitted synthetic task activation; the existing corrected fixture already fixes that and its Node preflight passed. Old attempt 2 selected stages[0], which is the not-started checker because projection ordering is by task ID. The new scenario finds the recorded maker by task ID plus recorded status and asserts that precondition. The 61-assessment display fixture explicitly remains recorded. No product code, historical result or SQL guard changes.
+
+Actual path remains compiled engine immutable decision over real core DB, denied synthetic runtime only, core completion through real preload/IPC and renderer. Legacy/corrupt/truncation/Stop cases remain labeled display fixtures. Genuine installation capture occurs before dynamic core imports, with profile-only bootstrap earlier; checks surround fixture issuance and UI boundary calls. Before/after selected hashes, backup/integrity, exact owned-root absence and aggregate final verdict are required. No network/provider/credentials/native executor; Stop is never invoked.
+
+Executable command after approval: `node evidence/integrations/S2/20260912-selection-ui-followup/electron-proof.mjs --run`. Node offline DOM preflight runs separately. Evidence uses new attempt markers and directories. The actual screenshot window uses showInactive so it is visible without requesting focus; a hidden window is unsuitable given the historical compositor capture failures. The main proof retains sandbox/context isolation and current application controls. Screenshots must be inspected rather than inferred from timer completion.

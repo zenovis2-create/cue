@@ -1,0 +1,57 @@
+{
+  "cases": [
+    {
+      "caseId": "role-exact-object-accepted",
+      "validator": "role",
+      "input": {
+        "id": "verify-contract",
+        "role": "verifier",
+        "instructions": "Verify the bounded contract.",
+        "model": {
+          "canonicalId": "provider/model-1"
+        }
+      }
+    },
+    {
+      "caseId": "role-privilege-field-rejected",
+      "validator": "role",
+      "input": {
+        "id": "verify-contract",
+        "role": "verifier",
+        "instructions": "Verify the bounded contract.",
+        "permissions": {
+          "write": true
+        }
+      }
+    },
+    {
+      "caseId": "role-model-extra-field-rejected",
+      "validator": "role",
+      "input": {
+        "id": "verify-contract",
+        "role": "verifier",
+        "instructions": "Verify the bounded contract.",
+        "model": {
+          "canonicalId": "provider/model-1",
+          "tools": [
+            "write"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "usage-negative-counter-rejected",
+      "validator": "usage",
+      "provider": "openai-chat",
+      "input": {
+        "prompt_tokens": -1
+      }
+    },
+    {
+      "caseId": "usage-array-rejected",
+      "validator": "usage",
+      "provider": "ollama",
+      "input": []
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "version": "cue-model-alias-source-claims-v2",
+  "digestRules": {
+    "web-claim-v1": "sha256(UTF-8(reference + 0x0A + claim + 0x0A + observedDate)); no terminal LF",
+    "local-file-sha256-v1": "sha256(exact referenced file bytes)"
+  },
+  "claims": [
+    {
+      "alias": "gpt 5.6 sol",
+      "kind": "web-claim-v1",
+      "reference": "https://developers.openai.com/api/docs/models",
+      "claim": "GPT-5.6 Sol -> gpt-5.6-sol",
+      "observedDate": "2026-09-12",
+      "digest": "02c3148374d626a52ddf2cb9111d2e27a27e2478013fa61c364638890a5c0d26"
+    },
+    {
+      "alias": "terra",
+      "kind": "web-claim-v1",
+      "reference": "https://developers.openai.com/api/docs/models",
+      "claim": "Requested terra omits GPT-5.6; official page identifies GPT-5.6 Terra but does not define terra as a standalone API alias",
+      "observedDate": "2026-09-12",
+      "digest": "2783f78c6b5d3ae321a0fa61cf084483448ee8091cd6cf4b6bbb52db61158d1e"
+    },
+    {
+      "alias": "luna",
+      "kind": "web-claim-v1",
+      "reference": "https://developers.openai.com/api/docs/models",
+      "claim": "Requested luna omits GPT-5.6; official page identifies GPT-5.6 Luna but does not define luna as a standalone API alias",
+      "observedDate": "2026-09-12",
+      "digest": "a73db08f6c3c178714d448aad2939dd46f9dfd67a927972fb1e4b00ae785e11d"
+    },
+    {
+      "alias": "6 astra",
+      "kind": "web-claim-v1",
+      "reference": "https://developers.openai.com/api/docs/models",
+      "claim": "GPT-6 Astra -> gpt-6-astra",
+      "observedDate": "2026-09-12",
+      "digest": "1ebe55787d93bcaddf28fcb837f7d6d653b23e246f3424a9f06ab14188d65865"
+    },
+    {
+      "alias": "claude opus 5.0",
+      "kind": "web-claim-v1",
+      "reference": "https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions",
+      "claim": "Claude Opus 5 -> claude-opus-5; major-version 5 omits the minor segment",
+      "observedDate": "2026-09-12",
+      "digest": "dda574be0184bb319a2543d5be90939e27ef25dafdb895c6cb19fcf9099be840"
+    },
+    {
+      "alias": "sonnet 5",
+      "kind": "web-claim-v1",
+      "reference": "https://platform.claude.com/docs/en/models/overview",
+      "claim": "Claude Sonnet 5 -> claude-sonnet-5",
+      "observedDate": "2026-09-12",
+      "digest": "673a9e1c163158fe4394fdad62c3d14297fbac1283022d314d0f6f1d53b012ef"
+    },
+    {
+      "alias": "haiku",
+      "kind": "web-claim-v1",
+      "reference": "https://platform.claude.com/docs/en/models/overview",
+      "claim": "Requested haiku lacks a version; official current and historical Haiku IDs are versioned",
+      "observedDate": "2026-09-12",
+      "digest": "ad80eadc0bf60bb9c68226b34223d344415e69574d495553c3a1dccced73b67a"
+    },
+    {
+      "alias": "fable 5.1",
+      "kind": "web-claim-v1",
+      "reference": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+      "claim": "Claude Fable 5.1 -> claude-fable-5-1",
+      "observedDate": "2026-09-12",
+      "digest": "e244007d7f4e906c8cc0139d417a78e7064f0314499872ef45200ffa76daccb4"
+    },
+    {
+      "alias": "gemini flash 3.8",
+      "kind": "web-claim-v1",
+      "reference": "https://ai.google.dev/gemini-api/docs/models",
+      "claim": "Gemini 3.8 Flash -> gemini-3.8-flash",
+      "observedDate": "2026-09-12",
+      "digest": "7e2f4d165a7edc6b1fe51716e14c0dc64a1cee82bac0dc6bd574fa2ed531e2b8"
+    },
+    {
+      "alias": "qwen 3.8 27b (로컬)",
+      "kind": "local-file-sha256-v1",
+      "reference": "evidence/integrations/S1/20260911-qwen-live/result.json",
+      "claim": "Local server advertised qwen38-27b-unc; marketing and weight identity remain unverified",
+      "observedDate": "2026-09-11",
+      "digest": "9c2f0bd6475e3890c5d5547173667d841325039013501d5a25e837ef8661aa40"
+    },
+    {
+      "alias": "grok 4.6",
+      "kind": "web-claim-v1",
+      "reference": "https://docs.x.ai/developers/models/grok-4.6",
+      "claim": "Grok 4.6 -> grok-4.6",
+      "observedDate": "2026-09-12",
+      "digest": "545dc157ff70dee09ade47435caae7da291c19fba45adc51f50fff9957db6858"
+    },
+    {
+      "alias": "muse 1.3",
+      "kind": "web-claim-v1",
+      "reference": "https://research.meta.ai/blog/introducing-muse-spark-1-3",
+      "claim": "Official page identifies Muse Spark 1.3 and Meta Model API availability but gives no canonical API model ID for requested muse 1.3",
+      "observedDate": "2026-09-12",
+      "digest": "b6ad513459e6c1559b7fadd05631cd147126f029d15e80f89baff863c9219f9f"
+    }
+  ]
+}

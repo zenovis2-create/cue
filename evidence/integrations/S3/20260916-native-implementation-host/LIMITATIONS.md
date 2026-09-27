@@ -1,0 +1,5 @@
+# Qualification boundary
+
+This is an offline composition seam, not a default or qualified production host. The focused Core test reaches prepare, approval, the driver start path, durable target binding, deployment-staging preparation, and a pre-provider capability refusal. It proves zero provider launches on missing evidence; it does not prove a successful implementation, verifier, final acceptance, billing settlement, or writer-process quiescence.
+
+Production activation still needs protected sources for exact Codex account entitlement/readiness and account binding, an independent verifier executor/principal and evidence policy, current monetary observations and final receipt verification, immutable existing-file requirement/target configuration, and final acceptance manifest/checker authority. Startup wiring must remain absent until those sources exist. The composition relies on its trusted Codex binding resolver to use the driver-created attempt staging envelope; the present test does not qualify a live provider or grant the staged-publication marker to a default startup.

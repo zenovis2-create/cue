@@ -1,0 +1,299 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > releases the settled runtime handle after an unexpected recovery exception commits 220ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines launch-configuration terminalization when lease release aborts 217ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a queued stop when its terminal transaction aborts 180ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > quarantines a user stop when its lease-release transaction aborts 155ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'normal completion' quarantines the writer and terminalizes its queue when lease release aborts 201ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'controller crash' quarantines the writer and terminalizes its queue when lease release aborts 203ms
+ ✓ test/p12-terminal-transaction.test.ts > P12 terminal transaction fail-closed lifecycle > 'worker hard-kill' quarantines the writer and terminalizes its queue when lease release aborts 201ms
+ ✓ test/integration-native-authority-success.test.ts > fixed composer completes real native issuer to publication and acceptance with local RPC controller 17874ms
+ ✓ test/integration-native-authority-success.test.ts > publication survives expired startup capacity after clean implementation while verifier admission refuses stale evidence 11707ms
+ ✓ test/integration-model-boundary-qualification.test.ts > fixed model-client controlled qualification observations > M1 production rejects code/tool/url fields and cannot select a probe 13902ms
+ ✓ test/integration-model-boundary-qualification.test.ts > fixed model-client controlled qualification observations > diagnostic hold requires true boolean and missing host acknowledgement still cleans 9975ms
+ ✓ test/integration-model-boundary-qualification.test.ts > fixed model-client controlled qualification observations > M2/M3 denied file operations plus same-listener host controls and no confined TCP success 5265ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > binds the AppContainer job lifetime to the daemon process handle 2ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the host controller descendant when the owned controller root is hard-killed 10371ms
+stdout | test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed
+P12_PARENT_DEATH_IDENTITY {"parentPid":44940,"wrapperPid":50852,"workerPid":19184,"terminationLatencyMs":2009,"wrapperAlive":false,"workerAlive":false,"originalWrapperAlive":false,"originalWorkerAlive":false,"wrapperIdentityBefore":{"ProcessId":50852,"ParentProcessId":44940,"created":"2026-09-26T14:39:21.8366700Z"},"wrapperIdentityAfter":null,"workerIdentityBefore":{"ProcessId":19184,"ParentProcessId":50852,"created":"2026-09-26T14:39:22.6119310Z"},"workerIdentityAfter":null}
+
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed 14043ms
+ ✓ test/integration-model-boundary.test.ts > S1 actual Windows model-only client boundary (provider remains unknown) > fixed production protocol uses inherited pipes and removes actual process/profile/root 8803ms
+ ✓ test/integration-model-boundary.test.ts > S1 actual Windows model-only client boundary (provider remains unknown) > same launcher preserves filesystem refusal regression and raw child/network diagnostics 4264ms
+ ✓ test/integration-model-boundary.test.ts > S1 actual Windows model-only client boundary (provider remains unknown) > timeout cancellation and observed parent death kill job and clean profile 7922ms
+ ✓ test/integration-model-boundary.test.ts > S1 actual Windows model-only client boundary (provider remains unknown) > production mode rejects harness override and client rejects oversized/multiple messages 1055ms
+ ✓ test/integration-generated-json-host.test.ts > loads the compiled host dependency graph in actual Node without test-runner CJS interop 140ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > records a durable stop from an exact persisted diagnostic and launches no recovery attempt 696ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > terminalizes an outputless failed attempt from exact cleanup evidence without launching its dependent checker 318ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > durably emits only the sanitized diagnostic code for a failed synthetic execution 347ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > binds immutable input-scoped evidence policies independently across runs 269ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > does not poll or promote unknown cleanup identity 150ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > re-observes a delayed guardian before issuing the terminal cleanup receipt 700ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > re-observes a persistent guardian before issuing the terminal cleanup receipt 10536ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > re-observes a cancel guardian before issuing the terminal cleanup receipt 171ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > runs shared-ledger producer/checker/cleanup/acceptance and retains unknown billing reservations 526ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > honors the saved efficiency mode and strict readonly template 128ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > honors the saved performance mode and strict readonly template 116ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > honors the saved value mode and strict readonly template 115ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > honors the saved speed mode and strict readonly template 105ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > returns unavailable for missing evidence, estimates, policy, accounting and pins 467ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > exposes only core-compatible reason codes, never callback exception paths 193ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > rejects invalid JSON and unapproved parent egress without persistence or launch 95ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > guards nesting before pretty formatting and refuses known output larger than its approval budget 215ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > rechecks qualification immediately before launch and never promotes incorrect generated values 774ms
+warning: in the working copy of 'target.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-staged-existing-file-publication-driver.test.ts > production publication host through public staged driver > opens the ledger-bound execution root, publishes native bytes, reconciles and does not revive registration 6746ms
+warning: in the working copy of 'first.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'second.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-git-staging-inherited-publication.test.ts > detached second writer inherits only exact owned publication and restores both paths before cleanup 4786ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > compiled helper upgrades legacy attempts without losing FK-linked history and reopens idempotently 425ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > refuses migration inside a transaction and restores FK settings after failed upgrade 254ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > binds exact immutable criteria before approval and never retrofits existing approvals 277ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > creates a new attempt from an exact clean transient receipt while retaining failed history and replay safety 215ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > allows normal clock advancement while rejecting future binding timestamps and elapsed deadlines 397ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > denies unknown cleanup, nonclassified/model failure, mismatched receipts and expired contracts 723ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > applies cumulative and per-task attempt caps to retries and later ordinary stages 486ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > engine atomically reserves cumulative unknown cost and rolls retry back on budget or stage failure 262ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > fails closed without trusted handoff artifact resolution and leaves retry state untouched 206ms
+ ✓ test/integration-retry-backend.test.ts > S4 explicit retry backend > separate concurrent connections consume a previous failure exactly once 486ms
+ ✓ test/native-provider-measurement-subject.test.ts > deterministically measures fixed current native provider artifacts without auth qualification 213ms
+ ✓ test/native-provider-measurement-subject.test.ts > fails closed on executable drift, missing fixed artifact and unissued descriptor 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > authority closure requires app/native-existing-file-authorities.mjs 4ms
+ ✓ test/native-provider-measurement-subject.test.ts > authority closure requires app/protected-installation.mjs 4ms
+ ✓ test/native-provider-measurement-subject.test.ts > authority closure requires app/main.mjs 4ms
+ ✓ test/native-provider-measurement-subject.test.ts > authority closure requires app/deployment-staging-host.mjs 5ms
+ ✓ test/native-provider-measurement-subject.test.ts > native fixed artifact inventory stays unique and bounded at 132 including provider 0ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/native-process-cleanup.ts rejects measurement 13ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/native-process-cleanup.js rejects measurement 11ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/cleanup-observation-store.ts rejects measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/cleanup-observation-store.js rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/orchestration/stage-envelope.ts rejects measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/orchestration/stage-envelope.js rejects measurement 11ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/orchestration/staging-authority.ts rejects measurement 13ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/orchestration/staging-authority.js rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/orchestration/git-staging-factory.ts rejects measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/orchestration/git-staging-factory.js rejects measurement 14ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/verification/acceptance.ts rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/verification/acceptance.js rejects measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/verification/native-existing-file-acceptance-host.ts rejects measurement 13ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/verification/native-existing-file-acceptance-host.js rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/verification/native-existing-file-checker.ts rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/verification/native-existing-file-checker.js rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/verification/evidence-policy.ts rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/verification/evidence-policy.js rejects measurement 14ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/verification/requirements.ts rejects measurement 13ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/verification/requirements.js rejects measurement 13ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/verification/generated-output.ts rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/verification/generated-output.js rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/orchestration/store.ts rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/orchestration/store.js rejects measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/change-records.ts rejects measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/change-records.js rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/final-publication.ts rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/final-publication.js rejects measurement 13ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/migrations/012_stage_envelope.sql rejects measurement 14ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/migrations/012_stage_envelope.sql rejects measurement 11ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/migrations/014_requirement_acceptance.sql rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/migrations/014_requirement_acceptance.sql rejects measurement 13ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/migrations/018_cleanup_observation.sql rejects measurement 14ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/migrations/018_cleanup_observation.sql rejects measurement 15ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/migrations/046_change_publication.sql rejects measurement 13ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/migrations/046_change_publication.sql rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/migrations/047_attempt_staging_authority.sql rejects measurement 17ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/migrations/047_attempt_staging_authority.sql rejects measurement 15ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/migrations/051_attempt_staging_task_authority.sql rejects measurement 17ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/migrations/051_attempt_staging_task_authority.sql rejects measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact app/staged-existing-file-publication-host.mjs rejects measurement 7ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact app/staged-publication-contract.mjs rejects measurement 5ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/src/ledger.ts rejects measurement 4ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/dist/src/ledger.js rejects measurement 4ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing completion artifact daemon/scripts/copy-assets.mjs rejects measurement 4ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority app/core.mjs rejects native measurement 4ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority app/default-goal-planning-bootstrap.mjs rejects native measurement 4ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority app/goal-proposal.mjs rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority app/goal-planning-contract.mjs rejects native measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority app/goal-planning-handoff-authority.mjs rejects native measurement 11ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority app/goal-planning-host.mjs rejects native measurement 8ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority app/accepted-goal-planning-output.mjs rejects native measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/orchestration/plan.ts rejects native measurement 8ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/orchestration/plan.js rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/selection/policy-store.ts rejects native measurement 15ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/selection/policy-store.js rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/selection/policy-promotion.ts rejects native measurement 8ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/selection/policy-promotion.js rejects native measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/selection/policy.ts rejects native measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/selection/policy.js rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/selection/local-policy-store.ts rejects native measurement 20ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/selection/local-policy-store.js rejects native measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/selection/local-host-settings.ts rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/selection/local-host-settings.js rejects native measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/integration-catalog.ts rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/integration-catalog.js rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/model-control-bundle.ts rejects native measurement 12ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/model-control-bundle.js rejects native measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/verification/goal-proposal-acceptance-host.ts rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/verification/goal-proposal-acceptance-host.js rejects native measurement 11ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/adapters/isolated-goal-proposal-checker.ts rejects native measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/adapters/isolated-goal-proposal-checker.js rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/goal-proposal-checker-client.cjs rejects native measurement 9ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/goal-proposal-checker-client.cjs rejects native measurement 14ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/src/verification/goal-proposal-checker.cjs rejects native measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > missing planning authority daemon/dist/src/verification/goal-proposal-checker.cjs rejects native measurement 10ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/src/native-process-cleanup.ts rejects prior capability evidence 188ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/dist/src/orchestration/stage-envelope.js rejects prior capability evidence 174ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/src/verification/acceptance.ts rejects prior capability evidence 157ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/dist/src/verification/native-existing-file-checker.js rejects prior capability evidence 150ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/src/final-publication.ts rejects prior capability evidence 151ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/migrations/046_change_publication.sql rejects prior capability evidence 133ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/migrations/051_attempt_staging_task_authority.sql rejects prior capability evidence 136ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/dist/migrations/051_attempt_staging_task_authority.sql rejects prior capability evidence 133ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/src/ledger.ts rejects prior capability evidence 134ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/scripts/copy-assets.mjs rejects prior capability evidence 131ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in app/goal-proposal.mjs rejects prior capability evidence 133ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in app/accepted-goal-planning-output.mjs rejects prior capability evidence 164ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in app/default-goal-planning-bootstrap.mjs rejects prior capability evidence 176ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/dist/src/orchestration/git-staging-factory.js rejects prior capability evidence 174ms
+ ✓ test/native-provider-measurement-subject.test.ts > simulated artifact digest change in daemon/test/host-codex-controller.test.ts rejects prior capability evidence 184ms
+ ✓ test/integration-readonly-wfp-diagnostic-bridge.test.ts > serializes the exact bounded precision-safe wire frame once and the real parser accepts it 730ms
+ ✓ test/integration-readonly-wfp-diagnostic-bridge.test.ts > duplicate provider invalidates captured evidence through the real parser 694ms
+ ✓ test/integration-readonly-wfp-diagnostic-bridge.test.ts > invalid nonce emits no unbound frame and consumes the one-shot attempt 726ms
+ ✓ test/integration-readonly-wfp-diagnostic-bridge.test.ts > writer failure is swallowed and a second emission is not attempted 803ms
+ ✓ test/integration-evaluation-ui.test.ts > IPC reads a saved comparison before prepare and exposes only the bounded descriptive view 8ms
+ ✓ test/integration-evaluation-ui.test.ts > IPC comparison read rejects hostile output and hides Core failures 1ms
+ ✓ test/integration-evaluation-ui.test.ts > IPC binds exact enrollment to latest successful prepare and derives observation, projection, and coverage scope 5ms
+ ✓ test/integration-evaluation-ui.test.ts > IPC denies arbitrary run, cutoff scope, result, time, accessors and foreign enrollment without calls 2ms
+ ✓ test/integration-evaluation-ui.test.ts > IPC projection refuses hostile top and nested DTO descriptors without touching them 3ms
+ ✓ test/integration-evaluation-ui.test.ts > DOM enrolls only after prepare, locks before approval, observes explicitly and derives revision/cutoff 516ms
+ ✓ test/integration-evaluation-ui.test.ts > DOM reads a saved insufficient comparison before prepare and clears stale or failed output 256ms
+ ✓ test/integration-evaluation-ui.test.ts > DOM manually pages saved comparisons and revalidates a selected record through detail read 232ms
+ ✓ test/integration-evaluation-ui.test.ts > DOM explicitly pages and selects stored comparison records without overwriting manual IDs 298ms
+ ✓ test/integration-evaluation-ui.test.ts > DOM creates a saved comparison only on explicit submit and clears failed or stale creation 233ms
+ ✓ test/integration-evaluation-ui.test.ts > DOM discards stale enrollment and clears old observation/coverage on generic error 235ms
+ ✓ test/integration-evaluation-ui.test.ts > DOM clears failed or stale projection output without exposing failure details 390ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > rejects an ordinary budget bound to a different selection policy revision 96ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > binds one candidate to exact current policy and smaller positive ordinary-budget sublimit 407ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > rejects new grants after approval, first attempt, reservation, or receipt including raw inserts 327ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > requires an outer transaction and exact existing ordinary reservation without double charging it 81ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > rolls back ordinary and exploration reservations together 82ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > uses ordinary receipt truth for pending, actual, unknown, overrun debt, and next denial 82ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > rejects foreign candidate, exhausted subcap, reset, mutation, and REPLACE 81ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > reopens with canonical immutable rows and fails closed on corrupt payload lineage 171ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > rejects proxies, accessors, extra fields, zero values and raw payload mismatches before authority changes 77ms
+ ✓ test/integration-exploration-budget.test.ts > S2 explicit exploration budget store > serializes concurrent ordinary plus exploration reservations so only one fits the subcap 340ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > persists local-resource actual usage without labelling dispatch counts as money or free service 160ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > binds real readonly local stage envelopes and rejects a swapped fixed-role candidate 284ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > reads exact typed policy identity and rejects conflicting or corrupt bindings without fallback 187ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > commits count and stage before launch, uses M roles, and never makes count into acceptance 121ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > replays exact saved reservation and activity without relaunch or reobservation, including new engine instance 121ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > rolls back stage rejection without launching 101ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > rolls back async rejection without launching 93ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > rolls back cap rejection without launching 114ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > rolls back checks rejection without launching 86ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > rolls back stale rejection without launching 84ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > rolls back timeout rejection without launching 92ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > preserves unknown cleanup/count and refuses monetary receipt fields 133ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > does not refund or infer cleanup after a thrown start 104ms
+ ✓ test/integration-local-engine.test.ts > local engine connected transaction and owned runtime lifecycle > explicit trusted clean failure retry consumes another count and keeps the approved policy and criteria 128ms
+ ✓ test/integration-native-recovery-observer.test.ts > same persisted lineage and exact FileTime produce frozen fixture observations with zero DB changes 127ms
+ ✓ test/integration-native-recovery-observer.test.ts > distinguishes reuse, matching exited and explicit absence without rounding FileTime 104ms
+ ✓ test/integration-native-recovery-observer.test.ts > rejects foreign lineage, malformed/accessor/proxy inputs before queries 88ms
+ ✓ test/integration-native-recovery-observer.test.ts > unusable nonce query remains unknown, never absence 89ms
+ ✓ test/integration-native-recovery-observer.test.ts > unusable partial query remains unknown, never absence 86ms
+ ✓ test/integration-native-recovery-observer.test.ts > unusable error query remains unknown, never absence 87ms
+ ✓ test/integration-native-recovery-observer.test.ts > unusable access query remains unknown, never absence 117ms
+ ✓ test/integration-native-recovery-observer.test.ts > unknown/reparse ancestry and wrong known folders never establish matching path provenance 288ms
+ ✓ test/integration-native-recovery-observer.test.ts > guard drift, changed session and caller abort discard responses without later observation 279ms
+ ✓ test/integration-native-recovery-observer.test.ts > full generation checks run twice independent of ancestor count; their time is outside OS deadline 102ms
+ ✓ test/integration-native-recovery-observer.test.ts > OS deadline remains five seconds and initial guard failure starts no query 87ms
+ ✓ test/integration-native-recovery-observer.test.ts > abort abandons a pending fixture query and consumes late rejection 79ms
+ ✓ test/integration-native-recovery-observer.test.ts > default wiring has fixed helper, exactly three PIDs, bounded sealed invocation, no historical cwd; only ENOENT means absent 111ms
+ ✓ test/integration-native-recovery-observer.test.ts > helper source has only read-only process APIs and same-handle liveness; no mutation functions 1ms
+ ✓ test/integration-handoff-activity.test.ts > S3 immutable handoff and typed activity facts > rejects accessors, proxies, custom prototypes, unknown fields and bounds 94ms
+ ✓ test/integration-handoff-activity.test.ts > S3 immutable handoff and typed activity facts > binds exact intent/identity and rejects replay or event/order conflicts 88ms
+ ✓ test/integration-handoff-activity.test.ts > S3 immutable handoff and typed activity facts > persists only allowlisted failure diagnostics and keeps legacy terminal facts valid 204ms
+ ✓ test/integration-handoff-activity.test.ts > S3 immutable handoff and typed activity facts > rejects proxied terminal diagnostics before invoking proxy traps 85ms
+ ✓ test/integration-handoff-activity.test.ts > S3 immutable handoff and typed activity facts > recomputes artifacts and rejects missing, duplicate, or mismatched resolvers 86ms
+ ✓ test/integration-handoff-activity.test.ts > S3 immutable handoff and typed activity facts > atomically seals terminal receipt plus handoff and database guards deny mutation 101ms
+ ✓ test/integration-handoff-activity.test.ts > S3 immutable handoff and typed activity facts > rejects reviewer cross-attempt receipt and identity substitution in API and SQLite 87ms
+ ✓ test/integration-handoff-activity.test.ts > S3 immutable handoff and typed activity facts > survives close/reopen exactly and leaves preidentity crash intent fenced 194ms
+ ✓ test/integration-handoff-activity.test.ts > S3 immutable handoff and typed activity facts > revalidates the durable session reference after reopen and rejects missing ownership 184ms
+ ✓ test/integration-budget.test.ts > S2 atomic persistent budget > initialization is immutable and rejects currency/unit changes 128ms
+ ✓ test/integration-budget.test.ts > S2 atomic persistent budget > reservation exact replay is idempotent and attempt/request mismatches reject 103ms
+ ✓ test/integration-budget.test.ts > S2 atomic persistent budget > unknown stop/cancel ACK and estimates retain the upper reservation 111ms
+ ✓ test/integration-budget.test.ts > S2 atomic persistent budget > actual final settlement releases only verified excess and late actual replaces total 116ms
+ ✓ test/integration-budget.test.ts > S2 atomic persistent budget > overspend survives as debt and blocks even zero new reservations 116ms
+ ✓ test/integration-budget.test.ts > S2 atomic persistent budget > unfinalized actual and high estimates retain conservative obligations 110ms
+ ✓ test/integration-budget.test.ts > S2 atomic persistent budget > reopen and separate connections preserve all scopes and exact replay 148ms
+ ✓ test/integration-budget.test.ts > S2 atomic persistent budget > safe integer validation and BigInt aggregates preserve large late actuals 120ms
+ ✓ test/integration-budget.test.ts > S2 atomic persistent budget > independent SQLite writers compete atomically, only one upper bound fits 358ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-1 renders conversation and current-work containers in the default two-column screen 229ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-2 replaces only the left conversation with an annotation canvas and preserves rail node identity 103ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-3 keeps progress/stage vocabulary and invokes the real stop callback after canvas transition 88ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps queued to exact status 유휴 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps running to exact status 작업 중 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps blocked to exact status 막힘 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps completed to exact status 완료 0ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-4 maps every ledger state and fails visibly for an unknown state 1ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-5 looks up recent work by task_id, never by a session id 81ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-6 omits the orphan badge node when the ledger count is zero 91ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-6 shows an orphan badge whose count equals the ledger query 92ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-7 renders exact approval totals for completed and 자세히 opens a detail node 91ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-7 renders exact approval totals for blocked and 자세히 opens a detail node 83ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8-8 displays autonomy ③ and exactly three ledgered recovery attempts 83ms
+ ✓ test/p8.test.ts > Phase 8 real DOM ledger UI > P8 safety gate keeps UI imports read-only and tests use real DOM queries/clicks 2ms
+ ✓ test/integration-local-observation.test.ts > count projection is distinct from money and does not imply cleanup or acceptance 109ms
+ ✓ test/integration-local-observation.test.ts > unbound local counts stay unknown rather than displaying a guessed balance 80ms
+ ✓ test/integration-local-observation.test.ts > absent local accounting does not add new properties to legacy projection 77ms
+ ✓ test/integration-local-observation.test.ts > actual renderer distinguishes count approval and observation from monetary cost 264ms
+ ✓ test/p12-crash-queue.test.ts > P12 crash-safe queued writer lifecycle > retains daemon ownership when crash-state persistence aborts 298ms
+ ✓ test/p12-crash-queue.test.ts > P12 crash-safe queued writer lifecycle > terminalizes queued approvals and never promotes them after the active controller settles 311ms
+ ✓ test/integration-evaluation-measured-facts-core-containment.test.ts > Core activates measured facts only for an explicit host and validates local identifiers before callbacks or writes 469ms
+ ✓ test/integration-evaluation-measured-facts-core-containment.test.ts > Core captures and reads the real local fact and exact replay does not request a new host measurement 250ms
+ ✓ test/integration-evaluation-baseline-core.test.ts > Core is workspace-scoped and its host verifier defaults closed without granting execution or policy authority 395ms
+ ✓ test/integration-journal-packaging.test.ts > checked manifest binds reviewed binary and exact source provenance 12ms
+ ✓ test/integration-journal-packaging.test.ts > compiled host resolves only its copied reviewed asset and publishes frozen metadata 62ms
+ ✓ test/integration-journal-packaging.test.ts > compiled host fails closed when copied helper is missing 52ms
+ ✓ test/integration-journal-packaging.test.ts > compiled host fails closed when copied helper is mismatch 53ms
+ ✓ test/integration-journal-packaging.test.ts > compiled host fails closed when copied manifest digest binding is changed 53ms
+ ✓ test/integration-deployment-staging-host.test.ts > parser retains the full basename for a prospective drive-root child without creating it 3ms
+ ✓ test/integration-deployment-staging-host.test.ts > invalid deployment configuration refuses before provider or staging factory work 1ms
+ ✓ test/integration-deployment-staging-host.test.ts > missing and disabled opt-in preserve the existing explicit readiness 0ms
+ ✓ test/integration-deployment-staging-host.test.ts > supported opted-in host reaches the Core driver with exact immutable execution staging 180ms
+ ✓ test/integration-deployment-staging-host.test.ts > enabled configuration does not upgrade an adapter without an explicit staging contract 3ms
+ ✓ test/integration-deployment-staging-host.test.ts > unsafe worktree and overlap refuse before the consuming host factory runs 3ms
+ ✓ test/integration-native-compiled-imports.test.ts > built native and Claude executor modules load in real Node 175ms
+ ✓ test/integration-qualification-application.test.ts > definitions only; exact existing JSON validation, one daemon passed to operation and closed after collection 22ms
+ ✓ test/integration-qualification-application.test.ts > missing/malformed/oversized existing config never creates DB or starts collection 2ms
+ ✓ test/integration-qualification-application.test.ts > missing/malformed/oversized existing config never creates DB or starts collection 4ms
+ ✓ test/integration-qualification-application.test.ts > missing/malformed/oversized existing config never creates DB or starts collection 3ms
+ ✓ test/integration-qualification-application.test.ts > abort prevents quit until collect settles, then closes; no collect/close race 62ms
+ ✓ test/integration-qualification-application.test.ts > outcome incomplete never exits as qualified 3ms
+ ✓ test/integration-qualification-application.test.ts > outcome unresolved never exits as qualified 3ms
+ ✓ test/integration-qualification-application.test.ts > outcome close-failure never exits as qualified 3ms
+ ✓ test/integration-qualification-application.test.ts > outcome collect-reject never exits as qualified 3ms
+ ✓ test/integration-report-comparison.test.ts > restores only pinned archive bytes with matching original IR and HTML receipt 5ms
+ ✓ test/integration-report-comparison.test.ts > unchanged snapshots have no node edge or file changes; forged and unrelated inputs reject 2ms
+ ✓ test/integration-report-comparison.test.ts > same path content changes are visible even when stable node and edge sets are unchanged 0ms
+ ✓ test/integration-report-comparison.test.ts > stable IDs show additions removals and endpoint changes with all inventory retained 0ms
+ ✓ test/integration-report-comparison.test.ts > comparison HTML escapes hostile labels, preserves provenance and uses script-free hashed CSP 147ms
+ ✓ test/integration-report-comparison.test.ts > current comparison wording requires a basis bound to an independently observed matching digest 1ms
+ ✓ test/integration-claude-cli-owned.test.ts > real spawnOwned writes a SQLite session handle for the fake process 140ms
+ ✓ test/integration-plan.test.ts > S3 immutable requirement task DAG > canonicalizes order and digests without exposing mutable caller data 4ms
+ ✓ test/integration-plan.test.ts > S3 immutable requirement task DAG > rejects duplicate IDs, missing/self dependencies and cycles 1ms
+ ✓ test/integration-plan.test.ts > S3 immutable requirement task DAG > rejects orphan requirements, missing implementation/verification and independent verifier omissions 1ms
+ ✓ test/integration-plan.test.ts > S3 immutable requirement task DAG > requires verification after all implementations of a requirement, allowing transitive dependencies 1ms
+ ✓ test/integration-plan.test.ts > S3 immutable requirement task DAG > permits model producers as makers without relaxing independent reviewer or all-maker dependencies 2ms
+ ✓ test/integration-plan.test.ts > S3 immutable requirement task DAG > rejects undeclared scope, candidates, requirements, privileges and policy changes 1ms
+ ✓ test/integration-plan.test.ts > S3 immutable requirement task DAG > rejects hostile records, sparse/accessor arrays and bounded input overflow without invoking getters 1ms
+ ✓ test/integration-plan.test.ts > S3 readiness from reconciled host facts > derives deterministic pending stages and never starts a task before dependencies complete 1ms
+ ✓ test/integration-plan.test.ts > S3 readiness from reconciled host facts > propagates explicit failed and blocked dependency roots without declaring completion 1ms
+ ✓ test/integration-plan.test.ts > S3 readiness from reconciled host facts > distinguishes all tasks completed from acceptance and execution admission 0ms
+ ✓ test/integration-plan.test.ts > S3 readiness from reconciled host facts > rejects missing/duplicate/foreign states, impossible execution and forged validated plans 1ms
+
+ Test Files  29 passed (29)
+      Tests  283 passed (283)
+   Start at  23:38:07
+   Duration  172.98s (transform 2.50s, setup 0ms, import 9.22s, tests 158.38s, environment 3ms)
+
+JSON report written to C:/Users/User/cue/evidence/integrations/release/20260926-grouped-regression/group-12/report.json

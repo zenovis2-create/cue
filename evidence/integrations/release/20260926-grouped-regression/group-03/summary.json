@@ -1,0 +1,48 @@
+{
+  "id": 3,
+  "complete": false,
+  "exactFiles": true,
+  "files": [
+    "daemon/test/integration-codex-adapter-preservation.test.ts",
+    "daemon/test/integration-driver-real-restart.test.ts",
+    "daemon/test/integration-evaluation-comparisons.test.ts",
+    "daemon/test/integration-evaluation-observations.test.ts",
+    "daemon/test/integration-evaluation-workload-verification.test.ts",
+    "daemon/test/integration-generated-acceptance-host.test.ts",
+    "daemon/test/integration-goal-planning-packaging.test.ts",
+    "daemon/test/integration-initial-default-engine.test.ts",
+    "daemon/test/integration-json-template-core.test.ts",
+    "daemon/test/integration-local-json-electron-gate-v2.test.ts",
+    "daemon/test/integration-model-alias-source-claims.test.ts",
+    "daemon/test/integration-model-qualification.test.ts",
+    "daemon/test/integration-native-host-acceptance-wiring.test.ts",
+    "daemon/test/integration-observation-core.test.ts",
+    "daemon/test/integration-protected-installation.test.ts",
+    "daemon/test/integration-readonly-verifier-acl.test.ts",
+    "daemon/test/integration-recovery-run-picker-ipc.test.ts",
+    "daemon/test/integration-resource-core.test.ts",
+    "daemon/test/integration-selection-explanation-ui.test.ts",
+    "daemon/test/integration-startup-exact-identity.test.ts",
+    "daemon/test/p10c-manifest.test.ts",
+    "daemon/test/p12-parent-death.test.ts",
+    "daemon/test/p2.test.ts",
+    "daemon/test/readonly-wfp-diagnostic-boundaries.test.ts"
+  ],
+  "counts": {
+    "failed": 1,
+    "passed": 154
+  },
+  "failedFiles": [
+    "daemon/test/p10c-manifest.test.ts"
+  ],
+  "unhandledErrors": null,
+  "outcome": {
+    "startedAt": "2026-09-26T14:15:01.319Z",
+    "finishedAt": "2026-09-26T14:17:30.031Z",
+    "code": 1,
+    "signal": null,
+    "timedOut": false,
+    "spawnError": null,
+    "sourceUnchanged": true
+  }
+}

@@ -1,0 +1,1 @@
+Done: actual SQLite/DOM outcome report composition, legacy reports/delivery/app gate and typecheck0; build coordinated. Cap 2 correction hypotheses; each pass focused gates. Own IR wrapper/Core export call/new test only. No model/native/IPC/UI changes. Independent review required.

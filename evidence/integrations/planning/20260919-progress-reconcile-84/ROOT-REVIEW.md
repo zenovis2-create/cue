@@ -1,0 +1,13 @@
+# Batch84 root verification
+
+Previous goal turn was progress. This turn adds a bounded approved planning lifecycle, independent structural checker, two-approval Core and UI/IPC handoff, and explicit measurement/packaging support. Original parent counts remain 44 total, 33 closed, 11 open.
+
+The final independent [backend review](../../S3/20260919-approved-goal-planning/REVIEW.md) passed 16/16 across four files. Real Core/driver/SQLite/Git transitions use synthetic provider/admission boundaries. The positive second phase observes the bound task instruction at a deliberately forbidden provider boundary; it is not a completed execution. Foreign accepted planning sources with identical proposal bytes cannot replace the captured source tuple. Unknown cleanup launches no verifier and creates no execution run. Immutable output records reject direct mutation.
+
+The separate [UI review](../../S3/20260919-approved-goal-planning/ui/REVIEW.md) passed 13/13 using the actual renderer in JSDOM with mocked replies. The [launcher review](../../S3/20260919-approved-goal-planning/launcher/REVIEW.md) includes a real local diagnostic child/process-limit/cleanup gate, 15/15. Diagnostic observations are not production M1–M3 qualification. The [measurement review](../../S1/20260919-planning-subject-closure/REVIEW.md) passed 86/86. The root's minimal two-copy packaging patch and fresh Node loading passed separate [packaging review](BUILD-REVIEW.md), 2/2. Test sets overlap and are not summed.
+
+Root coordinated the builds. The first failed on a missing handoff declaration, the second on the new planning template's declaration union. Both failures remain in build-pass1.log and build-pass2.log. The build then passed with asset copying, and the final source/test gate is build-complete.log, exit 0. Existing Core, driver, approval, JSON and startup regressions passed 61/61 across six files in core-regression.log; tracked process handle 52845 exited 0. No model, provider, account, remote service or Qwen call was made.
+
+Four status documents received batch84 insertions; exact original bytes were captured first in preimages/. Independent final documentation/pin audit remains a separate gate.
+
+This does not complete the product's default general-goal workflow. Startup does not construct the planning factory, the production native host still fixes two tasks, and the new goal checker's full qualification collector is explicitly unsupported. The concrete next production changes are recorded in [NEXT-PRODUCTION-PATH.md](NEXT-PRODUCTION-PATH.md). No parent item or full GOAL is closed. Qwen remains off, subscription allowance remains 4/4 used, and GOAL remains active.

@@ -1,0 +1,7 @@
+# Independent P12 proof-fixture review
+
+Verdict: PASS for the exact-surface fixture correction.
+
+The earlier serial suite reached `p12-electron-proof-result.test.ts`, but its forced cleanup failure was masked: `scripts/p11-electron-proof.mjs` compared the renderer API to a stale list and failed before the cleanup phase. Against the exact saved preimage (SHA-256 `50A187D8CAA8118EC79FDC6DB197049A763721DC915488B1536038CD9AAF8105`), the only change adds the four actual planning preload functions—`localPlanningSetup`, `planningAvailability`, `prepareFromPlanning`, and `preparePlanning`—to that exact list. The strict list, function-type check, sandbox/CSP/window checks, and `p12-electron-proof-result.test.ts` assertion remain intact. Final script SHA-256 is `A3DB7DC501F690DB7B740FD0C438CEBBED293E4EDD64A6D5B3F2DC929A807FFA`.
+
+I independently ran the named P12 test and then the full one-test file from `daemon`; both exited 0 with 1/1 pass (35.47 and 35.39 seconds respectively). The test starts a real Electron proof process with `CUE_ELECTRON_PROOF_FORCE_CLEANUP_FAILURE=1` and requires a nonzero child exit, no `p12_electron_window_result.json`, a failure receipt with `passed:false`, and an error containing `forced cleanup failure`. This verifies that the intended negative cleanup gate is reached. It is not a successful Electron acceptance proof or a full-suite result. No model, provider, Qwen, account, or service call was made.

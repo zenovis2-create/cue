@@ -1,0 +1,11 @@
+# Actual outcome report attempt 1 — FAILED timeout
+
+[Final verdict](actual-attempt1/final-verdict.json) is passed:false, exit 1. [Timeout](actual-attempt1/timeout.json) records report-window phase at the configured 115-second child deadline. The [failure](actual-attempt1/failure.json) then records Object has been destroyed at debugger.detach after the window teardown. The broad phase does not identify whether loading, DOM inspection, animation-frame wait or capture was pending. There are no PNGs or final inspection/checks receipts; no UI PASS is claimed.
+
+The actual core export produced [outcome-report.html](actual-attempt1/outcome-report.html) and an artifact receipt. Core/fixture imports followed genuine generation capture; the exact profile binding and selected manifests are preserved. These artifacts do not prove the unreached report inspection gates or visual readability. Original Node preflight remains its earlier compiled-snapshot evidence, not an actual UI result.
+
+Root and QA's bounded next hypothesis is the debugger-evaluated requestAnimationFrame promise in a javascript:false report window. That could remain unresolved even though the host window is displayed. This is plausible from source and deadline behavior, not established by a phase-specific receipt. A future correction would add precise checkpoints and use host-timed compositor capture without enabling JavaScript, preload, Node or network. No such change or rerun was performed under this attempt.
+
+[Owned state](actual-attempt1/owned-state.json): PID 21988 closed with exit 1, independent backup verification passed, only owned root `D:\Temp\User\cue-outcome-report-WX7uDj` removed with actual absence verified, parentErrors empty. The original SQLite backup, HTML, failure, timeout, manifests, intent marker and process log remain. [Runner](actual-attempt1/runner.json) records the terminal tool result; exact overall duration was not instrumented.
+
+No actual model/helper/provider/adapter, user approval or execution was invoked. This fixture contains only an awaiting-approval prepared workflow/policy/plan. No screenshot exists to inspect. Automatic retry is forbidden; any remaining actual attempt requires separately reviewed diagnosis and explicit root signal. All prior selection failure and unrelated successful QA receipts are unchanged.

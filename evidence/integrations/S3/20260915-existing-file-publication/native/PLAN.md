@@ -1,0 +1,7 @@
+# Native existing-file compare/write
+
+Done: preserve snapshot protocol v1 and add a bounded v2 existing-file compare/write operation whose only success is a complete matching same-handle before/after receipt. It binds the exact root identity, one relative target, expected file identity/length/SHA-256, and host-computed replacement bytes/length/SHA-256. Absent, reparse, sparse, directory, multilink, root/ancestor/target drift, malformed request, stale preimage, or exclusive-open conflict writes zero and returns contention/unavailable. Any helper death, timeout, short write, flush failure, or post-write verification failure returns unknown; it never claims rollback or definite write-zero. It excludes creation, pathname replacement, power-loss atomicity, and arbitrary already-open external writers.
+
+Cap 3. Each pass runs Go formatting/tests/build, wrapper-focused Vitest including P→A then stale P→B with A preserved and hostile preflight write-zero, packaging digest/manifest update, daemon build, and existing snapshot/change-record boundary regression. Failed passes require a new hypothesis and retained logs. Tests write only to owned temporary directories. No driver, ledger, migration, provider, model, Electron, or real workspace mutation.
+
+Full preimages captured before edits: `main_windows.go` SHA-256 `b0f16de74d7fa20811eaf4240c6eeb8f01c6e6c0355088fe9bbcf86346e4bcd7`; `main_other.go` `0277d1af3fc37f03a053dbf431aaaa99f742b84ced351266c445949acdf055d8`; `change-snapshot-host.ts` `5b45d38462cbd220c9c27b464391e95143e131e2d4ed7cf23183195a6a510f43`.

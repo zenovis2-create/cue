@@ -1,0 +1,1 @@
+Done: stale screenshot occurs only after delayed public reply release and renderer two animation frames. Prior offline process pass does not prove this timing. Root cap1 barrier correction, evidenceonly. Everypass syntax + offline fresh result/process0; independent preflight then actualElectron cap1. Keep synthetic unknown/noqualification scope.

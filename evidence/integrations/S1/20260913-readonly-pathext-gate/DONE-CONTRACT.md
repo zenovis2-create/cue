@@ -1,0 +1,7 @@
+# PATHEXT-corrected read-only gate done contract
+
+Done for preflight means a fresh one-attempt gate pins its runner, test, client, unchanged production launcher, reviewed three-key shared host helper, executable, and complete compiled identity/process closure; proportional offline tests pass; and independent review approves the exact command and owned paths. Preparation performs no native launch.
+
+If separately authorized, the single actual attempt must prove project read and runtime write success; project create/overwrite/remove/rename/ACL mutation and sibling read/write fail only with `EACCES` or `EPERM`; controlled loopback is reachable from the host but denied to the worker with `EACCES` or `EPERM`; exact root identity and ACL are restored; the worker is dead; the profile count is zero; and bounded raw pre-ACL, launcher, post-ACL, and profile observations are durable. Missing worker output is a failed result and must not prevent bounded post-observation.
+
+The gate owns `D:\Temp\User\Cue.ReadonlyVerifier.PathextGate1` and `evidence/integrations/S1/20260913-readonly-pathext-gate/actual-attempt1`. It permits at most one gate attempt and one native launcher call, with no retry, model, provider, external network, credential, production edit, historical reset, or cleanup-recovery action. Every preparation pass runs syntax, focused offline tests, manifest-pin comparison, owned-state absence, and scoped diff check. Failure remains failure and retains diagnostics.

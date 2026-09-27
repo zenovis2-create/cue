@@ -1,0 +1,199 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > aborts the turn and refuses every later tool call after a filesystem violation 12ms
+ ✓ test/p12-enforcement-seal.test.ts > P12 immediate enforcement sealing > also seals when worker preflight throws a typed boundary violation before spawn 3ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > real host performs an approved existing-file CAS with timing sink accepted 6286ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > real host performs an approved existing-file CAS with timing sink rejected 6040ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > real host refuses generic, unapproved and contended writes without launching workers 22750ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > runtime timing refuses fabricated observations and proxies without invoking getters or traps 1ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > native existing-file mode rejects broader authority before controller launch 1ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > invalid target authority is descriptor-safe and fails before controller filesystem or session mutation 1ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > proxy target arrays are refused without invoking traps or mutating controller state 1ms
+ ✓ test/p12-mutation-harness.test.ts > P12 mutation harness > proves fail-fast, lifecycle, and parent-death tests detect security regressions in disposable copies 19347ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > subscribes before resume and cleans only after exact process death 787ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > openfail refuses with zero resume and observes suspended death 777ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > getfail refuses with zero resume and observes suspended death 814ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > disabled refuses with zero resume and observes suspended death 807ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > appfail refuses with zero resume and observes suspended death 820ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > subfail refuses with zero resume and observes suspended death 795ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > an ambiguous subscription handle fails closed without cleanup or resume 798ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > unknown exact-handle death retains subscription and never cleans 823ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > unsubfail poisons after death and cannot report success 790ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > freefail poisons after death and cannot report success 786ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > closefail poisons after death and cannot report success 763ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > rejects invalid frozen requests before native calls and ignores later caller mutation 1529ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > rejects a foreign process handle before wait 732ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > deep-copies bounded events and reports callback loss as unknown 2310ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > constructs the concrete NativeWfp provider inertly 739ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > shares one native lifetime guard with the collector and releases it after safe disposal 755ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > keeps default launcher provider null and exposes no payload authority 0ms
+warning: in the working copy of 'target.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'target.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-git-staging-driver.test.ts > public driver with trusted Git staging factory > publishes exact bytes from a distinct real execution worktree through the public flow 6497ms
+ ✓ test/integration-git-staging-driver.test.ts > public driver with trusted Git staging factory > holds the lease and receipt when execution diverges after staged bytes are read 4492ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > capture snapshots host data before callbacks and returns deeply frozen owned facts 427ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > capture rejects hostile nested data and bounded graphs without traps or writes 1556ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > terminal integrity is exact, synchronous, data-only, and bound to the stored attempt 2548ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > Core projects bounded populated provenance and deterministic replay/reopen while retaining unavailable measurements 375ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > Core evidence preflight rejects unconfigured, malformed, and foreign facts without callbacks or writes 521ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > evidence projection fails closed on changed bytes and stored tamper, and offline fixture authority stays distinct 826ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > missing quality timing and accounting stay explicitly unavailable 288ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > actual Core report export revalidates and delivers only the safe current-run measured summary 555ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > Core report evidence corruption stays generic and foreign or rejected runs perform no measured callbacks or writes 299ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > capture enforces aggregate escaped JSON byte budget before evidence callbacks 256ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > measured-fact list uses actual Core and IPC for bounded empty continuation, workspace revalidation, reopen and zero writes 612ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > measured-fact list rejects bounds, stale cursor, disabled/closed/outer transaction and keeps closure authority 552ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > the checker principal is this module's own code identity, not a role or account name 241ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > an approved contract that is not pinned by the persisted requirement check cannot capture 220ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > a tampered contract is refused at construction rather than trusted 206ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > the evidence policy fixes code-kind requirements and cannot be widened by a caller 212ms
+ ↓ test/integration-native-existing-file-acceptance-host.test.ts > without the Windows snapshot helper the host refuses instead of reporting pass
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > real on-disk bytes matching the approved contract accept with an independent principal 608ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > a producer principal equal to the checker principal cannot be accepted 321ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > bytes that do not match the approved contract fail and are never accepted 498ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > a manifest change between capture and collect is never accepted 417ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > isManifestCurrent reports false once the approved bytes change under the lease 622ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > an unprovable target refuses instead of reporting pass 336ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > a successful read-only verifier receipt is what unlocks the independent principal 408ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > without a verifier receipt acceptance is never reached 293ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > an observation this host did not issue evaluates to unknown 203ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > two ordered producers receive separate protected checks and one independent verifier 1030ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > one corrupt target cannot pass its own approved requirement 910ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > a registered run rejects swapped producers and altered bindings while identical retry remains safe 917ms
+ ✓ test/integration-native-existing-file-acceptance-host.test.ts > two-writer verification without the native verifier receipt never accepts 384ms
+ ✓ test/integration-driver-provider-lifecycle.test.ts > driver provider lifecycle evidence boundary > keeps every failed verifier outcome at append count zero and cancel acknowledgement non-terminal 579ms
+ ✓ test/integration-driver-provider-lifecycle.test.ts > driver provider lifecycle evidence boundary > admits exact terminal then matching billing, preserves replay, and rejects stale billing without a dependent row 160ms
+ ✓ test/integration-driver-provider-lifecycle.test.ts > driver provider lifecycle evidence boundary > uses the public driver callback and appends zero for missing verification or subject drift during a delayed verdict 663ms
+ ✓ test/integration-driver-provider-lifecycle.test.ts > driver provider lifecycle evidence boundary > serializes the public terminal and billing callbacks and records only their authenticated snapshots 322ms
+ ✓ test/integration-driver-provider-lifecycle.test.ts > driver provider lifecycle evidence boundary > rechecks persisted account identity and close state after a delayed public verdict 442ms
+ ✓ test/integration-driver-provider-lifecycle.test.ts > driver provider lifecycle evidence boundary > rejects accessors, hostile kind coercion, and compact shared graphs before verifier invocation or terminal append 1289ms
+ ✓ test/integration-run-outcome-report.test.ts > real SQLite report includes separate outcome digest without upgrading completed task to acceptance 3903ms
+ ✓ test/integration-run-outcome-report.test.ts > each explicit read refreshes outcome while original report remains independent 96ms
+ ✓ test/integration-run-outcome-report.test.ts > outcome read error yields fixed unavailable without leaking data or fabricating outcome 88ms
+ ✓ test/integration-run-outcome-report.test.ts > outer writer transaction is rejected before either report read 89ms
+ ✓ test/integration-final-publication.test.ts > durable final existing-file publication > uses the pinned native helper for an existing-file win and a stale-preimage loss 618ms
+ ✓ test/integration-final-publication.test.ts > durable final existing-file publication > commits intent before the write, protects copied bytes, and replays without callbacks 246ms
+ ✓ test/integration-final-publication.test.ts > durable final existing-file publication > leaves a thrown post-intent execution pending across reopen and holds its exact lease 278ms
+ ✓ test/integration-final-publication.test.ts > durable final existing-file publication > keeps a completed write pending when terminal persistence fails and stores malformed host output as unknown 474ms
+ ✓ test/integration-final-publication.test.ts > durable final existing-file publication > persists bounded contention and unknown outcomes with truthful lease behavior 243ms
+ ✓ test/integration-final-publication.test.ts > durable final existing-file publication > rejects hostile terminal labels and downgrades incomplete host receipts to unknown 446ms
+ ✓ test/integration-final-publication.test.ts > durable final existing-file publication > denies malformed input, absent authority, expiry, and outer transactions before write 454ms
+ ✓ test/integration-final-publication.test.ts > durable final existing-file publication > fails startup on a partial guard set and keeps intent/result rows immutable 273ms
+ ✓ test/integration-qualify-generated-json.test.ts > explicit operation uses same DB and default collector only, checker first; duplicate calls never collect twice 165ms
+ ✓ test/integration-qualify-generated-json.test.ts > rejects missing/forged guard, getters, fixture seams and wrong same-ledger binding before collection 128ms
+ ✓ test/integration-qualify-generated-json.test.ts > generation drift at issuance prevents model collection and retains failure without close or retry 130ms
+ ✓ test/integration-qualify-generated-json.test.ts > checker unknown prevents any model call and cannot be retried 133ms
+ ✓ test/integration-qualify-generated-json.test.ts > checker fixture prevents any model call and cannot be retried 127ms
+ ✓ test/integration-qualify-generated-json.test.ts > checker error prevents any model call and cannot be retried 123ms
+ ✓ test/integration-qualify-generated-json.test.ts > preabort never collects and remains consumed; conflicting operation payload is rejected 120ms
+ ✓ test/integration-qualify-generated-json.test.ts > abort during owned checker await is forwarded and never starts model or closes caller DB 125ms
+ ✓ test/integration-held-recovery-admission.test.ts > S4 held recovery admission > blocks an open held case before decision insertion 207ms
+ ✓ test/integration-held-recovery-admission.test.ts > S4 held recovery admission > re-reads held authority after the last host callback 169ms
+ ✓ test/integration-held-recovery-admission.test.ts > S4 held recovery admission > keeps no-held and valid eligible disposition decisions available 360ms
+ ✓ test/integration-held-recovery-admission.test.ts > S4 held recovery admission > forces reconciled-stop and rejects a mismatched deterministic seal 366ms
+ ✓ test/integration-held-recovery-admission.test.ts > S4 held recovery admission > blocks decision replay, appendRevision, and replacement claim after a new held case appears 180ms
+ ✓ test/integration-evaluation-workload-enrollment.test.ts > eight frozen inputs prepare forty isolated slots with explicit fixture baseline authority and durable enrollment only 962ms
+ ✓ test/integration-staging-authority-migration-definition.test.ts > unchanged attempt staging definitions reopen 167ms
+ ✓ test/integration-staging-authority-migration-definition.test.ts > an exact 047 ledger upgrades to discard authority once and reopens 255ms
+ ✓ test/integration-staging-authority-migration-definition.test.ts > partial or weakened discard authority refuses startup 258ms
+ ✓ test/integration-staging-authority-migration-definition.test.ts > partial attempt staging install refuses startup 126ms
+ ✓ test/integration-staging-authority-migration-definition.test.ts > same-name weakened staging trigger refuses startup 133ms
+ ✓ test/integration-staging-authority-migration-definition.test.ts > altered staging table definition refuses startup 132ms
+ ✓ test/integration-staging-authority-migration-definition.test.ts > all staging tables and lease guards are immutable definitions 96ms
+ ✓ test/integration-staging-authority-migration-definition.test.ts > compiled package carries the exact staging migrations and opens them on fresh and reopened ledgers 261ms
+ ✓ test/integration-native-runtime-migration.test.ts > packages 050 exactly and opens the immutable schema fresh and reopened 192ms
+ ✓ test/integration-native-runtime-migration.test.ts > refuses partial and weakened 050 installations on reopen 248ms
+ ✓ test/integration-native-runtime-migration.test.ts > 050 refuses a comment legacy impersonation without rewriting it 168ms
+ ✓ test/integration-native-runtime-migration.test.ts > 050 refuses a changed-body legacy impersonation without rewriting it 165ms
+ ✓ test/integration-native-runtime-migration.test.ts > upgrades a legacy 050 lineage trigger in place and then reopens 212ms
+ ✓ test/integration-native-runtime-migration.test.ts > still refuses a same-name weakened lineage trigger rather than upgrading it 153ms
+ ✓ test/integration-native-runtime-migration.test.ts > upgrades a legacy 039 verifier lineage trigger in place 165ms
+ ✓ test/integration-evaluation-baseline.test.ts > explicit frozen authority atomically declares and enrolls a pinned manual baseline across reopen 198ms
+ ✓ test/integration-evaluation-baseline.test.ts > missing, false, throwing, malformed and unpinned authority paths write nothing 334ms
+ ✓ test/integration-evaluation-baseline.test.ts > direct enrollment, outer transactions, late declarations, tamper and oversized reads fail closed 174ms
+ ✓ test/integration-evaluation-baseline.test.ts > authorization bytes reject injected approval and promotion authority 83ms
+ ✓ test/integration-evaluation-baseline.test.ts > forged declaration rows cannot authorize direct manual enrollment 313ms
+ ✓ test/integration-recovery-claim-limits.test.ts > S4 decision-backed recovery claim limits > uses a valid bound retry contract and recovery scope 200ms
+ ✓ test/integration-recovery-claim-limits.test.ts > S4 decision-backed recovery claim limits > rejects a persisted replan replacement after the original deadline 191ms
+ ✓ test/integration-recovery-claim-limits.test.ts > S4 decision-backed recovery claim limits > rejects a persisted replan replacement after cumulative attempts are consumed 191ms
+ ✓ test/integration-recovery-claim-limits.test.ts > S4 decision-backed recovery claim limits > re-reads limits after the final authorization callback and admits an in-limit control 357ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L1 close does not resolve until every owned runtime has settled its teardown 212ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L2 stop retains the runtime handle until its teardown settles 188ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L3 the runtime stop path signals termination without deleting the credential home 1ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L4 the Electron quit path blocks the first quit and awaits the close barrier 138ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L6 a failed stop makes close reject and preserves the handle, db and ownership 128ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L7 a failing close never reaches app.quit and surfaces the failure 137ms
+ ✓ test/p13-lifecycle-barrier.test.ts > P13 runtime lifecycle barrier > P13-L5 main.mjs delegates quit to the guarded barrier instead of a fire-and-forget close 1ms
+ ✓ test/integration-claude-configuration.test.ts > explicit host session produces opaque one-use environment without modifying profile contents 35ms
+ ✓ test/integration-claude-configuration.test.ts > null session has no ambient fallback; missing resolver and wrong provider/version refuse 6ms
+ ✓ test/integration-claude-configuration.test.ts > crossed attemptId cannot consume an issued binding 17ms
+ ✓ test/integration-claude-configuration.test.ts > crossed candidateId cannot consume an issued binding 20ms
+ ✓ test/integration-claude-configuration.test.ts > crossed subjectDigest cannot consume an issued binding 20ms
+ ✓ test/integration-claude-configuration.test.ts > crossed accountIdentity cannot consume an issued binding 19ms
+ ✓ test/integration-claude-configuration.test.ts > crossed model cannot consume an issued binding 19ms
+ ✓ test/integration-claude-configuration.test.ts > crossed worktreePath cannot consume an issued binding 17ms
+ ✓ test/integration-claude-configuration.test.ts > forged/cloned/foreign-installation bindings fail 19ms
+ ✓ test/integration-claude-configuration.test.ts > resolver cannot change account/model or select an unidentified profile 5ms
+ ✓ test/integration-claude-configuration.test.ts > refuses missing environment 3ms
+ ✓ test/integration-claude-configuration.test.ts > refuses extra environment 5ms
+ ✓ test/integration-claude-configuration.test.ts > refuses ambient environment 10ms
+ ✓ test/integration-claude-configuration.test.ts > refuses worktree environment 10ms
+ ✓ test/integration-claude-configuration.test.ts > refuses outside-home environment 8ms
+ ✓ test/integration-claude-configuration.test.ts > refuses mismatched-home environment 11ms
+ ✓ test/integration-claude-configuration.test.ts > refuses relative environment 9ms
+ ✓ test/integration-claude-configuration.test.ts > refuses future session window 17ms
+ ✓ test/integration-claude-configuration.test.ts > refuses expired session window 21ms
+ ✓ test/integration-claude-configuration.test.ts > refuses overlong session window 4ms
+ ✓ test/integration-claude-configuration.test.ts > rechecks expiry, installation and profile/layout drift immediately before consumption 84ms
+ ✓ test/integration-claude-configuration.test.ts > junction config roots cannot be issued even when they point inside the explicit home 13ms
+ ✓ test/integration-claude-configuration.test.ts > hostile request/session/environment getters and proxies execute no traps 7ms
+ ✓ test/integration-claude-configuration.test.ts > direct session then-getters and proxies are rejected without Promise assimilation 6ms
+ ✓ test/integration-claude-configuration.test.ts > snapshots caller/session data and refuses concurrent duplicate attempt resolution 33ms
+ ✓ test/integration-planning-ui-ipc.test.ts > planning IPC accepts exact commands through trusted sender and never accepts renderer proposal text 7ms
+ ✓ test/integration-planning-ui-ipc.test.ts > renderer requires planning approval, released ready result, then a new execution approval 484ms
+ ✓ test/integration-planning-ui-ipc.test.ts > unconfigured planning is disabled in the real renderer 108ms
+ ✓ test/integration-capability-store.test.ts > exact replay and resolution preserve bytes without reading arbitrary filesystem paths 94ms
+ ✓ test/integration-capability-store.test.ts > latest failure supersedes pass and simultaneous conflict returns no usable reference 75ms
+ ✓ test/integration-capability-store.test.ts > immutable data cannot be changed through REPLACE, UPDATE or DELETE 77ms
+ ✓ test/integration-capability-store.test.ts > record survives actual SQLite reopen and preserves observed fixture provenance 142ms
+ ✓ test/integration-capability-store.test.ts > future, invalid and executable data rejected before recording 79ms
+ ✓ test/integration-capability-store.test.ts > real admission consumes store references while fixture summaries remain ineligible 86ms
+ ✓ test/integration-capability-store.test.ts > cached pass references cannot bypass newer failure or simultaneous conflict 81ms
+ ✓ test/integration-reports.test.ts > ledger report preserves observed states, planned dependencies and failed history without invented acceptance or costs 99ms
+ ✓ test/integration-reports.test.ts > declarations are canonical immutable and explicitly unverified 2ms
+ ✓ test/integration-reports.test.ts > declaration bounds, source path traversal, duplicate IDs and dangling edges are rejected 1ms
+ ✓ test/integration-reports.test.ts > HTML parser sees hostile labels as literal text with no scripts, attributes or external requests 147ms
+ ✓ test/integration-reports.test.ts > stable ID comparisons report exact declaration changes and refuse unrelated identities 76ms
+ ✓ test/integration-reports.test.ts > source diagram groups all files and distinct relations deterministically without rewriting IR or dropping inventories 43ms
+ ✓ test/integration-reports.test.ts > run reports retain direct observed/planned inventory and receive no source diagram or collapsed stage table 92ms
+ ✓ test/integration-evaluation-measurement-contracts.test.ts > authoritative registries derive immutable canonical digests and revalidate stored bytes 99ms
+ ✓ test/integration-evaluation-measurement-contracts.test.ts > offline factory cannot acquire host authority and input boundary rejects accessors without host reads 74ms
+ ✓ test/integration-evaluation-measurement-contracts.test.ts > metric domains and price identity are required rather than accepting digest-only authority 72ms
+ ✓ test/integration-evaluation-measurement-contracts.test.ts > nested registry accessors are rejected without execution or writes 70ms
+ ✓ test/integration-journal-recovery-startup-review.test.ts > actual ownership startup commits current-ledger holds before fencing and publishes no owner after fence failure 141ms
+ ✓ test/integration-measurement-artifacts.test.ts > actual composite measurement artifacts > bounds reads by the initial size when a writer continuously appends 16ms
+ ✓ test/integration-measurement-artifacts.test.ts > actual composite measurement artifacts > binds every labeled component and invalidates the existing subject on drift 16ms
+ ✓ test/integration-measurement-artifacts.test.ts > actual composite measurement artifacts > measures content independently of install location and streams large files exactly 28ms
+ ✓ test/integration-measurement-artifacts.test.ts > actual composite measurement artifacts > fails on missing/non-file components, duplicate identities and accessor input 4ms
+ ✓ test/integration-goal-planning-bootstrap.test.ts > real saved planning settings and fixture evidence assemble a bounded host without network 30ms
+ ✓ test/integration-local-http-failures.test.ts > local model HTTP rejection facts (mock fetch; no network) > classifies HTTP 401 without retaining response data 22ms
+ ✓ test/integration-local-http-failures.test.ts > local model HTTP rejection facts (mock fetch; no network) > classifies HTTP 403 without retaining response data 1ms
+ ✓ test/integration-local-http-failures.test.ts > local model HTTP rejection facts (mock fetch; no network) > classifies HTTP 408 without retaining response data 0ms
+ ✓ test/integration-local-http-failures.test.ts > local model HTTP rejection facts (mock fetch; no network) > classifies HTTP 429 without retaining response data 0ms
+ ✓ test/integration-local-http-failures.test.ts > local model HTTP rejection facts (mock fetch; no network) > classifies HTTP 500 without retaining response data 0ms
+ ✓ test/integration-local-http-failures.test.ts > local model HTTP rejection facts (mock fetch; no network) > classifies HTTP 599 without retaining response data 0ms
+ ✓ test/integration-local-http-failures.test.ts > local model HTTP rejection facts (mock fetch; no network) > classifies HTTP 400 without retaining response data 0ms
+ ✓ test/integration-local-http-failures.test.ts > local model HTTP rejection facts (mock fetch; no network) > classifies HTTP 418 without retaining response data 0ms
+ ✓ test/integration-local-http-failures.test.ts > local model HTTP rejection facts (mock fetch; no network) > does not classify forged errors or a successful response with no body 1ms
+ ✓ test/readonly-verifier-control.test.ts > measures an immutable exact control closure and detects drift 8ms
+ ✓ test/readonly-verifier-control.test.ts > rejects accessor proxy extra fields and changed digest 4ms
+ ✓ test/p10c-electron-security.test.ts > Electron renderer defense in depth > ships a restrictive CSP that allows only packaged scripts and styles 2ms
+ ✓ test/p10c-electron-security.test.ts > Electron renderer defense in depth > allows only the packaged renderer URL and denies every new window 9ms
+
+ Test Files  29 passed (29)
+      Tests  186 passed | 1 skipped (187)
+   Start at  23:33:31
+   Duration  132.53s (transform 2.14s, setup 0ms, import 8.12s, tests 119.19s, environment 3ms)
+
+JSON report written to C:/Users/User/cue/evidence/integrations/release/20260926-grouped-regression/group-10/report.json

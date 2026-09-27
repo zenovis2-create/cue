@@ -1,0 +1,11 @@
+# Done contract: bounded WFP collector primitive
+
+Done means an x64-only C# diagnostic collector and PowerShell compile wrapper implement the actual Windows SDK ABI for `FwpmEngineOpen0`, `FwpmEngineGetOption0(FWPM_ENGINE_COLLECT_NET_EVENTS)`, `FwpmGetAppIdFromFileName0`, `FwpmNetEventSubscribe2` with callback/event version 3, `FwpmNetEventUnsubscribe0`, `FwpmFreeMemory0`, and `FwpmEngineClose0`.
+
+The installed Windows 10.0.26100 SDK establishes that `FwpmNetEventSubscribe3` delivers `FWPM_NET_EVENT4`, while `FwpmNetEventSubscribe2` delivers `FWPM_NET_EVENT3`. This implementation therefore uses Subscribe2 for the reviewed Header3/Event3 decoder rather than pairing Subscribe3 with an incompatible struct.
+
+The collector first queries collection state. Disabled, error, wrong type, or decode failure returns `unknown` without subscribing. It derives canonical app-ID bytes from the requested executable path, scopes copied callback data by exact package SID, app-ID bytes, IPv4/TCP loopback endpoint and capability-drop type, and returns only bounded normalized events with capture state `captured|unknown`. It does not claim the path is held/sealed, a PID match, one-process lifetime, package-drop inference, permission authority, or acceptance.
+
+Bounds are five seconds, 64 events, and 4096 app-ID bytes. Overflow, loss, callback decode ambiguity, or cleanup failure returns unknown. Borrowed callback pointers are copied only inside the callback. The delegate remains rooted until successful unsubscribe. If unsubscribe fails, the process quarantines the delegate/native context, rejects later collection, and neither closes the engine nor frees callback-related state before process exit.
+
+Attempt cap: two evidence-based corrections. Every pass compiles the exact C#, executes the injected-native lifecycle and decoder without WFP, covers disabled/error no-subscribe, bounds, exact ABI fields, callback copying, cleanup success, and unsubscribe-failure no-close/no-free/quarantine, then runs syntax and scoped diff checks. No real WFP query/subscription, network, worker, profile, model, provider, elevation, service, setter, audit-policy, or exemption operation is authorized before independent review and root approval.

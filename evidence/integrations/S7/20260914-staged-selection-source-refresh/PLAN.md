@@ -1,0 +1,3 @@
+# Staged selection source recapture
+
+Wait for final independently accepted production source and current shared daemon build. Do not generate for unproven intermediate stores or engine candidates. Single generation cap1: node scripts/reuse/cue-current-source-report.mjs exit0 readytrue, stdout/stderr and terminal exit captured first call. Separate read-only checker verifies pointer/manifest/five artifacts/all JS+TS source hashes/before=after source basis, retained historical records, and full top-level preimages. No manual history deletion or duplicate build. This is static source/import evidence, not native/runtime/provider/visual/performance qualification.

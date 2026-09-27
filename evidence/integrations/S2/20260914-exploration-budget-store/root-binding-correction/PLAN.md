@@ -1,0 +1,5 @@
+# Root bounded budget-policy binding correction
+
+Done: existing ordinary budget policy_revision must equal exact selected policy ID:revision at both authorization INSERT and read/replay. Wrong revision rejected without grant; unchanged matching policy succeeds. Correct raw hash oracle uses valid canonical payload with only wrong digest and a same-payload correct-digest control. Independent daemon build and exploration/budget/policy-store gate exit0 against frozen source. One root correction pass, no further maker edits; failure switches hypothesis or restores exact root preimages rather than reusing an unsafe candidate. Full three-file preimages captured before edits.
+
+Previous maker cap2 is preserved: pass1 27/27, pass2 failure27/28 followed by unexecuted test corrections. Independent first gate28/28 was not qualified due ineffective SQL arity oracle and missing budget revision binding. This correction is prompted by that distinct production binding defect, not a relabeling of earlier green tests. Reviewer is separate; no live calls/ledger/engine changes in this correction.

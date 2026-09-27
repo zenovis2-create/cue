@@ -1,0 +1,5 @@
+# Root bounded fixture-contract correction
+
+Maker cap2 ended failed before identity. New diagnosed source mismatch: app driver lines135-136 rejects arbitrary synthetic capability strings; required existing protocol is host-codex-controller-v1/session-handle-v1. Historical store.dispatch replay DTO has no durableRef, so test must read exact persisted identity instead of expecting an invented result field. Capture child close before stdout await to avoid missing exit event. Root owns these two existing fixture files only; full handoff copies first. No product source changes or provider/native authority.
+
+Cap ONE correction pass. Done: daemon build0 and restart+request-queue focused gate exit0, followed by separate checker's combined gate with raw output. Every pass pins/diffs and focused gate; on failure save candidate evidence and restore full pre-edit absent state for introduced test files rather than retain a failing active test. Do not execute another root pass. Existing maker failures/cap remain recorded.

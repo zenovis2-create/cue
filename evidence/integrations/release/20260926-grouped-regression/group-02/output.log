@@ -1,0 +1,139 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker 15235ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates 46392ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker 24661ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a controller crash without automatically resuming it 9246ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > reconciles a previously running write as blocked/crash without auto-resume on restart 318ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fences a verified live session before reconciling an interrupted run on startup 5958ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > refuses to kill a reused PID whose process start time does not match the ledger identity 2919ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks completion immediately when the controller credential-home cleanup fails 458ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks when cleanup fails after controller launch setup throws 392ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when independent goal verification finds no relevant workspace change 449ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when an explicitly requested exact file content is wrong 16002ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fails closed before launch when the host Codex binary hash does not match the pin 302ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > queues a second write run for the same worktree and starts it after the first releases 571ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > cancels a queued write without launching it 591ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks queued writes when the app closes so restart cannot strand them 537ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 23931ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks an expired approval without spawning a controller or recording execution 255ms
+ ✓ test/p13-termination-scope.test.ts > P13 termination scope > T1 never places this process or an ancestor inside a foreign tree closure 1198ms
+ ✓ test/p13-termination-scope.test.ts > P13 termination scope > T2 requires a child to be younger than the parent it is attributed to 1237ms
+ ✓ test/p13-termination-scope.test.ts > P13 termination scope > T3 refuses to terminate a tree whose closure reaches this process 1211ms
+ ✓ test/p13-termination-scope.test.ts > P13 termination scope > T4 rejects an invalid pid instead of guessing 1ms
+ ✓ test/integration-readonly-terminal-wait.test.ts > read-only launcher terminal observation helper > success is fail-closed unless the process handle signals 670ms
+ ✓ test/integration-readonly-terminal-wait.test.ts > read-only launcher terminal observation helper > refuse is fail-closed unless the process handle signals 654ms
+ ✓ test/integration-readonly-terminal-wait.test.ts > read-only launcher terminal observation helper > timeout is fail-closed unless the process handle signals 655ms
+ ✓ test/integration-readonly-terminal-wait.test.ts > read-only launcher terminal observation helper > failed is fail-closed unless the process handle signals 666ms
+ ✓ test/integration-readonly-terminal-wait.test.ts > read-only launcher terminal observation helper > unexpected is fail-closed unless the process handle signals 631ms
+ ✓ test/integration-readonly-terminal-wait.test.ts > read-only launcher terminal observation helper > routes timeout, cancellation, and parent death through the shared observed-wait helper 1ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > handles capability mismatch with approved alternate available=false 3ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > handles capability mismatch with approved alternate available=true 0ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > selects the branch from host facts and stops unknown or unsafe state 0ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > switches only to an approved authenticated capable alternate 0ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > requires reset proof for quota and independent failure for quality replans 0ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > re-reads the final monetary slot after the last recovery host callback 212ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > rejects false-to-true and true-to-false classification authority drift 345ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > snapshots returned authority before later callbacks and rejects proxies without traps 346ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > fails closed when a legacy v1 observation lacks classification authority 177ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > observes an alternate candidate once and retains that immutable result 181ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > rejects malformed or extra persisted classification authority before decision replay 357ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > rejects a retry when the trusted clock callback consumes the final attempt slot 167ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > admits one normal retry in the remaining attempt slot 162ms
+ ✓ test/integration-recovery-policy.test.ts > S4 recovery policy > keeps revision role and attempt lineage immutable through migration 036 172ms
+ ✓ test/integration-requirements.test.ts > S4 approval-bound requirement contracts > canonicalizes all four kinds, exact IDs and nested immutable checker snapshots 143ms
+ ✓ test/integration-requirements.test.ts > S4 approval-bound requirement contracts > rejects missing/extra/duplicate IDs, all-optional and empty checks 120ms
+ ✓ test/integration-requirements.test.ts > S4 approval-bound requirement contracts > only registered compatible checker revisions bind; names are never executable commands 118ms
+ ✓ test/integration-requirements.test.ts > S4 approval-bound requirement contracts > rejects oversized text, callbacks, unsafe getter/array shapes and malformed digests 122ms
+ ✓ test/integration-requirements.test.ts > S4 approval-bound requirement contracts > binds before approval, reopens immutably and reads after checker uninstallation 165ms
+ ✓ test/integration-requirements.test.ts > S4 approval-bound requirement contracts > first binding after accepted approval or an attempt is rejected 246ms
+ ✓ test/integration-requirements.test.ts > S4 approval-bound requirement contracts > late raw insertion is blocked by SQL, not just the API 121ms
+ ✓ test/integration-requirements.test.ts > S4 approval-bound requirement contracts > idempotent replay cannot change required status/text and SQL REPLACE cannot overwrite 123ms
+ ✓ test/integration-requirements.test.ts > S4 approval-bound requirement contracts > rollback leaves no binding and corruption or changed run lineage is detected 250ms
+ ✓ test/integration-goal-planning-host.test.ts > loads compiled planning host in actual Node 136ms
+ ✓ test/integration-goal-planning-host.test.ts > approved goal planning host, synthetic executor boundary only > prepares exact approved input and runs producer/verifier through ledger acceptance 584ms
+ ✓ test/integration-goal-planning-host.test.ts > approved goal planning host, synthetic executor boundary only > rejects changed approved input before a planning stage 83ms
+ ✓ test/integration-goal-planning-host.test.ts > approved goal planning host, synthetic executor boundary only > retains the trusted execution contract when caller options change after host construction 85ms
+ ✓ test/integration-held-retry-admission.test.ts > S4 held legacy retry admission > blocks an open held legacy retry before store mutations 210ms
+ ✓ test/integration-held-retry-admission.test.ts > S4 held legacy retry admission > observes a held case created by the final authorization callback 177ms
+ ✓ test/integration-held-retry-admission.test.ts > S4 held legacy retry admission > keeps no-held and valid eligible retries admissible and exact replay inert 339ms
+ ✓ test/integration-held-retry-admission.test.ts > S4 held legacy retry admission > rejects reconciled-stop and corrupt final seals before writes 358ms
+ ✓ test/p10c-manifest-lifecycle.test.ts > manifest proof process lifecycle > waits for the child to close before its current working directory is removed 823ms
+ ✓ test/integration-runtime-contract.test.ts > unknown, unavailable, unauthorized and unsupported roles never launch 5ms
+ ✓ test/integration-runtime-contract.test.ts > missing, expired, artifact-drift and current subject-drift deny at launch 3ms
+ ✓ test/integration-runtime-contract.test.ts > each new execution rebuilds subject and rechecks fresh eligibility 2ms
+ ✓ test/integration-runtime-contract.test.ts > model and implementation roles require their own measured vector 2ms
+ ✓ test/integration-runtime-contract.test.ts > checker cannot write and requires every current M probe even when declared supported 3ms
+ ✓ test/integration-runtime-contract.test.ts > cancel acknowledgment does not settle; unknown or residual cleanup remains open 2ms
+ ✓ test/integration-runtime-contract.test.ts > explicit synthetic provider evidence is forwarded while completion invents no provider fact 2ms
+ ✓ test/integration-runtime-contract.test.ts > adapter lifecycle seam rejects forged internal kinds and hostile inputs 3ms
+ ✓ test/integration-runtime-contract.test.ts > lifecycle callback failure fails cancellation and clean settlement closed 1ms
+ ✓ test/integration-runtime-contract.test.ts > successful execution still requires independent, run-bound cleanup 1ms
+ ✓ test/integration-runtime-contract.test.ts > unsupported cancellation is explicit and leaves active run intact 1ms
+ ✓ test/integration-runtime-contract.test.ts > run ownership isolates completion, cancellation and cleanup; IDs cannot launch twice 1ms
+ ✓ test/integration-runtime-contract.test.ts > launch failure conservatively keeps cleanup unknown and disallows duplicate retry 1ms
+ ✓ test/integration-runtime-contract.test.ts > pre-aborted or invalid bounded start never invokes launch 1ms
+ ✓ test/integration-runtime-contract.test.ts > hung launch times out with retained ownership and cannot claim clean while pending 4ms
+ ✓ test/integration-runtime-contract.test.ts > abort during launch returns recovery handle; late resolution is owned and cancelled 61ms
+ ✓ test/integration-runtime-contract.test.ts > abort after returned handle cancels the same execution without declaring completion 62ms
+ ✓ test/integration-runtime-contract.test.ts > late launch rejection is observed and preserves unknown cleanup 1ms
+ ✓ test/integration-runtime-contract.test.ts > invalid late control handle consumes rejected completion and retains cleanup ownership 1ms
+ ✓ test/integration-runtime-contract.test.ts > malformed options are denied without invoking getters or proxy traps 1ms
+ ✓ test/integration-runtime-contract.test.ts > mutating original options cannot replace cancellation signal or leak listener on settlement 1ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > persists nullable fields and canonical sorted identities across real close/reopen 48ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > competing connections cannot both save the same expected revision 35ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > freezes defensive snapshots and produces deterministic digests for equivalent policy ordering 2ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > binds a run idempotently to an exact immutable policy despite later revisions 3ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > validates production policy and manual pin even with no candidate availability set 1ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > rejects accessors and inherited/extra privilege fields without invoking caller code 1ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > database triggers reject in-place policy and binding mutation or deletion 1ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > read and bind fail closed if stored policy content or provenance is corrupted 1ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > REPLACE and UPSERT cannot bypass immutable identity with recursive triggers disabled 2ms
+ ✓ test/integration-policy-store.test.ts > S2 immutable SQLite selection policy > read fails closed for malformed stored JSON and corrupted binding digest 2ms
+ ✓ test/integration-json-format-checker.test.ts > cue-json-format-v1 exact bounded checker > handles empty containers, scalars, Unicode and canonical key ordering with exact hashes 6ms
+ ✓ test/integration-json-format-checker.test.ts > cue-json-format-v1 exact bounded checker > fails any formatting/value/output alteration for valid canonical input 1ms
+ ✓ test/integration-json-format-checker.test.ts > cue-json-format-v1 exact bounded checker > marks invalid, duplicate or noncanonical inputs unknown, never corrects them silently 1ms
+ ✓ test/integration-json-format-checker.test.ts > cue-json-format-v1 exact bounded checker > rejects malformed UTF-8/BOM and respects Unicode byte boundaries 0ms
+ ✓ test/integration-json-format-checker.test.ts > cue-json-format-v1 exact bounded checker > enforces depth before recursive serialization while ignoring braces and escapes in strings 1ms
+ ✓ test/integration-json-format-checker.test.ts > cue-json-format-v1 exact bounded checker > supports exact byte cap, rejects oversize, and preflights pretty expansion as unknown 87ms
+ ✓ test/integration-json-format-checker.test.ts > cue-json-format-v1 exact bounded checker > does not execute data or inspect user accessors and rejects shared mutable bytes 1ms
+ ✓ test/integration-local-json-electron-gate-v2-review.test.ts > module import is inert and live execution remains behind exact frozen authority 33ms
+ ✓ test/integration-local-json-electron-gate-v2-review.test.ts > source fixes the two-child topology and binds acceptance checker revision to frozen installed bytes 2ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > keeps the committed verdict tracked while excluding supervisor output dumps 1ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > supports a tracked P12 stop receipt with disposable fixture paths outside the checkout 1ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > supports P12 Electron window and cancellation receipts without overwriting P11 evidence 1ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > closes a failed Electron child and its log before the proof returns 1ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > captures Electron evidence through the renderer DevTools protocol rather than the failing Viz path 1ms
+ ✓ test/p12-live-harness.test.ts > P12 live evidence harness contract > supports an external approved workspace and ordered fail-fast tool provenance 1ms
+ ✓ test/integration-model-alias-registry.test.ts > static model alias inventory > contains every spec alias exactly once and no extra alias 6ms
+ ✓ test/integration-model-alias-registry.test.ts > static model alias inventory > maps only primary-evidence canonical IDs and keeps all rows disabled 2ms
+ ✓ test/integration-model-alias-registry.test.ts > static model alias inventory > binds the local Qwen wording only to the server-advertised ID 0ms
+ ✓ test/integration-model-alias-registry.test.ts > static model alias inventory > every unresolved alias is known but unavailable 0ms
+ ✓ test/integration-model-alias-registry.test.ts > static model alias inventory > does not use normalized collision keys for fuzzy or wrong-case lookup 1ms
+ ✓ test/integration-model-alias-registry.test.ts > hostile input and immutability guards > registry, records, evidence and grants are deeply frozen 1ms
+ ✓ test/integration-model-alias-registry.test.ts > hostile input and immutability guards > proxy, getter, custom prototype and oversized lookup values invoke no caller code 0ms
+ ✓ test/integration-model-alias-registry.test.ts > hostile input and immutability guards > snapshot rejects caller inventory, callbacks and extra lookup authority 0ms
+ ✓ test/integration-model-alias-registry.test.ts > hostile input and immutability guards > lookup results are frozen and duplicate mutation cannot alter the exact index 0ms
+ ✓ test/readonly-verifier-worker.test.ts > rejects a writable runtime nested in or containing the approved worktree before launch 6ms
+ ✓ test/integration-native-startup.test.ts > explicit native setup reaches its composer and guarded same-ledger factory without local discovery 4ms
+ ✓ test/integration-native-startup.test.ts > malformed native selection refuses without local fallback (0) 1ms
+ ✓ test/integration-native-startup.test.ts > malformed native selection refuses without local fallback (1) 0ms
+ ✓ test/integration-native-startup.test.ts > malformed native selection refuses without local fallback (2) 0ms
+ ✓ test/integration-native-startup.test.ts > malformed native selection refuses without local fallback (3) 0ms
+ ✓ test/integration-native-startup.test.ts > malformed native selection refuses without local fallback (4) 0ms
+ ✓ test/integration-native-startup.test.ts > malformed native selection refuses without local fallback (5) 0ms
+ ✓ test/integration-native-startup.test.ts > malformed native selection refuses without local fallback (6) 1ms
+ ✓ test/integration-native-startup.test.ts > missing composer readiness and asynchronous refusal stay unavailable without exposing errors 1ms
+ ✓ test/integration-native-startup.test.ts > guard drift during async composition and before factory use refuses 2ms
+ ✓ test/integration-native-startup.test.ts > an unavailable daemon refuses before service composition 0ms
+ ✓ test/integration-start-entry.test.ts > legacy live environment rejects before protected loader, initialization or inference 5ms
+ ✓ test/integration-native-existing-file-checker.test.ts > native deterministic existing-file checker > commits exact expected bytes and accepts only the exact artifact set 5ms
+ ✓ test/integration-native-existing-file-checker.test.ts > native deterministic existing-file checker > rejects missing extra duplicate unchanged and hostile expectations before callbacks 2ms
+
+ Test Files  18 passed (18)
+      Tests  129 passed (129)
+   Start at  23:12:09
+   Duration  167.67s (transform 1.53s, setup 0ms, import 2.57s, tests 161.93s, environment 2ms)
+
+JSON report written to C:/Users/User/cue/evidence/integrations/release/20260926-grouped-regression/group-02/report.json

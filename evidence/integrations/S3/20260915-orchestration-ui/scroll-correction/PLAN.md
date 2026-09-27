@@ -1,0 +1,1 @@
+Done: scrollIntoView through nested containers, 2RAF, exact viewport and clipping-client bounds, raw geometry before assertion plus failurePNG; compact original stage rows after closing selection details, allfivefields/ninecaptures preserved. Cap2 offline; independent preflight; exclusiveactual4 root signal only. No product/build/DOM fabrication. Preserve actual3.

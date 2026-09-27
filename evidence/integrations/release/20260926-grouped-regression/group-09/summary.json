@@ -1,0 +1,54 @@
+{
+  "id": 9,
+  "complete": false,
+  "exactFiles": true,
+  "files": [
+    "daemon/test/integration-account-binding.test.ts",
+    "daemon/test/integration-change-records.test.ts",
+    "daemon/test/integration-cost-observation-ui.test.ts",
+    "daemon/test/integration-driver-targeted-stop.test.ts",
+    "daemon/test/integration-electron-profile.test.ts",
+    "daemon/test/integration-evaluation-local-contracts.test.ts",
+    "daemon/test/integration-evaluation-measured-trial.test.ts",
+    "daemon/test/integration-evaluation-record-picker-core.test.ts",
+    "daemon/test/integration-evidence-policy.test.ts",
+    "daemon/test/integration-generated-json-local-host.test.ts",
+    "daemon/test/integration-goal-proposal-handoff.test.ts",
+    "daemon/test/integration-installation-identity.test.ts",
+    "daemon/test/integration-knowledge.test.ts",
+    "daemon/test/integration-local-json-setup-ui.test.ts",
+    "daemon/test/integration-model-boundary-process-limit.test.ts",
+    "daemon/test/integration-native-implementation-host.test.ts",
+    "daemon/test/integration-native-verifier.test.ts",
+    "daemon/test/integration-outputless-handoff-review.test.ts",
+    "daemon/test/integration-provider-lifecycle.test.ts",
+    "daemon/test/integration-readonly-verifier-ledger.test.ts",
+    "daemon/test/integration-release-readiness.test.ts",
+    "daemon/test/integration-retrospective-core.test.ts",
+    "daemon/test/integration-selection-preference.test.ts",
+    "daemon/test/integration-workspace-management.test.ts",
+    "daemon/test/p11-exec-sealing.test.ts",
+    "daemon/test/p12-electron-proof-result.test.ts",
+    "daemon/test/p12-runtime-enforcement.test.ts",
+    "daemon/test/p45.test.ts",
+    "daemon/test/p5.test.ts"
+  ],
+  "counts": {
+    "failed": 1,
+    "passed": 181,
+    "skipped": 1
+  },
+  "failedFiles": [
+    "daemon/test/integration-goal-proposal-handoff.test.ts"
+  ],
+  "unhandledErrors": null,
+  "outcome": {
+    "startedAt": "2026-09-26T14:30:32.256Z",
+    "finishedAt": "2026-09-26T14:33:24.700Z",
+    "code": 1,
+    "signal": null,
+    "timedOut": false,
+    "spawnError": null,
+    "sourceUnchanged": true
+  }
+}

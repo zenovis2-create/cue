@@ -1,0 +1,9 @@
+# Reconciliation57 closeout
+
+PASS for bounded serial timeout/execution-error wait delivery. Sol maker reproduced a new host invocation after serial timeout on the preimage (exit1), then added the exact root-task running-state requirement after durable claim. One implementation revision used: build0 and four files/75 tests. Separate Sol checker independently passed the same focused gate once, captured complete raw output directly, reviewed full source preimages and verified all 15 maker hashes. Root made no product edits or repeated build/test gate.
+
+Verification 251fbd checked 15 maker pins (five code/test files, two full preimages and evidence), exact independent review/raw log hashes, pre-fix exit1 and final build/test exit0 receipts, four full doc preimages/current hashes and 502 resolving local Markdown links. Scoped diff d6312d exited0; Git whitespace checks exclude untracked content, which was separately reviewed against full preimages.
+
+The two new tests cover a held serial timeout without a receipt and a serial receipt-path exception with unknown cleanup. Each retains exact unresolved attempt identity and 10 reserved units, commits a claim without host send/observation, replays blocked-unresolved without resend and refuses settled/close. Existing serial/parallel positive delivery and factual delayed acknowledgements remain passing. Approved recovery resets root-task state by source inspection and existing regression tests; a positive wait response routed to a replacement recovery attempt is NOT directly tested.
+
+Broad S3 and the overall goal remain incomplete. Real provider delivery, live native/OS/Electron, process restart/handle recovery and local model/server are not qualified by this unit. Local model deferral is preserved; no live calls, commit or push occurred.

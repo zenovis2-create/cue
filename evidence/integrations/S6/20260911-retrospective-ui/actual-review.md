@@ -1,0 +1,11 @@
+# Retrospective UI: actual Electron fixture PASS
+
+2026-09-11. The QA executor did not edit product sources. [Executable proof](electron-proof.mjs), [observations](electron-result.json), [process receipt](electron-process.json), [screenshot](retrospective.png).
+
+The actual shipped renderer, sandboxed preload, strict IPC and Cue core used an isolated real SQLite database. Explicit UI preparation created one unexecuted legacy run. The UI created a retrospective, retried the same ID without another row, generated a new snapshot ID without automatically saving, then explicitly saved it. A real first read was delayed at the host IPC delivery boundary; its late response did not replace the second selected draft. Closing/reopening the real core and reloading the actual renderer retained lookup by draft ID without an active UI run.
+
+The final database contained one task and two retrospective drafts, with zero sessions, orchestration attempts and local invocation budgets. Ownership metadata remained released/zero-unresolved before and after retrospective operations; Stop stayed hidden for the unexecuted run. This is not an active Stop scenario. Hostile raw goal markup was excluded from persisted safe projections, and no image element appeared in retrospective output. There were zero observed non-file renderer network requests. No model or executor was invoked.
+
+Direct PNG inspection confirmed the retrieved draft ID, historical awaiting-approval state, zero-attempt counts and explicit not-assessed acceptance text. The provenance panel has a bounded internal scrollbar; the page has normal vertical scrolling with no horizontal overflow. The current-run creation buttons are disabled after reload while stored-ID lookup remains available. Screenshot SHA-256: `8578769c4bf3a649faf796185a3d7e3256d618fd4e9f2eda4ec6f92a01a87c89`.
+
+The Electron child PID 90072 exited 0, the child handle closed and the validated owned temporary directory was removed. Selected product source hashes matched before and after the execution and are listed in the result. This was a fixture launcher with a delayed read seam, not actual default package startup, fresh host qualification, model quality evaluation or provider-side telemetry. The default-startup visual failure remains separately recorded and is not superseded by this screenshot.

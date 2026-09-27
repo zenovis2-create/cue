@@ -1,0 +1,1 @@
+Test-only synthetic credential references supplied to generated-host and real Node crash fixture; no real credentials or provider calls. Covered by root correction gate3 five files108/108 and build4 exit0. Exact final hashes in ../20260915-account-binding-correction/final-pins.json. No production bypass.

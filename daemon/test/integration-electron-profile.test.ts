@@ -1,0 +1,12 @@
+import { afterEach, expect, test } from 'vitest';
+import { existsSync, mkdtempSync, writeFileSync, rmSync, symlinkSync } from 'node:fs';
+import { basename, dirname, join, relative, resolve } from 'node:path';
+import { tmpdir } from 'node:os';
+import { bindElectronProfile } from '../../app/electron-profile.mjs';
+const roots: string[] = [], previous = process.env.CUE_USER_DATA;
+afterEach(() => { if(previous===undefined)delete process.env.CUE_USER_DATA;else process.env.CUE_USER_DATA=previous;for(const path of roots.splice(0)){expect(dirname(resolve(path))).toBe(resolve(tmpdir()));expect(basename(path).startsWith('cue-profile-')).toBe(true);rmSync(path,{recursive:true,force:true});} });
+const owned=()=>{const path=mkdtempSync(join(tmpdir(),'cue-profile-'));roots.push(path);return path;};
+function host(ready=false){const values:Record<string,string>={};return {values,isReady:()=>ready,setPath:(name:string,value:string)=>{values[name]=value;},getPath:(name:string)=>values[name]!};}
+test('missing and empty preserve defaults',()=>{for(const value of [undefined,'']){if(value===undefined)delete process.env.CUE_USER_DATA;else process.env.CUE_USER_DATA=value;const app=host(true);expect(bindElectronProfile(app)).toBeNull();expect(app.values).toEqual({});}});
+test('relative nonexistent path binds both profiles without config creation',()=>{const path=join(owned(),'state');process.env.CUE_USER_DATA=relative(process.cwd(),path);const result=bindElectronProfile(host());expect(result).toEqual({userData:path,sessionData:join(path,'electron-session')});expect(existsSync(join(path,'cue-config.json'))).toBe(false);expect(Object.isFrozen(result)).toBe(true);});
+test('ready, regular file, real junction and getter mismatch fail closed',()=>{const root=owned();process.env.CUE_USER_DATA=join(root,'late');expect(()=>bindElectronProfile(host(true))).toThrow('too_late');expect(existsSync(process.env.CUE_USER_DATA)).toBe(false);const file=join(root,'file');writeFileSync(file,'preserve');process.env.CUE_USER_DATA=file;expect(()=>bindElectronProfile(host())).toThrow('path_denied');const outside=owned(),link=join(root,'link');symlinkSync(outside,link,process.platform==='win32'?'junction':'dir');process.env.CUE_USER_DATA=join(link,'state');expect(()=>bindElectronProfile(host())).toThrow('path_denied');expect(existsSync(join(outside,'state'))).toBe(false);process.env.CUE_USER_DATA=owned();expect(()=>bindElectronProfile({...host(),getPath:()=>''})).toThrow('binding_unverified');});

@@ -1,6 +1,25 @@
 import { createInterface, type Interface as ReadLineInterface } from 'node:readline';
 import { isAbsolute, relative, resolve, sep } from 'node:path';
 import type { Readable, Writable } from 'node:stream';
+import { createHash } from 'node:crypto';
+
+export type HostCodexEvent = Readonly<
+  | { kind: 'input'; method: 'thread/start' | 'turn/start'; scope: 'host-rpc-app-server-ack-only'; sha256: string; byteLength: number; executedInputVerified: false }
+  | { kind: 'tool'; callRef: string; status: 'started' | 'completed' | 'failed' }
+  | { kind: 'output'; contentRef: 'unknown'; sha256: string; byteLength: number; truncated: boolean }
+  | { kind: 'artifact'; artifactKind: 'workspace-change-set'; sourceRef: 'workspace-snapshot'; sha256: string; byteLength: number }
+  | { kind: 'usage'; source: 'thread/tokenUsage/updated'; scope: 'ephemeral-thread-cumulative'; totalTokens: number; inputTokens: number; cachedInputTokens: number; cacheWriteInputTokens: number; outputTokens: number; reasoningOutputTokens: number }
+  | { kind: 'terminal'; status: string }
+>;
+
+const PROVIDER_ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$/u;
+function providerId(value: unknown, label: string): string {
+  if (typeof value !== 'string' || !PROVIDER_ID.test(value)) throw new Error(`invalid provider ${label}`);
+  return value;
+}
+function providerRef(kind: 'call', value: string): string {
+  return `${kind}:${createHash('sha256').update(`${kind}\0${value}`, 'utf8').digest('hex')}`;
+}
 
 export const CUE_WORKSPACE_TOOL = Object.freeze({
   type: 'function',
@@ -103,6 +122,8 @@ export interface CueWorkspaceCommand {
   timeoutMs: number;
   operation?: 'write_text';
   inspectedPaths?: string[];
+  relativePath?: string;
+  contentUtf8?: Buffer;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -167,6 +188,8 @@ export function parseCueWorkspaceCall(params: DynamicToolCallParams, approvedCwd
       timeoutMs: Number(timeoutMs),
       operation: 'write_text',
       inspectedPaths: [target],
+      relativePath: relativeTarget.split(sep).join('/'),
+      contentUtf8: Buffer.from(content, 'utf8'),
     };
   }
   if (operation !== undefined) throw new Error('unsupported cue_workspace operation');
@@ -276,6 +299,7 @@ export interface HostCodexRunResult {
 
 interface PendingRequest {
   method: string;
+  input?: Readonly<{ method: 'thread/start' | 'turn/start'; sha256: string; byteLength: number }>;
   resolve(value: unknown): void;
   reject(reason: Error): void;
   timer: NodeJS.Timeout;
@@ -310,14 +334,34 @@ function finalAgentText(item: Record<string, unknown>): string | undefined {
     .join('\n');
 }
 
+const TOKEN_KEYS = ['totalTokens', 'inputTokens', 'cachedInputTokens', 'cacheWriteInputTokens', 'outputTokens', 'reasoningOutputTokens'] as const;
+function tokenBreakdown(value: unknown): Record<(typeof TOKEN_KEYS)[number], number> | undefined {
+  if (!isRecord(value) || Object.getPrototypeOf(value) !== Object.prototype) return undefined;
+  const keys = Object.keys(value);
+  if (keys.length !== TOKEN_KEYS.length || keys.some(key => !TOKEN_KEYS.includes(key as (typeof TOKEN_KEYS)[number]))) return undefined;
+  const result = {} as Record<(typeof TOKEN_KEYS)[number], number>;
+  for (const key of TOKEN_KEYS) {
+    const count = value[key];
+    if (!Number.isSafeInteger(count) || Number(count) < 0) return undefined;
+    result[key] = Number(count);
+  }
+  if (result.totalTokens !== result.inputTokens + result.outputTokens
+      || result.cachedInputTokens > result.inputTokens
+      || result.cacheWriteInputTokens > result.inputTokens
+      || result.reasoningOutputTokens > result.outputTokens) return undefined;
+  return result;
+}
+
 export class HostCodexRpcSession {
   readonly #transport: HostCodexTransport;
   readonly #runner: WorkspaceToolRunner;
   readonly #requestTimeoutMs: number;
   readonly #runTimeoutMs: number;
+  readonly #observer?: (event: HostCodexEvent) => void;
   readonly #lines: ReadLineInterface;
   readonly #pending = new Map<number, PendingRequest>();
   readonly #seenCallIds = new Set<string>();
+  readonly #seenOutputDigests = new Set<string>();
   readonly #abort = new AbortController();
   #nextId = 0;
   #activeToolCalls = 0;
@@ -335,18 +379,20 @@ export class HostCodexRpcSession {
   #fatalError?: Error;
   #enforcementViolation?: string;
   #turnCompleted = false;
+  #highestUsageTotal = -1;
   #closed = false;
   #ran = false;
 
   constructor(
     transport: HostCodexTransport,
     runner: WorkspaceToolRunner,
-    options: { requestTimeoutMs?: number; runTimeoutMs?: number } = {},
+    options: { requestTimeoutMs?: number; runTimeoutMs?: number; onEvent?: (event: HostCodexEvent) => void } = {},
   ) {
     this.#transport = transport;
     this.#runner = runner;
     this.#requestTimeoutMs = options.requestTimeoutMs ?? 30_000;
     this.#runTimeoutMs = options.runTimeoutMs ?? 900_000;
+    this.#observer = options.onEvent;
     this.#lines = createInterface({ input: transport.readable });
     this.#lines.on('line', line => this.#receive(line));
     this.#lines.once('close', () => {
@@ -356,21 +402,28 @@ export class HostCodexRpcSession {
     transport.writable.on('error', error => this.#fail(rpcError(error)));
   }
 
-  #send(message: Record<string, unknown>): void {
+  #send(message: Record<string, unknown>, encoded = `${JSON.stringify(message)}\n`): void {
     if (this.#closed || this.#transport.writable.destroyed) throw new Error('Codex app-server transport closed');
-    this.#transport.writable.write(`${JSON.stringify(message)}\n`);
+    this.#transport.writable.write(encoded);
   }
 
   #request(method: string, params: Record<string, unknown>): Promise<unknown> {
     const id = ++this.#nextId;
+    const encoded = `${JSON.stringify({ id, method, params })}\n`;
+    const input = method === 'thread/start' || method === 'turn/start'
+      ? Object.freeze({ method, sha256: createHash('sha256').update(encoded, 'utf8').digest('hex'), byteLength: Buffer.byteLength(encoded, 'utf8') }) : undefined;
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
         this.#pending.delete(id);
         reject(new Error(`${method} timed out after ${this.#requestTimeoutMs}ms`));
       }, this.#requestTimeoutMs);
       timer.unref?.();
-      this.#pending.set(id, { method, resolve, reject, timer });
-      this.#send({ id, method, params });
+      this.#pending.set(id, { method, input, resolve, reject, timer });
+      try {
+        this.#send({ id, method, params }, encoded);
+      } catch (error) {
+        this.#pending.delete(id);clearTimeout(timer);reject(rpcError(error));
+      }
     });
   }
 
@@ -380,6 +433,17 @@ export class HostCodexRpcSession {
 
   #reject(id: unknown, code: number, message: string): void {
     this.#send({ id, error: { code, message } });
+  }
+
+  #observe(event: HostCodexEvent): boolean {
+    try {
+      this.#observer?.(event);
+      return true;
+    } catch {
+      this.#abort.abort();
+      this.#fail(new Error('host Codex activity sink failed'));
+      return false;
+    }
   }
 
   #sealEnforcement(id: unknown, violation: string, response: unknown): void {
@@ -417,13 +481,21 @@ export class HostCodexRpcSession {
       clearTimeout(pending.timer);
       if (message.error !== undefined) pending.reject(rpcError(message.error));
       else {
-        if (pending.method === 'turn/start') {
-          const turnId = record(record(message.result).turn).id;
-          if (typeof turnId !== 'string' || !turnId) {
-            pending.reject(new Error('turn/start returned no turn id'));
+        if (pending.method === 'turn/start' || pending.method === 'thread/start') {
+          const name = pending.method === 'turn/start' ? 'turn' : 'thread';
+          const returnedId = record(record(message.result)[name]).id;
+          try {
+            const validated = providerId(returnedId, `${name} id`);
+            if (name === 'turn') this.#turnId = validated;
+          } catch {
+            pending.reject(new Error(`${pending.method} returned no ${name} id`));
             return;
           }
-          this.#turnId = turnId;
+          if (pending.input && !this.#observe(Object.freeze({ kind: 'input', ...pending.input,
+            scope: 'host-rpc-app-server-ack-only', executedInputVerified: false }))) {
+            pending.reject(new Error('host Codex activity sink failed'));
+            return;
+          }
         }
         pending.resolve(message.result);
       }
@@ -440,13 +512,16 @@ export class HostCodexRpcSession {
         if (this.#enforcementViolation) throw new Error(`dynamic tool call after enforcement violation: ${this.#enforcementViolation}`);
         if (typeof params.threadId !== 'string' || params.threadId !== this.#threadId) throw new Error('dynamic tool thread mismatch');
         if (typeof params.turnId !== 'string' || params.turnId !== this.#turnId) throw new Error('dynamic tool turn mismatch');
-        if (typeof params.callId !== 'string' || !params.callId || params.callId.length > 256) throw new Error('dynamic tool call id required');
-        if (this.#seenCallIds.has(params.callId)) throw new Error('duplicate dynamic tool call id');
-        this.#seenCallIds.add(params.callId);
+        const callId = providerId(params.callId, 'tool call id');
+        if (this.#seenCallIds.has(callId)) throw new Error('duplicate dynamic tool call id');
+        this.#seenCallIds.add(callId);
         const command = parseCueWorkspaceCall(params, this.#cwd);
         if (this.#toolCallCount >= 64) throw new Error('dynamic tool call cap exceeded');
         if (this.#activeToolCalls !== 0) throw new Error('concurrent dynamic tool call denied');
         this.#toolCallCount += 1;
+        if (!this.#observe(Object.freeze({ kind: 'tool', callRef: providerRef('call', callId), status: 'started' }))) {
+          throw new Error('host Codex activity sink failed');
+        }
         this.#activeToolCalls += 1;
         let result: WorkspaceWorkerResult;
         try {
@@ -454,7 +529,7 @@ export class HostCodexRpcSession {
             result = await this.#runner(command, {
               threadId: params.threadId,
               turnId: params.turnId,
-              callId: params.callId,
+              callId,
               signal: this.#abort.signal,
             });
           } catch (error) {
@@ -468,6 +543,9 @@ export class HostCodexRpcSession {
           this.#activeToolCalls -= 1;
         }
         const response = workspaceToolResponse(result);
+        if (!this.#observe(Object.freeze({ kind: 'tool', callRef: providerRef('call', callId), status: response.success ? 'completed' : 'failed' }))) {
+          throw new Error('host Codex activity sink failed');
+        }
         if (result.violation && TERMINAL_ENFORCEMENT_VIOLATIONS.has(result.violation)) {
           this.#sealEnforcement(id, result.violation, response);
           return;
@@ -491,10 +569,32 @@ export class HostCodexRpcSession {
   }
 
   #handleNotification(method: string, params: Record<string, unknown>): void {
+    if (method === 'thread/tokenUsage/updated') {
+      if (this.#turnCompleted || params.threadId !== this.#threadId || params.turnId !== this.#turnId) return;
+      const usage = record(params.tokenUsage);
+      if (Object.keys(usage).length !== 3 || !Object.hasOwn(usage, 'total') || !Object.hasOwn(usage, 'last')
+          || !Object.hasOwn(usage, 'modelContextWindow')) return;
+      const total = tokenBreakdown(usage.total);
+      const last = tokenBreakdown(usage.last);
+      const window = usage.modelContextWindow;
+      if (!total || !last || (window !== null && (!Number.isSafeInteger(window) || Number(window) < 1))
+          || total.totalTokens <= this.#highestUsageTotal) return;
+      this.#highestUsageTotal = total.totalTokens;
+      this.#observe(Object.freeze({ kind: 'usage', source: 'thread/tokenUsage/updated', scope: 'ephemeral-thread-cumulative', ...total }));
+      return;
+    }
     if (method === 'item/completed') {
+      if (this.#turnCompleted) return;
       if (params.threadId !== this.#threadId || params.turnId !== this.#turnId) return;
       const text = finalAgentText(record(params.item));
-      if (text !== undefined) this.#finalMessage = text;
+      if (text !== undefined) {
+        this.#finalMessage = text;
+        const bytes = Buffer.from(text, 'utf8');
+        const sha256 = createHash('sha256').update(bytes).digest('hex');
+        if (this.#seenOutputDigests.has(sha256)) return;
+        this.#seenOutputDigests.add(sha256);
+        if (!this.#observe(Object.freeze({ kind: 'output', contentRef: 'unknown', sha256, byteLength: bytes.byteLength, truncated: false }))) return;
+      }
       return;
     }
     if (method !== 'turn/completed') return;
@@ -504,6 +604,7 @@ export class HostCodexRpcSession {
     const threadId = this.#threadId;
     const turnId = this.#turnId;
     const status = String(turn.status ?? 'unknown');
+    if (!this.#observe(Object.freeze({ kind: 'terminal', status: /^[A-Za-z0-9._:-]{1,128}$/u.test(status) ? status : 'unknown' }))) return;
     const value = { threadId, turnId, status, finalMessage: this.#finalMessage };
     if (!this.#terminal) {
       this.#earlyTerminal = value;
@@ -541,8 +642,7 @@ export class HostCodexRpcSession {
     });
     this.#send({ method: 'initialized', params: {} });
     const threadResult = record(await this.#request('thread/start', buildHostThreadStartParams(options.cwd, options.goal, options.model) as unknown as Record<string, unknown>));
-    this.#threadId = String(record(threadResult.thread).id ?? '');
-    if (!this.#threadId) throw new Error('thread/start returned no thread id');
+    this.#threadId = providerId(record(threadResult.thread).id, 'thread id');
 
     const turnResult = record(await this.#request('turn/start', {
       threadId: this.#threadId,

@@ -1,0 +1,39 @@
+{
+  "launch": {
+    "version": "2.1.267",
+    "binary": "C:\\fixtures\\claude.exe",
+    "isolatedCwd": "C:\\fixtures\\controller",
+    "isolatedHome": "C:\\fixtures\\home",
+    "systemRoot": "C:\\Windows",
+    "prompt": "Explain this supplied text.",
+    "modelBinding": {
+      "canonicalId": "claude-fixture-model",
+      "identityVerified": true
+    }
+  },
+  "transcriptFrames": [
+    {
+      "type": "system",
+      "subtype": "init",
+      "tools": [],
+      "mcp_servers": []
+    },
+    {
+      "type": "assistant",
+      "message": {
+        "content": [
+          {
+            "type": "text",
+            "text": "fixture answer"
+          }
+        ]
+      }
+    },
+    {
+      "type": "result",
+      "subtype": "success",
+      "is_error": false,
+      "result": "fixture answer"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+import { afterEach, expect, test } from 'vitest';
+import { createHash } from 'node:crypto';
+import { mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { createCueCore, initializeConfig, type CueCore } from '../../app/core.mjs';
+import { normalizeEnvelope, envelopeHash } from '../src/envelope.js';
+import { saveSelectionPolicy, bindRunSelectionPolicy } from '../src/selection/policy-store.js';
+import { validateTaskPlan } from '../src/orchestration/plan.js';
+import { createOrchestrationStore } from '../src/orchestration/store.js';
+import { createEvaluationEnrollmentStore } from '../src/evaluation/enrollment.js';
+
+const roots:string[]=[], cores:CueCore[]=[];
+afterEach(async()=>{for(const core of cores.splice(0))await core.close();for(const root of roots.splice(0))rmSync(root,{recursive:true,force:true})});
+const h=(s:string)=>createHash('sha256').update(s).digest('hex');
+
+test('Core evaluation APIs share one ledger and deny foreign workspace, caller clock, and outer writer transaction without writes',()=>{
+  const root=mkdtempSync(join(tmpdir(),'cue-eval-core-')),workspace=join(root,'workspace'),foreign=join(root,'foreign');roots.push(root);
+  mkdirSync(workspace);mkdirSync(foreign);
+  const core=createCueCore(initializeConfig(join(root,'state'),{worktreeRoot:workspace}));cores.push(core);const db=core.daemon.db;
+  const policy=saveSelectionPolicy(db,{policyId:'policy',expectedRevision:null,createdAt:'2026-09-12T00:00:00.000Z',sourceVersion:'fixture',policy:{version:'cue-selection-v1',mode:'efficiency',qualityMinimum:.5,costBasis:1,timeBasisMs:1000,currency:'TEST',costLimit:null,remainingTimeMs:null,maxEstimateAgeMs:100,allowedCandidateIds:['agent'],pinnedCandidateId:null}});
+  const seed=(runId:string,taskId:string,worktree:string)=>{const env=normalizeEnvelope({run_id:runId,worktree_realpath:worktree,allowed_actions:['file_change'],egress:[],expires_at:'2027-01-01T00:00:00.000Z',autonomy_level:'bounded'}),eh=envelopeHash(env);db.prepare('INSERT INTO task VALUES(?,?,NULL,?)').run(taskId,'awaiting_approval','now');db.prepare("INSERT INTO envelope VALUES(?,?,'[]','now')").run(eh,worktree);db.prepare('INSERT INTO run VALUES(?,?,?,0,?)').run(runId,taskId,eh,'now');bindRunSelectionPolicy(db,{runId,policyId:'policy',revision:1,digest:policy.digest,boundAt:'2026-09-12T00:00:00.000Z'});const approval={policyRevision:'policy:1',policyDigest:policy.digest,requirementIds:['code'],allowedCandidateIds:['agent'],allowedScopeIds:['workspace']};const plan=validateTaskPlan(approval,{revision:'v1',policyRevision:'policy:1',policyDigest:policy.digest,tasks:[{id:`make-${runId}`,role:'implementation',ownerId:'maker',requirementIds:['code'],dependencyIds:[],candidateIds:['agent'],scopeIds:['workspace']},{id:`check-${runId}`,role:'verifier',ownerId:'checker',requirementIds:['code'],dependencyIds:[`make-${runId}`],candidateIds:['agent'],scopeIds:[]}]});createOrchestrationStore(db,{authorizePlan:()=>true,authorizeClaim:()=>true,verifyReceipt:()=>({outcomeVerified:true,cleanupVerified:true})}).install(runId,plan)};
+  seed('local','task-local',workspace);seed('foreign','task-foreign',foreign);
+  const dataset={id:'cohort',revision:'v1',cases:[{id:'local-case',kind:'code' as const,inputDigest:h('local'),split:'evaluation' as const},{id:'foreign-case',kind:'code' as const,inputDigest:h('foreign'),split:'holdout' as const}]};
+  const base={dataset,arm:'efficiency' as const,policy:{kind:'monetary' as const,policyId:'policy',revision:1,digest:policy.digest},metric:{id:'quality',revision:'v1',digest:h('metric')},environment:{id:'env',revision:'v1',digest:h('env')},accountLimits:{id:'limits',revision:'v1',digest:h('limits')},enrolledAtMs:1};
+  const local=core.enrollEvaluation({...base,enrollmentId:'enroll-local',runId:'local',caseId:'local-case'});expect(core.readEvaluationEnrollment('enroll-local')).toEqual(local);
+  const observed=core.observeEvaluation({enrollmentId:'enroll-local',observationId:'local-o1',expectedPriorRevision:0});expect(observed.runId).toBe('local');expect(core.observeEvaluation({enrollmentId:'enroll-local',observationId:'local-o1',expectedPriorRevision:0})).toEqual(observed);expect(()=>core.observeEvaluation({enrollmentId:'enroll-local',observationId:'local-o1',expectedPriorRevision:99})).toThrow('replay_conflict');
+  expect(core.evaluationCoverage({datasetDigest:local.dataset.digest,arm:'efficiency',policyDigest:local.policy.digest,cutoffId:'local-o1'}).slots).toHaveLength(1);
+  const enrollments=createEvaluationEnrollmentStore(db);enrollments.enroll({...base,enrollmentId:'enroll-foreign',runId:'foreign',caseId:'foreign-case'});
+  const before=(db.prepare('SELECT count(*) n FROM evaluation_observation').get() as any).n;
+  expect(()=>core.readEvaluationEnrollment('enroll-foreign')).toThrow('evaluation_unavailable');
+  expect(()=>core.observeEvaluation({enrollmentId:'enroll-foreign',observationId:'foreign-o1',expectedPriorRevision:0})).toThrow('evaluation_unavailable');
+  expect(()=>core.observeEvaluation({enrollmentId:'enroll-local',observationId:'clocked',expectedPriorRevision:1,recordedAtMs:0} as never)).toThrow();
+  expect(()=>db.transaction(()=>core.observeEvaluation({enrollmentId:'enroll-local',observationId:'nested',expectedPriorRevision:1}))()).toThrow('outer_transaction');
+  expect(()=>core.captureEvaluationMeasuredFact({factId:'fact',enrollmentId:'enroll-local',observationId:'local-o1'})).toThrow('evaluation_measured_fact_unavailable');
+  expect(()=>core.registerEvaluationMetric({id:'quality',revision:'v1'})).toThrow('evaluation_measured_fact_unavailable');
+  expect((db.prepare('SELECT count(*) n FROM evaluation_measured_fact').get() as any).n).toBe(0);
+  expect(()=>core.evaluationCoverage({datasetDigest:local.dataset.digest,arm:'efficiency',policyDigest:local.policy.digest,cutoffId:'local-o1'})).toThrow('evaluation_unavailable');
+  expect((db.prepare('SELECT count(*) n FROM evaluation_observation').get() as any).n).toBe(before);
+});

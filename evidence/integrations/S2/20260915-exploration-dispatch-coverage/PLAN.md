@@ -1,0 +1,3 @@
+# Root exploration dispatch coverage
+
+Separate test-only unit after driver maker cap3 freeze; maker source is unchanged. Root owns integration-driver.test.ts, preserving exact preimage. Done: positive parallel wave flags only approved member while sibling/checker remain ordinary, and approved same-candidate retry keeps exploration grant and subcap without double reservation on replay. Reuse established strong fixtures and parallel helper. Cap2, every pass runs integration-driver.test.ts against current shared build, raw output/exit preserved. Independent checker re-runs final combined gate and verifies exact lineage/charges/launch counts. Failure needs a new hypothesis, never relabel source-only coverage as tested. No live provider/model/native/Electron calls.

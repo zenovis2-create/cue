@@ -1,0 +1,3 @@
+# Root runtime schema correction
+
+Root owns one bounded corrective pass after the maker exhausted cap3. Keep maker failures and unqualified freeze as history. Done: explicit exploration verifies both041 tables and all eight named guards before any host callback, and missing-guard regression passes. Existing corruption/replay tests restore the original guard after deliberate corruption so they still exercise lineage validation. Full byte preimages precede edits. Cap1. Independent checker runs npm run build exit0, combined meaningful engine/store/driver/local/recovery gates and compiled fresh/reopen smoke; root does not self-qualify. Failure requires a new documented hypothesis or report unresolved; no live providers or local model calls.

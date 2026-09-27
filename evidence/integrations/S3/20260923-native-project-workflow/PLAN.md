@@ -1,0 +1,3 @@
+# Batch102 — native project switch and session navigation follow-through
+
+Offline only. First exercise the actual default Electron app through host-selected folder + synthetic dialog confirmation, ordered Core close, config swap, app quit, and Core reentry against the new root. Explicitly label mocked consent. Preserve failure/cleanup evidence. Correct bounded defects (max two hypotheses per blocker). Then add keyboard/focus and session discoverability where needed, test via JSDOM and real Electron; do not claim assistive-technology acceptance without actual screen reader use. No real provider/model/account/service calls, no credentials, no publication.

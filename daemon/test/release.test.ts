@@ -13,6 +13,8 @@ import { routeTask } from '../src/routing.js';
 import { assessPreference } from '../src/approval-surface.js';
 import { renderBlockedReport, renderCompletionReport } from '../src/reporting.js';
 import { RecoveryCoordinator, type TaskContract } from '../src/watcher.js';
+import { createBudgetManager } from '../src/budget.js';
+import { applyTokenLimit } from '../src/state-machine.js';
 
 const roots:string[]=[];
 const now='2026-09-03T00:00:00.000Z';
@@ -117,10 +119,20 @@ describe.sequential('v0.1 release gates',()=>{
     console.info(`R-6 LIVE app_pid=${appPid} ${report.replaceAll('\n',' | ')}`); db.close();
   },120_000);
 
-  it('R-7 has no monetary-budget emission path while retaining token-budget state',()=>{
-    const text=sourceFiles().map(path=>readFileSync(path,'utf8')).join('\n');
-    expect(text).not.toMatch(/(?:budget.{0,80}(?:USD|KRW|dollars?|won|currency|[$€₩])|(?:USD|KRW|dollars?|won|currency|[$€₩]).{0,80}budget)/iu);
-    expect(text).toContain("reason: 'budget'");
+  it('R-7 enforces monetary reservations and token thresholds independently under spec r3',()=>{
+    const db = openLedger();
+    try {
+      const budget = createBudgetManager(db, { verifyFinalReceipt: () => false });
+      budget.initialize({ runId: 'release-r7', currency: 'TEST', unit: 'micro', limitUnits: 100,
+        policyRevision: 'r3', source: 'release-fixture', observedAtMs: 1 });
+      expect(applyTokenLimit({state:'running'}, {input:6,output:4,total:10}, 10)).toEqual({state:'blocked',reason:'budget'});
+      expect(budget.summary('release-r7').remainingUnits).toBe(100n);
+      const reservation = { runId: 'release-r7', requestId: 'one', attemptId: 'attempt-one', currency: 'TEST', unit: 'micro' as const,
+        upperUnits: 100, source: 'release-fixture', observedAtMs: 2, scope: 'verified-completion-attempt-total' as const };
+      budget.reserve(reservation);
+      expect(applyTokenLimit({state:'running'}, {input:0,output:0,total:0}, 10)).toEqual({state:'running'});
+      expect(() => budget.reserve({ ...reservation, requestId: 'two', attemptId: 'attempt-two', upperUnits: 1 })).toThrow('limit_exceeded');
+    } finally { db.close(); }
   });
 
   it('R-9 runs the same real process task at autonomy ③ and ① with equal envelope decisions and different lineage',()=>{

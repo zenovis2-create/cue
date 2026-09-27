@@ -1,0 +1,44 @@
+{
+  "startedAt": "2026-09-11T05:46:37.978Z",
+  "endpoint": "http://127.0.0.1:8085/v1",
+  "model": "qwen38-27b-unc",
+  "scope": "live connectivity only; not M1-M3 qualification",
+  "transportSha256": "77d5835fee99a96baf87017d5efae99458d3b702e060453e9ecb62bb2cd42a28",
+  "events": [
+    {
+      "type": "text",
+      "text": "OK"
+    },
+    {
+      "type": "usage",
+      "status": "unknown"
+    },
+    {
+      "type": "terminal",
+      "status": "completed",
+      "providerStopped": "unknown"
+    }
+  ],
+  "modelMetadata": {
+    "id": "qwen38-27b-unc",
+    "aliases": [
+      "qwen38-27b-unc"
+    ],
+    "tags": [],
+    "object": "model",
+    "created": 1789105598,
+    "owned_by": "llamacpp",
+    "meta": {
+      "vocab_type": 2,
+      "n_vocab": 248320,
+      "n_ctx": 147456,
+      "n_ctx_train": 262144,
+      "n_embd": 5120,
+      "n_params": 27320697856,
+      "size": 13212073984,
+      "ftype": "Q3_K - Medium"
+    }
+  },
+  "passed": true,
+  "finishedAt": "2026-09-11T05:46:39.889Z"
+}

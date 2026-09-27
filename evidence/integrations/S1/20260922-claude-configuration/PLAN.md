@@ -1,0 +1,11 @@
+# Batch87 — explicit Claude configuration/account binding
+
+Direct implementation by the current assistant, as requested. No delegation or independent-review claim.
+
+Scope: S1-03 prerequisite described in the existing Claude adapter RESEARCH.md: connect a host-only authorized session/config resolver to the inactive executor. Remove launch-supplied environment as an authority. A resolver must return an exact account/attempt/candidate/subject/model/worktree-bound session record, explicit isolated directories and a selected profile already identified by the installation descriptor. Missing/foreign/expired/drifted/forged bindings refuse before spawn. Only host-issued one-use objects are consumable; never copy credentials, discover ambient login, create profiles or infer authentication from file metadata.
+
+The resolver's trusted callback is the still-required source of authorized existing session/config semantics for this CLI version. This unit validates/carries that host decision; it is not a production Claude login observer, CLI compatibility qualification or OS sandbox. No ready candidate, UI auth control or native publication authority is introduced. All tests use temporary fixture directories and mocked installation assertions/provider children; compiled import must use the same app issuer instance.
+
+Checks: focused config tests (real filesystem metadata, fake installation), actual executor wiring with missing/forged/cross-bound/expired/refreshed config and async cancellation/mutation races, existing Claude stream/SQLite ownership/cancellation tests, daemon build, real Node compiled import, P45 sole launch boundary and provider installation regression. Preserve failure output. At most two corrections for an unchanged blocker. Final results record exact commands, exits, source hashes and limitations. Existing parent checklist count remains 33/44 unless all original requirements are actually met.
+
+Safety: Qwen OFF, subscription 4/4 exhausted, zero live model/provider/service/account requests, no credential contents read or copied, no user home mutation, no commit/push/publication. Exact existing-file preimages saved before edits; unrelated worktree changes preserved.

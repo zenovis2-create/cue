@@ -1,0 +1,418 @@
+
+> cue-desktop@0.1.0 test
+> npm --prefix daemon test
+
+npm notice run cue-daemon@0.1.0 pretest
+npm notice run npm run build
+npm warn Unknown env config "global-ignore-file". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> cue-daemon@0.1.0 build
+> tsc -p tsconfig.json && node scripts/copy-assets.mjs
+
+npm notice run cue-daemon@0.1.0 test
+npm notice run vitest run --reporter=verbose --fileParallelism=false --maxWorkers=1
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H1 RED: P1 fails when the tool leaves a child running after a stop request 15048ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H2 GREEN: P1 passes when the tool takes its children down with it 7707ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H3 RED: P3 fails when a child outlives a hard-killed supervisor 14276ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H4 GREEN: P3 passes when nothing outlives a hard-killed supervisor 8189ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H5 the verdict ignores identical processes outside this run 14850ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H6 a stop budget that expires is a FAIL, not an inconclusive result 7948ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H7 GREEN: an obedient tool leaves no residue on the NORMAL exit path 16331ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H8 RED: the normal path catches residue the stop path would hide 37335ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H9 RED: a subject that never exits is a FAIL, not a clean normal path 11911ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H10 B5 needs all three paths; two green paths do not carry the third 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H11 B5 GREEN only when all three paths are independently clean 28582ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H12 B5 RED: one dirty path sinks the verdict even if the others are clean 33808ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H13 RED: a process-clean tool that leaks a tool home still fails B5 9656ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H14 RED: the same leak is caught on the NORMAL exit path too 12653ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H15 RED: a pending cleanup-journal row is residue 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H16 an unobserved residue class is never counted as clean 0ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H17 the AppContainer probe refuses to answer for a non-Cue profile name 1ms
+ ✓ test/p13-lifecycle-harness.test.ts > P13 R-7a lifecycle harness sensitivity (fixtures only) > H18 a genuinely clean run reads 0 in every class, not "unknown" 903ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > routes an approved arbitrary goal through host controller and AppContainer worker 25691ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > relaunches real controller and AppContainer worker PIDs before autonomy 3 escalates 66240ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > stops both the host controller and the live AppContainer worker 31054ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a controller crash without automatically resuming it 12870ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > reconciles a previously running write as blocked/crash without auto-resume on restart 457ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fences a verified live session before reconciling an interrupted run on startup 6939ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > refuses to kill a reused PID whose process start time does not match the ledger identity 3416ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks completion immediately when the controller credential-home cleanup fails 542ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks when cleanup fails after controller launch setup throws 483ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when independent goal verification finds no relevant workspace change 610ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks a model-completed run when an explicitly requested exact file content is wrong 21767ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > fails closed before launch when the host Codex binary hash does not match the pin 405ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > queues a second write run for the same worktree and starts it after the first releases 700ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > cancels a queued write without launching it 687ms
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks queued writes when the app closes so restart cannot strand them 664ms
+ × test/p10c-core.test.ts > Phase 10-C standalone core integration > consumes an approved run exactly once before any controller can be launched twice 352ms
+   → expected [Function] to throw error matching /already consumed/u but got 'approval_session_unavailable'
+   → EPERM, Permission denied: \\?\D:\Temp\User\cue-p10c-core-T4Oqmu '\\?\D:\Temp\User\cue-p10c-core-T4Oqmu'
+ ✓ test/p10c-core.test.ts > Phase 10-C standalone core integration > blocks an expired approval without spawning a controller or recording execution 338ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > keeps the controller on the host and executes the real tool in AppContainer 20870ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > terminates and reaps a worker when parent linkage fails after spawn 14328ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > bounds host controller stderr retained in memory 18340ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > fails independent goal verification after a successful but read-only no-op tool call 22270ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects a workspace mutation that does not touch the output path named by the goal 22540ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > rejects an expected-path change when the agent reports that it could not complete the goal 24560ms
+ ✓ test/p10c-runtime.test.ts > Phase 10-C split runtime tracer > changes a model-completed result to cleanup failure when the credential home cannot be safely removed 19369ms
+ ✓ test/integration-model-qualification.test.ts > outer transaction and pre-abort refuse before owned launch or evidence 249ms
+ ✓ test/integration-model-qualification.test.ts > protected installation guard refuses false and thenable before owned launch 230ms
+ ✓ test/integration-model-qualification.test.ts > protected source drift immediately before issuance retains raw evidence but issues no capability 28444ms
+ ✓ test/integration-model-qualification.test.ts > model fresh fixed production plus pinned diagnostics persist owned raw bytes, cleanup and fixture-only references 18539ms
+ ✓ test/integration-model-qualification.test.ts > json-checker fresh fixed production plus pinned diagnostics persist owned raw bytes, cleanup and fixture-only references 31929ms
+ ✓ test/integration-model-qualification.test.ts > goal-proposal-checker fresh fixed production plus pinned diagnostics persist owned raw bytes, cleanup and fixture-only references 29135ms
+ ✓ test/integration-model-qualification.test.ts > fixture model refuses missing transport and changed pin before creating a task 374ms
+ ✓ test/integration-model-qualification.test.ts > subject drift after owned measurements cannot issue any pass 17384ms
+ ✓ test/integration-model-qualification.test.ts > raw journal tampering rolls back all capability issuance 16953ms
+ ✓ test/integration-model-qualification.test.ts > goal control pins cannot be mislabeled as JSON production qualification 315ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses writable worktrees containing or inside the trusted Cue runtime 18ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > normal completion releases the real runtime lease before another writer runs 21113ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > controller crash releases the real runtime lease before another writer runs 12328ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > worker hard-kill releases the real runtime lease before another writer runs 24113ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > user stop releases the write lease immediately after stopping the owned runtime 310ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > daemon crash releases every lease and refuses automatic resume 337ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > reconciliation releases the interrupted writer lease and records blocked crash 346ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > refuses a second live daemon using another ledger for the same canonical worktree 472ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > a failed startup reconciliation cannot strand a new live ownership record 755ms
+ ✓ test/p11-writer-lifecycle.test.ts > P11 writer lifecycle > parent death kills the real AppContainer worker and restart releases the lease without resuming 6599ms
+ ✓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > rejects a caller-owned non-empty root without deleting it 251ms
+ ✓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > reaps live sessions and emits FAIL after a forced core close failure 33175ms
+ ✓ test/p12-stop-harness.test.ts > P12 stop-canary path ownership > does not leak an AppContainer profile after a normal stop 43741ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > rolls back a partially created home when credential staging fails 223ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > removes only disposable codex-home directories 205ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > stages a disposable controller home without granting or deleting the source Codex home 21715ms
+ ✓ test/p10b-home.test.ts > Phase 10-B source-home lifecycle > starts three real replacement controller/worker pairs before autonomy 3 escalates 62523ms
+ ✓ test/p12-electron-proof-result.test.ts > P12 Electron proof final receipt ordering > does not emit passed:true when cleanup fails after the UI checks pass 47598ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > complete paired cohort saves measured receipts and numeric comparison, unchanged exact replay and callback-free reopen 2349ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > missing cohort data remains counted and no selected-subset numerical performance is reported: {"missingFacts":true} 1588ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > missing cohort data remains counted and no selected-subset numerical performance is reported: {"missingObservations":true} 1481ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > missing cohort data remains counted and no selected-subset numerical performance is reported: {"missingQuality":true} 1708ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > complete facts using different metric contracts cannot be numerically compared 1750ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > source scalar tamper and wrong snapshot versions refuse without callbacks 1824ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > oversized, sparse and getter enrollment lists reject before capture 1773ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > omitted enrollment is explicitly unavailable in the full dataset denominator, even when all selected facts convert 1656ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > newer observation without a fact never falls back to an older convertible fact 2112ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > new billing leaves historical numbers immutable and is disclosed by separate inspection 2310ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > unreadable current evidence creates explicit unavailable slots rather than removing their failures 1634ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > changed identity membership or constraints cannot reuse an immutable snapshot id; reordered sets replay 1950ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > invalid membership/constraints/shape are rejected before evidence callbacks and no snapshot is inserted 1670ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > Core missing host and foreign workspace deny new creation, historical read respects workspace too 3303ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > forged numeric trial is rejected even after recomputing conversion, snapshot and envelope hashes 1814ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > changed original fact bytes invalidate historical linkage without observing the host 1767ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > same-connection changes during conversion cause snapshot refusal with no partial insert 1762ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > a separate connection committing during capture invalidates the entire snapshot 1913ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > dedicated list pages only verified measured snapshots without observing evidence 2297ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > list scans at most64 envelopes and advances across an empty corrupt/legacy page 2161ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > actual IPC create/read/list/inspect preserves fixture provenance and redacts raw measurement lineage 2178ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC incomplete cohort withholds numeric subset and retains full denominator and missing reasons 1414ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC redacts producer-defined uncertainty text and blocks default-host new creation 3368ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC forbids injected authority, malformed scalar/array commands and does not execute getters or proxies 2ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC fails closed on hostile output, scalar authority upgrades and mismatched snapshot without leaking failures 1905ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > IPC historical read without measurement host remains available while current inspection is unavailable 1837ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > desktop serializes explicit create through IPC/Core/SQLite, then separately reads and inspects 3076ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > desktop advances an empty measured-list page and does not submit missing performance cost limit 1784ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > desktop preserves withheld denominators, clears failure details and discards stale response after new run 1736ms
+ ✓ test/integration-evaluation-measured-comparisons.test.ts > outer transactions refuse and a denied nested create cannot insert a second snapshot 1730ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > real host performs an approved existing-file CAS with timing sink accepted 7460ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > real host performs an approved existing-file CAS with timing sink rejected 7405ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > real host refuses generic, unapproved and contended writes without launching workers 28573ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > runtime timing refuses fabricated observations and proxies without invoking getters or traps 1ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > native existing-file mode rejects broader authority before controller launch 3ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > invalid target authority is descriptor-safe and fails before controller filesystem or session mutation 3ms
+ ✓ test/integration-native-existing-file-runtime.test.ts > proxy target arrays are refused without invoking traps or mutating controller state 2ms
+ ✓ test/integration-native-proposal-dag.test.ts > approved arbitrary native DAG completes two serialized writers and independent verifier on real Core SQLite Git 38898ms
+ ✓ test/integration-native-authority-success.test.ts > fixed composer completes real native issuer to publication and acceptance with local RPC controller 23566ms
+ ✓ test/integration-native-authority-success.test.ts > publication survives expired startup capacity after clean implementation while verifier admission refuses stale evidence 12993ms
+ ✓ test/integration-model-boundary-qualification.test.ts > fixed model-client controlled qualification observations > M1 production rejects code/tool/url fields and cannot select a probe 16401ms
+ ✓ test/integration-model-boundary-qualification.test.ts > fixed model-client controlled qualification observations > diagnostic hold requires true boolean and missing host acknowledgement still cleans 10894ms
+ ✓ test/integration-model-boundary-qualification.test.ts > fixed model-client controlled qualification observations > M2/M3 denied file operations plus same-listener host controls and no confined TCP success 8557ms
+ ✓ test/integration-driver-targeted-stop.test.ts > cancellation completion waits for delayed termination, close, and absence observation 2ms
+{"kind":"targeted-stop-before","target":{"runId":"workflow","attemptId":"attempt-d83fd65533ffdd70552e16d9d28b3a93d0a92d7e661fe457","observed":[{"pid":58836,"createdAt":"2026-09-26T18:47:06.0604130+09:00"},{"pid":46504,"createdAt":"2026-09-26T18:47:06.1959530+09:00"}],"snapshot":{"runId":"workflow","state":"running","reason":null,"recovery":null,"readiness":{"phase":"running","readyTaskIds":[],"blockedTasks":[],"acceptance":"unverified","executionAdmissionRequired":true},"terminalIntegrity":[{"status":"integrity-unavailable","attemptId":"attempt-d83fd65533ffdd70552e16d9d28b3a93d0a92d7e661fe457"}],"unresolvedAttemptIds":["attempt-d83fd65533ffdd70552e16d9d28b3a93d0a92d7e661fe457"],"acceptance":"unverified"},"lifecycle":{"availability":"recorded","runId":"workflow","taskId":"make","attemptId":"attempt-d83fd65533ffdd70552e16d9d28b3a93d0a92d7e661fe457","candidateId":"producer","cancelRequest":"unknown","clientAcknowledgement":"unknown","providerTerminal":"unknown","providerDeath":"unknown","localController":"unknown","localTree":"unknown","cleanup":"unknown","billing":"unknown","sealed":false,"authority":{"processKill":0,"budgetRelease":0,"acceptance":0},"events":[],"references":[]}},"sibling":{"runId":"workflow-sibling","attemptId":"attempt-3971795d2e29248b9b8992ff205ec5d4b4584628c721ac61","observed":[{"pid":40380,"createdAt":"2026-09-26T18:47:06.1251140+09:00"},{"pid":48576,"createdAt":"2026-09-26T18:47:06.2783090+09:00"}],"snapshot":{"runId":"workflow-sibling","state":"running","reason":null,"recovery":null,"readiness":{"phase":"running","readyTaskIds":[],"blockedTasks":[],"acceptance":"unverified","executionAdmissionRequired":true},"terminalIntegrity":[{"status":"integrity-unavailable","attemptId":"attempt-3971795d2e29248b9b8992ff205ec5d4b4584628c721ac61"}],"unresolvedAttemptIds":["attempt-3971795d2e29248b9b8992ff205ec5d4b4584628c721ac61"],"acceptance":"unverified"},"lifecycle":{"availability":"recorded","runId":"workflow-sibling","taskId":"make","attemptId":"attempt-3971795d2e29248b9b8992ff205ec5d4b4584628c721ac61","candidateId":"producer","cancelRequest":"unknown","clientAcknowledgement":"unknown","providerTerminal":"unknown","providerDeath":"unknown","localController":"unknown","localTree":"unknown","cleanup":"unknown","billing":"unknown","sealed":false,"authority":{"processKill":0,"budgetRelease":0,"acceptance":0},"events":[],"references":[]}},"cancelRequests":0,"cancellationCompleted":[]}
+{"kind":"targeted-stop-target-completed","targetAttempt":"attempt-d83fd65533ffdd70552e16d9d28b3a93d0a92d7e661fe457","cancelRequests":1,"cancellationCompleted":["attempt-d83fd65533ffdd70552e16d9d28b3a93d0a92d7e661fe457"],"targetRemaining":[],"siblingHeartbeatBefore":264,"siblingHeartbeatAfter":1010,"siblingObserved":[{"pid":40380,"createdAt":"2026-09-26T18:47:06.1251140+09:00"},{"pid":48576,"createdAt":"2026-09-26T18:47:06.2783090+09:00"}],"siblingCurrent":[{"pid":40380,"ppid":60976,"createdAt":"2026-09-26T18:47:06.1251140+09:00"},{"pid":46520,"ppid":40380,"createdAt":"2026-09-26T18:47:06.1453480+09:00"},{"pid":48576,"ppid":40380,"createdAt":"2026-09-26T18:47:06.2783090+09:00"},{"pid":56356,"ppid":48576,"createdAt":"2026-09-26T18:47:06.2882220+09:00"}]}
+{"kind":"targeted-stop-final","cancelRequests":2,"cancellationCompleted":["attempt-d83fd65533ffdd70552e16d9d28b3a93d0a92d7e661fe457","attempt-3971795d2e29248b9b8992ff205ec5d4b4584628c721ac61"],"targetRemaining":[],"siblingRemaining":[]}
+{"kind":"targeted-stop-cleanup","observed":[{"pid":58836,"createdAt":"2026-09-26T18:47:06.0604130+09:00"},{"pid":46504,"createdAt":"2026-09-26T18:47:06.1959530+09:00"}],"remaining":[]}
+{"kind":"targeted-stop-cleanup","observed":[{"pid":40380,"createdAt":"2026-09-26T18:47:06.1251140+09:00"},{"pid":48576,"createdAt":"2026-09-26T18:47:06.2783090+09:00"}],"remaining":[]}
+ ✓ test/integration-driver-targeted-stop.test.ts > public driver Stop terminates only the selected active run process tree 30251ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > binds the AppContainer job lifetime to the daemon process handle 2ms
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the host controller descendant when the owned controller root is hard-killed 11714ms
+stdout | test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed
+P12_PARENT_DEATH_IDENTITY {"parentPid":57224,"wrapperPid":55164,"workerPid":41796,"terminationLatencyMs":2089,"wrapperAlive":false,"workerAlive":false,"originalWrapperAlive":false,"originalWorkerAlive":false,"wrapperIdentityBefore":{"ProcessId":55164,"ParentProcessId":57224,"created":"2026-09-26T09:47:49.0004020Z"},"wrapperIdentityAfter":null,"workerIdentityBefore":{"ProcessId":41796,"ParentProcessId":55164,"created":"2026-09-26T09:47:49.8971370Z"},"workerIdentityAfter":null}
+
+ ✓ test/p10c-containment.test.ts > Phase 10-C process containment > kills the capability-zero worker job when its daemon parent is hard-killed 14931ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > rejects an expired envelope before spawning any worker 103ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > runs the actual command in capability-zero AppContainer and records its real PID 2122ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > removes host credential variables from the AppContainer worker environment 2719ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > lets the OS boundary deny an obfuscated write outside the approved worktree 2825ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > denies a junction escape even when its destination is hidden from preflight parsing 3551ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > proves capability-zero AppContainer network denial with a real socket attempt 2875ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > bounds captured stdout and stderr before returning them to the host 2533ms
+ ✓ test/p10c-worker.test.ts > Phase 10-C asynchronous AppContainer tool worker > terminates a spawned worker when post-spawn runtime ledger insertion fails 4638ms
+ ✓ test/integration-native-recovery-host.test.ts > reopened Core scopes historical identity, works without settings/health, omits PID/paths and changes no DB bytes 4520ms
+ ✓ test/integration-native-recovery-host.test.ts > historical run picker reopens same ledger through Core and IPC without observing or returning private metadata 2541ms
+ ✓ test/integration-native-recovery-host.test.ts > run picker separates empty records and missing stage links and reports bounded workspace scans 9457ms
+ ✓ test/integration-native-recovery-host.test.ts > run picker rejects extra input, outer transactions and closed ledgers without OS calls 231ms
+ ✓ test/integration-native-recovery-host.test.ts > foreign run/attempt/reference, wrong workspace and tampered stage reject without OS query 1432ms
+ ✓ test/integration-native-recovery-host.test.ts > canonical dotted parent run remains queryable without widening native session identity 5189ms
+ ✓ test/integration-native-recovery-host.test.ts > fake generation, root/dependency mismatch and hostile inputs are denied 1397ms
+ ✓ test/integration-native-recovery-host.test.ts > authentic guard detects changed runtime metadata before publication (offline restored mutation) 2594ms
+ ✓ test/integration-native-recovery-host.test.ts > abort and changed lineage while observing discard result and do not issue receipts 1425ms
+ ✓ test/integration-native-recovery-host.test.ts > Core without protected recovery service is unavailable, and main wires the captured guard 235ms
+ ✓ test/integration-native-recovery-host.test.ts > owned daemon closes when the protected recovery factory fails during Core construction 274ms
+ ✓ test/integration-driver.test.ts > explicit exploration consent and dispatch > keeps a grant inert until explicit consent, then flags only approved task membership and charges both budgets once 395ms
+ ✓ test/integration-driver.test.ts > explicit exploration consent and dispatch > refuses start when explicit consent disappears after activation 138ms
+ ✓ test/integration-driver.test.ts > explicit exploration consent and dispatch > rejects local/conflicting/tampered membership and replays exact consent idempotently 404ms
+ ✓ test/integration-driver.test.ts > trusted host initial-default preparation > binds a frozen canonical default and drives a no-statistics claim through the actual driver 233ms
+ ✓ test/integration-driver.test.ts > trusted host initial-default preparation > accepts exact reopen, refuses changed or omitted reopen, and rejects foreign/accessor input before effects 416ms
+ ✓ test/integration-driver.test.ts > trusted host initial-default preparation > rolls the bound default back when a later preparation step fails and keeps legacy absence 282ms
+ ✓ test/integration-driver.test.ts > durable catalog account identity > rejects endpoint drift even with unchanged credential and subject 121ms
+ ✓ test/integration-driver.test.ts > durable catalog account identity > rechecks account after the final host clock callback at launch 169ms
+ ✓ test/integration-driver.test.ts > durable catalog account identity > retains the exact account-bound launch context through cleanup 207ms
+ ✓ test/integration-driver.test.ts > durable catalog account identity > exact monetary reopen retains binding but foreign credential reopen refuses 144ms
+ ✓ test/integration-driver.test.ts > durable catalog account identity > binds every planned candidate and refuses catalog account drift before activation 146ms
+ ✓ test/integration-driver.test.ts > protected failed-start context > passes the exact enriched launch context to optional failed-start cleanup 183ms
+ ✓ test/integration-driver.test.ts > S4 generated output preparation > binds actual input before approval, projects only immutable metadata, and preserves retry terms 167ms
+ ✓ test/integration-driver.test.ts > S4 generated output preparation > rolls back a malformed second target with policy, criteria, budget and plan and launches nothing 158ms
+ ✓ test/integration-driver.test.ts > S4 generated output preparation > rejects late binding after approval 149ms
+ ✓ test/integration-driver.test.ts > S4 generated output preparation > rejects corrupted persisted target on both replay and activation 156ms
+ ✓ test/integration-driver.test.ts > S4 generated output preparation > rejects missing persisted targets and preserves absent legacy summary field 308ms
+ ✓ test/integration-driver.test.ts > S4 generated output preparation > rejects nontext, duplicate, empty, unpaired Unicode and unknown target fields 745ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > keeps explicit exploration membership through a concurrent read wave and replay 292ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > preserves explicit exploration on a same-candidate retry and never charges replay again 393ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > runs an approved bounded read wave concurrently and waits for both before the verifier 269ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > routes parallel wait responses to each owned handle once and never resends after reopen 249ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > keeps a synchronously cancelled parallel wait claim unresolved without host delivery 237ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > records a valid delayed acknowledgement after delivery began even when stop follows 238ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > cancels every published parallel start on stop and retains unknown cleanup 342ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > expires a running parallel wave at taskTimeoutMs and retains exact unknown cleanup 263ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > closes a task-timeout wave after verified cleanup without verification success 263ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > rejects invalid or unsafe parallel configuration before persistence and defaults to serial 742ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > blocks a failed read wave and cancels its running sibling without launching verification 237ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > never mixes a ready writer into a read wave and starts it only after readers settle 675ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > rejects parallel configuration for local and automatic-recovery hosts before persistence 298ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > blocks retry when the real change journal observes a file identity replacement 451ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > allows a real modified observation through to the existing evidence gate 464ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > automatically applies an approved retry without resetting the active drive promise 381ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > automatically switches only to the store-derived approved alternate 387ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > automatically switches after quota failure and retains exact failure, cost and replay lineage 411ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > delivers a wait response once to the exact held 'retry' replacement after explicit recovery 292ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > delivers a wait response once to the exact held 'switch' replacement after explicit recovery 278ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > delivers a wait response once to the exact held 'replan' replacement after explicit recovery 269ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > keeps automatic quota recovery dormant until the authoritative reset 374ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > persists automatic replan for explicit continuation and stops without replacement 595ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > fences automatic recovery when a trusted callback cancels or crosses the deadline 432ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > does not extend the original monotonic deadline for deferred replan continuation 355ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > rejects unsupported automatic recovery before persistence and preserves manual default 546ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > derives recovery from trusted host proof and executes a forced approved switch 358ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > executes an explicit revision-one replan through claim, stage, finish and acceptance 358ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > keeps an authoritative quota retry dormant until the recorded reset time 393ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > runs approved clean transient retry through a new child owner and real acceptance without refunding unknown costs 386ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > requires independent verifier identity against failed makers as well as the latest successful maker 345ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > does not retry without approval, trusted classification, clean cleanup, or after synchronous stop 796ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > bounds retry attempts and cumulative funds, rejects criteria-free or scope-expanding retry approval 892ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > absolute retry deadline cancels an active owned stage and retains unknown cleanup and billing 677ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > absolute retry deadline aborts a hanging collector and prevents late accepted completion 1200ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > rechecks the absolute deadline after synchronous final-manifest callbacks 315ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > fences launch when a synchronous runtime authorization callback crosses the absolute deadline 213ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > checks the last launch boundary after synchronous capability evidence callbacks 190ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > rejects a host policy that differs from the requested mode before binding approval 159ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > connects clean stages to host acceptance and completes without releasing unknown billing 309ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > persists explicit synthetic provider evidence and reopens it without launch or resend 238ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > rolls back provider terminal and prior bindings when a later reference conflicts 242ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > keeps model self-report and missing criteria unverified through the connected verifier 497ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > downgrades historical acceptance observation when accepted raw evidence is corrupted 303ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > stop and close abort acceptance collection and never finalize a late successful manifest 586ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > bounded acceptance timeout blocks completion and ignores late evidence 364ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > binds immutable requirement criteria before approval without inventing acceptance 231ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > freezes policy/DAG/budget approval summary, activates without parent lease and serializes stages 221ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > start replay shares the owned promise and never relaunches finished stages 219ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > prepare failure rolls back policy binding, budget and plan rows 151ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > denied actual admission never launches and close rejects unknown ownership 322ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > outer transaction rollback invalidates cached preparation and permits clean shutdown 152ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > identical plan digests never share scope grants between workflows 226ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > unknown cleanup prevents verifier stage and keeps writer lease and reservation 180ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > synchronous stop cancels an in-flight start, retains late ownership, and refuses unsafe close 200ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > keeps a serial timeout wait claim unresolved without a new host delivery 229ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > keeps a serial execution-error wait claim unresolved without a new host delivery 192ms
+ ✓ test/integration-driver.test.ts > S3 actual main-process orchestration driver > delivers a committed wait response once to the owned live handle and never resends after reopen 197ms
+ ✓ test/integration-fixed-model-qualification.test.ts > fixed qualification client with production pins (no eligibility) > model production recipe has actual process limit cause and distinct diagnostic identity 4259ms
+ ✓ test/integration-fixed-model-qualification.test.ts > fixed qualification client with production pins (no eligibility) > json-checker production recipe has actual process limit cause and distinct diagnostic identity 4305ms
+ ✓ test/integration-fixed-model-qualification.test.ts > fixed qualification client with production pins (no eligibility) > model actual filesystem denial with host before/after controls and bounded listener 4610ms
+ ✓ test/integration-fixed-model-qualification.test.ts > fixed qualification client with production pins (no eligibility) > json-checker actual filesystem denial with host before/after controls and bounded listener 4640ms
+ ✓ test/integration-fixed-model-qualification.test.ts > fixed qualification client with production pins (no eligibility) > rejects missing pins, arbitrary paths, bad operation and non-fixture outside target before child 4511ms
+ ✓ test/integration-fixed-model-qualification.test.ts > goal proposal diagnostic pin > runs the real pinned diagnostic client and cleans its owned child 4215ms
+ ✓ test/integration-native-verifier.test.ts > Codex verifier preserves lifecycle but rejects implementation role and write authority before launch 5ms
+ ✓ test/integration-native-verifier.test.ts > real host runtime completes a read-only verifier without snapshot workers or workspace authority 5626ms
+ ✓ test/integration-native-verifier.test.ts > real read-only host rejects controller workspace tools without creating a worker 5925ms
+ ✓ test/integration-native-verifier.test.ts > real read-only host rejects an empty terminal model result 5782ms
+ ✓ test/integration-native-verifier.test.ts > native implementation host consumes a distinct typed verifier executor without granting writer authority 181ms
+warning: in the working copy of 'tracked.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.gitattributes', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tracked.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-git-staging-factory.test.ts > trusted Git staging factory > inspects exact clean attached publication root and rejects dirty/ignored/attribute/submodule surfaces 2100ms
+warning: in the working copy of 'tracked.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-git-staging-factory.test.ts > trusted Git staging factory > creates exact detached commit once and discovers the durable active root after reopen 3608ms
+warning: in the working copy of 'tracked.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-git-staging-factory.test.ts > trusted Git staging factory > refuses unknown partial creation instead of automatically retrying 1025ms
+warning: in the working copy of 'tracked.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-git-staging-factory.test.ts > trusted Git staging factory > keeps dirty execution root and metadata when non-force cleanup cannot prove absence 2820ms
+warning: in the working copy of 'tracked.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'second.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-git-staging-factory.test.ts > trusted Git staging factory > reconciles only exact published target bytes and refuses unknown execution changes 5344ms
+ ✓ test/integration-git-staging-factory.test.ts > trusted Git staging factory > accepts no-op and mixed published targets while restoring only the dirty subset 4163ms
+ ✓ test/integration-model-measurement-subject.test.ts > factory-owned model measurement closure (fixture files, no eligibility) > requires planning authorities and rejects evidence bound to an earlier planning subject 6651ms
+ ✓ test/integration-model-measurement-subject.test.ts > factory-owned model measurement closure (fixture files, no eligibility) > measures goal proposal checker as its own client kind without issuing eligibility 1084ms
+ ✓ test/integration-model-measurement-subject.test.ts > factory-owned model measurement closure (fixture files, no eligibility) > v2 binds fixed qualification source/collector/tests and refuses any missing required component 2772ms
+ ✓ test/integration-model-measurement-subject.test.ts > factory-owned model measurement closure (fixture files, no eligibility) > measures actual OS/host binaries and separates kinds, captures added host/compiled/dependency bytes 4601ms
+ ✓ test/integration-model-measurement-subject.test.ts > factory-owned model measurement closure (fixture files, no eligibility) > requires compiled/source/app/policy/probe/package closure and rejects out-root native dependency 754ms
+ ✓ test/integration-model-measurement-subject.test.ts > factory-owned model measurement closure (fixture files, no eligibility) > refuses junction/symlink inventory escape and input accessor without invoking it 119ms
+ ✓ test/p12-mutation-harness.test.ts > P12 mutation harness > proves fail-fast, lifecycle, and parent-death tests detect security regressions in disposable copies 19381ms
+ ✓ test/integration-model-boundary.test.ts > S1 actual Windows model-only client boundary (provider remains unknown) > fixed production protocol uses inherited pipes and removes actual process/profile/root 8126ms
+ ✓ test/integration-model-boundary.test.ts > S1 actual Windows model-only client boundary (provider remains unknown) > same launcher preserves filesystem refusal regression and raw child/network diagnostics 4062ms
+ ✓ test/integration-model-boundary.test.ts > S1 actual Windows model-only client boundary (provider remains unknown) > timeout cancellation and observed parent death kill job and clean profile 7402ms
+ ✓ test/integration-model-boundary.test.ts > S1 actual Windows model-only client boundary (provider remains unknown) > production mode rejects harness override and client rejects oversized/multiple messages 1101ms
+ ✓ test/integration-isolated-local-model.test.ts > isolated client -> fixed host broker -> isolated result > owns asynchronous no-PID startup failure when approved cwd disappears 280ms
+ ✓ test/integration-isolated-local-model.test.ts > isolated client -> fixed host broker -> isolated result > actual child roundtrip preserves large text and native-prefix spoof text as data 3860ms
+ ✓ test/integration-isolated-local-model.test.ts > isolated client -> fixed host broker -> isolated result > overflow and EOF without terminal fail rather than manufacturing a result 7561ms
+ ✓ test/integration-isolated-local-model.test.ts > isolated client -> fixed host broker -> isolated result > cancel aborts actual broker work and leaves cleanup proof to the host 3775ms
+ ✓ test/integration-isolated-local-model.test.ts > isolated client -> fixed host broker -> isolated result > validates request bound before spawn and fixed child rejects response identity and truncation 299ms
+ ✓ test/integration-generated-json-host.test.ts > loads the compiled host dependency graph in actual Node without test-runner CJS interop 130ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > records a durable stop from an exact persisted diagnostic and launches no recovery attempt 580ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > terminalizes an outputless failed attempt from exact cleanup evidence without launching its dependent checker 280ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > durably emits only the sanitized diagnostic code for a failed synthetic execution 379ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > binds immutable input-scoped evidence policies independently across runs 272ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > does not poll or promote unknown cleanup identity 149ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > re-observes a delayed guardian before issuing the terminal cleanup receipt 692ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > re-observes a persistent guardian before issuing the terminal cleanup receipt 10521ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > re-observes a cancel guardian before issuing the terminal cleanup receipt 160ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > runs shared-ledger producer/checker/cleanup/acceptance and retains unknown billing reservations 583ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > honors the saved efficiency mode and strict readonly template 101ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > honors the saved performance mode and strict readonly template 101ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > honors the saved value mode and strict readonly template 101ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > honors the saved speed mode and strict readonly template 97ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > returns unavailable for missing evidence, estimates, policy, accounting and pins 438ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > exposes only core-compatible reason codes, never callback exception paths 168ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > rejects invalid JSON and unapproved parent egress without persistence or launch 85ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > guards nesting before pretty formatting and refuses known output larger than its approval budget 170ms
+ ✓ test/integration-generated-json-host.test.ts > S4 default generated JSON host assembly, synthetic executor qualification only > rechecks qualification immediately before launch and never promotes incorrect generated values 593ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-1/S-3 keeps one child_process boundary and only owned public spawn APIs 37ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-3 positive control rejects a newly introduced direct spawn 82ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 asks the OS for the AppContainer worker parent PID 10058ms
+ ↓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 OS cwd query (SKIPPED on Windows: Win32_Process exposes no cwd)
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-3/P4-5 automatically starts the owned queued request after lease promotion 4426ms
+ ✓ test/integration-readonly-observation-lease.test.ts > read-only launcher observation lease > releases only after the lease independently observes the exact process handle dead 3234ms
+ ✓ test/integration-readonly-observation-lease.test.ts > read-only launcher observation lease > places acquisition after job assignment and parent opening but before resume 0ms
+ ✓ test/integration-readonly-observation-lease.test.ts > read-only launcher observation lease > executes the production pre-resume owner for refusal, throw, and resume failure 2717ms
+ ✓ test/integration-readonly-observation-lease.test.ts > read-only launcher observation lease > retains through terminal handling and releases only after observed death 1865ms
+ ✓ test/integration-readonly-observation-lease.test.ts > read-only launcher observation lease > terminates and verifies a suspended process when provider acquisition throws 1334ms
+ ✓ test/integration-readonly-observation-lease.test.ts > read-only launcher observation lease > overrides a pending successful worker return when finalization is unverified 2609ms
+ ✓ test/integration-readonly-observation-lease.test.ts > read-only launcher observation lease > never repeats a default-path termination already attempted by a terminal branch 1258ms
+ ✓ test/integration-readonly-observation-lease.test.ts > read-only launcher observation lease > runs independent cleanup before propagating finalization failure 2017ms
+ ✓ test/integration-readonly-observation-lease.test.ts > read-only launcher observation lease > keeps the default PowerShell launch call free of an observation input 1ms
+warning: in the working copy of 'target.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-owned-writer-quiescence.test.ts > owned staging writer quiescence > withholds publication and lease release until the exact real writer exits 11897ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > subscribes before resume and cleans only after exact process death 727ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > openfail refuses with zero resume and observes suspended death 746ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > getfail refuses with zero resume and observes suspended death 768ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > disabled refuses with zero resume and observes suspended death 710ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > appfail refuses with zero resume and observes suspended death 688ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > subfail refuses with zero resume and observes suspended death 735ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > an ambiguous subscription handle fails closed without cleanup or resume 772ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > unknown exact-handle death retains subscription and never cleans 844ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > unsubfail poisons after death and cannot report success 742ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > freefail poisons after death and cannot report success 743ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > closefail poisons after death and cannot report success 730ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > rejects invalid frozen requests before native calls and ignores later caller mutation 1411ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > rejects a foreign process handle before wait 708ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > deep-copies bounded events and reports callback loss as unknown 2212ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > constructs the concrete NativeWfp provider inertly 734ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > shares one native lifetime guard with the collector and releases it after safe disposal 721ms
+ ✓ test/integration-readonly-wfp-observation.test.ts > WFP observation lease adapter > keeps default launcher provider null and exposes no payload authority 0ms
+ ✓ test/integration-isolated-json-checker.test.ts > fixed isolated JSON checker > compiled real child computes pass/fail/unknown, independently observes cleanup 20057ms
+ ✓ test/integration-isolated-json-checker.test.ts > fixed isolated JSON checker > rejects proxy/shared/detached bytes before launch without invoking proxy traps 282ms
+ ✓ test/integration-isolated-json-checker.test.ts > fixed isolated JSON checker > combined carrier limit and wrong role refuse before spawn; immediate cancel owns pending start 677ms
+ ✓ test/integration-isolated-json-checker.test.ts > fixed isolated JSON checker > fixed client rejects malformed/extra-code/identity/EOF and never treats prefix text as protocol 959ms
+warning: in the working copy of 'target.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'target.txt', LF will be replaced by CRLF the next time Git touches it
+ ✓ test/integration-git-staging-driver.test.ts > public driver with trusted Git staging factory > publishes exact bytes from a distinct real execution worktree through the public flow 14234ms
+ ✓ test/integration-git-staging-driver.test.ts > public driver with trusted Git staging factory > holds the lease and receipt when execution diverges after staged bytes are read 10352ms
+ ✓ test/integration-approved-goal-planning-core.test.ts > planning is unavailable without a qualified host and cannot consume an unaccepted run 355ms
+ ✓ test/integration-approved-goal-planning-core.test.ts > Core planning handoff: valid 12029ms
+ ✓ test/integration-approved-goal-planning-core.test.ts > Core planning handoff: foreign-source 12818ms
+ ✓ test/integration-approved-goal-planning-core.test.ts > Core planning handoff: unknown-cleanup 1747ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a runtime-computed outside path in a non-Node worker 5725ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > blocks a non-Node worker from a real local socket when egress is empty 1622ms
+ ✓ test/p3c.test.ts > Phase 3C AppContainer enforcement > allows a non-Node worker to write inside and removes its ephemeral ACE 6348ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > records execution from the real worker lifecycle 5767ms
+ ✓ test/p3c.test.ts > Phase 3C production wiring > renders the ledger label through the completion-card path 180ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > complete fixture converts failure with all cost partitions, source lineage and zero writes/captures, survives reopen 1258ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > complete cancelled is retained rather than counted as success or dropped 739ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > complete unknown is retained rather than counted as success or dropped 835ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > host-observed label is retained without giving promotion authority (host itself is synthetic in this test) 780ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > manual fixed-plan baseline uses real saved declaration and original task candidate identities 735ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete quality returns no trial and an explicit reason 669ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete timing returns no trial and an explicit reason 651ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete partial timing returns no trial and an explicit reason 896ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete clock revision returns no trial and an explicit reason 800ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete producer revision returns no trial and an explicit reason 900ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete tool revision returns no trial and an explicit reason 757ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete model revision returns no trial and an explicit reason 814ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete input mismatch returns no trial and an explicit reason 627ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete partition returns no trial and an explicit reason 523ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete unknown cost returns no trial and an explicit reason 897ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete uncertainty returns no trial and an explicit reason 912ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsupported measurement contracts never normalize or fabricate scores: {"complete":false} 937ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsupported measurement contracts never normalize or fabricate scores: {"domain":true} 1015ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > outer transaction and nonexistent fact are refused without creating data 986ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > newer final billing invalidates conversion without rewriting historical fact 996ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsettled run writer-flag never yields a trial despite completed attempt rows 934ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsettled run writer-lease never yields a trial despite completed attempt rows 950ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsettled run running never yields a trial despite completed attempt rows 1049ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > changed terminal outcome invalidates the old observation 1071ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > altered evidence and corrupted stored fact fail rather than becoming convertible 760ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > Core denies missing host, foreign workspace and hostile request before evidence callbacks 1622ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > same-connection host mutations or cross-store reentry cannot produce a conversion 828ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > separate SQLite connection commits during validation are detected, even unrelated writes 1006ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > isolated execution durably stages once while capture and publication stay on the approved root 1335ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > failed clean staged execution durably discards its exact isolated root without publication and releases the lease 996ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > unknown failed-clean discard is durable, keeps the lease, and refuses terminal receipt persistence 840ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > durable pre-clean authorization reopens without re-invoking a drifting verifier and rejects a changed receipt 959ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > unverified failed-clean receipt (false) cannot authorize or physically discard staging 802ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > unverified failed-clean receipt (throw) cannot authorize or physically discard staging 880ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > factory failure is terminal, durable, lease-held, and replay creates zero more roots 742ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > an approved writable run without attempt-owned staging refuses before launch and cannot be upgraded later 625ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > approved factory identity drift refuses before create and claim mutation 615ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > one staged writer commits and a stale journal cannot overwrite it; replay launches and writes zero 2459ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > missing adapter staging marker refuses before adapter launch and keeps the preimage lease 959ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > capability removed during staging registration is rechecked before adapter launch 950ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > effect-capable actions [ 'command' ] refuse before staging registration or adapter launch 506ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > effect-capable actions [ 'write_stdin' ] refuse before staging registration or adapter launch 624ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > effect-capable actions [ 'shell' ] refuse before staging registration or adapter launch 495ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > effect-capable actions [ 'file_change', 'command' ] refuse before staging registration or adapter launch 889ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > staging registration 'timeout' refuses before adapter launch 966ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > staging registration 'rejection' refuses before adapter launch 966ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > 'pending' publication cannot finish or release the lease 1123ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > 'unknown' publication cannot finish or release the lease 1099ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > cancellation or callback timeout after staged read performs no native write 2318ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > callback drift after staged read blocks before native publication 1044ms
+ ✓ test/integration-driver-publication.test.ts > driver staged existing-file publication > authorize callback stop is rechecked before intent or native write 1130ms
+ × test/host-runtime-native-identity.test.ts > captures exact FILETIME only for a process in the owned launch tree 35054ms
+   → Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ✓ test/host-runtime-native-identity.test.ts > refuses a target whose native FILETIME changes across ownership observation 1ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > capture snapshots host data before callbacks and returns deeply frozen owned facts 2872ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > capture rejects hostile nested data and bounded graphs without traps or writes 6377ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > terminal integrity is exact, synchronous, data-only, and bound to the stored attempt 9344ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > Core projects bounded populated provenance and deterministic replay/reopen while retaining unavailable measurements 1484ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > Core evidence preflight rejects unconfigured, malformed, and foreign facts without callbacks or writes 2069ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > evidence projection fails closed on changed bytes and stored tamper, and offline fixture authority stays distinct 3074ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > missing quality timing and accounting stay explicitly unavailable 1109ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > actual Core report export revalidates and delivers only the safe current-run measured summary 1800ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > Core report evidence corruption stays generic and foreign or rejected runs perform no measured callbacks or writes 1068ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > capture enforces aggregate escaped JSON byte budget before evidence callbacks 1076ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > measured-fact list uses actual Core and IPC for bounded empty continuation, workspace revalidation, reopen and zero writes 2238ms
+ ✓ test/integration-evaluation-measured-fact-evidence-core.test.ts > measured-fact list rejects bounds, stale cursor, disabled/closed/outer transaction and keeps closure authority 1895ms
+ ✓ test/p12-parent-sentinel.test.ts > P12 AppContainer parent sentinel > terminates the worker when the monitored sentinel dies while the launcher parent remains alive 15865ms

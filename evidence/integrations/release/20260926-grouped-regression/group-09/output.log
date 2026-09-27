@@ -1,0 +1,227 @@
+
+ RUN  v4.1.11 C:/Users/User/cue/daemon
+
+ ✓ test/p12-electron-proof-result.test.ts > P12 Electron proof final receipt ordering > does not emit passed:true when cleanup fails after the UI checks pass 40452ms
+ ✓ test/integration-driver-targeted-stop.test.ts > cancellation completion waits for delayed termination, close, and absence observation 2ms
+{"kind":"targeted-stop-before","target":{"runId":"workflow","attemptId":"attempt-8cb353f5458986331a2967df16a0b76a83fb72f09d7a94d7","observed":[{"pid":62032,"createdAt":"2026-09-26T23:31:14.3857500+09:00"},{"pid":51428,"createdAt":"2026-09-26T23:31:14.4838500+09:00"}],"snapshot":{"runId":"workflow","state":"running","reason":null,"recovery":null,"readiness":{"phase":"running","readyTaskIds":[],"blockedTasks":[],"acceptance":"unverified","executionAdmissionRequired":true},"terminalIntegrity":[{"status":"integrity-unavailable","attemptId":"attempt-8cb353f5458986331a2967df16a0b76a83fb72f09d7a94d7"}],"unresolvedAttemptIds":["attempt-8cb353f5458986331a2967df16a0b76a83fb72f09d7a94d7"],"acceptance":"unverified"},"lifecycle":{"availability":"recorded","runId":"workflow","taskId":"make","attemptId":"attempt-8cb353f5458986331a2967df16a0b76a83fb72f09d7a94d7","candidateId":"producer","cancelRequest":"unknown","clientAcknowledgement":"unknown","providerTerminal":"unknown","providerDeath":"unknown","localController":"unknown","localTree":"unknown","cleanup":"unknown","billing":"unknown","sealed":false,"authority":{"processKill":0,"budgetRelease":0,"acceptance":0},"events":[],"references":[]}},"sibling":{"runId":"workflow-sibling","attemptId":"attempt-4fe5befc848a7108b0d1dc03d5448689d17ec16db811f129","observed":[{"pid":48016,"createdAt":"2026-09-26T23:31:14.4303940+09:00"},{"pid":58400,"createdAt":"2026-09-26T23:31:14.5155150+09:00"}],"snapshot":{"runId":"workflow-sibling","state":"running","reason":null,"recovery":null,"readiness":{"phase":"running","readyTaskIds":[],"blockedTasks":[],"acceptance":"unverified","executionAdmissionRequired":true},"terminalIntegrity":[{"status":"integrity-unavailable","attemptId":"attempt-4fe5befc848a7108b0d1dc03d5448689d17ec16db811f129"}],"unresolvedAttemptIds":["attempt-4fe5befc848a7108b0d1dc03d5448689d17ec16db811f129"],"acceptance":"unverified"},"lifecycle":{"availability":"recorded","runId":"workflow-sibling","taskId":"make","attemptId":"attempt-4fe5befc848a7108b0d1dc03d5448689d17ec16db811f129","candidateId":"producer","cancelRequest":"unknown","clientAcknowledgement":"unknown","providerTerminal":"unknown","providerDeath":"unknown","localController":"unknown","localTree":"unknown","cleanup":"unknown","billing":"unknown","sealed":false,"authority":{"processKill":0,"budgetRelease":0,"acceptance":0},"events":[],"references":[]}},"cancelRequests":0,"cancellationCompleted":[]}
+{"kind":"targeted-stop-target-completed","targetAttempt":"attempt-8cb353f5458986331a2967df16a0b76a83fb72f09d7a94d7","cancelRequests":1,"cancellationCompleted":["attempt-8cb353f5458986331a2967df16a0b76a83fb72f09d7a94d7"],"targetRemaining":[],"siblingHeartbeatBefore":200,"siblingHeartbeatAfter":872,"siblingObserved":[{"pid":48016,"createdAt":"2026-09-26T23:31:14.4303940+09:00"},{"pid":58400,"createdAt":"2026-09-26T23:31:14.5155150+09:00"}],"siblingCurrent":[{"pid":48016,"ppid":61152,"createdAt":"2026-09-26T23:31:14.4303940+09:00"},{"pid":61384,"ppid":48016,"createdAt":"2026-09-26T23:31:14.4385080+09:00"},{"pid":58400,"ppid":48016,"createdAt":"2026-09-26T23:31:14.5155150+09:00"},{"pid":62708,"ppid":58400,"createdAt":"2026-09-26T23:31:14.5285060+09:00"}]}
+{"kind":"targeted-stop-final","cancelRequests":2,"cancellationCompleted":["attempt-8cb353f5458986331a2967df16a0b76a83fb72f09d7a94d7","attempt-4fe5befc848a7108b0d1dc03d5448689d17ec16db811f129"],"targetRemaining":[],"siblingRemaining":[]}
+{"kind":"targeted-stop-cleanup","observed":[{"pid":62032,"createdAt":"2026-09-26T23:31:14.3857500+09:00"},{"pid":51428,"createdAt":"2026-09-26T23:31:14.4838500+09:00"}],"remaining":[]}
+{"kind":"targeted-stop-cleanup","observed":[{"pid":48016,"createdAt":"2026-09-26T23:31:14.4303940+09:00"},{"pid":58400,"createdAt":"2026-09-26T23:31:14.5155150+09:00"}],"remaining":[]}
+ ✓ test/integration-driver-targeted-stop.test.ts > public driver Stop terminates only the selected active run process tree 26409ms
+ ✓ test/integration-native-verifier.test.ts > Codex verifier preserves lifecycle but rejects implementation role and write authority before launch 6ms
+ ✓ test/integration-native-verifier.test.ts > real host runtime completes a read-only verifier without snapshot workers or workspace authority 5694ms
+ ✓ test/integration-native-verifier.test.ts > real read-only host rejects controller workspace tools without creating a worker 5182ms
+ ✓ test/integration-native-verifier.test.ts > real read-only host rejects an empty terminal model result 6084ms
+ ✓ test/integration-native-verifier.test.ts > native implementation host consumes a distinct typed verifier executor without granting writer authority 192ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-1/S-3 keeps one child_process boundary and only owned public spawn APIs 34ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > S-3 positive control rejects a newly introduced direct spawn 101ms
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 asks the OS for the AppContainer worker parent PID 10352ms
+ ↓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-2 OS cwd query (SKIPPED on Windows: Win32_Process exposes no cwd)
+ ✓ test/p45.test.ts > Phase 4.5 launch-path seal > P4-3/P4-5 automatically starts the owned queued request after lease promotion 4512ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > complete fixture converts failure with all cost partitions, source lineage and zero writes/captures, survives reopen 507ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > complete cancelled is retained rather than counted as success or dropped 347ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > complete unknown is retained rather than counted as success or dropped 341ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > host-observed label is retained without giving promotion authority (host itself is synthetic in this test) 331ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > manual fixed-plan baseline uses real saved declaration and original task candidate identities 357ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete quality returns no trial and an explicit reason 377ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete timing returns no trial and an explicit reason 368ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete partial timing returns no trial and an explicit reason 359ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete clock revision returns no trial and an explicit reason 366ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete producer revision returns no trial and an explicit reason 368ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete tool revision returns no trial and an explicit reason 364ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete model revision returns no trial and an explicit reason 373ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete input mismatch returns no trial and an explicit reason 379ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete partition returns no trial and an explicit reason 364ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete unknown cost returns no trial and an explicit reason 364ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > incomplete uncertainty returns no trial and an explicit reason 376ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsupported measurement contracts never normalize or fabricate scores: {"complete":false} 308ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsupported measurement contracts never normalize or fabricate scores: {"domain":true} 279ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > outer transaction and nonexistent fact are refused without creating data 266ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > newer final billing invalidates conversion without rewriting historical fact 345ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsettled run writer-flag never yields a trial despite completed attempt rows 639ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsettled run writer-lease never yields a trial despite completed attempt rows 463ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > unsettled run running never yields a trial despite completed attempt rows 453ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > changed terminal outcome invalidates the old observation 387ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > altered evidence and corrupted stored fact fail rather than becoming convertible 345ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > Core denies missing host, foreign workspace and hostile request before evidence callbacks 693ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > same-connection host mutations or cross-store reentry cannot produce a conversion 302ms
+ ✓ test/integration-evaluation-measured-trial.test.ts > separate SQLite connection commits during validation are detected, even unrelated writes 381ms
+ ✓ test/integration-model-boundary-process-limit.test.ts > actual owned Job process-limit event > correlates a native ACTIVE_PROCESS_LIMIT receipt to one controlled spawn without treating UNKNOWN as denial 8159ms
+ ✓ test/p12-runtime-enforcement.test.ts > P12 runtime enforcement provenance > attempts every teardown stage after an earlier worker stop fails 2ms
+ ✓ test/p12-runtime-enforcement.test.ts > P12 runtime enforcement provenance > persists bounded ordered provenance even when preflight seals before a worker PID exists 9469ms
+ ✓ test/integration-workspace-management.test.ts > project registration is canonical, bounded, guarded against overlaps and protects durable history 151ms
+ ✓ test/integration-workspace-management.test.ts > Cue sessions link distinct runs, enforce scope in code and SQLite, and survive reopen without resume 216ms
+ ✓ test/integration-workspace-management.test.ts > session rename is workspace-scoped metadata with stale-name and archive refusal 172ms
+ ✓ test/integration-workspace-management.test.ts > strict IPC refuses forged project/session commands and links prepared run without execution authority 127ms
+ ✓ test/integration-workspace-management.test.ts > atomic config activation requires expected version and keeps previous bytes on denial 110ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator denies active work, checks again after confirmation, and never writes config after failed close 102ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator denies another in-flight IPC operation without touching Core 1ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator orders close, config persistence and relaunch and blocks concurrent requests 0ms
+ ✓ test/integration-workspace-management.test.ts > post-close project reentry scopes Core and session reads to the newly active root 342ms
+ ✓ test/integration-workspace-management.test.ts > Core refuses project switching while approval is prepared or ownership is held 226ms
+ ✓ test/integration-workspace-management.test.ts > switch coordinator denies a target with a persisted approval before confirmation 249ms
+ ✓ test/integration-workspace-management.test.ts > switch confirmation race rejects newly prepared work without close or persistence 248ms
+ ✓ test/integration-workspace-management.test.ts > reopened Core reconciles prior approvals in every project without circular switch lock 300ms
+ ✓ test/integration-workspace-management.test.ts > approval and execution atomically reject duplicate, stale epoch and foreign project without events 245ms
+ ✓ test/integration-goal-proposal-handoff.test.ts > goal proposals are goal-bound and reject duplicate, missing, and accessor instructions 5ms
+ × test/integration-goal-proposal-handoff.test.ts > Core consumes a pinned proposal in the driver and rejects mutated artifact before approval 1090ms
+   → promise resolved "undefined" instead of rejecting
+ ✓ test/integration-installation-identity.test.ts > builtin capture never executes loader/native bytes, records runtime ABI and self TCB, freezes and rechecks exact generation 363ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: app/main.mjs 229ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: app/core.mjs 207ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: daemon/src/ledger.ts 220ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: daemon/dist/src/ledger.js 226ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: daemon/migrations/001.sql 215ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: daemon/dist/migrations/001.sql 201ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: daemon/native/change-snapshot/manifest.json 197ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: daemon/native/change-snapshot/change-snapshot.exe 202ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: daemon/dist/native/change-snapshot/manifest.json 200ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: daemon/dist/native/change-snapshot/change-snapshot.exe 199ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: package-lock.json 200ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: dependencies/better-sqlite3/lib/database.js 213ms
+ ✓ test/integration-installation-identity.test.ts > changed entry/source/compiled/migration/lock/loader/native bytes reject: dependencies/better-sqlite3/build/Release/better_sqlite3.node 244ms
+ ✓ test/integration-installation-identity.test.ts > directory inventory rejects add even when all remaining original bytes match 252ms
+ ✓ test/integration-installation-identity.test.ts > directory inventory rejects delete even when all remaining original bytes match 266ms
+ ✓ test/integration-installation-identity.test.ts > unsupported package dependencies/version, missing native and oversized file fail closed 198ms
+ ✓ test/integration-installation-identity.test.ts > actual junction/symlink package escape and hostile input accessor are rejected 51ms
+ ✓ test/integration-local-json-setup-ui.test.ts > setup IPC exact DTO and trusted frame; limits cannot grant paths, models or authority 6ms
+ ✓ test/integration-local-json-setup-ui.test.ts > setup reads only; explicit form saves limits then restart blocks new preparation and clears approval 365ms
+ ✓ test/integration-local-json-setup-ui.test.ts > launch resolve preserves identity against setup/template reset until terminal ledger 371ms
+ ✓ test/integration-local-json-setup-ui.test.ts > launch reject preserves identity against setup/template reset until terminal ledger 355ms
+ ✓ test/integration-local-json-setup-ui.test.ts > blocked with missing, unknown or unresolved ownership retains Stop until matching released ledger 2073ms
+ ✓ test/integration-local-json-setup-ui.test.ts > CAS conflict refreshes revision; malicious host metadata stays text and late preparation cannot revive approval 250ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > rejects PATH and junction aliases into a writable worktree and verifies existence 62ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses a planted absolute worker binary and records a violation before launch 154ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > refuses an owned launch from another writable worktree in the ledger 138ms
+ ✓ test/p11-exec-sealing.test.ts > P11 executable sealing > denies a planted executable launched as a shell descendant 3311ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > fixed local producer records actual OS/runtime and file code bytes, but never a complete execution environment 85ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > each explicit capture is a new environment observation, metric replay preserves original timestamp and bytes 72ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > default Core exposes only an explicit, workspace-bound Laya shadow read; no model or provider call 168ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > default Core works without measuredFactHost and packaged code hashes identify JS rather than TS 197ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > local Core producer does not use injected provider/fact callbacks or accept caller definitions 136ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > bad wall clock or outer transaction refuses before any registration 80ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > second registry failure reports failure without deleting first immutable contract; retry is explicit 83ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > IPC accepts only an explicit field-free local capture and returns incomplete references, not raw OS data 131ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > IPC refuses hostile local output or complete/ready/authority upgrades without touching getters 85ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > desktop explicitly captures through real IPC/Core/SQLite; copy touches only metric/environment references 510ms
+ ✓ test/integration-evaluation-local-contracts.test.ts > desktop hides errors and clears stale capture after new run without automatic retry or copy 356ms
+ ✓ test/integration-evaluation-record-picker-core.test.ts > Core and IPC list bounded revalidated workspace projections across pages and reopen 2552ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > keeps client cancel, provider terminal, local cleanup, death, and billing as separate unknown-preserving facts 318ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > accepts billing finality only after matching provider receipt evidence 92ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > permits exact replay and rejects ordinal gaps, conflicts, duplicate terminal facts, and late sealed writes 108ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > binds only opaque digests and rejects the same provider reference across attempts despite changed type or label 100ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > rejects proxies, accessors, custom prototypes, extra keys, invalid hashes, and oversized opaque input without writes 90ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > rejects a structurally valid direct-SQL terminal with a caller-supplied fake hash at the database boundary 91ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > revalidates a forged terminal predecessor before billing and writes zero dependent rows 84ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > revalidates forged cancel and parent events before acknowledgement, binding, or seal 176ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > detects predecessor tamper after reopen even when the immutable update trigger was bypassed 182ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > guards update, delete, replace, and mismatched or absent lineage without partial writes 83ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > serializes two connections, rolls back failed outer transactions, and survives close/reopen with FK integrity 201ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 provider execution lifecycle append-only store > migrates a pre-032 file as explicit legacy, replays migration, and keeps fresh attempts writable 228ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 deployment-owned provider lifecycle evidence admission > copies a final verdict bound to immutable bytes and exact current lineage 2ms
+ ✓ test/integration-provider-lifecycle.test.ts > S1 deployment-owned provider lifecycle evidence admission > rejects absent, non-final, mismatched, malformed, proxy, accessor, thrown, and timed-out verification 17ms
+ ✓ test/integration-generated-json-local-host.test.ts > explicit local host uses exact 022 counts/time and exposes no monetary selection or billing functions 98ms
+ ✓ test/integration-generated-json-local-host.test.ts > too-small count, mixed accounting fields, wrong local candidate identity, revoked checks and unqualified evidence refuse setup 158ms
+ ✓ test/integration-generated-json-local-host.test.ts > local driver consumes producer and checker invocations with actual capture/cleanup persistence and no money records 522ms
+ ✓ test/integration-generated-json-local-host.test.ts > default dotted candidate IDs persist real cleanup receipts before checker launch in offline composition 485ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5 ledger upgrades an existing pre-P5 database idempotently 280ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > failed migration closes the database handle instead of leaking a Windows file lock 23ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-1 grades deterministic signal sources without treating worker-read as truth 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-2 invokes diagnosis only after two candidate signals 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-2 production dispatcher integrates observation without adding a launch path 91ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-3 requires empty page, threshold exceeded, and live worker together 0ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-4 uses task-type threshold data, with no global idle constant path 1ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-5 records four-rung lineage and escalates at the immutable cap 92ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-6 fences and hashes state before a real owned restart while preserving actual worker work 215ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-7 validates handoff schema and has no automatic handoff executor 23ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-8 always sends an open decision gate to a human, including autonomy 3 231ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 1 has distinct lineage 86ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 2 has distinct lineage 77ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-9 autonomy 3 has distinct lineage 81ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-10 autonomy 3 cannot widen envelope, retry cap, or task contract 98ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-11 rejects in-run increases and applies plus records decreases immediately 78ms
+ ✓ test/p5.test.ts > P5 watcher and recovery > P5-12 stores and retrieves the autonomy level for each run id 77ms
+ ✓ test/integration-change-records.test.ts > S4 bounded native change records > captures and freshly observes exact native bytes 371ms
+ ✓ test/integration-change-records.test.ts > S4 bounded native change records > rejects traversal, aliases, and hard links without a fallback 239ms
+ ✓ test/integration-change-records.test.ts > S4 bounded native change records > rejects stored preimage byte substitution under its original digest label 235ms
+ ✓ test/integration-change-records.test.ts > S4 bounded native change records > rejects restore authority before invoking a supplied host 240ms
+ ✓ test/integration-change-records.test.ts > S4 bounded native change records > keeps an authorized stopped restore inert without atomic race closure 255ms
+ ✓ test/integration-selection-preference.test.ts > user selection preference is persisted intent, not execution authority > defaults without mutating the ledger and returns immutable data 90ms
+ ✓ test/integration-selection-preference.test.ts > user selection preference is persisted intent, not execution authority > persists all four modes across close and migration replay 399ms
+ ✓ test/integration-selection-preference.test.ts > user selection preference is persisted intent, not execution authority > rejects stale saves from another connection without losing newer intent 141ms
+ ✓ test/integration-selection-preference.test.ts > user selection preference is persisted intent, not execution authority > rejects malformed mode/revision without writes or policy/run creation 82ms
+ ✓ test/integration-account-binding.test.ts > binds canonical opaque account identity exactly and replays 102ms
+ ✓ test/integration-account-binding.test.ts > rejects changed identity and detects payload deletion/corruption 86ms
+ ✓ test/integration-account-binding.test.ts > rejects hostile plain-data and mixed batches before writes even when outer transaction catches 91ms
+ ✓ test/integration-account-binding.test.ts > SQL rejects scalar, digest and approved lineage substitutions 90ms
+ ✓ test/integration-account-binding.test.ts > does not partially extend an already bound candidate set 93ms
+ ✓ test/integration-account-binding.test.ts > refuses identity backfill after approval 99ms
+ ✓ test/integration-account-binding.test.ts > detects scalar drift even after guard name restoration 91ms
+ ✓ test/integration-account-binding.test.ts > binds endpoint identity and refuses missing guard 93ms
+ ✓ test/integration-retrospective-core.test.ts > core stores a local historical draft without approval, execution or raw goal and reopens it 241ms
+ ✓ test/integration-retrospective-core.test.ts > core rejects conflicting replay, missing run and executable input without changing drafts 145ms
+ ✓ test/integration-outputless-handoff-review.test.ts > cleanup fallback rejects unknown and cross candidate, subject, and session provenance 121ms
+ ✓ test/integration-outputless-handoff-review.test.ts > cleanup fallback rejects payload tamper and a succeeded receipt while the attempt is still running 208ms
+ ✓ test/integration-outputless-handoff-review.test.ts > failed cleanup-evidence handoff retains full terminal integrity after SQLite reopen 244ms
+ ✓ test/integration-readonly-verifier-ledger.test.ts > exact payload nonce persists real identity and cleanup across reopen 225ms
+ ✓ test/integration-readonly-verifier-ledger.test.ts > wrong-nonce persists no clean authority 147ms
+ ✓ test/integration-readonly-verifier-ledger.test.ts > death-unknown persists no clean authority 138ms
+ ✓ test/integration-cost-observation-ui.test.ts > UI consumes actual persisted monetary observation, derives expiry and redacts identity/source 119ms
+ ✓ test/integration-cost-observation-ui.test.ts > unknown/actual receipt updates remain descriptive and corrupt source isolates as unavailable 99ms
+ ✓ test/integration-cost-observation-ui.test.ts > renderer shows fresh/stale/unknown and removes previous amount on invalid or new run 310ms
+ ✓ test/integration-native-implementation-host.test.ts > native implementation host refuses before provider composition when authority is incomplete 3ms
+ ✓ test/integration-native-implementation-host.test.ts > Core prepares and approves the staged existing-file implementation and independent verifier plan without launching providers 321ms
+ ✓ test/integration-release-readiness.test.ts > keeps first milestone, efficiency proof, and extensions independent 33ms
+ ✓ test/integration-release-readiness.test.ts > missing or altered source and missing evidence cannot report qualified 32ms
+ ✓ test/integration-release-readiness.test.ts > a checked assertion without an evidence reference remains unverified 14ms
+ ✓ test/integration-release-readiness.test.ts > derives current counts from checklist items rather than a fixed remaining count 20ms
+ ✓ test/integration-release-readiness.test.ts > renders readable self-contained HTML and escapes hostile checklist text 191ms
+ ✓ test/integration-release-readiness.test.ts > common and launch acceptance remain explicit release dependencies 48ms
+ ✓ test/integration-release-readiness.test.ts > empty sections remain unverified and changed evidence or generator changes generation identity 70ms
+stdout | test/integration-knowledge.test.ts > bounded reference-only lexical knowledge retrieval > compares fixed evaluation and separate holdout with exact-substring baseline; counts are fixture-only
+{"set":"fixed-evaluation","queries":4,"relevantQueries":3,"hits":3,"falsePositives":0,"baselineHits":1,"baselineFalsePositives":0}
+{"set":"separate-holdout","queries":4,"relevantQueries":3,"hits":3,"falsePositives":0,"baselineHits":1,"baselineFalsePositives":0}
+
+ ✓ test/integration-knowledge.test.ts > bounded reference-only lexical knowledge retrieval > indexes reopened store BOM bytes with Korean/emoji citations and preserves already-present BOM 193ms
+ ✓ test/integration-knowledge.test.ts > bounded reference-only lexical knowledge retrieval > compares fixed evaluation and separate holdout with exact-substring baseline; counts are fixture-only 30ms
+ ✓ test/integration-knowledge.test.ts > bounded reference-only lexical knowledge retrieval > cites actual UTF8 byte slices and hash provenance while excluding rules/skills 13ms
+ ✓ test/integration-knowledge.test.ts > bounded reference-only lexical knowledge retrieval > rejects altered content, duplicate/conflicting resource identity, and mutable snapshots 7ms
+ ✓ test/integration-knowledge.test.ts > bounded reference-only lexical knowledge retrieval > bounds documents/tokens/queries and preserves stable tie order 22ms
+ ✓ test/integration-knowledge.test.ts > bounded reference-only lexical knowledge retrieval > rejects inherited getters, proxy reflection, own accessors and custom array iteration without execution 7ms
+ ✓ test/integration-electron-profile.test.ts > missing and empty preserve defaults 2ms
+ ✓ test/integration-electron-profile.test.ts > relative nonexistent path binds both profiles without config creation 4ms
+ ✓ test/integration-electron-profile.test.ts > ready, regular file, real junction and getter mismatch fail closed 8ms
+ ✓ test/integration-evidence-policy.test.ts > S4 evidence policy > accepts exact independent code evidence and fails closed on model or missing target evidence 3ms
+ ✓ test/integration-evidence-policy.test.ts > S4 evidence policy > requires research claim mapping, document render evidence, and authoritative external state 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/integration-goal-proposal-handoff.test.ts > Core consumes a pinned proposal in the driver and rejects mutated artifact before approval
+AssertionError: promise resolved "undefined" instead of rejecting
+
+- Expected:
+Error {
+  "message": "rejected promise",
+}
+
++ Received:
+undefined
+
+ ❯ test/integration-goal-proposal-handoff.test.ts:89:31
+     87|   }finally{
+     88|     // The synthetic launch stops before a provider exists. The durabl…
+     89|     await expect(core.close()).rejects.toThrow('orchestration_cleanup_…
+       |                               ^
+     90|     expect(db.prepare('SELECT state,cleanup_verified FROM orchestratio…
+     91|     db.close();rmSync(root,{recursive:true,force:true});
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 28 passed (29)
+      Tests  1 failed | 181 passed | 1 skipped (183)
+   Start at  23:30:32
+   Duration  171.49s (transform 2.17s, setup 0ms, import 9.29s, tests 156.81s, environment 3ms)
+
+JSON report written to C:/Users/User/cue/evidence/integrations/release/20260926-grouped-regression/group-09/report.json

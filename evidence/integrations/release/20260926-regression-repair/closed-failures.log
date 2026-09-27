@@ -1,0 +1,13 @@
+420: ✓ test/host-runtime-native-identity.test.ts > captures exact FILETIME only for a process in the owned launch tree 8228ms
+523: ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > writes the root evidence command to the repository evidence directory 2ms
+524: ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > observes only cue_workspace in the actual model request 2856ms
+525: ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > rejects an explicit unpinned executable without fallback or proof publication 102ms
+526: ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > rejects a changed staged copy before capture or proof publication 753ms
+527: ✓ test/p10c-manifest.test.ts > pinned Codex effective tool manifest > never publishes PASS if cleanup fails after the real loopback capture 2822ms
+554: ✓ test/integration-goal-proposal-handoff.test.ts > Core consumes a pinned proposal in the driver and rejects mutated artifact before approval 4631ms
+794: ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through late completion after stop failure 254ms
+795: ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination rejection 247ms
+796: ✓ test/p11-writer-corrective.test.ts > P11 corrective writer security > retains ownership through termination result 248ms
+1297: ✓ test/p9.test.ts > Phase 9 Electron shell > P9-3 freezes channels, rejects unknown channels, and cannot execute before approval 159ms
+2348: Test Files  309 passed (309)
+2349:      Tests  2261 passed | 10 skipped (2271)

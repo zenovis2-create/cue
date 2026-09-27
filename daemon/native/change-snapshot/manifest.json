@@ -1,0 +1,23 @@
+{
+  "schema": "cue-native-helper-manifest-v1",
+  "protocol": "cue-change-snapshot-v1",
+  "compareWriteProtocol": "cue-change-snapshot-v2",
+  "artifact": {
+    "path": "change-snapshot.exe",
+    "sha256": "82ff0f80ecb63293de0eed39296bf66ad51b4cfdeee2d8d7aaea062fae80d07e",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "sources": [
+    { "path": "main_windows.go", "sha256": "d782a8a5da8437417fc4f30e805be21c627df1bcbea07da2b3a7678c2008fdbd" },
+    { "path": "main_other.go", "sha256": "0277d1af3fc37f03a053dbf431aaaa99f742b84ced351266c445949acdf055d8" },
+    { "path": "go.mod", "sha256": "0edebd0660f8677d4fd0806ff805b442f74bcf77fffdfe1120364685ffb78415" },
+    { "path": "NOTICE.md", "sha256": "b52c5d455e55f926837b46b894216cb588a15951df51a09039df9b30b4d16c31" },
+    { "path": "THIRD_PARTY_LICENSE_MICROSOFT_HCSSHIM.txt", "sha256": "b5cb7ff7859e7d282d98fc43ab081b0dda5dc659dc3385cf65740c759a7e6a6c" }
+  ],
+  "provenance": {
+    "review": "evidence/integrations/S3/20260915-existing-file-publication/native/review.md",
+    "reviewedAt": "2026-09-15",
+    "buildPolicy": "prebuilt-reviewed-no-download-no-startup-compilation"
+  }
+}

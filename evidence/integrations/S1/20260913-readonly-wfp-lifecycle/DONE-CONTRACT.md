@@ -1,0 +1,7 @@
+# DONE contract — read-only WFP lifecycle seam
+
+Done means `node --test scripts/reuse/readonly-wfp-collector.test.mjs` preserves all 12 collector cases and passes executable injected lifecycle cases proving: subscription success precedes the sole worker-start call; collection-disabled/open/get/app-ID/subscribe failures call worker start zero times; only an injected `dead` observation can leave the lifecycle result `captured`; alive, unknown, cancelled, timeout, start rejection, and thrown observer paths remain `unknown`; subscription stays active through death observation; and every path either proves unsubscribe/free/close or retains and poisons the native lifetime. `node --check` and `git diff --check` must pass and final SHA-256 values must be recorded.
+
+Attempt cap: two correction passes total. Every pass runs the full focused Node test, syntax check, and diff check. A failure requires a new measured hypothesis or handoff.
+
+This is an offline injected seam. Its lifecycle observations are typed inputs from a future protected host, not OS proof, production wiring, permission qualification, or evidence that a real worker or WFP subscription ran. Passing `timeoutMs` does not enforce wall-clock time inside an arbitrary adapter; a future protected adapter must enforce the bound and independently verify exact worker/job death. No live WFP, worker, network, model, provider, policy, elevation, or historical gate operation is authorized.

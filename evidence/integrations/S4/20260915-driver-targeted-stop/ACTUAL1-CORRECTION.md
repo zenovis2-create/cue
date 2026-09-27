@@ -1,0 +1,5 @@
+# Actual attempt 1 diagnosis and correction
+
+Attempt 1 ran once and failed. Vitest launched two owned process trees, but the assertion looked them up by workflow run ID while the runtime map is keyed by the engine attempt/owner run ID. `executions.size === 2` succeeded, then the workflow-key lookup returned undefined. The failure path subsequently exceeded the default 10-second hook timeout while closing both actual trees. Raw log and result are preserved.
+
+Changed hypothesis for actual attempt 2: resolve each execution using the real `orchestration_attempt.attempt_id` for `(workflow run_id, task_id='make')`, which is the same identity passed as the runtime context/owner key. Give only this actual-OS cleanup hook a bounded 30-second timeout and the test a 60-second harness timeout; these are harness bounds, not product latency claims. Preserve all PID/creation identity checks. Offline cap for this correction: one import/list pass plus independent review. Actual attempt 2 is the final permitted run.

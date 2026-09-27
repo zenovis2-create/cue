@@ -17,7 +17,11 @@ describe('Phase 9 Electron shell', () => {
   it('P9-1 has npm start and a main entrypoint', () => {
     const pkg = JSON.parse(readFileSync(repoFile('package.json'), 'utf8'));
     expect(pkg.scripts.start).toBe('electron .');
-    expect(readFileSync(repoFile(pkg.main), 'utf8')).toContain('BrowserWindow');
+    expect(pkg.main).toBe('app/start.mjs');
+    const entry = readFileSync(repoFile(pkg.main), 'utf8');
+    expect(entry).toMatch(/runGuardedEntry\(\(\) => \{\s*bindElectronProfile\(app\);\s*return import\('\.\/main\.mjs'\);\s*\}\)/u);
+    expect(entry).toContain('loaded.startCueApplication({ guard })');
+    expect(readFileSync(repoFile('app', 'main.mjs'), 'utf8')).toContain('export async function startCueApplication({ guard })');
   });
 
   it('P9-2 seals BrowserWindow and exposes an explicit preload API only', () => {
@@ -32,13 +36,17 @@ describe('Phase 9 Electron shell', () => {
     expect(preload).not.toMatch(/exposeInMainWorld\([^,]+,\s*ipcRenderer/u);
   });
 
-  it('P9-3 freezes channels, rejects unknown channels, and cannot execute before approval', () => {
+  it('P9-3 freezes channels, rejects unknown channels, and cannot execute before approval', async () => {
     expect(Object.isFrozen(IPC_CHANNELS)).toBe(true);
     expect(() => assertAllowedChannel('cue:shell')).toThrow('IPC channel denied');
     const root = temp(); const config = initializeConfig(join(root, 'data'), { worktreeRoot: temp() }); const core = createCueCore(config);
-    const prepared = core.prepareGoal('one file');
-    expect(() => core.execute(prepared.runId)).toThrow('approval required');
-    core.close();
+    try {
+      const prepared = core.prepareGoal('one file');
+      expect(() => core.execute(prepared.runId)).toThrow('approval_session_unavailable');
+      expect(core.daemon.db.prepare('SELECT COUNT(*) n FROM execution_event').get()).toEqual({n:0});
+      expect(core.daemon.db.prepare('SELECT COUNT(*) n FROM session_handle').get()).toEqual({n:0});
+      expect(core.daemon.db.prepare('SELECT approval_state FROM run_session_epoch WHERE run_id=?').get(prepared.runId)).toEqual({approval_state:'prepared'});
+    } finally { await core.close(); }
   });
 
   it('P9-4 first-run setup chooses a workspace once and reuses the persisted choice', async () => {
@@ -137,4 +145,3 @@ describe('Phase 9 Electron shell', () => {
     expect(sources).not.toMatch(/buzz-adapter|CueBuzz|BuzzMessage/u);
   });
 });
-

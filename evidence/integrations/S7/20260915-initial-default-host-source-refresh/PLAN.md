@@ -1,0 +1,3 @@
+# Initial-default host source recapture
+
+Done: one final accepted-source generation via node scripts/reuse/cue-current-source-report.mjs, exit0/readytrue; exact pointer/manifest/five artifacts/current source hashes and stable source basis, prior records preserved. Cap1 generation after independent maker source acceptance and current build, no duplicate build or manual history deletion. Raw stdout/stderr/exit recorded first call. Root creates full top-level preimages now; separate checker verifies all evidence after capture. Static source/import evidence only; no runtime/provider/performance/visual qualification.

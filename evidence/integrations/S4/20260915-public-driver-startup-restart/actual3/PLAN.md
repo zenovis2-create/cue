@@ -1,0 +1,9 @@
+# Corrected fresh-driver refusal and bounded child diagnostics
+
+Preserve actual1 and actual2 unchanged. Actual2 proves native publication intent1/result0 and retained blocked/held startup state, but no complete public restart response. Its second-child stderr was not saved and cleanup encountered a process-exit/event-loop race. Do not claim its immediate exit reason as an observed fact.
+
+Changed hypothesis: the fresh driver rejects both start and snapshot because no in-memory preparation exists. The fixture must record those real public refusals, separately query the durable blocked task state, retain the remaining no-relaunch/no-resend and held/lease/native-postimage assertions, and persist bounded per-child diagnostics on every exit path. Offline tests must demonstrate the fresh-driver API behavior and distinguish OS absence pending child close from a mismatched live identity. A mismatched identity never authorizes signaling.
+
+Done/cap: one new isolated actual invocation only after correction5 independent CLEAR and noEmit. Product source stays at coordinated Build6 and static generation 9bcf201de0911824879ec640ea99df0150b3f8cbb27de51d330c3c0025ee4549. Preserve runtime and final fixture pins first. Require all offline and actual tests exit0, two observed creation identities, exact first-child death, complete second-child response, bounded close and durable cleanup record confirming owned root removal. A separate checker audits A04 and S4-05 against the original contract. Failure preserves artifacts and requires a distinct evidenced hypothesis before another run.
+
+Use the same public-driver test command from actual2 with CUE_ACTUAL_PUBLIC_DRIVER_RESTART=1 and absolute cleanup/observations output paths in this actual3 directory. No old retained root reuse or mutation, local-model calls, provider calls, unknown Codex binary, or broad OS changes.

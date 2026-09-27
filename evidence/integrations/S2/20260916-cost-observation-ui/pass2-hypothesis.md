@@ -1,0 +1,1 @@
+Pass1: existing24 controls passed, new3 failed because attempt-history projection omitted costObservation while stage projection included it. Pass2 adds the same cached read-only observation to attemptHistory. Assertions unchanged; rerun same four suites.

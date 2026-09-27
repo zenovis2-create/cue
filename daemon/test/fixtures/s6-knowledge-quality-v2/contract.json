@@ -1,0 +1,48 @@
+{
+  "version": "s6-authored-bilingual-quality-contract-v2",
+  "evaluation": "authored-fixed-fixture-only",
+  "k": 3,
+  "attemptCap": {"baseline": 1, "rankingHypothesis": 1},
+  "rankingHypothesis": "deterministic token proximity",
+  "thresholds": {
+    "macroRecallAt3Minimum": 0.95,
+    "englishMacroRecallAt3Minimum": 1,
+    "koreanMacroRecallAt3Minimum": 0.91,
+    "allQueryFalsePositiveQueriesMaximum": 9,
+    "negativeFalsePositiveQueriesMaximum": 2,
+    "requiresRecallImprovementOverLexicalBaseline": true,
+    "requiresAllProvenanceChecks": true
+  },
+  "frozenLexicalBaseline": {
+    "macroRecallAt3": 0.8181818181818182,
+    "englishMacroRecallAt3": 0.8,
+    "koreanMacroRecallAt3": 0.8333333333333334,
+    "allQueryFalsePositiveQueries": 9,
+    "negativeFalsePositiveQueries": 2
+  },
+  "requiredCoverage": [
+    "korean-spacing-and-compounds",
+    "english-camelcase-acronyms-and-digits",
+    "parser-and-cache-hard-negatives",
+    "multiple-relevant-documents",
+    "easy-and-hard-negatives",
+    "utf8-bom-and-emoji"
+  ],
+  "outputRequirements": {
+    "authority": "reference-only",
+    "sourceVerification": "declared-not-remote-verified",
+    "sourceRevisionManifestAndContentHashes": true,
+    "originalUtf8ByteSlice": true,
+    "stableTieBreak": true,
+    "frozenResults": true
+  },
+  "fixtureSha256": {
+    "corpus.json": "8ed7d28d86b2efd1bc97389116e170b9d4c6e9cd37e8551d01e32646e1e36af4",
+    "queries.json": "067b9de02cdbd75709d275a48972f6eb24881ee3248bf4c5f05fc697b8c3f9a8"
+  },
+  "limitations": [
+    "No claim about real-user, remote-source, or production retrieval quality.",
+    "No semantic secret detection claim.",
+    "No model, provider, native process, network, or user-home access."
+  ]
+}

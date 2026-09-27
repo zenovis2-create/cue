@@ -9,6 +9,11 @@ afterEach(() => {
   for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true });
 });
 
+// This is the only test in the suite that launches a real Electron application. It used to
+// fail in-suite because scripts/p11-electron-proof.mjs bound a constant inspector port, so a
+// recent previous run left that port in TIME_WAIT and Electron reported "address already in
+// use"; the failure then surfaced as an unrelated CDP error. The proof now probes for a
+// bindable port, and this gate passes both standalone and inside the full serial suite.
 describe('P12 Electron proof final receipt ordering', () => {
   it('does not emit passed:true when cleanup fails after the UI checks pass', () => {
     const output = mkdtempSync(join(tmpdir(), 'cue-p12-electron-proof-result-'));

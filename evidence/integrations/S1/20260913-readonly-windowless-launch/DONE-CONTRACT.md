@@ -1,0 +1,5 @@
+# Read-only windowless-launch repair done contract
+
+Done means the exact executed launcher and PATHEXT-gate manifest are archived and verified before editing. The only launcher behavior change adds Windows `CREATE_NO_WINDOW` (`0x08000000`) to the existing `CREATE_SUSPENDED`, `EXTENDED_STARTUPINFO_PRESENT`, and `CREATE_UNICODE_ENVIRONMENT` flags. Capability-zero AppContainer attributes, job ownership, process limit, held handles, command/environment contracts, cleanup, and the writer launcher remain unchanged.
+
+Every pass runs PowerShell syntax parsing, focused offline boundary tests that assert all four flags and parity with the reviewed model-only launcher, TypeScript/build asset copying, source/dist launcher hash equality, archive integrity, and scoped diff check. At most two implementation corrections are allowed. No native worker, AppContainer, model, provider, network, historical marker reset, gate repin, or retry is authorized. The prior `0xC0000142` result remains an observed exit class; this change makes no DLL or root-cause claim and requires independent review.

@@ -1,0 +1,5 @@
+export interface WorkspaceSessionRecord {readonly runId:string;readonly taskId:string;readonly state:'queued'|'running'|'awaiting_approval'|'blocked'|'completed'|'failed';readonly startedAt:string;readonly title:string}
+export interface WorkspaceProject {readonly name:string;readonly root:string}
+export interface WorkspaceSessionList {readonly version:'cue-workspace-sessions-v1';readonly authority:'historical-ledger-index-only';readonly project:WorkspaceProject;readonly records:readonly WorkspaceSessionRecord[];readonly nextCursor:number|null;readonly complete:boolean}
+export interface WorkspaceSessionDetail {readonly version:'cue-workspace-session-v1';readonly authority:'historical-ledger-read-only';readonly project:WorkspaceProject;readonly session:WorkspaceSessionRecord & {readonly goal:string|null};readonly limitation:'stored-run-only-no-reconnect-or-execution-authority'}
+export function createWorkspaceSessionReader(db:any,worktree:string):Readonly<{list(input:{limit:number;cursor:number|null}):WorkspaceSessionList;read(input:{runId:string}):WorkspaceSessionDetail}>;

@@ -1,25 +1,20 @@
 import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { constants, copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import { HostCodexRpcSession } from '../dist/src/host-codex-controller.js';
 import { stopProcessTree } from './process-lifecycle.mjs';
 import { CLEAN_CONFIG, vendorCodexLaunchSpec } from '../dist/src/tool-home.js';
+import { resolvePinnedCodex } from './pinned-codex.mjs';
 
 const args = process.argv.slice(2);
 const outputAt = args.indexOf('--output');
 const output = outputAt >= 0 ? resolve(args[outputAt + 1]) : resolve('..', 'evidence', 'P10C', 'p10c_manifest_proof.json');
-const expectedSha256 = 'cf68265897197ac5f3bff6a10c168eec159842b353129726da5e3ed6b91ef0f4';
-// The pin is the hash, never the path. CUE_VENDOR_CODEX only says WHERE to look,
-// so a side-by-side toolchain can be measured without touching the shared global
-// install; the hash check below still decides whether it is the pinned artifact.
-const binary = process.env.CUE_VENDOR_CODEX
-  || join(process.env.APPDATA || '', 'npm', 'node_modules', '@openai', 'codex', 'node_modules', '@openai', 'codex-win32-x64', 'vendor', 'x86_64-pc-windows-msvc', 'bin', 'codex.exe');
-if (!existsSync(binary)) throw new Error('pinned Codex binary is unavailable');
-const binarySha256 = createHash('sha256').update(readFileSync(binary)).digest('hex');
-if (binarySha256 !== expectedSha256) throw new Error('pinned Codex binary hash mismatch');
+// Resolve only independently pinned bytes; a global CLI update cannot silently
+// change this probe's subject. Explicit overrides remain fail-closed.
+const { binary, binarySha256, binarySource } = resolvePinnedCodex();
 
 const root = mkdtempSync(join(tmpdir(), 'cue-manifest-proof-'));
 const codexHome = join(root, 'codex-home-manifest');
@@ -61,7 +56,15 @@ const server = createServer((request, response) => {
 
 let child;
 let rpc;
+let proof;
 try {
+  // Launch an owned, hash-rechecked snapshot, not a mutable global install or
+  // the standalone package's .codex path. Keep the vendor launch guard intact.
+  const vendorRoot = join(root, 'vendor');
+  mkdirSync(vendorRoot);
+  const executionBinary = join(vendorRoot, 'codex.exe');
+  copyFileSync(binary, executionBinary, constants.COPYFILE_EXCL);
+  if (createHash('sha256').update(readFileSync(executionBinary)).digest('hex') !== binarySha256) throw Error('pinned Codex staged binary hash mismatch');
   await new Promise((resolvePromise, rejectPromise) => {
     server.once('error', rejectPromise);
     server.listen(0, '127.0.0.1', resolvePromise);
@@ -82,7 +85,7 @@ try {
     '',
   ].join('\n');
   writeFileSync(join(codexHome, 'config.toml'), config, { mode: 0o600 });
-  const spec = vendorCodexLaunchSpec(binary, ['-a', 'on-request', 'app-server'], codexHome);
+  const spec = vendorCodexLaunchSpec(executionBinary, ['-a', 'on-request', 'app-server'], codexHome);
   child = spawn(spec.command, spec.args, { cwd: controllerCwd, env: spec.env, stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true });
   if (!child.stdin || !child.stdout) throw new Error('manifest probe requires app-server stdio');
   rpc = new HostCodexRpcSession({ readable: child.stdout, writable: child.stdin }, async () => {
@@ -105,10 +108,13 @@ try {
   const toolNames = tools.map(tool => tool?.name ?? tool?.function?.name ?? tool?.type ?? '').filter(Boolean);
   const hostExecutionTools = toolNames.filter(name => /(?:shell|apply[_-]?patch|exec|command|terminal|code_mode|local_shell)/iu.test(name));
   const verdict = toolNames.length === 1 && toolNames[0] === 'cue_workspace' && hostExecutionTools.length === 0 ? 'PASS' : 'FAIL';
-  const proof = {
+  proof = {
     generatedAt: new Date().toISOString(),
     verdict,
     binarySha256,
+    binaryPath: binary,
+    binarySource,
+    executedSnapshotSha256: binarySha256,
     requestEndpoint: capture.endpoint,
     model: capture.body.model,
     toolNames,
@@ -116,9 +122,6 @@ try {
     toolManifest: tools,
     toolManifestSha256: createHash('sha256').update(JSON.stringify(tools)).digest('hex'),
   };
-  mkdirSync(dirname(output), { recursive: true });
-  writeFileSync(output, `${JSON.stringify(proof, null, 2)}\n`);
-  if (verdict !== 'PASS') process.exitCode = 2;
 } finally {
   rpc?.close();
   await stopProcessTree(child);
@@ -128,3 +131,7 @@ try {
   });
   rmSync(root, { recursive: true, force: true, maxRetries: 20, retryDelay: 50 });
 }
+// A captured tool list is not a completed proof until owned teardown succeeds.
+mkdirSync(dirname(output), { recursive: true });
+writeFileSync(output, `${JSON.stringify(proof, null, 2)}\n`);
+if (proof.verdict !== 'PASS') process.exitCode = 2;
